@@ -8,14 +8,22 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class IndexController {
 	// 功能
-	final static String SYS_F = "index.do";
+	final static String SYS_F = "index.basil";
 
 	/**
-	 * 第一次登入
+	 * 登入
 	 */
-	@RequestMapping(value = "/index.dtr", method = { RequestMethod.GET })
-	public ModelAndView loginCheck() {
-		System.out.println("---controller - loginCheck");
-		return new ModelAndView("main", "allData", null);
+	@RequestMapping(value = "/login.basil", method = { RequestMethod.GET })
+	public String loginCheck() {
+		System.out.println("---controller - login Check");
+		return "/html/login";
+	}
+	/**
+	 * 主頁
+	 */
+	@RequestMapping(value = "/index.basil", method = { RequestMethod.POST })
+	public ModelAndView indexCheck() {
+		System.out.println("---controller - index Check");
+		return new ModelAndView("/html/main", "resp_content", 123);
 	}
 }
