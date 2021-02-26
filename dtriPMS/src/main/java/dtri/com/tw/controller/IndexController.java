@@ -13,7 +13,7 @@ public class IndexController {
 	/**
 	 * 登入
 	 */
-	@RequestMapping(value = "/login.basil", method = { RequestMethod.GET })
+	@RequestMapping(value = {"/login.basil","/","/index.basil"}, method = { RequestMethod.GET })
 	public String loginCheck() {
 		System.out.println("---controller - login Check");
 		return "/html/login";

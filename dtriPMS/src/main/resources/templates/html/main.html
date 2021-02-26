@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DTR_PMS(製程系統)</title>
+<script src="./thirdparty/js/jquery-3.5.1.min.js"></script>
+<script src="./thirdparty/js/jquery-ui-1.12.1.min.js"></script>
+<script src="./thirdparty/js/bootstrap-4.6.0.min.js"></script>
+<script src="./thirdparty/js/vue-2.6.11.min.js"></script>
+
+<link rel="stylesheet" href="./thirdparty/css/jquery-ui-1.12.1.min.css" />
+<link rel="stylesheet" href="./thirdparty/css/bootstrap-4.6.0.min.css" />
+<link rel="stylesheet" href="./thirdparty/bootstrap-icons-1.4.0/bootstrap-icons.css" />
+<link rel="icon" type="img/svg" href="./img/icon.png">
+<style type="text/css">
+body {
+	background-color: #f8f9fc;
+}
+
+#nav_m_all {
+	background-color: #212529;
+	max-height: 100vh;
+	top: 43px;
+	min-width: 265px;
+}
+
+#user img {
+	width: 25px;
+}
+
+#nav_u {
+	left: auto;
+	top: 43px;
+	min-width: 130px;
+}
+
+#logo {
+	width: 25px;
+}
+</style>
+</head>
+<body id="main">
+	<!-- 開頭(header) -->
+	<div id="header_t_all"></div>
+	<!-- 選單(nav) -->
+	<div class="navbar p-1 navbar-dark bg-dark justify-content-start shadow" id="nav_t_all">
+		<img class="bg-white" id="logo" src="./img/login.png" alt="DTR ERP"> <a class="navbar-brand p-0 pl-2" href="#"><h3 class="m-0">DTR PMS</h3></a>
+		<button class="p-1 btn btn-sm border border-light btn-outline-secondary" id="nav_m_all_btn" type="button" data-toggle="collapse" data-target="#nav_m_all" aria-controls="nav_m_all"
+			aria-expanded="false">
+			<div class="row m-0">
+				<div class="navbar-toggler-icon"></div>
+				<div class="pl-2">
+					<h5 class="text-white m-0">Menu</h5>
+				</div>
+			</div>
+		</button>
+		<div id="user" class="col-sm col-5 m-0 row justify-content-end ">
+			<div class="pl-2 pt-1">
+				<h5 class="text-white m-0" id="name">Name</h5>
+			</div>
+			<div class="p-0 pr-2 pl-2 ml-2" id="nav_u_btn" type="button" data-toggle="collapse" data-target="#nav_u" aria-controls="nav_u" aria-expanded="false">
+				<button class="btn btn-sm border border-light btn-outline-secondary">
+					<div>
+						<img class="img-profile rounded-circle" src="./img/undraw_profile.svg">
+					</div>
+				</button>
+			</div>
+		</div>
+	</div>
+	<!-- 選單-功能 -->
+	<div class="collapse fixed-top shadow overflow-auto col-lg-2 col-md-3 col-sm-4 col-5 p-0" id="nav_m_all">
+		<div class="p-3">
+			<h5 class="text-light">Collapsed content</h5>
+			<ul class="nav navbar-nav">
+
+				<li class="btn-outline-secondary" id="nav_m_n1" data-toggle="collapse" data-target="#nav_m_l1" aria-controls="nav_m_l1" aria-expanded="false">
+					<div>
+						<a class="text-white nav-link p-2 dropdown-toggle" href="#"><i class="bi bi-tags mr-2"></i><b>功能選單1</b></a>
+					</div>
+				</li>
+				<div class="collapse ml-3" onclick="$('#nav_m_all_btn').trigger('click')" id="nav_m_l1">
+					<ul class="nav navbar-nav">
+						<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Home_1</a></li>
+						<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Link_1</a></li>
+						<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Thing_1</a></li>
+					</ul>
+				</div>
+
+				<li class="btn-outline-secondary" id="nav_m_n2" data-toggle="collapse" data-target="#nav_m_l2" aria-controls="nav_m_l2" aria-expanded="false">
+					<div>
+						<a class="text-white nav-link p-2 dropdown-toggle" href="#"><i class="bi bi-tags mr-2"></i><b>功能選單2</b></a>
+					</div>
+				</li>
+				<div class="collapse ml-3" onclick="$('#nav_m_all_btn').trigger('click')" id="nav_m_l2">
+					<ul class="nav navbar-nav">
+						<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Home_2</a></li>
+						<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Link_2</a></li>
+						<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Thing_2</a></li>
+					</ul>
+				</div>
+			</ul>
+		</div>
+	</div>
+	<!-- 選單-使用者資訊 -->
+	<div class="collapse fixed-top mr-3 bg-white rounded shadow col-lg-1 col-md-2 col-sm-3 col-4" id="nav_u">
+		<div class="p-1" onclick="$('#nav_u_btn').trigger('click')">
+			<a class="dropdown-item p-2" href="#"><i class="bi bi-person mr-2"></i>Profile</a>
+			<div></div>
+			<a class="dropdown-item p-2" href="#"><i class="bi bi-wrench mr-2"></i>Settings</a>
+			<div class="dropdown-divider p-0"></div>
+			<a class="dropdown-item p-2" href="#"><i class="bi bi-door-open mr-2"></i>Logout</a>
+		</div>
+	</div>
+	<!-- 本體(body) -->
+	<div class="text-center col-md" id="body_t_all">
+		<div class="p-1">
+			<h4>
+				<b>單元名稱</b>
+			</h4>
+		</div>
+		<div class="p-1">
+			<ul class="nav nav-tabs shadow-sm" id="myTab" role="tablist">
+				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm active" data-toggle="tab" role="tab" aria-selected="true" aria-controls="search" href="#search" id="tab-search"><i
+						class="bi bi-chat-right-text mr-1"></i>Search</a></li>
+				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="modify" href="#modify" id="tab-modify"><i
+						class="bi bi-pencil-square mr-1"></i>Modify / Create / Delete</a></li>
+				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="print" href="#print" id="tab-print"><i
+						class="bi bi-printer-fill mr-1"></i>Print / Download</a></li>
+				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="upload" href="#upload" id="tab-upload"><i
+						class="bi bi-file-arrow-up-fill mr-1"></i>Upload</a></li>
+				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="analysis" href="#analysis" id="tab-analysis"><i
+						class="bi bi-clipboard-data mr-1"></i>Analysis report / Download</a></li>
+				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="workstation" href="#workstation" id="tab-workstation"><i
+						class="bi bi-joystick mr-1"></i>Workstation mode</a></li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="tab-search">
+					<div>...tab-search</div>
+				</div>
+				<div class="tab-pane fade" id="modify" role="tabpanel" aria-labelledby="tab-modify">...tab-modify</div>
+				<div class="tab-pane fade" id="print" role="tabpanel" aria-labelledby="tab-print">...tab-print</div>
+				<div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="tab-upload">...tab-upload</div>
+				<div class="tab-pane fade" id="analysis" role="tabpanel" aria-labelledby="tab-analysis">...tab-analysis</div>
+				<div class="tab-pane fade" id="workstation" role="tabpanel" aria-labelledby="tab-workstation">...tab-workstation</div>
+			</div>
+		</div>
+	</div>
+	<!-- 底部(footer) -->
+	<div id="footer_t_all" class="text-center">
+		<div class="mt-5 text-muted small" id="footer">
+			<div>請使用 1.Brave 2.Chrome 3.Microsoft Edge 瀏覽器 最佳解析度為 1366*768 以上</div>
+			<div>&copy; 2021 DT Research, Inc. All Rights Reserved. 版本: Beta v0.72.8</div>
+			<div>任何問題 需求 請洽詢 系統管理員 分機:321</div>
+		</div>
+	</div>
+
+	<span class="d-none" id="${resp_content}" th:text="${resp_content}"></span>
+</body>
+<script type="text/javascript">
+	//各類模型 Vue 位置(需註冊)
+	var templateHeader = "";
+	var templateNav = "";
+	var templateBody = "";
+	var templateFooter = "";
+	//控制端
+	var main = new Vue({
+		el : "#main",
+		data : {
+			//每次回傳資料
+			/* allData: ${ resp_content },*/
+			//登入存入資料
+			loginData : "",
+			//各類模型 資料
+			contentData : "",
+			//Ajax 傳輸模組
+			ajaxCell : {
+				url : "",
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				dataType : "JSON",
+				data : "",
+			},
+			//倒數計時
+			countDownId : "",
+			countDownSecond : 300
+		},
+		created : function() {
+			//初始化
+
+			//var message = [[${resp_content}]];
+			//console.log(message);
+
+			//this.contentData = this.allData["r_content"];
+			//this.loginData = this.allData["r_content"]["longinInfo"];
+			//取得模板
+			//$("#header").load(this.contentData["template"]["header"]);
+			//$("#nav").load(this.contentData["template"]["nav"]);
+			//$("#body").load(this.contentData["template"]["body"]);
+			//$("#footer").load(this.contentData["template"]["footer"]);
+			//啟動計時
+			//this.timeOut(true);
+		},
+		methods : {
+			ajaxSend : function(url, dataSend) {
+				//進入倒數中
+				clearInterval(this.countDownId);
+				this.countDownSecond = 800;
+				main.timeOut(true);
+				//進入運作中
+				main.loading(true);
+				//排除空白
+				var data = dataSend.replace(/\s+/g, "");
+				$.ajax({
+					url : url,
+					type : this.ajaxCell.type,
+					contentType : this.ajaxCell.contentType,
+					dataType : this.ajaxCell.dataType,
+					data : data,
+					success : function(event) {
+						main.allData = event;
+						main.contentData = event.r_content;
+						main.alertshow(true, " 結果->" + event.r_message);
+						//模組 轉跳 畫面
+						console.log(event.r_cellBackName + " : to success");
+						//固定回傳模組
+						if (event.r_cellBackName != null) {
+							switch (event.r_cellBackName) {
+							case "navAfter":
+								templateNav["navAfter"](event);
+								break;
+							case "bodyAfter":
+								templateBody["bodyAfter"](event);
+								break;
+							case "headerAfter":
+								templateHeader["headerAfter"](event);
+								break;
+							case "footerAfter":
+								templateFooter["footerAfter"](event);
+								break;
+							}
+						}
+						main.loading(false);
+					},
+					error : function(event) {
+						main.alertshow(true, "Something to fail");
+						console.log("to index fail:" + event);
+						if (event.status == 200) {
+							//沒有session 拒絕時
+							window.location.replace("login.jsp");
+						}
+						main.loading(false);
+					},
+				});
+			},
+			alertshow : function(open, message) {
+				if (open) {
+					$("#alert_message").text("資訊: " + message);
+					$(".alert").addClass("show");
+					setTimeout(function() {
+						$(".alert").removeClass("show");
+						$("#alert_message").text("");
+					}, 8000);
+				}
+			},
+			//timeOut 到計時 登出(提醒失效)
+			countDown : function() {
+				this.countDownSecond -= 1;
+				if (this.countDownSecond == 60) {
+					$("#countDown").removeClass("d-none");
+				}
+				if (this.countDownSecond < 0) {
+					clearInterval(this.countDownId);
+					$("#countDown").addClass("d-none");
+					templateNav.signout();
+				}
+				$("#timeOutmsg h2").text("程序登出中....請點我繼續..." + this.countDownSecond);
+				//console.log("倒數登出 : "+this.countDownSecond);
+			},
+			timeOut : function(check) {
+				if (check) {
+					//開始計時
+					this.countDownId = setInterval(this.countDown, 1000); //每秒執行一次，賦值
+				} else {
+					//啟動計時
+					clearInterval(this.countDownId);
+					this.countDownSecond = 800;
+					$("#countDown").addClass("d-none");
+					//觸發紀錄
+					var url = "./sessionUpdate.do";
+					var data = JSON.stringify({
+						data : {
+							datetime : "",
+							action : "R",
+							whoami : main.loginData.account,
+							cellBackName : "",
+							cellBackOrder : "",
+							content : "",
+						},
+					});
+					main.ajaxSend(url, data);
+				}
+			},
+			//程序運作中~
+			loading : function(open) {
+				if (open) {
+					$("#loading").removeClass("d-none");
+				} else {
+					$("#loading").addClass("d-none");
+				}
+			},
+		}
+	});
+</script>
+</html>
+
