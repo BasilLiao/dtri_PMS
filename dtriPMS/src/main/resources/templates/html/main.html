@@ -44,7 +44,8 @@ body {
 	<div id="header_t_all"></div>
 	<!-- 選單(nav) -->
 	<div class="navbar p-1 navbar-dark bg-dark justify-content-start shadow" id="nav_t_all">
-		<img class="bg-white" id="logo" src="./img/login.png" alt="DTR ERP"> <a class="navbar-brand p-0 pl-2" href="#"><h3 class="m-0">DTR PMS</h3></a>
+		<img class="bg-white" id="logo" src="./img/login.png" alt="DTR ERP"> <a class="navbar-brand p-0 pl-2" href="#"><i class="h3">DTR PMS</i></a>
+
 		<button class="p-1 btn btn-sm border border-light btn-outline-secondary" id="nav_m_all_btn" type="button" data-toggle="collapse" data-target="#nav_m_all" aria-controls="nav_m_all"
 			aria-expanded="false">
 			<div class="row m-0">
@@ -58,7 +59,7 @@ body {
 			<div class="pl-2 pt-1">
 				<h5 class="text-white m-0" id="name">Name</h5>
 			</div>
-			<div class="p-0 pr-2 pl-2 ml-2" id="nav_u_btn" type="button" data-toggle="collapse" data-target="#nav_u" aria-controls="nav_u" aria-expanded="false">
+			<div class="p-0 pr-2 pl-2 ml-2" id="nav_u_btn" data-toggle="collapse" data-target="#nav_u" aria-controls="nav_u" aria-expanded="false">
 				<button class="btn btn-sm border border-light btn-outline-secondary">
 					<div>
 						<img class="img-profile rounded-circle" src="./img/undraw_profile.svg">
@@ -72,37 +73,35 @@ body {
 		<div class="p-3">
 			<h5 class="text-light">Collapsed content</h5>
 			<ul class="nav navbar-nav">
-
-				<li class="btn-outline-secondary" id="nav_m_n1" data-toggle="collapse" data-target="#nav_m_l1" aria-controls="nav_m_l1" aria-expanded="false">
-					<div>
+				<li id="nav_m_n1" data-toggle="collapse" data-target="#nav_m_l1" aria-controls="nav_m_l1" aria-expanded="false">
+					<div class="btn-outline-secondary">
 						<a class="text-white nav-link p-2 dropdown-toggle" href="#"><i class="bi bi-tags mr-2"></i><b>功能選單1</b></a>
 					</div>
-				</li>
-				<div class="collapse ml-3" onclick="$('#nav_m_all_btn').trigger('click')" id="nav_m_l1">
-					<ul class="nav navbar-nav">
-						<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Home_1</a></li>
-						<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Link_1</a></li>
-						<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Thing_1</a></li>
-					</ul>
-				</div>
-
-				<li class="btn-outline-secondary" id="nav_m_n2" data-toggle="collapse" data-target="#nav_m_l2" aria-controls="nav_m_l2" aria-expanded="false">
-					<div>
-						<a class="text-white nav-link p-2 dropdown-toggle" href="#"><i class="bi bi-tags mr-2"></i><b>功能選單2</b></a>
+					<div class="collapse ml-3" onclick="$('#nav_m_all_btn').trigger('click')" id="nav_m_l1">
+						<ul class="nav navbar-nav">
+							<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Home_1</a></li>
+							<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Link_1</a></li>
+							<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Thing_1</a></li>
+						</ul>
 					</div>
 				</li>
-				<div class="collapse ml-3" onclick="$('#nav_m_all_btn').trigger('click')" id="nav_m_l2">
-					<ul class="nav navbar-nav">
-						<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Home_2</a></li>
-						<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Link_2</a></li>
-						<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Thing_2</a></li>
-					</ul>
-				</div>
+				<li id="nav_m_n2" data-toggle="collapse" data-target="#nav_m_l2" aria-controls="nav_m_l2" aria-expanded="false">
+					<div class="btn-outline-secondary">
+						<a class="text-white nav-link p-2 dropdown-toggle" href="#"><i class="bi bi-tags mr-2"></i><b>功能選單2</b></a>
+					</div>
+					<div class="collapse ml-3" onclick="$('#nav_m_all_btn').trigger('click')" id="nav_m_l2">
+						<ul class="nav navbar-nav">
+							<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Home_2</a></li>
+							<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Link_2</a></li>
+							<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Thing_2</a></li>
+						</ul>
+					</div>
+				</li>
 			</ul>
 		</div>
 	</div>
 	<!-- 選單-使用者資訊 -->
-	<div class="collapse fixed-top mr-3 bg-white rounded shadow col-lg-1 col-md-2 col-sm-3 col-4" id="nav_u">
+	<div class="collapse fixed-top mr-3 bg-white rounded shadow col-lg-1 col-md-2 col-sm-3 col-4 p-1" id="nav_u">
 		<div class="p-1" onclick="$('#nav_u_btn').trigger('click')">
 			<a class="dropdown-item p-2" href="#"><i class="bi bi-person mr-2"></i>Profile</a>
 			<div></div>
@@ -113,30 +112,158 @@ body {
 	</div>
 	<!-- 本體(body) -->
 	<div class="text-center col-md" id="body_t_all">
-		<div class="p-1">
-			<h4>
+		<div class="p-1 mt-2">
+			<h4 class="m-0">
 				<b>單元名稱</b>
 			</h4>
 		</div>
 		<div class="p-1">
 			<ul class="nav nav-tabs shadow-sm" id="myTab" role="tablist">
 				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm active" data-toggle="tab" role="tab" aria-selected="true" aria-controls="search" href="#search" id="tab-search"><i
-						class="bi bi-chat-right-text mr-1"></i>Search</a></li>
+						class="bi bi-search mr-1"></i>Search</a></li>
 				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="modify" href="#modify" id="tab-modify"><i
-						class="bi bi-pencil-square mr-1"></i>Modify / Create / Delete</a></li>
+						class="bi bi-pencil-square mr-1"></i> Create / Modify / Delete</a></li>
 				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="print" href="#print" id="tab-print"><i
 						class="bi bi-printer-fill mr-1"></i>Print / Download</a></li>
 				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="upload" href="#upload" id="tab-upload"><i
-						class="bi bi-file-arrow-up-fill mr-1"></i>Upload</a></li>
+						class="bi bi-upload mr-1"></i>Upload</a></li>
 				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="analysis" href="#analysis" id="tab-analysis"><i
-						class="bi bi-clipboard-data mr-1"></i>Analysis report / Download</a></li>
+						class="bi bi-graph-up mr-1"></i>Analysis report</a></li>
 				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="workstation" href="#workstation" id="tab-workstation"><i
 						class="bi bi-joystick mr-1"></i>Workstation mode</a></li>
 			</ul>
 			<div class="tab-content" id="myTabContent">
+				<!-- tab-search -->
 				<div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="tab-search">
-					<div>...tab-search</div>
+					<!-- 查詢項目 -->
+					<div class="shadow mt-2 text-left">
+						<div class=" bg-white rounded-top m-0 pl-1 h5">Search</div>
+						<div class="p-1 pl-2 pr-2 pt-2">
+							<div class="row p-0 m-0">
+								<div class="row col-4 p-0 m-0">
+									<div class="col-6 pt-1 pb-1">查詢項目1</div>
+									<div class="col-6 pt-1 pb-1 border border-dark rounded" contenteditable="true">1</div>
+								</div>
+								<div class="row col-4 p-0 m-0">
+									<div class="col-6 pt-1 pb-1">查詢項目2</div>
+									<div class="col-6 pt-1 pb-1 border border-dark rounded" contenteditable="true">2</div>
+								</div>
+								<div class="row col-4 p-0 m-0">
+									<div class="col-6 pt-1 pb-1">查詢項目3</div>
+									<div class="col-6 pt-1 pb-1 border border-dark rounded" contenteditable="true">3</div>
+								</div>
+							</div>
+						</div>
+						<div class="p-1 pl-2 pr-2 pb-2">
+							<div class="row p-0 m-0">
+								<div class="row col-4 p-0 m-0">
+									<div class="col-6 pt-1 pb-1">查詢項目4</div>
+									<div class="col-6 pt-1 pb-1 border border-dark rounded" contenteditable="true">4</div>
+								</div>
+								<div class="row col-4 p-0 m-0">
+									<div class="col-6 pt-1 pb-1">查詢項目5</div>
+
+									<select class="col-6 custom-select custom-select-sm">
+										<option selected>Open this select menu</option>
+										<option value="1">One</option>
+										<option value="2">Two</option>
+										<option value="3">Three</option>
+									</select>
+
+								</div>
+								<div class="row col-4 p-0 m-0">
+									<div class="col-12 row justify-content-around m-0 pr-0">
+										<button class="col-md-5 mt-1 p-0 btn btn-primary btn-sm" type="submit">Search</button>
+										<button class="col-md-5 mt-1 p-0 btn btn-warning btn-sm" type="submit">Clear</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 查詢結果 -->
+					<div class="shadow mt-2">
+						<div class="text-left bg-white rounded-top m-0 pl-1 h5">Result</div>
+						<div class=" p-2">
+							<div class="pb-2 m-0 row">
+								<div class="col-4 h6 m-0 p-0 mt-1 row justify-content-start ">
+									<div class="mr-2">
+										<i class="bi bi-shield"></i>Lock
+									</div>
+									<div class="mr-2">
+										<i class="bi bi-receipt"></i>Detail
+									</div>
+									<div class="mr-2">
+										<i class="bi bi-vector-pen"></i>Modify
+									</div>
+									<div class="mr-2">
+										<i class="bi bi-x-octagon"></i>Delete
+									</div>
+
+								</div>
+								<div class="col-1"></div>
+								<div class="col-7 m-0 p-0 row justify-content-end">
+									<ul class="pagination pagination-sm m-0 row">
+										<li class="page-item"><a class="page-link" href="#"> Previous 10 </a></li>
+										<li class="page-item active"><a class="page-link pr-3 pl-3" href="#">1</a></li>
+										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">2</a></li>
+										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">3</a></li>
+										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">4</a></li>
+										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">5</a></li>
+										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">6</a></li>
+										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">7</a></li>
+										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">8</a></li>
+										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">9</a></li>
+										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">10</a></li>
+										<li class="page-item"><a class="page-link" href="#"> Next 10 </a></li>
+									</ul>
+								</div>
+							</div>
+							<table class="table table-sm table-hover table-striped table-bordered m-0">
+								<thead class="thead bg-dark table-dark">
+									<tr>
+										<th scope="col" style="width: 35px"><i class="bi bi-shield"></i></th>
+										<th scope="col" style="width: 35px"><i class="bi bi-receipt"></i></th>
+										<th scope="col" style="width: 35px"><i class="bi bi-vector-pen"></i></th>
+										<th scope="col" style="width: 35px"><i class="bi bi-x-octagon"></i></th>
+										<th scope="col">ID</th>
+										<th scope="col">First</th>
+										<th scope="col">Last</th>
+										<th scope="col">Handle</th>
+									</tr>
+								</thead>
+								<tbody class="">
+									<tr>
+										<td>
+											<div class="custom-control custom-radio custom-control-inline m-0">
+												<input type="radio" id="line0" name="line" class="custom-control-input" value="line0" checked> <label class="custom-control-label" for="line0"></label>
+											</div>
+										</td>
+										<td>
+											<div class="custom-control custom-radio custom-control-inline m-0">
+												<input type="radio" id="line1" name="line" class="custom-control-input" value="line1"> <label class="custom-control-label" for="line1"></label>
+											</div>
+										</td>
+										<td>
+											<div class="custom-control custom-radio custom-control-inline m-0">
+												<input type="radio" id="line2" name="line" class="custom-control-input" value="line2"> <label class="custom-control-label" for="line2"></label>
+											</div>
+										</td>
+										<td>
+											<div class="custom-control custom-radio custom-control-inline m-0">
+												<input type="radio" id="line3" name="line" class="custom-control-input" value="line3"> <label class="custom-control-label" for="line3"></label>
+											</div>
+										</td>
+										<td>1</td>
+										<td>Mark</td>
+										<td>Otto</td>
+										<td>@mdo</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
+
 				<div class="tab-pane fade" id="modify" role="tabpanel" aria-labelledby="tab-modify">...tab-modify</div>
 				<div class="tab-pane fade" id="print" role="tabpanel" aria-labelledby="tab-print">...tab-print</div>
 				<div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="tab-upload">...tab-upload</div>
@@ -146,15 +273,14 @@ body {
 		</div>
 	</div>
 	<!-- 底部(footer) -->
-	<div id="footer_t_all" class="text-center">
-		<div class="mt-5 text-muted small" id="footer">
-			<div>請使用 1.Brave 2.Chrome 3.Microsoft Edge 瀏覽器 最佳解析度為 1366*768 以上</div>
-			<div>&copy; 2021 DT Research, Inc. All Rights Reserved. 版本: Beta v0.72.8</div>
-			<div>任何問題 需求 請洽詢 系統管理員 分機:321</div>
+	<div id="footer_t_all" class="text-muted small col-md">
+		<div class="m-0 p-2 text-center row justify-content-around" id="footer">
+			<div class="col-4">Browser:1.Brave 2.Chrome 3.Microsoft Edge :1366*768</div>
+			<div class="col-4">&copy; 2021 DT Research, Inc. All Rights Reserved. ver: Beta v0.72.8</div>
+			<div class="col-4">Any questions, please consult the administrator TE:321</div>
 		</div>
 	</div>
-
-	<span class="d-none" id="${resp_content}" th:text="${resp_content}"></span>
+	<span class="d-none" id="resp_content" th:text="${resp_content}"></span>
 </body>
 <script type="text/javascript">
 	//各類模型 Vue 位置(需註冊)
