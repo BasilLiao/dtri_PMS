@@ -122,11 +122,13 @@ body {
 				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm active" data-toggle="tab" role="tab" aria-selected="true" aria-controls="search" href="#search" id="tab-search"><i
 						class="bi bi-search mr-1"></i>Search</a></li>
 				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="modify" href="#modify" id="tab-modify"><i
-						class="bi bi-pencil-square mr-1"></i> Create / Modify / Delete</a></li>
+						class="bi bi-vector-pen mr-1"></i> Create / Modify / Delete</a></li>
 				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="print" href="#print" id="tab-print"><i
-						class="bi bi-printer-fill mr-1"></i>Print / Download</a></li>
+						class="bi bi-printer mr-1"></i>Print</a></li>
+				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="download" href="#download" id="tab-download"><i
+						class="bi bi-cloud-download mr-1"></i>Download</a></li>
 				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="upload" href="#upload" id="tab-upload"><i
-						class="bi bi-upload mr-1"></i>Upload</a></li>
+						class="bi bi-cloud-upload mr-1"></i>Upload</a></li>
 				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="analysis" href="#analysis" id="tab-analysis"><i
 						class="bi bi-graph-up mr-1"></i>Analysis report</a></li>
 				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="workstation" href="#workstation" id="tab-workstation"><i
@@ -134,126 +136,230 @@ body {
 			</ul>
 			<div class="tab-content" id="myTabContent">
 				<!-- tab-search -->
-				<div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="tab-search">
-					<!-- 查詢項目 -->
+				<div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="tab-search"></div>
+				<!-- tab-modify -->
+				<div class="tab-pane fade" id="modify" role="tabpanel" aria-labelledby="tab-modify">
+
 					<div class="shadow mt-2 text-left">
-						<div class=" bg-white rounded-top m-0 pl-1 h5">Search</div>
+						<div class=" bg-white rounded-top m-0 pl-1 h5">
+							<i class="bi bi-receipt mr-1"></i>Detail
+						</div>
 						<div class="p-1 pl-2 pr-2 pt-2">
-							<div class="row p-0 m-0">
-								<div class="row col-4 p-0 m-0">
-									<div class="col-6 pt-1 pb-1">查詢項目1</div>
-									<div class="col-6 pt-1 pb-1 border border-dark rounded" contenteditable="true">1</div>
-								</div>
-								<div class="row col-4 p-0 m-0">
-									<div class="col-6 pt-1 pb-1">查詢項目2</div>
-									<div class="col-6 pt-1 pb-1 border border-dark rounded" contenteditable="true">2</div>
-								</div>
-								<div class="row col-4 p-0 m-0">
-									<div class="col-6 pt-1 pb-1">查詢項目3</div>
-									<div class="col-6 pt-1 pb-1 border border-dark rounded" contenteditable="true">3</div>
-								</div>
-							</div>
-						</div>
-						<div class="p-1 pl-2 pr-2 pb-2">
-							<div class="row p-0 m-0">
-								<div class="row col-4 p-0 m-0">
-									<div class="col-6 pt-1 pb-1">查詢項目4</div>
-									<div class="col-6 pt-1 pb-1 border border-dark rounded" contenteditable="true">4</div>
-								</div>
-								<div class="row col-4 p-0 m-0">
-									<div class="col-6 pt-1 pb-1">查詢項目5</div>
-
-									<select class="col-6 custom-select custom-select-sm">
-										<option selected>Open this select menu</option>
-										<option value="1">One</option>
-										<option value="2">Two</option>
-										<option value="3">Three</option>
-									</select>
-
-								</div>
-								<div class="row col-4 p-0 m-0">
-									<div class="col-12 row justify-content-around m-0 pr-0">
-										<button class="col-md-5 mt-1 p-0 btn btn-primary btn-sm" type="submit">Search</button>
-										<button class="col-md-5 mt-1 p-0 btn btn-warning btn-sm" type="submit">Clear</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- 查詢結果 -->
-					<div class="shadow mt-2">
-						<div class="text-left bg-white rounded-top m-0 pl-1 h5">Result</div>
-						<div class=" p-2">
-							<div class="pb-2 m-0 row">
-								<div class="col-4 h6 m-0 p-0 mt-1 row justify-content-start ">
-									<div class="mr-2">
-										<i class="bi bi-shield"></i>Lock
-									</div>
-									<div class="mr-2">
-										<i class="bi bi-receipt"></i>Detail
-									</div>
-									<div class="mr-2">
-										<i class="bi bi-vector-pen"></i>Modify
-									</div>
-									<div class="mr-2">
-										<i class="bi bi-x-octagon"></i>Delete
-									</div>
-
-								</div>
-								<div class="col-1"></div>
-								<div class="col-7 m-0 p-0 row justify-content-end">
-									<ul class="pagination pagination-sm m-0 row">
-										<li class="page-item"><a class="page-link" href="#"> Previous 10 </a></li>
-										<li class="page-item active"><a class="page-link pr-3 pl-3" href="#">1</a></li>
-										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">2</a></li>
-										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">3</a></li>
-										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">4</a></li>
-										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">5</a></li>
-										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">6</a></li>
-										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">7</a></li>
-										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">8</a></li>
-										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">9</a></li>
-										<li class="page-item"><a class="page-link pr-3 pl-3" href="#">10</a></li>
-										<li class="page-item"><a class="page-link" href="#"> Next 10 </a></li>
-									</ul>
-								</div>
-							</div>
-							<table class="table table-sm table-hover table-striped table-bordered m-0">
+							<table class="table table-sm table-bordered table-responsive m-0">
 								<thead class="thead bg-dark table-dark">
 									<tr>
-										<th scope="col" style="width: 35px"><i class="bi bi-shield"></i></th>
-										<th scope="col" style="width: 35px"><i class="bi bi-receipt"></i></th>
-										<th scope="col" style="width: 35px"><i class="bi bi-vector-pen"></i></th>
-										<th scope="col" style="width: 35px"><i class="bi bi-x-octagon"></i></th>
-										<th scope="col">ID</th>
-										<th scope="col">First</th>
-										<th scope="col">Last</th>
-										<th scope="col">Handle</th>
+										<th scope="col" style="width: 100vw;">Content</th>
+									</tr>
+								</thead>
+								<tbody class="text-muted">
+									<tr>
+										<td class="border border-dark">
+											<div class="row p-0 m-0">
+												<div class="col-md-2 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded card-text">N/A</div>
+												</div>
+												<div class="col-md-2 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded">N/A</div>
+												</div>
+												<div class="col-md-4 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded">N/A</div>
+												</div>
+												<div class="col-md-8 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded">N/A</div>
+												</div>
+												<div class="col-md-4 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded">N/A</div>
+												</div>
+												<div class="col-md-2 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded">N/A</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="border border-dark">
+											<div class="row p-0 m-0">
+												<div class="col-md-2 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded card-text">N/A</div>
+												</div>
+												<div class="col-md-2 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded">N/A</div>
+												</div>
+												<div class="col-md-4 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded">N/A</div>
+												</div>
+												<div class="col-md-8 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded">N/A</div>
+												</div>
+												<div class="col-md-4 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded">N/A</div>
+												</div>
+												<div class="col-md-2 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded">N/A</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="shadow mt-2 text-left">
+						<div class=" bg-white rounded-top m-0 pl-1 h5">
+							<i class="bi bi-file-earmark-plus mr-1"></i>Create
+						</div>
+						<div class="p-1 pl-2 pr-2 pt-2">
+							<table class="table table-sm table-bordered table-responsive m-0">
+								<thead class="thead bg-dark table-dark">
+									<tr>
+										<th scope="col" style="min-width: 35px"><i class="m-1 bi bi-pencil-square"></i></th>
+										<th scope="col" style="width: 100vw;">Content</th>
 									</tr>
 								</thead>
 								<tbody class="">
 									<tr>
-										<td>
-											<div class="custom-control custom-radio custom-control-inline m-0">
-												<input type="radio" id="line0" name="line" class="custom-control-input" value="line0" checked> <label class="custom-control-label" for="line0"></label>
+										<td class="p-0 pl-1 pt-1 border border-dark">
+											<div class="custom-control custom-radio custom-control-inline p-0 m-0">
+												<i class="bi bi-x-square btn btn-outline-danger p-0 pl-1 pr-1 m-0 d-none"></i> <i class="bi bi-plus-square btn btn-outline-success p-0 pl-1 pr-1 m-0"></i>
 											</div>
 										</td>
-										<td>
-											<div class="custom-control custom-radio custom-control-inline m-0">
-												<input type="radio" id="line1" name="line" class="custom-control-input" value="line1"> <label class="custom-control-label" for="line1"></label>
+										<td class="border border-dark">
+											<div class="row p-0 m-0">
+												<div class="col-md-2 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded" contenteditable="true"></div>
+												</div>
+												<div class="col-md-2 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded" contenteditable="true"></div>
+												</div>
+												<div class="col-md-4 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded" contenteditable="true"></div>
+												</div>
+												<div class="col-md-8 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded" contenteditable="true"></div>
+												</div>
+												<div class="col-md-4 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded" contenteditable="true"></div>
+												</div>
+												<div class="col-md-2 pb-2">
+													<div class="h6 mb-1">Name</div>
+													<div class="border border-dark rounded" contenteditable="true"></div>
+												</div>
 											</div>
 										</td>
-										<td>
-											<div class="custom-control custom-radio custom-control-inline m-0">
-												<input type="radio" id="line2" name="line" class="custom-control-input" value="line2"> <label class="custom-control-label" for="line2"></label>
-											</div>
-										</td>
-										<td>
-											<div class="custom-control custom-radio custom-control-inline m-0">
-												<input type="radio" id="line3" name="line" class="custom-control-input" value="line3"> <label class="custom-control-label" for="line3"></label>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<div class="shadow mt-2 text-left">
+						<div class=" bg-white rounded-top m-0 pl-1 h5">
+							<i class="bi bi-vector-pen mr-1"></i>Modify
+						</div>
+						<div class="p-1 pl-2 pr-2 pt-2">
+							<table class="table table-sm table-hover table-striped table-bordered table-responsive m-0">
+								<thead class="thead bg-dark table-dark">
+									<tr>
+										<th scope="col" style="min-width: 35px"><i class="m-1 bi bi-pencil-square"></i></th>
+										<th scope="col" style="min-width: 40px">ID</th>
+										<th scope="col" style="min-width: 200px">First</th>
+										<th scope="col" style="min-width: 200px">Last</th>
+										<th scope="col" style="min-width: 200px; width: 100%;">Handle</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="p-0 pl-1 pt-1">
+											<div class="custom-control custom-radio custom-control-inline p-0 m-0">
+												<i class="bi bi-x-square btn btn-outline-danger p-0 pl-1 pr-1 m-0"></i>
 											</div>
 										</td>
 										<td>1</td>
+										<td class="p-0">
+											<div class="p-1 border border-dark rounded" contenteditable="true">Mark</div>
+										</td>
+										<td class="p-0">
+											<div class="p-1 border border-dark rounded" contenteditable="true">Otto</div>
+										</td>
+										<td class="p-0">
+											<div class="p-1 border border-dark rounded" contenteditable="true">@mdo</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="p-0 pl-1 pt-1">
+											<div class="custom-control custom-radio custom-control-inline p-0 m-0">
+												<i class="bi bi-x-square btn btn-outline-danger p-0 pl-1 pr-1 m-0"></i>
+											</div>
+										</td>
+										<td>2</td>
+										<td class="p-0">
+											<div class="p-1 border border-dark rounded" contenteditable="true">Mark</div>
+										</td>
+										<td class="p-0">
+											<div class="p-1 border border-dark rounded" contenteditable="true">Otto</div>
+										</td>
+										<td class="p-0">
+											<div class="p-1 border border-dark rounded" contenteditable="true">@mdo</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<div class="shadow mt-2 text-left">
+						<div class=" bg-white rounded-top m-0 pl-1 h5">
+							<i class="bi bi-file-earmark-x mr-1"></i>Delete
+						</div>
+						<div class="p-1 pl-2 pr-2 pt-2">
+							<table class="table table-sm table-hover table-striped table-bordered table-responsive m-0">
+								<thead class="thead bg-dark table-dark">
+									<tr>
+										<th scope="col" style="min-width: 35px"><i class="m-1 bi bi-pencil-square"></i></th>
+										<th scope="col" style="min-width: 40px">ID</th>
+										<th scope="col" style="min-width: 200px">First</th>
+										<th scope="col" style="min-width: 200px">Last</th>
+										<th scope="col" style="min-width: 200px; width: 100%;">Handle</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="p-0 pl-1 pt-1">
+											<div class="custom-control custom-radio custom-control-inline p-0 m-0">
+												<i class="bi bi-x-square btn btn-outline-danger p-0 pl-1 pr-1 m-0"></i>
+											</div>
+										</td>
+										<td>1</td>
+										<td>Mark</td>
+										<td>Otto</td>
+										<td>@mdo</td>
+									</tr>
+									<tr>
+										<td class="p-0 pl-1 pt-1">
+											<div class="custom-control custom-radio custom-control-inline p-0 m-0">
+												<i class="bi bi-x-square btn btn-outline-danger p-0 pl-1 pr-1 m-0"></i>
+											</div>
+										</td>
+										<td>2</td>
 										<td>Mark</td>
 										<td>Otto</td>
 										<td>@mdo</td>
@@ -262,10 +368,10 @@ body {
 							</table>
 						</div>
 					</div>
-				</div>
 
-				<div class="tab-pane fade" id="modify" role="tabpanel" aria-labelledby="tab-modify">...tab-modify</div>
+				</div>
 				<div class="tab-pane fade" id="print" role="tabpanel" aria-labelledby="tab-print">...tab-print</div>
+				<div class="tab-pane fade" id="download" role="tabpanel" aria-labelledby="tab-download">...tab-download</div>
 				<div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="tab-upload">...tab-upload</div>
 				<div class="tab-pane fade" id="analysis" role="tabpanel" aria-labelledby="tab-analysis">...tab-analysis</div>
 				<div class="tab-pane fade" id="workstation" role="tabpanel" aria-labelledby="tab-workstation">...tab-workstation</div>
@@ -318,10 +424,24 @@ body {
 
 			//this.contentData = this.allData["r_content"];
 			//this.loginData = this.allData["r_content"]["longinInfo"];
-			//取得模板
+			//模板-清單
+			//查詢-模板
+			$("#search").load("./html/model/search.html");
+			//編輯-模板
+
+			//列印-模板
+
+			//下載-模板
+
+			//上傳-模板
+
+			//報告-模板
+
+			//工作站-模板
+
 			//$("#header").load(this.contentData["template"]["header"]);
 			//$("#nav").load(this.contentData["template"]["nav"]);
-			//$("#body").load(this.contentData["template"]["body"]);
+			//
 			//$("#footer").load(this.contentData["template"]["footer"]);
 			//啟動計時
 			//this.timeOut(true);
