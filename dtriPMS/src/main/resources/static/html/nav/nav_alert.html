@@ -1,0 +1,69 @@
+<div id="alert" class="alert alert-primary fixed-top p-2 row m-0 justify-content-between d-none" role="alert" style="top: 44px;">
+	<div>
+		<strong id="error_code">Holy guacamole!</strong><i id="error_info">You should check in on some of those fields below.</i>
+	</div>
+	<button type="button" class="close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<script type="text/javascript">
+	//控制端
+	t_alert = new Vue({
+		el : "#alert",
+		//資料區
+		data : {
+			test : 300,
+		},
+		//初始化
+		created() {
+			console.log("alert.html(created)");
+			//動態監聽顯示Table 物件 查看開關
+			this.alertshow('success','000','歡迎使用!!');
+			$(document).on("click", "#alert button", function(event) {
+				t_alert.alertshow("close","","");
+			});
+		},
+		//可呼叫方法
+		methods : {
+			//顯示: 資訊/警訊/錯誤
+			alertshow(color,error_code,error_info) {
+				$("#alert").removeClass("alert-primary");
+				$("#alert").removeClass("alert-danger");
+				$("#alert").removeClass("alert-success");
+				switch (color) {
+				  case 'danger':
+					//danger
+					$("#alert").addClass("alert-danger");
+				  break;
+				  case 'warning':
+					//warning
+					$("#alert").addClass("alert-warning");
+				  break;
+				  case 'success':
+					//success
+					$("#alert").addClass("alert-success");
+				  break;
+				  case 'close':
+					//close
+					$("#alert").addClass("d-none");
+					$("#alert_message").text("");
+					return;
+				break;
+				  default:
+				}
+				$("#error_code").text("["+error_code+"]");
+				$("#error_info").text("資訊:" + error_info);
+				$("#alert").removeClass("d-none");
+				setTimeout(function() {
+					$("#alert").addClass("d-none");
+					$("#alert_message").text("");
+				}, 8000);
+			}
+		},
+		//移除監聽事件
+		beforeDestroy() {
+			console.log("alert.html(beforeDestroy)");
+			$(document).off("click", "#alert button");
+		}
+	});
+</script>

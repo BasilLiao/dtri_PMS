@@ -1,5 +1,5 @@
 <!-- 下載 -->
-<div class="shadow mt-0 text-left">
+<div id="download" class="shadow mt-0 text-left">
 	<div class=" bg-white rounded-top m-0 pl-1 h5">
 		<i class="bi bi-cloud-download mr-1"></i>Download
 	</div>
@@ -38,3 +38,28 @@
 		</table>
 	</div>
 </div>
+<script type="text/javascript">
+	//控制端
+	var upload = new Vue({
+		el : "#download",
+		//資料區
+		data : {
+			test : 300
+		},
+		//初始化
+		created : function() {
+			console.log("download.html(created)");
+		},
+		//可呼叫方法
+		methods : {
+			ajaxSend : function(url, dataSend) {
+
+			},
+		},
+		//移除監聽事件
+		beforeDestroy : function() {
+			console.log("download.html(beforeDestroy)");
+
+		}
+	});
+</script>

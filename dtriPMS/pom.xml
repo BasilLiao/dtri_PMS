@@ -14,7 +14,7 @@
 	<name>dtriPMS</name>
 	<description>PMS server</description>
 	<properties>
-		<java.version>14</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<!-- Html 模板 -->
@@ -27,7 +27,22 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!-- Web security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<!-- SQL postgre -->
 		<dependency>
 			<groupId>org.postgresql</groupId>

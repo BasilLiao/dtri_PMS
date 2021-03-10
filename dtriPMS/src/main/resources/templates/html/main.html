@@ -17,27 +17,6 @@ body {
 	background-color: #f8f9fc;
 }
 
-#nav_m_all {
-	background-color: #212529;
-	max-height: 100vh;
-	top: 43px;
-	min-width: 265px;
-}
-
-#user img {
-	width: 25px;
-}
-
-#nav_u {
-	left: auto;
-	top: 43px;
-	min-width: 130px;
-}
-
-#logo {
-	width: 25px;
-}
-
 .custom-select {
 	height: 34px;
 }
@@ -47,141 +26,47 @@ body {
 	<!-- 開頭(header) -->
 	<div id="header_t_all"></div>
 	<!-- 選單(nav) -->
-	<div class="navbar p-1 navbar-dark bg-dark justify-content-start fixed-top shadow" id="nav_t_all">
-		<img class="bg-white" id="logo" src="./img/login.png" alt="DTR ERP"> <a class="navbar-brand p-0 pl-2" href="#"><i class="h3">DTR PMS</i></a>
-
-		<button class="p-1 btn btn-sm border border-light btn-outline-secondary" id="nav_m_all_btn" type="button" data-toggle="collapse" data-target="#nav_m_all" aria-controls="nav_m_all"
-			aria-expanded="false">
-			<div class="row m-0">
-				<div class="navbar-toggler-icon"></div>
-				<div class="pl-2">
-					<h5 class="text-white m-0">Menu</h5>
-				</div>
-			</div>
-		</button>
-		<div id="user" class="col-sm col-5 m-0 row justify-content-end ">
-			<div class="pl-2 pt-1">
-				<h5 class="text-white m-0" id="name">Name</h5>
-			</div>
-			<div class="p-0 pr-2 pl-2 ml-2" id="nav_u_btn" data-toggle="collapse" data-target="#nav_u" aria-controls="nav_u" aria-expanded="false">
-				<button class="btn btn-sm border border-light btn-outline-secondary">
-					<div>
-						<img class="img-profile rounded-circle" src="./img/undraw_profile.svg">
-					</div>
-				</button>
-			</div>
-		</div>
-	</div>
-	<!-- 選單-功能 -->
-	<div class="collapse fixed-top shadow overflow-auto col-lg-2 col-md-3 col-sm-4 col-5 p-0" id="nav_m_all">
-		<div class="p-3">
-			<h5 class="text-light">Collapsed content</h5>
-			<ul class="nav navbar-nav">
-				<li id="nav_m_n1" data-toggle="collapse" data-target="#nav_m_l1" aria-controls="nav_m_l1" aria-expanded="false">
-					<div class="btn-outline-secondary">
-						<a class="text-white nav-link p-2 dropdown-toggle" href="#"><i class="bi bi-tags mr-2"></i><b>功能選單1</b></a>
-					</div>
-					<div class="collapse ml-3" onclick="$('#nav_m_all_btn').trigger('click')" id="nav_m_l1">
-						<ul class="nav navbar-nav">
-							<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Home_1</a></li>
-							<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Link_1</a></li>
-							<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Thing_1</a></li>
-						</ul>
-					</div>
-				</li>
-				<li id="nav_m_n2" data-toggle="collapse" data-target="#nav_m_l2" aria-controls="nav_m_l2" aria-expanded="false">
-					<div class="btn-outline-secondary">
-						<a class="text-white nav-link p-2 dropdown-toggle" href="#"><i class="bi bi-tags mr-2"></i><b>功能選單2</b></a>
-					</div>
-					<div class="collapse ml-3" onclick="$('#nav_m_all_btn').trigger('click')" id="nav_m_l2">
-						<ul class="nav navbar-nav">
-							<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Home_2</a></li>
-							<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Link_2</a></li>
-							<li class="btn-outline-secondary"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i>Thing_2</a></li>
-						</ul>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<!-- 選單-使用者資訊 -->
-	<div class="collapse fixed-top mr-3 bg-white rounded shadow col-lg-1 col-md-2 col-sm-3 col-4 p-1" id="nav_u">
-		<div class="p-1" onclick="$('#nav_u_btn').trigger('click')">
-			<a class="dropdown-item p-2" href="#"><i class="bi bi-person mr-2"></i>Profile</a>
-			<div></div>
-			<a class="dropdown-item p-2" href="#"><i class="bi bi-wrench mr-2"></i>Settings</a>
-			<div class="dropdown-divider p-0"></div>
-			<a class="dropdown-item p-2" href="#"><i class="bi bi-door-open mr-2"></i>Logout</a>
-		</div>
-	</div>
+	<div id="nav_t_all"></div>
+	<!-- 錯誤訊息(alert) -->
+	<div id="alert_t_all"></div>
 	<!-- 本體(body) -->
-	<div class="text-center col-md " id="body_t_all">
-		<div class="p-1 mt-5">
-			<h4 class="m-0">
-				<b>單元名稱</b>
-			</h4>
-		</div>
-		<div class="p-1">
-			<ul class="nav nav-tabs shadow-sm" id="myTab" role="tablist">
-				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm active" data-toggle="tab" role="tab" aria-selected="true" aria-controls="search_tab" href="#search_tab" id="tab-search"><i
-						class="bi bi-search mr-1"></i>Search</a></li>
-				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="modify_tab" href="#modify_tab" id="tab-modify"><i
-						class="bi bi-vector-pen mr-1"></i>Detail / Create / Modify / Delete</a></li>
-				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="print_tab" href="#print_tab" id="tab-print"><i
-						class="bi bi-printer mr-1"></i>Print</a></li>
-				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="download_tab" href="#download_tab" id="tab-download"><i
-						class="bi bi-cloud-download mr-1"></i>Download</a></li>
-				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="upload_tab" href="#upload_tab" id="tab-upload"><i
-						class="bi bi-cloud-upload mr-1"></i>Upload</a></li>
-				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm disabled" data-toggle="tab" role="tab" aria-selected="false" aria-controls="analysis_tab" href="#analysis_tab" id="tab-analysis"><i
-						class="bi bi-graph-up mr-1"></i>Analysis report</a></li>
-				<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="workstation_tab" href="#workstation_tab" id="tab-workstation"><i
-						class="bi bi-joystick mr-1"></i>Workstation mode</a></li>
-			</ul>
-			<div class="tab-content" id="myTabContent">
-				<!-- tab-search -->
-				<div class="tab-pane fade show active" id="search_tab" role="tabpanel" aria-labelledby="tab-search"></div>
-				<!-- tab-modify -->
-				<div class="tab-pane fade" id="modify_tab" role="tabpanel" aria-labelledby="tab-modify"></div>
-				<!-- tab-print -->
-				<div class="tab-pane fade" id="print_tab" role="tabpanel" aria-labelledby="tab-print"></div>
-				<!-- tab-download -->
-				<div class="tab-pane fade" id="download_tab" role="tabpanel" aria-labelledby="tab-download"></div>
-				<!-- tab-upload -->
-				<div class="tab-pane fade" id="upload_tab" role="tabpanel" aria-labelledby="tab-upload"></div>
-				<!-- tab-analysis -->
-				<div class="tab-pane fade" id="analysis_tab" role="tabpanel" aria-labelledby="tab-analysis"></div>
-				<!-- tab-workstation -->
-				<div class="tab-pane fade" id="workstation_tab" role="tabpanel" aria-labelledby="tab-workstation"></div>
-			</div>
-		</div>
-	</div>
+	<div id="body_t_all"></div>
 	<!-- 底部(footer) -->
-	<div id="footer_t_all" class="text-muted small col-md">
-		<div class="m-0 p-2 text-center row justify-content-around" id="footer">
-			<div class="col-4">Browser:1.Brave 2.Chrome 3.Microsoft Edge :1366*768</div>
-			<div class="col-4">&copy; 2021 DT Research, Inc. All Rights Reserved. ver: Beta v0.72.8</div>
-			<div class="col-4">Any questions, please consult the administrator TE:321</div>
-		</div>
-	</div>
-	<span class="d-none" id="resp_content" th:text="${resp_content}"></span>
+	<div id="footer_t_all"></div>
+
+	<!-- <span class="d-none" id="resp_content" th:text="${resp_content}"></span> -->
 </body>
 <script type="text/javascript">
-	//各類模型 Vue 位置(需註冊)
-	var templateHeader = "";
-	var templateNav = "";
-	var templateBody = "";
-	var templateFooter = "";
+
+	//各類主頁面 Vue 位置(需註冊)
+	var t_header = "";
+	var t_nav = "";
+	var t_alert = "";
+	var t_body = "";
+	var t_footer = "";
+	//Body 各類-模板 Vue 位置(需註冊)
+	var home = "";
+	var search = "";
+	var modify = "";
+	var print = "";
+	var download = "";
+	var upload = "";
+	var analysis = "";
+	var workstation = "";
 	//控制端
 	var main = new Vue({
 		el : "#main",
 		data : {
-			//每次回傳資料
-			/* allData: ${ resp_content },*/
 			//登入存入資料
-			loginData : "",
-			//各類模型 資料
-			contentData : "",
+			loginData:{
+				user_name : '',
+				user_login_time : '',
+				user_login_last_time : '',
+				user_status : '',
+				user_position : '',
+			},
+			//每次回傳資料
+			allData: "",
 			//Ajax 傳輸模組
 			ajaxCell : {
 				url : "",
@@ -194,40 +79,37 @@ body {
 			countDownId : "",
 			countDownSecond : 300
 		},
-		created : function() {
-			//初始化
-
-			//$("#now_barcode").focus();
-			//var message = [[${resp_content}]];
-			//console.log(message);
-
-			//this.contentData = this.allData["r_content"];
-			//this.loginData = this.allData["r_content"]["longinInfo"];
-			//模板-清單
-			//查詢-模板
-			$("#search_tab").load("./html/model/search.html");
-			//編輯-模板
-			$("#modify_tab").load("./html/model/modify.html");
-			//列印-模板
-			$("#print_tab").load("./html/model/print.html");
-			//下載-模板
-			$("#download_tab").load("./html/model/download.html");
-			//上傳-模板
-			$("#upload_tab").load("./html/model/upload.html");
-			//報告-模板
-			$("#analysis_tab").load("./html/model/analysis.html");
-			//工作站-模板
-			$("#workstation_tab").load("./html/model/workstation.html");
-
-			//$("#header").load(this.contentData["template"]["header"]);
-			//$("#nav").load(this.contentData["template"]["nav"]);
-			//
-			//$("#footer").load(this.contentData["template"]["footer"]);
+		//初始化
+		created() {
+			//this.allData = [[${resp_content}]];
+			
+			//模板-清單-家(default)
+			$("#header_t_all").load("./html/header/header_index.html");
+			
+			$("#nav_t_all").load("./html/nav/nav_index.html", function() {
+				//測試
+				var examples=[];
+				for(var i = 1;i<4 ;i++){
+					var example_one = {};
+					example_one.g_name = 2+"_g_name";
+					example_one.i_name = i+"_i_name";
+					example_one.url = i+"_i_url";
+					example_one.sort =  i+"_i_sort";
+				    examples.push(example_one);
+				}
+				
+				//帶入模板內資料
+				t_nav.setMenu(examples);
+			});
+			$("#alert_t_all").load("./html/nav/nav_alert.html");
+			$("#body_t_all").load("./html/body/body_index.html");
+			$("#footer_t_all").load("./html/footer/footer_index.html");
+			
 			//啟動計時
 			//this.timeOut(true);
 		},
 		methods : {
-			ajaxSend : function(url, dataSend) {
+			ajaxSend(url, dataSend) {
 				//進入倒數中
 				clearInterval(this.countDownId);
 				this.countDownSecond = 800;
@@ -242,7 +124,7 @@ body {
 					contentType : this.ajaxCell.contentType,
 					dataType : this.ajaxCell.dataType,
 					data : data,
-					success : function(event) {
+					success(event) {
 						main.allData = event;
 						main.contentData = event.r_content;
 						main.alertshow(true, " 結果->" + event.r_message);
@@ -267,29 +149,20 @@ body {
 						}
 						main.loading(false);
 					},
-					error : function(event) {
+					error(event) {
 						main.alertshow(true, "Something to fail");
 						console.log("to index fail:" + event);
 						if (event.status == 200) {
 							//沒有session 拒絕時
-							window.location.replace("login.jsp");
+							window.location.replace("login.html");
 						}
 						main.loading(false);
 					},
 				});
 			},
-			alertshow : function(open, message) {
-				if (open) {
-					$("#alert_message").text("資訊: " + message);
-					$(".alert").addClass("show");
-					setTimeout(function() {
-						$(".alert").removeClass("show");
-						$("#alert_message").text("");
-					}, 8000);
-				}
-			},
+			
 			//timeOut 到計時 登出(提醒失效)
-			countDown : function() {
+			countDown() {
 				this.countDownSecond -= 1;
 				if (this.countDownSecond == 60) {
 					$("#countDown").removeClass("d-none");
@@ -302,7 +175,7 @@ body {
 				$("#timeOutmsg h2").text("程序登出中....請點我繼續..." + this.countDownSecond);
 				//console.log("倒數登出 : "+this.countDownSecond);
 			},
-			timeOut : function(check) {
+			timeOut(check) {
 				if (check) {
 					//開始計時
 					this.countDownId = setInterval(this.countDown, 1000); //每秒執行一次，賦值
@@ -334,7 +207,7 @@ body {
 					$("#loading").addClass("d-none");
 				}
 			},
-		}
+		},
 	});
 </script>
 </html>
