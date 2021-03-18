@@ -49,12 +49,12 @@
 		},
 		//可呼叫方法
 		methods : {
-			set_user_info(name, time, last_time, status, position) {
+			set_user_info(name,position, time, last_time, status) {
 				$('#user_name').text(name);
+				$('#user_position').text(position);
 				$('#user_login_time').text(time);
 				$('#user_login_last_time').text(last_time);
 				$('#user_status').text(status);
-				$('#user_position').text(position);
 			},
 			ajaxSend(url, dataSend) {
 

@@ -1,18 +1,20 @@
-package dtri.com.tw.config;
+package dtri.com.tw.login;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class ConfigSecutity extends WebSecurityConfigurerAdapter {
+public class LoginSecutity extends WebSecurityConfigurerAdapter {
+
+	@Autowired
+	LoginUserDetailsService userDetailsService;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -25,12 +27,14 @@ public class ConfigSecutity extends WebSecurityConfigurerAdapter {
 		// (authenticated = 登入後可訪問)
 		// (anyRequest = 所有請求)
 
+		// (sg_permission[特殊3(512),特殊2(256),特殊1(128),訪問(64),下載(32),上傳(16),新增(8),修改(4),刪除(2),查詢(1)])
 		// 下列-權限驗證
 		http.authorizeRequests()
 				// thirdparty && img 資料夾靜態資料可 直接 存取
 				.antMatchers(HttpMethod.GET, "/thirdparty/**", "/img/**", "/login.basil", "/login.html").permitAll()
-				// 請求需要檢驗-是否登入(DE)
-				.antMatchers(HttpMethod.PATCH, "ajax/**").hasRole("ADMIN")
+				// 請求-index-(訪問+查詢)
+				.antMatchers(HttpMethod.PATCH, "ajax/index.basil")
+				.access("hasAuthority('index.basil.0001000000') and hasAuthority('index.basil.0000000001')")
 				// 請求需要檢驗-全部請求
 				.anyRequest().authenticated();
 		// 下列-登入位置
@@ -57,30 +61,22 @@ public class ConfigSecutity extends WebSecurityConfigurerAdapter {
 				.deleteCookies();
 		// 關閉CSRF跨域
 		// 在 Thymeleaf 或 JSP 中，Token 名稱與值可分別使用 ${_csrf.parameterName} 與 ${_csrf.token}
-		// 來取得，
-		// 發送請求時，必須得包含這個 Token，否則就會被拒絕請求。
+		// 來取得，發送請求時，必須得包含這個 Token，否則就會被拒絕請求。
 		http.csrf().disable();
 
 	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// 內存幫我們存放兩名使用者的帳號及密碼
-		// 個method裡面也可以設定如何連接到我們資料庫，拿取使用者的帳號密碼並進行登入的比對
-		PasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
-		// 驗證資訊存放於記憶體
-		/*
-		 * auth.inMemoryAuthentication().passwordEncoder(pwdEncoder).withUser("admin")
-		 * .password(pwdEncoder.encode("admin12345678")).roles("ADMIN", "MEMBER");
-		 * auth.inMemoryAuthentication().passwordEncoder(pwdEncoder).withUser(
-		 * "caterpillar") .password(pwdEncoder.encode("12345678")).roles("MEMBER");
+		/***
+		 * 測試兩組帳號-驗證資訊存放於記憶體-內存幫我們存放使用者的帳號及密碼 <br>
+		 * PasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
+		 * auth.inMemoryAuthentication().passwordEncoder(pwdEncoder).withUser("admin").password(pwdEncoder.encode("admin")).roles("ADMIN",
+		 * "MEMBER");
+		 * auth.inMemoryAuthentication().passwordEncoder(pwdEncoder).withUser("caterpillar")
+		 * .password(pwdEncoder.encode("caterpillar")).roles("MEMBER");
 		 */
 
-		auth.inMemoryAuthentication().passwordEncoder(pwdEncoder).withUser("admin").password(pwdEncoder.encode("admin"))
-				.roles("ADMIN", "MEMBER");
-		auth.inMemoryAuthentication().passwordEncoder(pwdEncoder).withUser("caterpillar")
-				.password(pwdEncoder.encode("caterpillar")).roles("MEMBER");
-		// System.out.println(pwdEncoder.encode("admin"));
+		auth.userDetailsService(userDetailsService);
 	}
-
 }
