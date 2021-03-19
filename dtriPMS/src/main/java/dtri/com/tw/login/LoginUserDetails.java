@@ -45,40 +45,37 @@ public class LoginUserDetails implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
-/**
- * 注意密碼加密"{noop}" +
- * 
- * PasswordEncoder**/
+
+	/**
+	 * 注意密碼加密"{noop}" +
+	 * 
+	 * PasswordEncoder
+	 **/
 	@Override
 	public String getPassword() {
-
-		return  "{noop}" +user.getSupassword();
+		return "{noop}" + user.getSupassword();
 	}
 
 	@Override
 	public String getUsername() {
-
 		return user.getSuaccount();
 	}
 
 	/** 指示用户的帐户是否已过期 **/
 	@Override
 	public boolean isAccountNonExpired() {
-
 		return true;
 	}
 
 	/** 指示用户是锁定还是解锁 **/
 	@Override
 	public boolean isAccountNonLocked() {
-
 		return true;
 	}
 
 	/** 指示用户的凭据（密码）是否已过期 **/
 	@Override
 	public boolean isCredentialsNonExpired() {
-
 		return true;
 	}
 

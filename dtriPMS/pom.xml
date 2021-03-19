@@ -50,14 +50,6 @@
 			<artifactId>postgresql</artifactId>
 		</dependency>
 
-		<!-- SQL Connection pool -->
-		<!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
-			<version>1.1.20</version>
-		</dependency>
-
 		<!-- Apache POI library – Writing a Simple Excel -->
 		<!-- https://mkyong.com/java/apache-poi-reading-and-writing-excel-file-in-java/ -->
 		<dependency>

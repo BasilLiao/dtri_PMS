@@ -34,129 +34,115 @@ body {
 	<!-- 底部(footer) -->
 	<div id="footer_t_all"></div>
 
-	<!-- <span class="d-none" id="resp_content" th:text="${resp_content}"></span> -->
 </body>
-<script type="text/javascript">
-
+<script type="text/javascript" th:inline="javascript">
 	//各類主頁面 Vue 位置(需註冊)
-	var t_header = "";
-	var t_nav = "";
-	var t_alert = "";
-	var t_body = "";
-	var t_footer = "";
+	var t_header = "",t_nav = "",t_alert = "",t_body = "",t_footer = "";
 	//Body 各類-模板 Vue 位置(需註冊)
-	var home = "";
-	var search = "";
-	var modify = "";
-	var print = "";
-	var download = "";
-	var upload = "";
-	var analysis = "";
-	var workstation = "";
+	var home = "",search = "",modify = "",print = "",download = "",upload = "",analysis = "",workstation = "";
 	//控制端
 	var main = new Vue({
 		el : "#main",
 		data : {
 			//登入存入資料
 			loginData:{
-				user_name : '',
-				user_login_time : '',
-				user_login_last_time : '',
-				user_status : '',
-				user_position : '',
+				user_name : '',	user_status : '',user_position : '',
+				user_login_time : '',user_login_last_time : '',
 			},
-			//每次回傳資料
-			allData: "",
-			//Ajax 傳輸模組
-			ajaxCell : {
-				url : "",
-				type : "POST",
-				contentType : "application/json; charset=utf-8",
-				dataType : "JSON",
-				data : "",
-			},
+			//每次回傳資料/使用者資料
+			allData: "",info_user:{},
 			//倒數計時
-			countDownId : "",
-			countDownSecond : 300
+			countDownId : "",countDownSecond : 300,
 		},
 		//初始化
 		created() {
-			//this.allData = [[${resp_content}]];
-			
+			console.log("main.html(created)");
+			//基本資料
+			this.allData = JSON.parse(/*[[${initMain}]]*/+"")['resp_content'];
+			this.info_user = this.allData['info_user'];
+			console.log(this.allData);
 			//模板-清單-家(default)
 			$("#header_t_all").load("./html/header/header_index.html");
-			
+			//模版-Menu
 			$("#nav_t_all").load("./html/nav/nav_index.html", function() {
-				//測試
-				var examples=[];
-				for(var i = 1;i<4 ;i++){
-					var example_one = {};
-					example_one.g_name = 2+"_g_name";
-					example_one.i_name = i+"_i_name";
-					example_one.url = i+"_i_url";
-					example_one.sort =  i+"_i_sort";
-				    examples.push(example_one);
+				//帶入模板內資料			
+				var menus=[];
+				for(var i = 0;i<main.allData['body'].length ;i++){
+					var menus_one = {};
+					menus_one.g_name = main.allData['body'][i]['g_name'];
+					menus_one.i_name = main.allData['body'][i]['i_name'];
+					menus_one.url = main.allData['body'][i]['i_url'];
+					menus_one.sort = main.allData['body'][i]['i_sort'];
+					menus.push(menus_one);
 				}
-				
-				//帶入模板內資料
-				t_nav.setMenu(examples);
+				t_nav.setMenu(menus);
 			});
-			$("#alert_t_all").load("./html/nav/nav_alert.html");
-			$("#body_t_all").load("./html/body/body_index.html");
+			//模板-訊息資訊
+			$("#alert_t_all").load("./html/nav/nav_alert.html",function(){
+				t_alert.alertshow(main.allData['info_color'],main.allData['info']);
+			});
+			//模板-主體
+			$("#body_t_all").load("./html/body/body_index.html",function(){
+				t_body.initHome();
+			});
+			//模板-網站宣告
 			$("#footer_t_all").load("./html/footer/footer_index.html");
 			
 			//啟動計時
 			//this.timeOut(true);
 		},
 		methods : {
-			ajaxSend(url, dataSend) {
-				//進入倒數中
-				clearInterval(this.countDownId);
-				this.countDownSecond = 800;
-				main.timeOut(true);
-				//進入運作中
-				main.loading(true);
+			//請求模組
+			ajaxSend(s_url,s_type,s_data) {
 				//排除空白
-				var data = dataSend.replace(/\s+/g, "");
+				var s_data = JSON.stringify(s_data).replace(/\s+/g, "");
+				//Ajax 傳輸模組
+				var ajax = {
+						url :  "ajax/"+s_url,
+						type : s_type,//POST/GET/PUT/DELETE
+						dataType : "JSON",
+						contentType : "application/json; charset=utf-8",
+						data : s_data,
+					};
+				//Cell 
 				$.ajax({
-					url : url,
-					type : this.ajaxCell.type,
-					contentType : this.ajaxCell.contentType,
-					dataType : this.ajaxCell.dataType,
-					data : data,
+					url :ajax.url,
+					type : ajax.type,
+					dataType : ajax.dataType,
+					contentType : ajax.contentType,
+					data : ajax.data,
 					success(event) {
-						main.allData = event;
-						main.contentData = event.r_content;
-						main.alertshow(true, " 結果->" + event.r_message);
-						//模組 轉跳 畫面
-						console.log(event.r_cellBackName + " : to success");
-						//固定回傳模組
-						if (event.r_cellBackName != null) {
-							switch (event.r_cellBackName) {
-							case "navAfter":
-								templateNav["navAfter"](event);
-								break;
-							case "bodyAfter":
-								templateBody["bodyAfter"](event);
-								break;
-							case "headerAfter":
-								templateHeader["headerAfter"](event);
-								break;
-							case "footerAfter":
-								templateFooter["footerAfter"](event);
-								break;
-							}
+						console.log("ajax to success:"+JSON.stringify(event));
+						main.allData = event['resp_content'];
+						//Step1.顯示 訊息
+						t_alert.alertshow(main.allData['info_color'],main.allData['info']);
+						//Step2.是否 轉跳畫面
+						if(main.allData['html_body']!=""){
+							//銷毀舊的 樣板
+							t_body.$destroy();
+							$("#body_t_all").load("./html/body/"+main.allData['html_body']);
+							
+						}else{
+							//Step3.呼叫 刷新模板方法
+							
+							
 						}
-						main.loading(false);
+						
+						//進入倒數中
+						//clearInterval(this.countDownId);
+						//this.countDownSecond = 800;
+						//main.timeOut(true);
+						//進入運作中
+						//main.loading(false);
 					},
 					error(event) {
-						main.alertshow(true, "Something to fail");
-						console.log("to index fail:" + event);
+						console.log("ajax to fail:" + JSON.stringify(event));
+						t_alert.alertshow("danger", "[002] The command was executed [ERROR]!!");
 						if (event.status == 200) {
 							//沒有session 拒絕時
-							window.location.replace("login.html");
+							window.location.replace("login.basil");
 						}
-						main.loading(false);
+						//main.loading(false);
 					},
 				});
 			},

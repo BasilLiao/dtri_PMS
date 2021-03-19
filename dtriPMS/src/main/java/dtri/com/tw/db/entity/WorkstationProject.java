@@ -48,6 +48,7 @@ public class WorkstationProject {
 		this.sysver = 0;
 		this.sysnote = "";
 		this.syssort = 0;
+		this.sysstatus = 0;
 	}
 
 	// 共用型

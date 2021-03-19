@@ -5,29 +5,29 @@
 			<i class="bi bi-house mr-1"></i>Home
 		</div>
 		<div class="row m-0">
-			<div class="col-lg-8 p-2">
+			<div id="bulletinBoard" class="col-lg-8 p-2">
 				<div class="h6 mb-1">Bulletin Board</div>
 				<div class="p-0">
 					<div class="col m-0 p-1 border border-dark rounded" style="min-height: 450px;"></div>
 				</div>
 			</div>
-			<div class="col-lg-4 p-2">
+			<div id="userInfo" class="col-lg-4 p-2">
 				<div class="h6 mb-1">User Info</div>
 				<div class="p-0">
 					<div class="col m-0 p-1 border border-dark rounded row" style="min-height: 450px;">
-						<div class="col-4 p-0">
+						<div class="col-4 p-0 font-weight-bold">
 							<div>Name:</div>
 							<div>Position:</div>
-							<div>Time:</div>
-							<div>Last time:</div>
+							<div>Email:</div>
 							<div>Status:</div>
+							<div>Time:</div>
 						</div>
 						<div class="col-8 p-0">
 							<div id='user_name'></div>
 							<div id='user_position'></div>
-							<div id='user_login_time'></div>
-							<div id='user_login_last_time'></div>
+							<div id='user_email'></div>
 							<div id='user_status'></div>
+							<div id='user_now'></div>
 						</div>
 					</div>
 				</div>
@@ -41,7 +41,6 @@
 		el : "#home",
 		//資料區
 		data : {
-
 		},
 		//初始化
 		created() {
@@ -49,12 +48,12 @@
 		},
 		//可呼叫方法
 		methods : {
-			set_user_info(name,position, time, last_time, status) {
+			set_user_info(name,position, email, status,now) {
 				$('#user_name').text(name);
 				$('#user_position').text(position);
-				$('#user_login_time').text(time);
-				$('#user_login_last_time').text(last_time);
+				$('#user_email').text(email);
 				$('#user_status').text(status);
+				$('#user_now').text(now);
 			},
 			ajaxSend(url, dataSend) {
 

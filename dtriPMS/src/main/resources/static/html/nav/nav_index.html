@@ -56,7 +56,8 @@
 				</div>
 				<div class="collapse ml-3" onclick="$('#nav_m_all_btn').trigger('click')" id="nav_m_l_0">
 					<ul class="nav navbar-nav">
-						<li class="btn-outline-secondary item_click" id="item_m"><a class="text-white nav-link p-2" href="#"><i class="bi bi-box-arrow-in-down-right mr-2"></i><i class="item_n">Home_0</i></a></li>
+						<li class="btn-outline-secondary item_click" id="item_m"><a class="text-white nav-link p-2" href="#"> <i class="bi bi-box-arrow-in-down-right mr-2"></i><font class="item_n">Home_0</font>
+						</a></li>
 					</ul>
 				</div>
 			</li>
@@ -105,10 +106,6 @@
 				var nav_m_l="nav_m_l";//單元組內容位置ID
 				//建立選單-新增
 				for(i=0;i<list.length;i++){
-					list[i].g_name;
-					list[i].i_name;
-					list[i].url;
-					list[i].sort;
 					var g_menu = $( "#nav_m_g_0" ).clone();//複製樣本
 					//不同則新建(單元組)
 					if(old_g_name!=list[i].g_name){
@@ -134,7 +131,7 @@
 					one_item.appendTo("#"+nav_m_l+" ul");
 					//修正內容
 					$("#"+nav_m_l+" #item_m").attr("id","item_m_"+i);
-					$("#item_m_"+i+" .item_n").attr("id",list[i].url);
+					$("#item_m_"+i).attr("url",list[i].url);
 					$("#item_m_"+i+" .item_n").text(list[i].i_name);
 				}
 				//將預設單-移除
@@ -143,12 +140,28 @@
 				//監聽-轉跳
 				$(document).on("click", ".item_click", function(event) {
 					t_nav.turnMenu(event);
-					event.preventDefault();
+					//event.preventDefault();
 				});
 			},
 			//轉跳-單元
 			turnMenu(event){
-				console.log(event.target.id);				
+				console.log("turnMenu:"+event.currentTarget.attributes.url.value);
+				var s_url = event.currentTarget.attributes.url.value;
+				var	s_type = "POST";
+				var	s_data = {};
+				var req = {};
+				req.user="";
+				req.date=new Date();
+				req.action="AC";
+				req.body=[];
+				req.page_total=100;
+				req.page_batch=1;
+				req.page_now_nb=1;
+				req.html_body= "body_"+event.currentTarget.attributes.url.value.replace('basil', 'html');
+				req.cell_bk_fn="";
+				req.cell_bk_vals={};
+				s_data.req_content = req;
+				main.ajaxSend(s_url,s_type,s_data);
 			}
 		
 		},
