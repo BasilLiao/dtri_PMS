@@ -9,7 +9,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>dtri.com.tw</groupId>
-	<artifactId>dtriPMS</artifactId>
+	<artifactId>dtriMESA</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>dtriPMS</name>
 	<description>PMS server</description>
