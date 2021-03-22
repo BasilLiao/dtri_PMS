@@ -96,6 +96,7 @@ body {
 			ajaxSend(s_url,s_type,s_data) {
 				//排除空白
 				var s_data = JSON.stringify(s_data).replace(/\s+/g, "");
+				console.log("ajax to send:"+s_data);
 				//Ajax 傳輸模組
 				var ajax = {
 						url :  "ajax/"+s_url,
@@ -118,13 +119,21 @@ body {
 						t_alert.alertshow(main.allData['info_color'],main.allData['info']);
 						//Step2.是否 轉跳畫面
 						if(main.allData['html_body']!=""){
-							//銷毀舊的 樣板
+							//銷毀舊_樣板
 							t_body.$destroy();
-							$("#body_t_all").load("./html/body/"+main.allData['html_body']);
-							
+							home.$destroy();
+							search.$destroy();
+							modify.$destroy();
+							print.$destroy();
+							download.$destroy();
+							upload.$destroy();
+							analysis.$destroy();
+							workstation.$destroy();
+							console.log("./html/body/"+main.allData['html_body']);
+							//刷新_模板
+							$("#body_t_all").load("./html/body/"+main.allData['html_body']);							
 						}else{
-							//Step3.呼叫 刷新模板方法
-							
+							//Step3.非轉跳畫面
 							
 						}
 						

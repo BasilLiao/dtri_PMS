@@ -1,2 +1,27 @@
 <!-- 統計報告 -->
 ...tab-analysis
+<script type="text/javascript">
+	//控制端
+	analysis = new Vue({
+		el : "#analysis",
+		//資料區
+		data : {
+			test : 300
+		},
+		//初始化
+		created : function() {
+			console.log("analysis.html(created)");
+		},
+		//可呼叫方法
+		methods : {
+			ajaxSend : function(url, dataSend) {
+
+			},
+		},
+		//移除監聽事件
+		beforeDestroy : function() {
+			console.log("analysis.html(beforeDestroy)");
+
+		}
+	});
+</script>

@@ -75,7 +75,12 @@
         mounted() {
             //模板-清單-家
             $("#index #home_tab").load("./html/model/home.html", function () {
-                home.set_user_info(main.info_user["name"], main.info_user["position"], main.info_user["email"], main.info_user["status"], new Date());
+                home.setUserInfo(
+               		main.info_user["name"], 
+               		main.info_user["position"], 
+               		main.info_user["email"], 
+               		main.info_user["status"], 
+               		new Date());
             });
             //查詢-模板
             $("#index #search_tab").load("./html/model/search.html");

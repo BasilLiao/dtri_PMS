@@ -60,7 +60,12 @@
 			//模板-清單-家
 			$("#index #home_tab").load("./html/model/home.html", function() {
 				//帶入模板內資料
-				home.set_user_info(1, 2, 3, 4, 5)
+				 home.setUserInfo(
+               		main.info_user["name"], 
+               		main.info_user["position"], 
+               		main.info_user["email"], 
+               		main.info_user["status"], 
+               		new Date());
 			});
 			//查詢-模板
 			$("#index #search_tab").load("./html/model/search.html");

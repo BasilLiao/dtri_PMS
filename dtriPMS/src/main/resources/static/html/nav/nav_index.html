@@ -50,7 +50,7 @@
 	<div class="p-3">
 		<h5 class="text-light">Menu content</h5>
 		<ul id="nav_ms" class="nav navbar-nav">
-			<li class="example" id="nav_m_g_0" data-toggle="collapse" data-target="#nav_m_l_0" aria-controls="nav_m_l_0" aria-expanded="false">
+			<li class="nav_example" id="nav_m_g_0" data-toggle="collapse" data-target="#nav_m_l_0" aria-controls="nav_m_l_0" aria-expanded="false">
 				<div class="btn-outline-secondary" id="nav_m_g_n_0">
 					<a class="text-white nav-link p-2 dropdown-toggle" href="#"><i class="bi bi-tags mr-2"></i><b>功能選單0</b></a>
 				</div>
@@ -113,7 +113,7 @@
 						nav_m_g = "nav_m_g_"+nb;
 						nav_m_g_n = "nav_m_g_n_"+nb;
 						nav_m_l = "nav_m_l_"+nb;
-						g_menu.removeClass("example");
+						g_menu.removeClass("nav_example");
 						g_menu.attr("id",nav_m_g);
 						g_menu.appendTo("#nav_ms");
 						//修正內容
@@ -135,7 +135,7 @@
 					$("#item_m_"+i+" .item_n").text(list[i].i_name);
 				}
 				//將預設單-移除
-				$(".example").remove();
+				$(".nav_example").remove();
 				
 				//監聽-轉跳
 				$(document).on("click", ".item_click", function(event) {

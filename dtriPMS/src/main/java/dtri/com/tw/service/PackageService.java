@@ -19,7 +19,11 @@ public class PackageService {
 		PackageBean data = new PackageBean();
 
 		if (!json_object.isNull("req_content")) {
-			JSONObject req = json_object.getJSONObject("req_content");
+			String checkWord = json_object.getJSONObject("req_content").toString();
+			// 排除特定符號 Ex:{= | '}
+			checkWord = checkWord.replace("=", "").replace("'", "").replace("|", "");
+			// 進行解析 與 分裝物件
+			JSONObject req = new JSONObject(checkWord);
 			data.setType_content("req");
 			data.setDate(req.isNull("date") ? new Date() : Fm_Time.toDate(req.getString("date")));
 			data.setAction(req.isNull("action") ? null : req.getString("action"));
@@ -73,7 +77,8 @@ public class PackageService {
 	public PackageBean setObjResp(PackageBean resp_object, PackageBean req_object, String info, String info_color) {
 		resp_object.setAction(req_object.getaction() == null ? "AR" : req_object.getaction());
 		resp_object.setCell_bk_fn(req_object.getCell_bk_fn() == null ? "" : req_object.getCell_bk_fn());
-		resp_object.setCell_bk_vals(req_object.getCell_bk_vals() == null ? new JSONObject() : req_object.getCell_bk_vals());
+		resp_object.setCell_bk_vals(
+				req_object.getCell_bk_vals() == null ? new JSONObject() : req_object.getCell_bk_vals());
 		resp_object.setInfo(info == null ? PackageBean.info_message_success : info);
 		resp_object.setInfo_color(info_color == null ? PackageBean.info_color_success : info_color);// --danger--warning--success
 		resp_object.setPage_batch(req_object.getPage_batch() == null ? 1 : req_object.getPage_batch());
