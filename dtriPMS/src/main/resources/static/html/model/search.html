@@ -90,53 +90,48 @@
 						<th style="min-width: 35px"><i class="btn btn-outline-danger p-0 pr-1 pl-1 bi bi-x-octagon"></i></th>
 						<th style="min-width: 35px"><i class="btn btn-outline-primary p-0 pr-1 pl-1 bi bi-printer"></i></th>
 						<th style="min-width: 35px"><i class="btn btn-outline-info p-0 pr-1 pl-1 bi bi-cloud-download"></i></th>
-						<th style="min-width: 200px">ID</th>
-						<th style="min-width: 200px">First</th>
-						<th style="min-width: 200px">Last</th>
-						<th style="min-width: 200px; width: 100%;">Handle</th>
+						<th class="s_title_body" style="min-width: 200px">Last</th>
+						<th class="s_title_last" style="min-width: 200px; width: 100%;">Handle</th>
 					</tr>
 				</thead>
 				<tbody class="search_example_list">
-					<tr>
-						<td class="p-0 pl-1 pt-1">
+					<tr class="search_example_content">
+						<td class="p-0 pl-1 pt-1 search_radio_0">
 							<div class="custom-control custom-radio custom-control-inline m-0">
 								<input type="radio" id="line_0_0" name="line_0" class="custom-control-input" value="line_0_0" checked> <label class="custom-control-label" for="line_0_0"></label>
 							</div>
 						</td>
-						<td class="p-0 pl-1 pt-1">
+						<td class="p-0 pl-1 pt-1 search_radio_1">
 							<div class="custom-control custom-radio custom-control-inline m-0">
 								<input type="radio" id="line_0_1" name="line_0" class="custom-control-input" value="line_0_1"> <label class="custom-control-label" for="line_0_1"></label>
 							</div>
 						</td>
-						<td class="p-0 pl-1 pt-1">
+						<td class="p-0 pl-1 pt-1 search_radio_2">
 							<div class="custom-control custom-radio custom-control-inline m-0">
 								<input type="radio" id="line_0_2" name="line_0" class="custom-control-input" value="line_0_2"> <label class="custom-control-label" for="line_0_2"></label>
 							</div>
 						</td>
-						<td class="p-0 pl-1 pt-1">
+						<td class="p-0 pl-1 pt-1 search_radio_3">
 							<div class="custom-control custom-radio custom-control-inline m-0">
 								<input type="radio" id="line_0_3" name="line_0" class="custom-control-input" value="line_0_3"> <label class="custom-control-label" for="line_0_3"></label>
 							</div>
 						</td>
-						<td class="p-0 pl-1 pt-1">
+						<td class="p-0 pl-1 pt-1 search_radio_4">
 							<div class="custom-control custom-radio custom-control-inline m-0">
 								<input type="radio" id="line_0_4" name="line_0" class="custom-control-input" value="line_0_4"> <label class="custom-control-label" for="line_0_4"></label>
 							</div>
 						</td>
-						<td class="p-0 pl-1 pt-1">
+						<td class="p-0 pl-1 pt-1 search_radio_5">
 							<div class="custom-control custom-radio custom-control-inline m-0">
 								<input type="radio" id="line_0_5" name="line_0" class="custom-control-input" value="line_0_5"> <label class="custom-control-label" for="line_0_5"></label>
 							</div>
 						</td>
-						<td class="p-0 pl-1 pt-1">
+						<td class="p-0 pl-1 pt-1 search_radio_6">
 							<div class="custom-control custom-radio custom-control-inline m-0">
 								<input type="radio" id="line_0_6" name="line_0" class="custom-control-input" value="line_0_6"> <label class="custom-control-label" for="line_0_6"></label>
 							</div>
 						</td>
-						<td>1</td>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
+						<td class="s_list_body">1</td>
 					</tr>
 
 				</tbody>
@@ -153,17 +148,66 @@
 			test : 300
 		},
 		//初始化
-		created : function() {
+		created() {
 			console.log("search.html(created)");
 		},
 		//可呼叫方法
 		methods : {
-			ajaxSend : function(url, dataSend) {
+			setDataTitle(title){
+				//標題注入資訊
+				title = main.orderedSort(title);
+				for(var i =0;i< (Object.keys(title).length-1);i++){
+					var one_item = $('.search_example_title .s_title_body').clone();//複製樣本
+					var key_id = Object.keys(title)[i];
+					var value_name = title[Object.keys(title)[i]];
+					console.log(key_id+" "+value_name);
+					one_item[0].className="";
+					one_item[0].id = key_id;
+					one_item[0].innerText = value_name;
+					one_item.insertBefore(".s_title_last");
+				}
+				//結尾
+				var key_id = Object.keys(title)[(Object.keys(title).length-1)];
+				var value_name = title[Object.keys(title)[(Object.keys(title).length-1)]];
+				$('.s_title_last').attr("id",key_id);
+				$('.s_title_last').text(value_name);
+				//關閉範例
+				$('.s_title_body').addClass("d-none");
+				
+			},
+			setDataList(list){
+				//清單注入資訊
+				console.log( list.length);
+				for(var j = 0;j < list.length; j++){
+					//資料筆數
+					var list_item = $('.search_example_content').clone();//複製樣本
+					list_item[0].className="search_data_list";
+					list_item[0].id="search_data_"+(j+1);
+					list_item.appendTo('.search_example_list');
+					//選紐欄位
+					for(var r=0 ;r<=6;r++){
+						$("#"+list_item[0].id+" .search_radio_"+r+" input")
+						
+					}
+					//資料欄位
+					for(var i =0;i< (Object.keys(list[j]).length-1);i++){
+						var one_item = $('.search_example_content .s_list_body').clone();//複製樣本
+						var key_id = Object.keys(list[j])[i];
+						var value_name = list[j][Object.keys(list[j])[i]];
+						console.log(key_id+" "+value_name);
+						one_item[0].className="";
+						one_item[0].id = key_id;
+						one_item[0].innerText = value_name;
+						one_item.insertBefore("#"+list_item[0].id+" .s_list_body");
+					}
+				}
+			},
+			ajaxSend(url, dataSend) {
 
 			},
 		},
 		//移除監聽事件
-		beforeDestroy : function() {
+		beforeDestroy() {
 			console.log("search.html(beforeDestroy)");
 
 		}

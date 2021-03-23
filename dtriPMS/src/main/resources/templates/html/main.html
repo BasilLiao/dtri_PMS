@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>DTR_PMS(製程系統)</title>
+<title>DTR_MESA(製程系統)</title>
 <script src="./thirdparty/js/jquery-3.5.1.min.js"></script>
 <script src="./thirdparty/js/jquery-ui-1.12.1.min.js"></script>
 <script src="./thirdparty/js/bootstrap-4.6.0.min.js"></script>
@@ -155,7 +155,16 @@ body {
 					},
 				});
 			},
-			
+			//排序jsonObj 功能
+			orderedSort(title){
+				const ordered = Object.keys(title).sort().reduce(
+			  	(obj, key) => { 
+			    	obj[key] = title[key]; 
+			    	return obj;
+			  	}, {}
+				);
+				return ordered;
+			},
 			//timeOut 到計時 登出(提醒失效)
 			countDown() {
 				this.countDownSecond -= 1;

@@ -68,7 +68,11 @@
                		new Date());
 			});
 			//查詢-模板
-			$("#index #search_tab").load("./html/model/search.html");
+			$("#index #search_tab").load("./html/model/search.html", function() {
+				search.setDataTitle(main.allData.header);
+				search.setDataList(main.allData.body);
+				
+			});
 			//編輯-模板
 			$("#index #modify_tab").load("./html/model/modify.html");
 			//列印-模板
