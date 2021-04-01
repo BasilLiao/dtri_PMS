@@ -1,7 +1,7 @@
 package dtri.com.tw.login;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,10 +15,10 @@ public class LoginUserDetails implements UserDetails {
 	 */
 	private static final long serialVersionUID = 1L;
 	private SystemUser user;
-	private ArrayList<SystemGroup> group;
+	private List<SystemGroup> group;
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public LoginUserDetails(SystemUser user, ArrayList<SystemGroup> group,
+	public LoginUserDetails(SystemUser user, List<SystemGroup> group,
 			Collection<? extends GrantedAuthority> authorities) {
 		super();
 		this.user = user;
@@ -26,7 +26,7 @@ public class LoginUserDetails implements UserDetails {
 		this.authorities = authorities;
 	}
 
-	public ArrayList<SystemGroup> getSystemGroup() {
+	public List<SystemGroup> getSystemGroup() {
 		return group;
 	}
 
@@ -37,8 +37,8 @@ public class LoginUserDetails implements UserDetails {
 	/**
 	 * 權限清單 <br>
 	 * 規則: <br>
-	 * 單元+請求類型(CRUD權限):index.basil.0100000000<br>
-	 * 單元+請求類型(CRUD權限):index.basil.0010000000<br>
+	 * 單元+請求類型(CRUD權限):index.basil_0100000000<br>
+	 * 單元+請求類型(CRUD權限):index.basil_0010000000<br>
 	 * 
 	 **/
 	@Override

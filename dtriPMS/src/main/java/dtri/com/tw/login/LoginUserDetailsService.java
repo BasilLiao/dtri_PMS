@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,19 +36,21 @@ public class LoginUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException(account);
 		}
 		// Step2.取得group+Permission
-		ArrayList<SystemGroup> systemGroups = groupDao.findBySggid(user.getSusggid());
+		List<SystemGroup> systemGroups = groupDao.findBySggidOrderBySgidAscSyssortAsc(user.getSusggid());
 		if (systemGroups == null) {
 			throw new UsernameNotFoundException(account);
 		}
 
 		// Step3.檢查-驗證使用者 密碼前面加上"{noop}"使用NoOpPasswordEncoder，也就是不對密碼進行任何格式的編碼。
+
+		// 測試用
 		/*
-		 * 測試用
 		 * UserBuilder builder_u = User.builder();
 		 * builder_u.username(user.getSuaccount()); builder_u.password("{noop}" +
 		 * user.getSupassword()); builder_u.roles(user.getSuposition() + "");
 		 * UserDetails test = builder_u.build();
 		 */
+		// return test;
 
 		// Step4.登記-可使用權限
 		List<GrantedAuthority> authorities = new ArrayList<>();
@@ -60,15 +64,14 @@ public class LoginUserDetailsService implements UserDetailsService {
 					int move_p = 9 - i;
 					double now_p = Math.pow(10, move_p);
 					String now_s = String.format("%010d", (int) now_p);
-					System.out.println(systemGroup.getSystemPermission().getSpcontrol() + '.' + now_s);
-					String role = systemGroup.getSystemPermission().getSpcontrol() + '.' + now_s;
+					String role = systemGroup.getSystemPermission().getSpcontrol().replace(".", "_") + '_' + now_s;
+					System.out.println(role);
 					authorities.add(new SimpleGrantedAuthority(role));
 				} else {
 					continue;
 				}
 			}
-		}
-		// Step5.註冊-使用者
+		} // Step5.註冊-使用者
 		UserDetails userDetails = new LoginUserDetails(user, systemGroups, authorities);
 		return userDetails;
 	}

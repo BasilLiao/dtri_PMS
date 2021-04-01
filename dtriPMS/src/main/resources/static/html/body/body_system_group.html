@@ -6,26 +6,30 @@
 	</div>
 	<div class="p-1">
 		<ul class="nav nav-tabs shadow-sm" id="myTab" role="tablist">
-			<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm active" data-toggle="tab" role="tab" aria-selected="true" aria-controls="home_tab" href="#home_tab" id="tab-home"><i
+			<li class="nav-item"><a id="home_nav" class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="true" aria-controls="home_tab" href="#home_tab" id="tab-home"><i
 					class="bi bi-house mr-1"></i>Home</a></li>
-			<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm " data-toggle="tab" role="tab" aria-selected="true" aria-controls="search_tab" href="#search_tab" id="tab-search"><i
+			<li class="nav-item"><a id="search_nav" class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="search_tab" href="#search_tab" id="tab-search"><i
 					class="bi bi-search mr-1"></i>Search</a></li>
-			<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm " data-toggle="tab" role="tab" aria-selected="false" aria-controls="modify_tab" href="#modify_tab" id="tab-modify"><i
-					class="bi bi-vector-pen mr-1"></i>Detail / Create / Modify / Delete</a></li>
-			<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm " data-toggle="tab" role="tab" aria-selected="false" aria-controls="print_tab" href="#print_tab" id="tab-print"><i
+			<li class="nav-item"><a id="modify_nav" class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="modify_tab" href="#modify_tab" id="tab-modify"> <i
+					class="bi bi-vector-pen mr-1"></i>Detail / Create / Modify / Delete
+			</a></li>
+			<li class="nav-item"><a id="print_nav" class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="print_tab" href="#print_tab" id="tab-print"><i
 					class="bi bi-printer mr-1"></i>Print</a></li>
-			<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm " data-toggle="tab" role="tab" aria-selected="false" aria-controls="download_tab" href="#download_tab" id="tab-download"><i
-					class="bi bi-cloud-download mr-1"></i>Download</a></li>
-			<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm " data-toggle="tab" role="tab" aria-selected="false" aria-controls="upload_tab" href="#upload_tab" id="tab-upload"><i
+			<li class="nav-item"><a id="download_nav" class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="download_tab" href="#download_tab"
+				id="tab-download"> <i class="bi bi-cloud-download mr-1"></i>Download
+			</a></li>
+			<li class="nav-item"><a id="upload_nav" class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="upload_tab" href="#upload_tab" id="tab-upload"><i
 					class="bi bi-cloud-upload mr-1"></i>Upload</a></li>
-			<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm " data-toggle="tab" role="tab" aria-selected="false" aria-controls="analysis_tab" href="#analysis_tab" id="tab-analysis"><i
-					class="bi bi-graph-up mr-1"></i>Analysis report</a></li>
-			<li class="nav-item"><a class="p-1 mr-1 nav-link btn-sm " data-toggle="tab" role="tab" aria-selected="false" aria-controls="workstation_tab" href="#workstation_tab" id="tab-workstation"><i
-					class="bi bi-joystick mr-1"></i>Workstation mode</a></li>
+			<li class="nav-item"><a id="analysis_nav" class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="analysis_tab" href="#analysis_tab"
+				id="tab-analysis"> <i class="bi bi-graph-up mr-1"></i>Analysis report
+			</a></li>
+			<li class="nav-item"><a id="workstation_nav" class="p-1 mr-1 nav-link btn-sm" data-toggle="tab" role="tab" aria-selected="false" aria-controls="workstation_tab" href="#workstation_tab"
+				id="tab-workstation"> <i class="bi bi-joystick mr-1"></i>Workstation mode
+			</a></li>
 		</ul>
 		<div class="tab-content" id="myTabContent">
 			<!-- tab-home -->
-			<div class="tab-pane fade show active" id="home_tab" role="tabpanel" aria-labelledby="tab-home"></div>
+			<div class="tab-pane fade" id="home_tab" role="tabpanel" aria-labelledby="tab-home"></div>
 			<!-- tab-search -->
 			<div class="tab-pane fade" id="search_tab" role="tabpanel" aria-labelledby="tab-search"></div>
 			<!-- tab-modify -->

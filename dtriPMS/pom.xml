@@ -78,7 +78,7 @@
 			<artifactId>javax.mail</artifactId>
 			<version>1.6.0</version>
 		</dependency>
-
+		
 		<!-- 熱部署 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

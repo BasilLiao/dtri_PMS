@@ -28,12 +28,12 @@ public class PackageService {
 			data.setDate(req.isNull("date") ? new Date() : Fm_Time.toDate(req.getString("date")));
 			data.setAction(req.isNull("action") ? null : req.getString("action"));
 			data.setHeader(req.isNull("header") ? null : req.getJSONObject("header"));
-			data.setBody(req.isNull("body") ? null : req.getJSONArray("body"));
+			data.setBody(req.isNull("body") ? null : req.getJSONObject("body"));
 			data.setPage_batch(req.isNull("page_batch") ? 0 : req.getInt("page_batch"));
 			data.setPage_now_nb(req.isNull("page_now_nb") ? 1 : req.getInt("page_now_nb"));
 			data.setPage_total(req.isNull("page_total") ? 100 : req.getInt("page_total"));
-			data.setCell_bk_fn(req.isNull("cell_bk_fn") ? null : req.getString("cell_bk_fn"));
-			data.setCell_bk_vals(req.isNull("cell_bk_vals") ? new JSONObject() : req.getJSONObject("cell_bk_vals"));
+			data.setCall_bk_fn(req.isNull("call_bk_fn") ? null : req.getString("call_bk_fn"));
+			data.setCall_bk_vals(req.isNull("call_bk_vals") ? new JSONObject() : req.getJSONObject("call_bk_vals"));
 			data.setHtml_body(req.isNull("html_body") ? null : req.getString("html_body"));
 			data.setInfo("");
 		} else {
@@ -59,9 +59,12 @@ public class PackageService {
 		data.put("info", object.getInfo());
 		data.put("info_color", object.getInfo_color());
 		data.put("info_user", object.getInfo_user());
-		data.put("cell_bk_fn", object.getCell_bk_fn());
-		data.put("cell_bk_vals", object.getCell_bk_vals());
+		data.put("call_bk_fn", object.getCall_bk_fn());
+		data.put("call_bk_vals", object.getCall_bk_vals());
 		data.put("html_body", object.getHtml_body());
+		data.put("cell_searchs", object.getCell_searchs());
+		data.put("cell_modify", object.getCell_modify());
+
 		System.out.println(data.toString());
 		return new JSONObject().put("resp_content", data).toString();
 	}
@@ -76,9 +79,9 @@ public class PackageService {
 	 **/
 	public PackageBean setObjResp(PackageBean resp_object, PackageBean req_object, String info, String info_color) {
 		resp_object.setAction(req_object.getaction() == null ? "AR" : req_object.getaction());
-		resp_object.setCell_bk_fn(req_object.getCell_bk_fn() == null ? "" : req_object.getCell_bk_fn());
-		resp_object.setCell_bk_vals(
-				req_object.getCell_bk_vals() == null ? new JSONObject() : req_object.getCell_bk_vals());
+		resp_object.setCall_bk_fn(req_object.getCall_bk_fn() == null ? "" : req_object.getCall_bk_fn());
+		resp_object.setCall_bk_vals(
+				req_object.getCall_bk_vals() == null ? new JSONObject() : req_object.getCall_bk_vals());
 		resp_object.setInfo(info == null ? PackageBean.info_message_success : info);
 		resp_object.setInfo_color(info_color == null ? PackageBean.info_color_success : info_color);// --danger--warning--success
 		resp_object.setPage_batch(req_object.getPage_batch() == null ? 1 : req_object.getPage_batch());

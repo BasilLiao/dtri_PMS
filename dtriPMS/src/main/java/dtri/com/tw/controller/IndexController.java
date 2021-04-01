@@ -1,6 +1,6 @@
 package dtri.com.tw.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,7 +62,7 @@ public class IndexController {
 					.getPrincipal();
 			// Step1.查詢資料
 			SystemUser user = userDetails.getSystemUser();
-			ArrayList<SystemGroup> nav = userDetails.getSystemGroup();
+			List<SystemGroup> nav = userDetails.getSystemGroup();
 			resp_object = indexService.getNav(nav);
 			resp_object.setInfo_user(indexService.getUserInfo(user));
 		} else {
@@ -96,7 +96,7 @@ public class IndexController {
 					.getPrincipal();
 			// Step2.查詢資料
 			SystemUser user = userDetails.getSystemUser();
-			ArrayList<SystemGroup> nav = userDetails.getSystemGroup();
+			List<SystemGroup> nav = userDetails.getSystemGroup();
 			resp_object = indexService.getNav(nav);
 			resp_object.setInfo_user(indexService.getUserInfo(user));
 		} else {

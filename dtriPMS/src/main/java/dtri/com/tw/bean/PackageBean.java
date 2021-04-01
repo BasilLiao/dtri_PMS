@@ -25,16 +25,18 @@ public class PackageBean {
 	private Date date;// 時間
 	private String action;// 請求 動作行為
 	private JSONObject header;// title 名稱表
-	private JSONArray body;// 資料 內 容物
+	private JSONObject body;// 資料 內 容物
 	private Integer page_total;// 每次 總頁數 ex :10
 	private Integer page_batch;// 第幾批
 	private Integer page_now_nb;// 第幾分頁
 	private String info; // 回傳資訊
 	private String info_color; // 回傳資訊 顏色
-	private String cell_bk_fn;// 回傳呼叫方法
-	private JSONObject cell_bk_vals;// 回傳呼叫傳遞值
-	private String html_body;//切換頁面
-	private JSONObject info_user;//使用者資訊
+	private String call_bk_fn;// 回傳呼叫方法
+	private JSONObject call_bk_vals;// 回傳呼叫傳遞值
+	private String html_body;// 切換頁面
+	private JSONObject info_user;// 使用者資訊
+	private JSONArray cell_searchs;// 查詢欄位
+	private JSONArray cell_modify;// 修改欄位
 
 	public PackageBean() {
 		this.info = info_message_danger + info_administrator;
@@ -66,11 +68,11 @@ public class PackageBean {
 		this.action = action;
 	}
 
-	public JSONArray getBody() {
+	public JSONObject getBody() {
 		return body;
 	}
 
-	public void setBody(JSONArray body) {
+	public void setBody(JSONObject body) {
 		this.body = body;
 	}
 
@@ -106,22 +108,6 @@ public class PackageBean {
 		this.info = info;
 	}
 
-	public String getCell_bk_fn() {
-		return cell_bk_fn;
-	}
-
-	public void setCell_bk_fn(String cell_bk_fn) {
-		this.cell_bk_fn = cell_bk_fn;
-	}
-
-	public JSONObject getCell_bk_vals() {
-		return cell_bk_vals;
-	}
-
-	public void setCell_bk_vals(JSONObject cell_bk_vals) {
-		this.cell_bk_vals = cell_bk_vals;
-	}
-
 	public JSONObject getHeader() {
 		return header;
 	}
@@ -154,4 +140,35 @@ public class PackageBean {
 		this.info_user = info_user;
 	}
 
+	public JSONArray getCell_searchs() {
+		return cell_searchs;
+	}
+
+	public void setCell_searchs(JSONArray cell_searchs) {
+		this.cell_searchs = cell_searchs;
+	}
+
+	public JSONArray getCell_modify() {
+		return cell_modify;
+	}
+
+	public void setCell_modify(JSONArray cell_modify) {
+		this.cell_modify = cell_modify;
+	}
+
+	public String getCall_bk_fn() {
+		return call_bk_fn;
+	}
+
+	public void setCall_bk_fn(String call_bk_fn) {
+		this.call_bk_fn = call_bk_fn;
+	}
+
+	public JSONObject getCall_bk_vals() {
+		return call_bk_vals;
+	}
+
+	public void setCall_bk_vals(JSONObject call_bk_vals) {
+		this.call_bk_vals = call_bk_vals;
+	}
 }

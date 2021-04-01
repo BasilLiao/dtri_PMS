@@ -11,8 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
@@ -75,7 +77,8 @@ public class SystemGroup {
 
 	// 群組型
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_group_seq") 
+    @SequenceGenerator(name = "system_group_seq", sequenceName = "system_group_seq") 
 	@Column(name = "sg_id")
 	private Integer sgid;
 

@@ -1,6 +1,7 @@
 <style>
 #logo {
 	width: 25px;
+	height: 25px;
 }
 
 #nav_m_all {
@@ -21,22 +22,24 @@
 }
 </style>
 <div id="nav" class="navbar p-1 navbar-dark bg-dark justify-content-start fixed-top shadow">
-	<img class="bg-white" id="logo" src="./img/login.png" alt="DTR ERP"> <a class="navbar-brand p-0 pl-2" href="#"><i class="h3">DTR MESA</i></a>
-
-	<button class="p-1 btn btn-sm border border-light btn-outline-secondary" id="nav_m_all_btn" type="button" data-toggle="collapse" data-target="#nav_m_all" aria-controls="nav_m_all"
-		aria-expanded="false">
-		<div class="row m-0">
-			<div class="navbar-toggler-icon"></div>
-			<div class="pl-2">
-				<h5 class="text-white m-0">Menu</h5>
+	<div class="col-sm col-7 row m-0 p-0">
+		<img class="bg-white m-1 rounded" id="logo" src="./img/login.png" alt="DTR ERP"> <a class="navbar-brand p-0 " href="#"><i class="h3">DTR MES</i></a>
+		<button class="p-1 btn btn-sm border border-light btn-outline-secondary" id="nav_m_all_btn" type="button" data-toggle="collapse" data-target="#nav_m_all" aria-controls="nav_m_all"
+			aria-expanded="false">
+			<div class="row m-0">
+				<div class="navbar-toggler-icon"></div>
+				<div class="pl-2">
+					<h5 class="text-white m-0">Menu</h5>
+				</div>
 			</div>
-		</div>
-	</button>
-	<div id="user" class="col-sm col-5 m-0 row justify-content-end ">
+		</button>
+	</div>
+	
+	<div id="user" class="col-sm col-4 m-0 p-0 row justify-content-end ">
 		<div class="pl-2 pt-1">
 			<h5 class="text-white m-0" id="name">Name</h5>
 		</div>
-		<div class="p-0 pr-2 pl-2 ml-2" id="nav_u_btn" data-toggle="collapse" data-target="#nav_u" aria-controls="nav_u" aria-expanded="false">
+		<div class="p-0 pr-4 pl-2 ml-2" id="nav_u_btn" data-toggle="collapse" data-target="#nav_u" aria-controls="nav_u" aria-expanded="false">
 			<button class="btn btn-sm border border-light btn-outline-secondary">
 				<div>
 					<img class="img-profile rounded-circle" src="./img/undraw_profile.svg">
@@ -153,17 +156,16 @@
 				req.user="";
 				req.date=new Date();
 				req.action="AC";
-				req.body=[];
-				req.page_total=100;
-				req.page_batch=1;
-				req.page_now_nb=1;
+				req.body={};
+				req.page_total=main.page_total;
+				req.page_batch=main.page_batch;
+				req.page_now_nb=main.page_now_nb;
 				req.html_body= "body_"+event.currentTarget.attributes.url.value.replace('basil', 'html');
-				req.cell_bk_fn="";
-				req.cell_bk_vals={};
+				req.call_bk_fn="";
+				req.call_bk_vals={};
 				s_data.req_content = req;
 				main.ajaxSend(s_url,s_type,s_data);
 			}
-		
 		},
 		//移除監聽事件
 		beforeDestroy() {

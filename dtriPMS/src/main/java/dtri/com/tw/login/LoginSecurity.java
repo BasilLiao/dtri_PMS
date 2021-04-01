@@ -27,48 +27,47 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 
 		// Restful API ( GET -> 訪問/查詢 ) ( POST -> 新增 ) ( PUT -> 更新) ( DELETE -> 刪除 )
 		// 下列-權限驗證
-		String s_u = "system_user.basil";
-		String s_p = "system_permission.basil";
-		String s_g = "system_group.basil";
-		String i_x = "index.basil";
+		String system_use = "/ajax/system_user.basil";
+		String system_gro = "/ajax/system_group.basil";
+		String system_per = "/ajax/system_permission.basil";
 		http.authorizeRequests()
-				// thirdparty && img 資料夾靜態資料可 直接 存取 (預設皆有 訪問權限)
+				// thirdparty && img 資料夾靜態資料可 直接 存取 (預設皆有 訪問權限 資料可[匿名]存取)
 				.antMatchers(HttpMethod.GET, "/thirdparty/**", "/img/**", "/login.basil", "/login.html").permitAll()
 				// ----請求-index-(訪問)----
-				.antMatchers(HttpMethod.POST, "ajax/" + i_x).access(hasAuthority(i_x, ""))
+				.antMatchers(HttpMethod.POST, "/ajax/index.basil").access(actionRole("index.basil", ""))
 
 				// ----請求-system_permission-(訪問) ----
-				.antMatchers(HttpMethod.POST, "ajax/" + s_p).access(hasAuthority(s_p, ""))
+				.antMatchers(HttpMethod.POST, system_per).hasAuthority(actionRole(system_per, ""))
 				// (查詢)
-				.antMatchers(HttpMethod.GET, "ajax/" + s_p+".AR").access(hasAuthority(s_p, "AR"))
+				.antMatchers(HttpMethod.POST, system_per + ".AR").hasAuthority(actionRole(system_per, "AR"))
 				// (新增)
-				.antMatchers(HttpMethod.POST, "ajax/" + s_p+".AR_AC").access(hasAuthority(s_p, "AR_AC"))
+				.antMatchers(HttpMethod.POST, system_per + ".AC").hasAuthority(actionRole(system_per, "AC"))
 				// (修改)
-				.antMatchers(HttpMethod.PUT, "ajax/" + s_p+".AR_AU").access(hasAuthority(s_p, "AR_AU"))
+				.antMatchers(HttpMethod.PUT, system_per + ".AU").hasAuthority(actionRole(system_per, "AU"))
 				// (移除)
-				.antMatchers(HttpMethod.DELETE, "ajax/" + s_p+".AR_AD").access(hasAuthority(s_p, "AR_AD"))
-
-				// ----請求-sys_user-(訪問) ----
-				.antMatchers(HttpMethod.GET, "ajax/" + s_u).access(hasAuthority(s_u, ""))
-				// (查詢)
-				.antMatchers(HttpMethod.GET, "ajax/" + s_u).access(hasAuthority(s_u, "AR"))
-				// (新增)
-				.antMatchers(HttpMethod.POST, "ajax/" + s_u).access(hasAuthority(s_u, "AR_AC"))
-				// (修改)
-				.antMatchers(HttpMethod.PUT, "ajax/" + s_u).access(hasAuthority(s_u, "AR_AU"))
-				// (移除)
-				.antMatchers(HttpMethod.DELETE, "ajax/" + s_u).access(hasAuthority(s_u, "AR_AD"))
+				.antMatchers(HttpMethod.DELETE, system_per + ".AD").hasAuthority(actionRole(system_per, "AD"))
 
 				// ----請求-sys_group-(訪問) ----
-				.antMatchers(HttpMethod.GET, "ajax/" + s_g).access(hasAuthority(s_g, ""))
+				.antMatchers(HttpMethod.POST, system_gro).hasAuthority(actionRole(system_gro, ""))
 				// (查詢)
-				.antMatchers(HttpMethod.GET, "ajax/" + s_g).access(hasAuthority(s_g, "AR"))
+				.antMatchers(HttpMethod.POST, system_gro).hasAuthority(actionRole(system_gro, "AR"))
 				// (新增)
-				.antMatchers(HttpMethod.POST, "ajax/" + s_g).access(hasAuthority(s_g, "AR_AC"))
+				.antMatchers(HttpMethod.POST, system_gro).hasAuthority(actionRole(system_gro, "AC"))
 				// (修改)
-				.antMatchers(HttpMethod.PUT, "ajax/" + s_g).access(hasAuthority(s_g, "AR_AU"))
+				.antMatchers(HttpMethod.PUT, system_gro).hasAuthority(actionRole(system_gro, "AU"))
 				// (移除)
-				.antMatchers(HttpMethod.DELETE, "ajax/" + s_g).access(hasAuthority(s_g, "AR_AD"))
+				.antMatchers(HttpMethod.DELETE, system_gro).hasAuthority(actionRole(system_gro, "AD"))
+
+				// ----請求-sys_user-(訪問) ----
+				.antMatchers(HttpMethod.POST, system_use).hasAuthority(actionRole(system_use, ""))
+				// (查詢)
+				.antMatchers(HttpMethod.POST, system_use).hasAuthority(actionRole(system_use, "AR"))
+				// (新增)
+				.antMatchers(HttpMethod.POST, system_use).hasAuthority(actionRole(system_use, "AC"))
+				// (修改)
+				.antMatchers(HttpMethod.PUT, system_use).hasAuthority(actionRole(system_use, "AU"))
+				// (移除)
+				.antMatchers(HttpMethod.DELETE, system_use).hasAuthority(actionRole(system_use, "AD"))
 
 				// 請求需要檢驗-全部請求
 				.anyRequest().authenticated();
@@ -116,38 +115,44 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 	}
 
 	/** 權限-規則-群組歸類 **/
-	private String hasAuthority(String cell_who, String action_do) {
+	private String actionRole(String cell_who, String action_do) {
 		// (sg_permission[特殊3(512),特殊2(256),特殊1(128),訪問(64),下載(32),上傳(16),新增(8),修改(4),刪除(2),查詢(1)])
 		// 訪問
-		String hasAuthority = "hasAuthority" + "('" + action_do + ".0001000000')";
+		String cell_role = cell_who.replace(".", "_").replace("/ajax/", "");
+		String hasAuthority = cell_role + "_0001000000";
 		// CRUD
-		if (action_do.contains("S3")) {
-			hasAuthority += " and hasAuthority" + "('" + action_do + ".1000000000')"; // 特殊3
+		switch (action_do) {
+		case "S3":
+			hasAuthority = cell_role + "_1000000000"; // 特殊3
+			break;
+		case "S2":
+			hasAuthority = cell_role + "_0100000000"; // 特殊2
+			break;
+		case "S1":
+			hasAuthority = cell_role + "_0010000000"; // 特殊1
+			break;
+		case "FD":
+			hasAuthority = cell_role + "_0000100000"; // 下載
+			break;
+		case "FU":
+			hasAuthority = cell_role + "_0000010000"; // 上載
+			break;
+		case "AC":
+			hasAuthority = cell_role + "_0000001000"; // 新增
+			break;
+		case "AU":
+			hasAuthority = cell_role + "_0000000100"; // 修改
+			break;
+		case "AD":
+			hasAuthority = cell_role + "_0000000010"; // 移除
+			break;
+		case "AR":
+			hasAuthority = cell_role + "_0000000001"; // 查詢
+			break;
+		default:
+			break;
 		}
-		if (action_do.contains("S2")) {
-			hasAuthority += " and hasAuthority" + "('" + action_do + ".0100000000')"; // 特殊2
-		}
-		if (action_do.contains("S1")) {
-			hasAuthority += " and hasAuthority" + "('" + action_do + ".0010000000')"; // 特殊1
-		}
-		if (action_do.contains("FD")) {
-			hasAuthority += " and hasAuthority" + "('" + action_do + ".0000100000')"; // 訪問
-		}
-		if (action_do.contains("FU")) {
-			hasAuthority += " and hasAuthority" + "('" + action_do + ".0000010000')"; // 上載
-		}
-		if (action_do.contains("AC")) {
-			hasAuthority += " and hasAuthority" + "('" + action_do + ".0000001000')"; // 新增
-		}
-		if (action_do.contains("AU")) {
-			hasAuthority += " and hasAuthority" + "('" + action_do + ".0000000100')"; // 修改
-		}
-		if (action_do.contains("AD")) {
-			hasAuthority += " and hasAuthority" + "('" + action_do + ".0000000010')"; // 移除
-		}
-		if (action_do.contains("AR")) {
-			hasAuthority += " and hasAuthority" + "('" + action_do + ".0000000001')"; // 查詢
-		}
+		System.out.println(cell_who + " " + hasAuthority);
 		return hasAuthority;
 	}
 }

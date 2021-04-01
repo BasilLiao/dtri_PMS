@@ -1,7 +1,6 @@
 package dtri.com.tw.db.entity;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -17,19 +15,18 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * @author Basil
- * @see 功能權限<br>
- *      sp_id : 單元ID<br>
- *      sp_name : 單元名稱<br>
- *      sp_g_id : 單元群組ID<br>
- *      sp_g_name : 單元群組名稱<br>
- *      sp_control : 單元控制名稱<br>
- *      sp_permission : 權限<br>
+ * @see 系統設定<br>
+ *      sc_id : ID<br>
+ *      sc_name : 名稱<br>
+ *      sc_g_id : 群組ID<br>
+ *      sc_g_name : 群組名稱<br>
+ *      sc_value : 設定參數<br>
  */
 @Entity
-@Table(name = "system_permission")
+@Table(name = "system_config")
 @EntityListeners(AuditingEntityListener.class)
-public class SystemPermission {
-	public SystemPermission() {
+public class SystemConfig {
+	public SystemConfig() {
 		this.syscdate = new Date();
 		this.syscuser = "system";
 		this.sysmdate = new Date();
@@ -67,29 +64,22 @@ public class SystemPermission {
 
 	// 功能權限
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_permission_seq") 
-    @SequenceGenerator(name = "system_permission_seq", sequenceName = "system_permission_seq") 
-	@Column(name = "sp_id")
-	private Integer spid;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_config_seq") 
+    @SequenceGenerator(name = "system_config_seq", sequenceName = "system_config_seq") 
+	@Column(name = "sc_id")
+	private Integer scid;
 
-	@Column(name = "sp_name", nullable = false, columnDefinition = "varchar(50)")
-	private String spname;
+	@Column(name = "sc_name", nullable = false, columnDefinition = "varchar(50)")
+	private String scname;
 
-	@Column(name = "sp_g_id", nullable = false)
-	private Integer spgid;
+	@Column(name = "sc_g_id", nullable = false)
+	private Integer scgid;
 
-	@Column(name = "sp_g_name", nullable = false, columnDefinition = "varchar(50)")
-	private String spgname;
+	@Column(name = "sc_g_name", nullable = false, columnDefinition = "varchar(50)")
+	private String scgname;
 
-	@Column(name = "sp_control", nullable = false, columnDefinition = "varchar(50)")
-	private String spcontrol;
-
-	@Column(name = "sp_permission", nullable = false, columnDefinition = "varchar(10)")
-	private String sppermission;
-
-	//@OrderBy(clause =  "sg_g_id ASC")
-	@OneToMany(mappedBy = "systemPermission")
-	private List<SystemGroup> systemGroup;
+	@Column(name = "sc_value", nullable = false, columnDefinition = "varchar(50)")
+	private String scvalue;
 
 	public Date getSyscdate() {
 		return syscdate;
@@ -155,59 +145,46 @@ public class SystemPermission {
 		this.sysstatus = sysstatus;
 	}
 
-	public Integer getSpid() {
-		return spid;
+	public Integer getScid() {
+		return scid;
 	}
 
-	public void setSpid(Integer spid) {
-		this.spid = spid;
+	public void setScid(Integer scid) {
+		this.scid = scid;
 	}
 
-	public String getSpname() {
-		return spname;
+	public String getScname() {
+		return scname;
 	}
 
-	public void setSpname(String spname) {
-		this.spname = spname;
+	public void setScname(String scname) {
+		this.scname = scname;
 	}
 
-	public Integer getSpgid() {
-		return spgid;
+	public Integer getScgid() {
+		return scgid;
 	}
 
-	public void setSpgid(Integer spgid) {
-		this.spgid = spgid;
+	public void setScgid(Integer scgid) {
+		this.scgid = scgid;
 	}
 
-	public String getSpgname() {
-		return spgname;
+	public String getScgname() {
+		return scgname;
 	}
 
-	public void setSpgname(String spgname) {
-		this.spgname = spgname;
+	public void setScgname(String scgname) {
+		this.scgname = scgname;
 	}
 
-	public String getSpcontrol() {
-		return spcontrol;
+	public String getScvalue() {
+		return scvalue;
 	}
 
-	public void setSpcontrol(String spcontrol) {
-		this.spcontrol = spcontrol;
+	public void setScvalue(String scvalue) {
+		this.scvalue = scvalue;
 	}
 
-	public String getSppermission() {
-		return sppermission;
-	}
-
-	public void setSppermission(String sppermission) {
-		this.sppermission = sppermission;
-	}
-
-	public List<SystemGroup> getSystemGroup() {
-		return systemGroup;
-	}
-
-	public void setSystemGroup(List<SystemGroup> systemGroup) {
-		this.systemGroup = systemGroup;
-	}
+	
+	
 }

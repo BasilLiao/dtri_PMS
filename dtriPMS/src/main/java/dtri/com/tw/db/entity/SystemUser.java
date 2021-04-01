@@ -8,6 +8,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -110,7 +111,8 @@ public class SystemUser {
 
 	// 主體型
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_user_seq") 
+    @SequenceGenerator(name = "system_user_seq", sequenceName = "system_user_seq") 
 	@Column(name = "su_id")
 	private Integer suid;
 

@@ -1,53 +1,57 @@
 <!-- 查詢項目 -->
+<style>
+.radio_size {
+	width: 22px;
+	height: 22px;
+}
+</style>
 <div id="search">
 	<div class="shadow mt-0 text-left">
-		<div class=" bg-white rounded-top m-0 pl-1 h5">
+		<div class="bg-white rounded-top m-0 pl-1 h4">
 			<i class="bi bi-search mr-1"></i>Search
 		</div>
-		<div class="row p-0 m-0">
+		<div class="row p-0 m-0 search_example_finds">
 			<!-- col-md-2/4/6/8/10/12 -->
 			<div class="col-md-2 p-2 search_example_input">
-				<div class="h6 mb-1">Search1</div>
+				<div class="h6 mb-1 s_name">Search1</div>
 				<div class="p-0">
-					<input class="col p-1 border border-dark rounded" type="text">
+					<input class="col p-1 border border-dark rounded s_value" type="text" />
 				</div>
 			</div>
-			<div class="col-md-2 p-2">
-				<div class="h6 mb-1 search_example_select">Search2</div>
-				<select class="col-12 custom-select custom-select-sm">
-					<option value="0" selected>Open this select menu</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
+			<div class="col-md-2 p-2 search_example_selsect">
+				<div class="h6 mb-1 s_name">Search2</div>
+				<select class="col-12 custom-select custom-select-sm s_value">
+					<option class="example_select_def" value="" selected>select</option>
+					<option class="example_select_one" value="1">One</option>
 				</select>
 			</div>
 		</div>
 		<div class="row justify-content-end p-0 m-0 search_example_button">
 			<div class="col-12 col-md-4 row justify-content-between m-0 p-2">
-				<button class="col-md-5 mt-1 btn btn-primary btn-sm" type="submit">Search</button>
-				<button class="col-md-5 mt-1 btn btn-warning btn-sm" type="submit">Clear</button>
+				<button id="search_btn" class="col-md-5 mt-1 btn btn-primary btn-sm" type="submit">Search</button>
+				<button id="clear_btn" class="col-md-5 mt-1 btn btn-warning btn-sm" type="button">Clear</button>
 			</div>
 		</div>
 	</div>
 	<!-- 查詢結果 -->
 	<div class="shadow mt-2">
-		<div class="text-left bg-white rounded-top m-0 pl-1 h5">
+		<div class="text-left bg-white rounded-top m-0 pl-1 h4">
 			<i class="bi bi-list-ul mr-1"></i>Result
 		</div>
-		<div class=" p-2">
+		<div class="p-2">
 			<div class="pb-2 m-0 row">
 				<div class="col-6 h6 m-0 p-0 row justify-content-start search_example_action">
 					<div class="m-0 mr-2">
-						<button class="col-md-12 m-0 pl-2 pr-2 btn btn-outline-primary btn-sm" type="submit">Action</button>
+						<button id="choose_s" class="col-md-12 m-0 pl-2 pr-2 btn btn-outline-primary btn-sm" type="submit">Action</button>
 					</div>
 					<div class="m-0 mt-1 mr-2 h6">
 						<i class="bi bi-shield"></i>Lock
 					</div>
 					<div class="m-0 mt-1 mr-2 h6">
-						<i class="bi bi-files"></i>Save as ...
+						<i class="bi bi-receipt"></i>Detail
 					</div>
 					<div class="m-0 mt-1 mr-2 h6">
-						<i class="bi bi-receipt"></i>Detail
+						<i class="bi bi-files"></i>Save as ...
 					</div>
 					<div class="m-0 mt-1 mr-2 h6">
 						<i class="bi bi-vector-pen"></i>Modify
@@ -65,151 +69,438 @@
 
 				<div class="col-6 m-0 p-0 row justify-content-end search_example_page">
 					<ul class="pagination pagination-sm m-0 row">
-						<li class="page-item"><a class="page-link" href="#"> Previous 10 </a></li>
-						<li class="page-item active"><a class="page-link pr-3 pl-3" href="#">1</a></li>
-						<li class="page-item"><a class="page-link pr-3 pl-3" href="#">2</a></li>
-						<li class="page-item"><a class="page-link pr-3 pl-3" href="#">3</a></li>
-						<li class="page-item"><a class="page-link pr-3 pl-3" href="#">4</a></li>
-						<li class="page-item"><a class="page-link pr-3 pl-3" href="#">5</a></li>
-						<li class="page-item"><a class="page-link pr-3 pl-3" href="#">6</a></li>
-						<li class="page-item"><a class="page-link pr-3 pl-3" href="#">7</a></li>
-						<li class="page-item"><a class="page-link pr-3 pl-3" href="#">8</a></li>
-						<li class="page-item"><a class="page-link pr-3 pl-3" href="#">9</a></li>
-						<li class="page-item"><a class="page-link pr-3 pl-3" href="#">10</a></li>
-						<li class="page-item"><a class="page-link" href="#"> Next 10 </a></li>
+						<li id="page_p" class="page-item"><a class="page-link" href="#"> Previous 10 </a></li>
+						<li id="page_1" class="page-item"><a class="page-link pr-3 pl-3" href="#">1</a></li>
+						<li id="page_2" class="page-item"><a class="page-link pr-3 pl-3" href="#">2</a></li>
+						<li id="page_3" class="page-item"><a class="page-link pr-3 pl-3" href="#">3</a></li>
+						<li id="page_4" class="page-item"><a class="page-link pr-3 pl-3" href="#">4</a></li>
+						<li id="page_5" class="page-item"><a class="page-link pr-3 pl-3" href="#">5</a></li>
+						<li id="page_6" class="page-item"><a class="page-link pr-3 pl-3" href="#">6</a></li>
+						<li id="page_7" class="page-item"><a class="page-link pr-3 pl-3" href="#">7</a></li>
+						<li id="page_8" class="page-item"><a class="page-link pr-3 pl-3" href="#">8</a></li>
+						<li id="page_9" class="page-item"><a class="page-link pr-3 pl-3" href="#">9</a></li>
+						<li id="page_10" class="page-item"><a class="page-link pr-3 pl-3" href="#">10</a></li>
+						<li id="page_n" class="page-item"><a class="page-link" href="#"> Next 10 </a></li>
 					</ul>
 				</div>
 			</div>
-			<table class="table table-sm table-hover table-striped table-bordered table-responsive m-0">
+			<table class="table table-sm table-hover table-striped table-bordered table-responsive m-0" style="min-height: 410px;">
 				<thead class="thead bg-dark table-dark search_example_title">
 					<tr>
-						<th style="min-width: 35px"><i class="btn btn-outline-light p-0 pr-1 pl-1 bi bi-shield"></i></th>
-						<th style="min-width: 35px"><i class="btn btn-outline-secondary p-0 pr-1 pl-1 bi bi-files"></i></th>
-						<th style="min-width: 35px"><i class="btn btn-outline-success p-0 pr-1 pl-1 bi bi-receipt"></i></th>
-						<th style="min-width: 35px"><i class="btn btn-outline-warning p-0 pr-1 pl-1 bi bi-vector-pen"></i></th>
-						<th style="min-width: 35px"><i class="btn btn-outline-danger p-0 pr-1 pl-1 bi bi-x-octagon"></i></th>
-						<th style="min-width: 35px"><i class="btn btn-outline-primary p-0 pr-1 pl-1 bi bi-printer"></i></th>
-						<th style="min-width: 35px"><i class="btn btn-outline-info p-0 pr-1 pl-1 bi bi-cloud-download"></i></th>
-						<th class="s_title_body" style="min-width: 200px">Last</th>
-						<th class="s_title_last" style="min-width: 200px; width: 100%;">Handle</th>
+						<th style="min-width: 35px;"><i class="btn btn-outline-light p-0 pr-1 pl-1 bi bi-shield"></i></th>
+						<th style="min-width: 35px;"><i class="btn btn-outline-secondary p-0 pr-1 pl-1 bi bi-receipt"></i></th>
+						<th style="min-width: 35px;"><i class="btn btn-outline-success p-0 pr-1 pl-1 bi bi-files"></i></th>
+						<th style="min-width: 35px;"><i class="btn btn-outline-warning p-0 pr-1 pl-1 bi bi-vector-pen"></i></th>
+						<th style="min-width: 35px;"><i class="btn btn-outline-danger p-0 pr-1 pl-1 bi bi-x-octagon"></i></th>
+						<th style="min-width: 35px;"><i class="btn btn-outline-primary p-0 pr-1 pl-1 bi bi-printer"></i></th>
+						<th style="min-width: 35px;"><i class="btn btn-outline-info p-0 pr-1 pl-1 bi bi-cloud-download"></i></th>
+						<th class="s_title_body" style="min-width: 100px;">Last</th>
+						<th class="s_title_last" style="min-width: 100px; width: 100%;">Handle</th>
 					</tr>
 				</thead>
-				<tbody class="search_example_list">
+				<tbody class="search_example_list" style="white-space: nowrap;">
 					<tr class="search_example_content">
-						<td class="p-0 pl-1 pt-1 search_radio_0">
-							<div class="custom-control custom-radio custom-control-inline m-0">
-								<input type="radio" id="line_0_0" name="line_0" class="custom-control-input" value="line_0_0" checked> <label class="custom-control-label" for="line_0_0"></label>
+						<td class="p-0 pt-1 search_radio_0">
+							<div class="m-0">
+								<input type="radio" id="line_0_0" name="line_0" class="radio_size position-static" value="lock" />
 							</div>
 						</td>
-						<td class="p-0 pl-1 pt-1 search_radio_1">
-							<div class="custom-control custom-radio custom-control-inline m-0">
-								<input type="radio" id="line_0_1" name="line_0" class="custom-control-input" value="line_0_1"> <label class="custom-control-label" for="line_0_1"></label>
+						<td class="p-0 pt-1 search_radio_1">
+							<div class="m-0">
+								<input type="radio" id="line_0_1" name="line_1" class="radio_size position-static" value="detail" />
 							</div>
 						</td>
-						<td class="p-0 pl-1 pt-1 search_radio_2">
-							<div class="custom-control custom-radio custom-control-inline m-0">
-								<input type="radio" id="line_0_2" name="line_0" class="custom-control-input" value="line_0_2"> <label class="custom-control-label" for="line_0_2"></label>
+						<td class="p-0 pt-1 search_radio_2">
+							<div class="m-0">
+								<input type="radio" id="line_0_2" name="line_2" class="radio_size position-static" value="save_as" />
 							</div>
 						</td>
-						<td class="p-0 pl-1 pt-1 search_radio_3">
-							<div class="custom-control custom-radio custom-control-inline m-0">
-								<input type="radio" id="line_0_3" name="line_0" class="custom-control-input" value="line_0_3"> <label class="custom-control-label" for="line_0_3"></label>
+						<td class="p-0 pt-1 search_radio_3">
+							<div class="m-0">
+								<input type="radio" id="line_0_3" name="line_3" class="radio_size position-static" value="modify" />
 							</div>
 						</td>
-						<td class="p-0 pl-1 pt-1 search_radio_4">
-							<div class="custom-control custom-radio custom-control-inline m-0">
-								<input type="radio" id="line_0_4" name="line_0" class="custom-control-input" value="line_0_4"> <label class="custom-control-label" for="line_0_4"></label>
+						<td class="p-0 pt-1 search_radio_4">
+							<div class="m-0">
+								<input type="radio" id="line_0_4" name="line_4" class="radio_size position-static" value="delete" />
 							</div>
 						</td>
-						<td class="p-0 pl-1 pt-1 search_radio_5">
-							<div class="custom-control custom-radio custom-control-inline m-0">
-								<input type="radio" id="line_0_5" name="line_0" class="custom-control-input" value="line_0_5"> <label class="custom-control-label" for="line_0_5"></label>
+						<td class="p-0 pt-1 search_radio_5">
+							<div class="m-0">
+								<input type="radio" id="line_0_5" name="line_5" class="radio_size position-static" value="print" />
 							</div>
 						</td>
-						<td class="p-0 pl-1 pt-1 search_radio_6">
-							<div class="custom-control custom-radio custom-control-inline m-0">
-								<input type="radio" id="line_0_6" name="line_0" class="custom-control-input" value="line_0_6"> <label class="custom-control-label" for="line_0_6"></label>
+						<td class="p-0 pt-1 search_radio_6">
+							<div class=" m-0">
+								<input type="radio" id="line_0_6" name="line_6" class="radio_size position-static" value="download" />
 							</div>
 						</td>
-						<td class="s_list_body">1</td>
+						<td title="" class="s_list_body">1</td>
 					</tr>
-
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
-	//控制端
-	search = new Vue({
-		el : "#search",
-		//資料區
-		data : {
-			test : 300
-		},
-		//初始化
-		created() {
-			console.log("search.html(created)");
-		},
-		//可呼叫方法
-		methods : {
-			setDataTitle(title){
-				//標題注入資訊
-				title = main.orderedSort(title);
-				for(var i =0;i< (Object.keys(title).length-1);i++){
-					var one_item = $('.search_example_title .s_title_body').clone();//複製樣本
-					var key_id = Object.keys(title)[i];
-					var value_name = title[Object.keys(title)[i]];
-					console.log(key_id+" "+value_name);
-					one_item[0].className="";
-					one_item[0].id = key_id;
-					one_item[0].innerText = value_name;
-					one_item.insertBefore(".s_title_last");
-				}
-				//結尾
-				var key_id = Object.keys(title)[(Object.keys(title).length-1)];
-				var value_name = title[Object.keys(title)[(Object.keys(title).length-1)]];
-				$('.s_title_last').attr("id",key_id);
-				$('.s_title_last').text(value_name);
-				//關閉範例
-				$('.s_title_body').addClass("d-none");
-				
-			},
-			setDataList(list){
-				//清單注入資訊
-				console.log( list.length);
-				for(var j = 0;j < list.length; j++){
-					//資料筆數
-					var list_item = $('.search_example_content').clone();//複製樣本
-					list_item[0].className="search_data_list";
-					list_item[0].id="search_data_"+(j+1);
-					list_item.appendTo('.search_example_list');
-					//選紐欄位
-					for(var r=0 ;r<=6;r++){
-						$("#"+list_item[0].id+" .search_radio_"+r+" input")
-						
-					}
-					//資料欄位
-					for(var i =0;i< (Object.keys(list[j]).length-1);i++){
-						var one_item = $('.search_example_content .s_list_body').clone();//複製樣本
-						var key_id = Object.keys(list[j])[i];
-						var value_name = list[j][Object.keys(list[j])[i]];
-						console.log(key_id+" "+value_name);
-						one_item[0].className="";
-						one_item[0].id = key_id;
-						one_item[0].innerText = value_name;
-						one_item.insertBefore("#"+list_item[0].id+" .s_list_body");
-					}
-				}
-			},
-			ajaxSend(url, dataSend) {
+    //控制端
+    search = new Vue({
+        el: "#search",
+        //資料區
+        data: {
+            //換頁樣式
+            page_total: main.page_total, //每次_總筆數
+            page_batch: main.page_batch, //每次_第幾批
 
-			},
-		},
-		//移除監聽事件
-		beforeDestroy() {
-			console.log("search.html(beforeDestroy)");
+            page_show_size: main.page_show_size, //目前_每分頁顯示數量
+            page_now_size: main.page_now_size, //目前_實際筆數
+            page_now: main.page_now, //目前_頁數
+        },
+        //初始化
+        created() {
+            console.log("search.html(created)");
+        },
+        //可呼叫方法
+        methods: {
+            setDataTitle(title) {
+                //標題注入資訊
+                //排序
+                title = main.orderedSort(title);
+                for (var i = 0; i < Object.keys(title).length - 1; i++) {
+                    var one_item = $(".search_example_title .s_title_body").clone(); //複製樣本
+                    var key_id = Object.keys(title)[i];
+                    var value_name = title[Object.keys(title)[i]];
+                    //console.log(key_id+" "+value_name);
+                    one_item[0].className = "";
+                    one_item[0].id = key_id;
+                    one_item[0].innerText = value_name;
+                    one_item.insertBefore(".s_title_last");
+                }
+                //結尾
+                var key_id = Object.keys(title)[Object.keys(title).length - 1];
+                var value_name = title[Object.keys(title)[Object.keys(title).length - 1]];
+                $(".s_title_last").attr("id", key_id);
+                $(".s_title_last").text(value_name);
+                //關閉範例
+                $(".s_title_body").addClass("d-none");
+            },
+            setDataList(list) {
+                //清單注入資訊
+                //console.log( list.length);
+                //就有資料清除
+                if (list.length < 1) {
+                    t_alert.alertshow("warning", "[777] Didn't find anything [WARNING]!!");
+                    if (this.page_batch >= 1) {
+                        this.page_batch -= 1;
+                    }
+                    return false;
+                }
+                $(".search_data_list").remove();
+                //開啟樣式
+                $(".s_list_body").removeClass("d-none");
+                $(".search_example_content").removeClass("d-none");
+                for (var j = 0; j < list.length; j++) {
+                    //排序
+                    list[j] = main.orderedSort(list[j]);
+                    //資料筆數
+                    var list_item = $(".search_example_content").clone(); //複製樣本
+                    list_item[0].className = "search_data_list";
+                    list_item[0].id = "search_data_" + (j + 1);
+                    list_item.appendTo(".search_example_list");
 
-		}
-	});
+                    //選紐欄位(lock=0/save_as=1/detail=2/modify=3/delete=4/print=5/download=6)
+                    for (var r = 0; r <= 6; r++) {
+                        $("#" + list_item[0].id + " .search_radio_" + r + " input").attr("name", "line_" + (j + 1));
+                        $("#" + list_item[0].id + " .search_radio_" + r + " input").attr("id", "line_" + (j + 1) + "_" + r);
+                        $("#" + list_item[0].id + " .search_radio_" + r + " label").attr("for", "line_" + (j + 1) + "_" + r);
+                    }
+                    $("#" + list_item[0].id + " .search_radio_0 input").prop("checked", true);
+
+                    //資料欄位
+                    for (var i = 0; i < Object.keys(list[j]).length; i++) {
+                        var one_item = $(".search_example_content .s_list_body").clone(); //複製樣本
+                        var key_id = Object.keys(list[j])[i];
+                        var value_name = list[j][Object.keys(list[j])[i]];
+                        //console.log(key_id+" "+value_name);
+                        one_item[0].className = "datalist";
+                        one_item[0].id = "";
+                        one_item[0].title = key_id;
+                        one_item[0].innerText = value_name;
+                        one_item.insertBefore("#" + list_item[0].id + " .s_list_body");
+                    }
+                    $("#search_data_" + j + " .s_list_body").remove();
+                }
+                //關閉樣式
+                $(".s_list_body").addClass("d-none");
+                $(".search_example_content").addClass("d-none");
+                this.pageInit();
+            },
+            setSearch(search) {
+                //查詢注入資訊
+                //console.log(search);
+                for (var i = 0; i < search.length; i++) {
+                    switch (search[i].tag) {
+                        case "input":
+                            var search_input = $(".search_example_input").clone(); //複製樣本
+                            search_input[0].className = search[i].col + " p-2 search_true";
+                            search_input[0].id = "search_" + search[i].id;
+                            search_input.appendTo(".search_example_finds");
+                            $("#" + search_input[0].id + " .s_name").text(search[i].name);
+                            break;
+                        case "select":
+                            //查詢物件練立search:[{"id":"","values":[{"key":"XXX","value":"XXX"},{...}],"type":"","name":""}]
+                            //id / value / type
+                            var search_selsect = $(".search_example_selsect").clone(); //複製樣本
+                            search_selsect[0].className = search[i].col + " p-2 search_true";
+                            search_selsect[0].id = "search_" + search[i].id;
+                            search_selsect.appendTo(".search_example_finds");
+                            $("#" + search_selsect[0].id + " .s_name").text(search[i].name);
+                            for (var o = 0; o < search[i].values.length; o++) {
+                                var one_option = $("#" + search_selsect[0].id + " select .example_select_one").clone(); //複製樣本
+                                one_option[0].id = "select_" + search[i]["values"][o]["key"];
+                                one_option[0].value = search[i]["values"][o]["key"];
+                                one_option[0].innerText = search[i]["values"][o]["value"];
+                                one_option[0].className = "";
+                                one_option.appendTo("#" + search_selsect[0].id + " select");
+                            }
+                            //關閉樣式
+                            break;
+                        default:
+                    }
+                    //關閉樣式
+                    $(".example_select_one").addClass("d-none");
+                    $(".search_example_input").addClass("d-none");
+                    $(".search_example_selsect").addClass("d-none");
+                }
+            },
+            selectAllInit() {
+                //監聽-同步相同屬性
+                //選紐欄位(lock=0/save_as=1/detail=2/modify=3/delete=4/print=5/download=6)
+                $(document).on("click", ".search_example_title .bi-shield", function (event) {
+                    $(".search_radio_0 input").trigger("click");
+                });
+                $(document).on("click", ".search_example_title .bi-receipt", function (event) {
+                    $(".search_radio_1 input").trigger("click");
+                });
+                $(document).on("click", ".search_example_title .bi-files", function (event) {
+                    $(".search_radio_2 input").trigger("click");
+                });
+                $(document).on("click", ".search_example_title .bi-vector-pen", function (event) {
+                    $(".search_radio_3 input").trigger("click");
+                });
+                $(document).on("click", ".search_example_title .bi-x-octagon", function (event) {
+                    $(".search_radio_4 input").trigger("click");
+                });
+                $(document).on("click", ".search_example_title .bi-printer", function (event) {
+                    $(".search_radio_5 input").trigger("click");
+                });
+                $(document).on("click", ".search_example_title .bi-cloud-download", function (event) {
+                    $(".search_radio_6 input").trigger("click");
+                });
+                $(document).on("click", "#choose_s", function (event) {
+                    console.log("choose_s");
+                    search.actionDo();
+                });
+                $(document).on("click", "#search_btn", function (event) {
+                    console.log("search_btn");
+                    search.searchSend();
+                });
+                $(document).on("click", "#clear_btn", function (event) {
+                    console.log("clear_btn");
+                    $(".search_example_finds input").val("");
+                    $(".search_example_finds select").val("");
+                });
+                $(document).on("click", ".pagination .page-item", function (event) {
+                    search.pageChange(event.currentTarget);
+                    return false;
+                });
+            },
+            //action
+            actionDo() {
+                //進行多選
+                var obj_all = {},a_save_as = [],a_detail = [];
+                var a_modify = [], a_delete = [],a_print = [];
+                var a_download = [];
+                for (var s = 1; s <= $(".search_data_list").length; s++) {
+                    var line_id = $("#search_data_" + s + ' input[name="line_' + s + '"]:checked').val();
+                    var sp = "_b__";
+                    var arrays = $("#search_data_" + s + " .datalist");
+                    var obj_one = {};
+                    //key value 建置
+                    for (var c = 0; c < arrays.length; c++) {
+                        var key = arrays[c].title.split(sp)[1];
+                        var value = arrays[c].innerText;
+                       // console.log(key + " : " + value);
+                        obj_one[key] = value;
+                    }
+					//分類包裝
+                    switch (line_id) {
+                        case "detail":a_detail.push(obj_one);
+                            break;
+                        case "save_as":a_save_as.push(obj_one);
+                            break;
+                        case "modify":a_modify.push(obj_one);
+                            break;
+                        case "delete":a_delete.push(obj_one);
+                            break;
+                        case "print":a_print.push(obj_one);
+                            break;
+                        case "download":a_download.push(obj_one);
+                            break;
+                    }
+                }
+                obj_all.a_detail = a_detail;
+                obj_all.a_save_as = a_save_as;
+                obj_all.a_modify = a_modify;
+                obj_all.a_delete = a_delete;
+                obj_all.a_print = a_print;
+                obj_all.a_download = a_download;
+              	//自動(轉跳)點選
+            	for (var i = 0; i < Object.keys(obj_all).length; i++) {
+            		 var key_id = Object.keys(obj_all)[i];
+                     var key_value = obj_all[Object.keys(obj_all)[i]];
+                    //console.log(key_value.length);
+                     //modify_nav 分頁觸發
+                     if(key_value.length>0 && (key_id=="a_detail" || key_id=="a_save_as" || key_id=="a_modify"|| key_id=="a_delete")){
+                    	 $( "#modify_nav" ).trigger( "click" );
+                    	 break;
+                     }
+                   	//print_nav 分頁觸發
+                     if(key_value.length>0 && (key_id=="a_print" )){
+                    	 $( "#print_nav" ).trigger( "click" );
+                    	 break;
+                     }
+                   //download_nav 分頁觸發
+                     if(key_value.length>0 && (key_id=="a_download" )){
+                    	 $( "#download_nav" ).trigger( "click" );
+                    	 break;
+                     }
+                }
+                modify.setData(obj_all);
+            },
+            //search
+            searchSend() {
+                //查詢
+                //Ex:body:{search:{b:b,c:c}}
+                var search = {};
+                for (var s = 0; s < $(".search_true").length; s++) {
+                    var key = $(".search_true")[s].id.replace("search_", "");
+                    var value = $("#" + $(".search_true")[s].id + " .s_value").val();
+                    //console.log(key+ " "+value);
+                    search[key] = value;
+                }
+                //包裝
+                var s_url = (t_body.html_body + ".AR").replace("html", "basil").replace("body_", "");
+                var s_type = "POST";
+                var s_data = {};
+                var req = {};
+                req.user = "";
+                req.date = new Date();
+                req.action = "AR";
+                req.body = {};
+                req.body.search = search;
+                req.page_total = this.page_total;
+                req.page_batch = this.page_batch;
+                req.page_now_nb = this.page_now_nb;
+                req.html_body = "";
+                req.call_bk_fn = "search";
+                req.call_bk_vals = {};
+                s_data.req_content = req;
+
+                //console.log(s_url);
+                //傳送
+                main.ajaxSend(s_url, s_type, s_data);
+            },
+            searchReturn() {
+                console.log("searchReturn");
+                this.setDataList(main.allData.body.search);
+            },
+            //v====[分頁功能]====v
+            pageInit() {
+                //取得目前筆數
+                this.page_now_size = $(".search_data_list").length;
+                this.page_now = 1;
+                var show_p = Math.ceil(this.page_now_size / this.page_show_size);
+                //初始化換頁
+                var d = "disabled";
+                var a = "active";
+                $(".pagination li").removeClass(d).removeClass(a);
+                $(".pagination #page_1").addClass(a);
+                //是否有前一批 資料
+                if (this.page_batch == 0) {
+                    $(".pagination #page_p").addClass(d);
+                }
+                //是否有下一批 資料
+                if (this.page_now_size != this.page_total) {
+                    $(".pagination #page_n").addClass(d);
+                }
+                //分頁初始化
+                for (var p = 1; p <= 10; p++) {
+                    if (p > show_p) $(".pagination #page_" + p).addClass(d);
+                }
+                //隱藏不需要顯示的分頁
+                for (var h = 1; h <= this.page_now_size; h++) {
+                    if (h > this.page_show_size) {
+                        $("#search_data_" + h).addClass("d-none");
+                    }
+                }
+            },
+            pageChange(even) {
+                var id = even.id;
+                console.log("page : " + id.replace("page_", ""));
+                if (id.replace("page_", "") == "n") {
+                    //換頁批次 (下)
+                    if (this.page_now_size != this.page_total) {
+                        return false;
+                    }
+                    this.page_batch += 1;
+                    this.searchSend();
+                } else if (id.replace("page_", "") == "p") {
+                    //換頁批次 (前)
+                    if (this.page_batch == 0) {
+                        return false;
+                    }
+                    this.page_batch -= 1;
+                    this.searchSend();
+                } else if (!$("#" + id).hasClass("disabled")) {
+                    //換頁
+                    var d = "disabled";
+                    var a = "active";
+                    var nb = parseInt(id.replace("page_", ""));
+                    //分頁初始化
+                    for (var p = 1; p <= 10; p++) {
+                        $(".pagination #page_" + p).removeClass(a);
+                    }
+                    $(".pagination #page_" + nb).addClass(a);
+                    //顯示換頁內容
+                    for (var show = 1; show <= this.page_now_size; show++) {
+                        if (show <= nb * this.page_show_size && show > nb * this.page_show_size - this.page_show_size) {
+                            $("#search_data_" + show).removeClass("d-none");
+                        } else {
+                            $("#search_data_" + show).addClass("d-none");
+                        }
+                    }
+                } else {
+                    return false;
+                }
+            },
+
+            //^====[分頁功能]====^
+        },
+        //移除監聽事件
+        beforeDestroy() {
+            console.log("search.html(beforeDestroy)");
+            $(document).off("click", ".search_example_title .bi-shield");
+            $(document).off("click", ".search_example_title .bi-files");
+            $(document).off("click", ".search_example_title .bi-receipt");
+            $(document).off("click", ".search_example_title .bi-vector-pen");
+            $(document).off("click", ".search_example_title .bi-x-octagon");
+            $(document).off("click", ".search_example_title .bi-printer");
+            $(document).off("click", ".search_example_title .bi-cloud-download");
+            $(document).off("click", "#choose_s");
+            $(document).off("click", "#clear_btn");
+            $(document).off("click", "#search_btn");
+            $(document).off("click", ".pagination .page-item");
+        },
+    });
 </script>
