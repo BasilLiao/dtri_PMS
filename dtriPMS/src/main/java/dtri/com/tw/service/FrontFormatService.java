@@ -22,8 +22,8 @@ public class FrontFormatService {
 	 *         show:"d-none/disabled/show", values:[{key:value,key:value}]}
 	 * 
 	 **/
-	public JSONObject h_modify(String id, String name, String tag, String type, boolean required, String placeholder,
-			String show, String col, JSONArray values) {
+	public JSONObject h_modify(String tag, String type, String placeholder, String show, String col, boolean required, JSONArray values, String id,
+			String name) {
 		JSONObject object_value = new JSONObject();
 		object_value.put("name", name);
 		object_value.put("id", id);// id
@@ -49,7 +49,7 @@ public class FrontFormatService {
 	 * @return 格式 :
 	 *         {name:xxx,type:(select/input/textarea),col:(col-(md/lg/sm)-數字),id:"",values:[{key:value,key:value}]}
 	 **/
-	public JSONObject h_search(String name, String tag, String type, String col, String id, JSONArray values) {
+	public JSONObject h_search(String tag, String type, String col, String id, String name, JSONArray values) {
 		JSONObject one_search = new JSONObject();
 		one_search.put("name", name);
 		one_search.put("tag", tag);
@@ -59,4 +59,19 @@ public class FrontFormatService {
 		one_search.put("values", values);
 		return one_search;
 	}
+
+	// Table header 格式(標題/寬度)
+	/**
+	 * @param name 欄位名稱
+	 * @param size 欄位寬度
+	 * 
+	 * @return 格式 : {name:xxx,size:50px}
+	 **/
+	public JSONObject h_title(String name, String size) {
+		JSONObject one_title = new JSONObject();
+		one_title.put("name", name);
+		one_title.put("size", size);
+		return one_title;
+	}
+
 }

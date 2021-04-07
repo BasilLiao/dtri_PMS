@@ -191,11 +191,11 @@
 			</div>
 			<div class="p-2">
 				<table class="table table-sm table-hover table-striped table-bordered table-responsive m-0 delete_example">
-					<thead class="thead bg-dark table-dark delete_example_title">
+					<thead class="thead bg-dark table-dark delete_example_title" style="white-space: nowrap;">
 						<tr>
 							<th style="min-width: 35px"><i class="m-1 bi bi-pencil-square"></i></th>
-							<th class="d_title_body" style="min-width: 100px">ID</th>
-							<th class="d_title_last" style="min-width: 100px; width: 100%;">Handle</th>
+							<th class="d_title_body" >ID</th>
+							<th class="d_title_last" style=" width: 100%;">Handle</th>
 						</tr>
 					</thead>
 					<tbody class="delete_example_body" style="white-space: nowrap;">
@@ -266,14 +266,17 @@
                 //console.log(key_id+" "+value_name);
                 one_item[0].className = "";
                 one_item[0].id = key_id;
-                one_item[0].innerText = value_name;
+                one_item[0].innerText = value_name.name;
+               
                 one_item.insertBefore(".d_title_last");
+                $('.delete_example_title #'+key_id).css('min-width', value_name.size);
            		}
             //結尾
             var key_id = Object.keys(title)[Object.keys(title).length - 1];
             var value_name = title[Object.keys(title)[Object.keys(title).length - 1]];
             $(".d_title_last").attr("id", key_id);
-            $(".d_title_last").text(value_name);
+            $(".d_title_last").text(value_name.name);
+            $('#'+key_id).css('min-width', value_name.size);
             //關閉範例
             $(".d_title_body").remove();
 			},

@@ -82,6 +82,7 @@ public class SystemUser {
 		this.sysnote = "";
 		this.syssort = 0;
 		this.sysstatus = 0;
+		this.sysgheader = false;
 	}
 
 	// 共用型
@@ -108,6 +109,9 @@ public class SystemUser {
 
 	@Column(name = "sys_sort", columnDefinition = "int default 0")
 	private Integer syssort;
+	
+	@Column(name = "sys_g_header", nullable = false, columnDefinition = "boolean default false")
+	private Boolean sysgheader;
 
 	// 主體型
 	@Id
@@ -136,6 +140,14 @@ public class SystemUser {
 
 	@Column(name = "su_email", columnDefinition = "varchar(200) default ''")
 	private String suemail;
+	
+	public Boolean getSysgheader() {
+		return sysgheader;
+	}
+
+	public void setSysgheader(Boolean sysgheader) {
+		this.sysgheader = sysgheader;
+	}
 
 	public Date getSyscdate() {
 		return syscdate;

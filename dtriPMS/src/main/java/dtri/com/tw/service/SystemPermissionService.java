@@ -41,79 +41,72 @@ public class SystemPermissionService {
 			systemPermissions = permissionDao.findAllByOrderBySpgidAscSpidAsc(page_r);
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
-			object_header.put("01_h__sp_id", "功能ID");
-			object_header.put("02_h__sp_g_id", "功能組ID");
-			object_header.put("03_h__sp_g_name", "功能組名稱");
-			object_header.put("04_h__sp_name", "功能名稱");
-			object_header.put("05_h__sp_control", "功能控制");
+			object_header.put("01_h__sp_id", f_f.h_title("功能ID", "100px"));
+			object_header.put("02_h__sp_g_id", f_f.h_title("功能組ID", "100px"));
+			object_header.put("03_h__sp_g_name", f_f.h_title("功能組名稱", "150px"));
+			object_header.put("04_h__sp_name", f_f.h_title("功能名稱", "150px"));
+			object_header.put("05_h__sp_control", f_f.h_title("功能控制", "150px"));
+			object_header.put("06_h__sp_permission", f_f.h_title("權限範圍", "150px"));
+			
+			object_header.put("07_h__sys_c_date", f_f.h_title("建立時間", "150px"));
+			object_header.put("08_h__sys_c_user", f_f.h_title("建立人", "100px"));
+			object_header.put("09_h__sys_m_date", f_f.h_title("修改時間", "150px"));
+			object_header.put("10_h__sys_m_user", f_f.h_title("修改人", "100px"));
 
-			object_header.put("06_h__sp_permission", "權限範圍");
-			object_header.put("07_h__sys_c_date", "建立時間");
-			object_header.put("08_h__sys_c_user", "建立人");
-			object_header.put("09_h__sys_m_date", "修改時間");
-			object_header.put("10_h__sys_m_user", "修改人");
-
-			object_header.put("11_h__sys_note", "備註");
-			object_header.put("12_h__sys_sort", "排序");
-			object_header.put("13_h__sys_ver", "版本");
-			object_header.put("14_h__sys_status", "狀態");
+			object_header.put("11_h__sys_note", f_f.h_title("備註", "100px"));
+			object_header.put("12_h__sys_sort", f_f.h_title("排序", "100px"));
+			object_header.put("13_h__sys_ver", f_f.h_title("版本", "100px"));
+			object_header.put("14_h__sys_status", f_f.h_title("狀態", "100px"));
 			bean.setHeader(object_header);
 
 			// 放入修改 [m__(key)](modify/Create/Delete) 格式
 			JSONArray obj_m = new JSONArray();
-			obj_m.put(f_f.h_modify("m__sp_id", "功能ID", "input", "text", false, "", "disabled", "col-md-2",
-					new JSONArray()));
-			obj_m.put(f_f.h_modify("m__sp_g_id", "功能組ID", "input", "text", false, "", "disabled", "col-md-2",
-					new JSONArray()));
-			obj_m.put(f_f.h_modify("m__sp_g_name", "功能組名稱", "input", "text", true, "", "show", "col-md-2",
-					new JSONArray()));
-			obj_m.put(
-					f_f.h_modify("m__sp_name", "功能名稱", "input", "text", true, "", "show", "col-md-2", new JSONArray()));
-			obj_m.put(f_f.h_modify("m__sp_control", "功能控制", "input", "text", true, "", "show", "col-md-2",
-					new JSONArray()));
-
-			obj_m.put(f_f.h_modify("m__sp_permission", "權限範圍", "input", "text", true, "", "show", "col-md-2",
-					new JSONArray()));
-			obj_m.put(f_f.h_modify("m__sys_c_date", "建立時間", "input", "text", false, "", "disabled", "col-md-2",
-					new JSONArray()));
-			obj_m.put(f_f.h_modify("m__sys_c_user", "建立人", "input", "text", false, "", "disabled", "col-md-2",
-					new JSONArray()));
-			obj_m.put(f_f.h_modify("m__sys_m_date", "修改時間", "input", "text", false, "", "disabled", "col-md-2",
-					new JSONArray()));
-			obj_m.put(f_f.h_modify("m__sys_m_user", "修改人", "input", "text", false, "", "disabled", "col-md-2",
-					new JSONArray()));
-
-			obj_m.put(f_f.h_modify("m__sys_note", "備註", "textarea", "text", false, "", "show", "col-md-12",
-					new JSONArray()));
-			obj_m.put(f_f.h_modify("m__sys_sort", "排序", "input", "number", true, "", "show", "col-md-2",
-					new JSONArray()));
-			obj_m.put(f_f.h_modify("m__sys_ver", "版本", "input", "number", false, "", "disabled", "col-md-2",
-					new JSONArray()));
 			JSONArray values = new JSONArray();
+			String inp = "input", tex = "textarea", sel = "select";
+			String text = "text", numb = "number";
+			String dis = "disabled", sho = "show";
+
+			obj_m.put(f_f.h_modify(inp, text, "", dis, "col-md-2", false, values, "m__sp_id", "功能ID"));
+			obj_m.put(f_f.h_modify(inp, text, "", dis, "col-md-2", false, values, "m__sp_g_id", "功能組ID"));
+			obj_m.put(f_f.h_modify(inp, text, "", sho, "col-md-2", true, values, "m__sp_g_name", "功能組名稱"));
+			obj_m.put(f_f.h_modify(inp, text, "", sho, "col-md-2", true, values, "m__sp_name", "功能名稱"));
+			obj_m.put(f_f.h_modify(inp, text, "", sho, "col-md-2", true, values, "m__sp_control", "功能控制"));
+
+			obj_m.put(f_f.h_modify(inp, text, "", sho, "col-md-2", true, values, "m__sp_permission", "權限範圍"));
+			obj_m.put(f_f.h_modify(inp, text, "", dis, "col-md-2", false, values, "m__sys_c_date", "建立時間"));
+			obj_m.put(f_f.h_modify(inp, text, "", dis, "col-md-2", false, values, "m__sys_c_user", "建立人"));
+			obj_m.put(f_f.h_modify(inp, text, "", dis, "col-md-2", false, values, "m__sys_m_date", "修改時間"));
+			obj_m.put(f_f.h_modify(inp, text, "", dis, "col-md-2", false, values, "m__sys_m_user", "修改人"));
+
+			obj_m.put(f_f.h_modify(tex, text, "", sho, "col-md-12", false, values, "m__sys_note", "備註"));
+			obj_m.put(f_f.h_modify(inp, numb, "", sho, "col-md-2", true, values, "m__sys_sort", "排序"));
+			obj_m.put(f_f.h_modify(inp, numb, "", dis, "col-md-2", false, values, "m__sys_ver", "版本"));
+
+			values = new JSONArray();
 			values.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			values.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			obj_m.put(f_f.h_modify("m__sys_status", "狀態", "select", "text", true, "", "show", "col-md-2", values));
+			obj_m.put(f_f.h_modify(sel, text, "", sho, "col-md-2", true, values, "m__sys_status", "狀態"));
 			bean.setCell_modify(obj_m);
 
 			// 放入包裝(search)
 			JSONArray object_searchs = new JSONArray();
-			object_searchs.put(f_f.h_search("功能組名稱", "input", "text", "col-md-2", "sp_g_name", new JSONArray()));
-			object_searchs.put(f_f.h_search("功能名稱", "input", "text", "col-md-2", "sp_name", new JSONArray()));
+			object_searchs.put(f_f.h_search("input", "text", "col-md-2", "sp_g_name", "功能組名稱", new JSONArray()));
+			object_searchs.put(f_f.h_search("input", "text", "col-md-2", "sp_name", "功能名稱", new JSONArray()));
 			values = new JSONArray();
 			values.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			values.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			object_searchs.put(f_f.h_search("狀態", "select", "text", "col-md-2", "sys_status", values));
+			object_searchs.put(f_f.h_search("select", "text", "col-md-2", "sys_status", "狀態", values));
 			bean.setCell_searchs(object_searchs);
 		} else {
 			// 進行-特定查詢
-			String sp_name = body.getJSONObject("search").getString("sp_name").equals("") ? null
-					: body.getJSONObject("search").getString("sp_name");
-			String sp_g_name = body.getJSONObject("search").getString("sp_g_name").equals("") ? null
-					: body.getJSONObject("search").getString("sp_g_name");
-			Integer status = body.getJSONObject("search").getString("sys_status").equals("") ? 0
-					: body.getJSONObject("search").getInt("sys_status");
+			String sp_name = body.getJSONObject("search").getString("sp_name");
+			sp_name = sp_name.equals("") ? null : sp_name;
+			String sp_g_name = body.getJSONObject("search").getString("sp_g_name");
+			sp_g_name = sp_g_name.equals("") ? null : sp_g_name;
+			String status = body.getJSONObject("search").getString("sys_status");
+			status = status.equals("") ? "0" : status;
 
-			systemPermissions = permissionDao.findAllByPermission(sp_name, sp_g_name, status, page_r);
+			systemPermissions = permissionDao.findAllByPermission(sp_name, sp_g_name, Integer.parseInt(status), page_r);
 		}
 
 		// 放入包裝(body) [01 是排序][_b__ 是分割直][資料庫欄位名稱]
@@ -161,8 +154,7 @@ public class SystemPermissionService {
 				sys_p.setSyscuser(user.getSuname());
 
 				// 檢查群組名稱重複
-				ArrayList<SystemPermission> sys_p_g = permissionDao.findAllByPermissionGroupTop1(sys_p.getSpgname(),
-						PageRequest.of(0, 1));
+				ArrayList<SystemPermission> sys_p_g = permissionDao.findAllByPermissionGroupTop1(sys_p.getSpgname(), PageRequest.of(0, 1));
 				if (sys_p_g != null && sys_p_g.size() > 0) {
 					// 重複 則取同樣G_ID
 					sys_p.setSpgid(sys_p_g.get(0).getSpgid());
@@ -191,15 +183,16 @@ public class SystemPermissionService {
 				sys_p.setSyscuser(user.getSuname());
 
 				// 檢查群組名稱重複
-				ArrayList<SystemPermission> sys_p_g = permissionDao.findAllByPermissionGroupTop1(sys_p.getSpgname(),
-						PageRequest.of(0, 1));
+				ArrayList<SystemPermission> sys_p_g = permissionDao.findAllByPermissionGroupTop1(sys_p.getSpgname(), PageRequest.of(0, 1));
 				if (sys_p_g != null && sys_p_g.size() > 0) {
 					// 重複 則取同樣G_ID
 					sys_p.setSpgid(sys_p_g.get(0).getSpgid());
+					sys_p.setSysheader(false);
 				} else {
 					// 取得最新G_ID
 					sys_p_g = permissionDao.findAllByTop1(PageRequest.of(0, 1));
 					sys_p.setSpgid((sys_p_g.get(0).getSpgid() + 1));
+					sys_p.setSysheader(true);
 				}
 				permissionDao.save(sys_p);
 				check = true;
@@ -233,15 +226,16 @@ public class SystemPermissionService {
 				sys_p.setSysmdate(new Date());
 
 				// 檢查群組名稱重複
-				ArrayList<SystemPermission> sys_p_g = permissionDao.findAllByPermissionGroupTop1(sys_p.getSpgname(),
-						PageRequest.of(0, 1));
+				ArrayList<SystemPermission> sys_p_g = permissionDao.findAllByPermissionGroupTop1(sys_p.getSpgname(), PageRequest.of(0, 1));
 				if (sys_p_g != null && sys_p_g.size() > 0) {
 					// 重複 則取同樣G_ID
 					sys_p.setSpgid(sys_p_g.get(0).getSpgid());
+					sys_p.setSysheader(false);
 				} else {
 					// 取得最新G_ID
 					sys_p_g = permissionDao.findAllByTop1(PageRequest.of(0, 1));
 					sys_p.setSpgid((sys_p_g.get(0).getSpgid() + 1));
+					sys_p.setSysheader(true);
 				}
 				permissionDao.save(sys_p);
 				check = true;
@@ -265,7 +259,7 @@ public class SystemPermissionService {
 				JSONObject data = (JSONObject) one;
 				sys_p.setSpid(data.getInt("sp_id"));
 
-				permissionDao.delete(sys_p);
+				permissionDao.deleteBySpidAndSysheader(sys_p.getSpid(),false);
 				check = true;
 			}
 		} catch (Exception e) {

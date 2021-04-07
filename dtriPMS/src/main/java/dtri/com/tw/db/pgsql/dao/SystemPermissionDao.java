@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 import dtri.com.tw.db.entity.SystemPermission;
 
 @Repository
@@ -35,4 +36,6 @@ public interface SystemPermissionDao extends JpaRepository<SystemPermission, Lon
 	@Query("SELECT c FROM SystemPermission c order by c.spgid desc")
 	ArrayList<SystemPermission> findAllByTop1(Pageable pageable);
 
+	//delete
+	Long deleteBySpidAndSysheader(Integer id, Boolean sysheader);
 }

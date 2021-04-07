@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.springframework.core.annotation.Order;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
@@ -48,6 +47,7 @@ public class SystemGroup {
 		this.sysnote = "";
 		this.syssort = 0;
 		this.sysstatus = 0;
+		this.sysheader = false;
 	}
 
 	// 共用型
@@ -75,14 +75,17 @@ public class SystemGroup {
 	@Column(name = "sys_sort", columnDefinition = "int default 0")
 	private Integer syssort;
 
+	@Column(name = "sys_header", nullable = false, columnDefinition = "boolean default false")
+	private Boolean sysheader;
+
 	// 群組型
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_group_seq") 
-    @SequenceGenerator(name = "system_group_seq", sequenceName = "system_group_seq") 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_group_seq")
+	@SequenceGenerator(name = "system_group_seq", sequenceName = "system_group_seq")
 	@Column(name = "sg_id")
 	private Integer sgid;
 
-	@Column(name = "sg_g_id", nullable = false, columnDefinition = "int default 2")
+	@Column(name = "sg_g_id", nullable = false, columnDefinition = "int default 0")
 	private Integer sggid;
 
 	@Column(name = "sg_name", nullable = false, columnDefinition = "varchar(50)")
@@ -94,6 +97,14 @@ public class SystemGroup {
 	@ManyToOne(targetEntity = SystemPermission.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "sg_sp_id")
 	private SystemPermission systemPermission;
+
+	public Boolean getSysheader() {
+		return sysheader;
+	}
+
+	public void setSysheader(Boolean sysgheader) {
+		this.sysheader = sysgheader;
+	}
 
 	public Date getSyscdate() {
 		return syscdate;

@@ -53,6 +53,7 @@ public class PackageService {
 		data.put("action", object.getaction());
 		data.put("header", object.getHeader());
 		data.put("body", object.getBody());
+		data.put("body_type", object.getBody_type());
 		data.put("page_batch", object.getPage_batch());
 		data.put("page_now_nb", object.getPage_now_nb());
 		data.put("page_total", object.getPage_total());
@@ -70,7 +71,7 @@ public class PackageService {
 	}
 
 	/**
-	 * 其他類型包裝
+	 * 其他-類型包裝-延遞迴船
 	 * 
 	 * @param resp_object 回應包
 	 * @param req_object  請求包

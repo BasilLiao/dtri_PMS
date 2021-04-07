@@ -27,14 +27,26 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 
 		// Restful API ( GET -> 訪問/查詢 ) ( POST -> 新增 ) ( PUT -> 更新) ( DELETE -> 刪除 )
 		// 下列-權限驗證
-		String system_use = "/ajax/system_user.basil";
-		String system_gro = "/ajax/system_group.basil";
+		String system_con = "/ajax/system_config.basil";
 		String system_per = "/ajax/system_permission.basil";
+		String system_gro = "/ajax/system_group.basil";
+		String system_use = "/ajax/system_user.basil";
 		http.authorizeRequests()
 				// thirdparty && img 資料夾靜態資料可 直接 存取 (預設皆有 訪問權限 資料可[匿名]存取)
 				.antMatchers(HttpMethod.GET, "/thirdparty/**", "/img/**", "/login.basil", "/login.html").permitAll()
 				// ----請求-index-(訪問)----
-				.antMatchers(HttpMethod.POST, "/ajax/index.basil").access(actionRole("index.basil", ""))
+				.antMatchers(HttpMethod.POST, "/ajax/index.basil").hasAuthority(actionRole("index.basil", ""))
+
+				// ----請求-system_config-(訪問) ----
+				.antMatchers(HttpMethod.POST, system_con).hasAuthority(actionRole(system_con, ""))
+				// (查詢)
+				.antMatchers(HttpMethod.POST, system_con + ".AR").hasAuthority(actionRole(system_con, "AR"))
+				// (新增)
+				.antMatchers(HttpMethod.POST, system_con + ".AC").hasAuthority(actionRole(system_con, "AC"))
+				// (修改)
+				.antMatchers(HttpMethod.PUT, system_con + ".AU").hasAuthority(actionRole(system_con, "AU"))
+				// (移除)
+				.antMatchers(HttpMethod.DELETE, system_con + ".AD").hasAuthority(actionRole(system_con, "AD"))
 
 				// ----請求-system_permission-(訪問) ----
 				.antMatchers(HttpMethod.POST, system_per).hasAuthority(actionRole(system_per, ""))
@@ -50,24 +62,24 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 				// ----請求-sys_group-(訪問) ----
 				.antMatchers(HttpMethod.POST, system_gro).hasAuthority(actionRole(system_gro, ""))
 				// (查詢)
-				.antMatchers(HttpMethod.POST, system_gro).hasAuthority(actionRole(system_gro, "AR"))
+				.antMatchers(HttpMethod.POST, system_gro + ".AR").hasAuthority(actionRole(system_gro, "AR"))
 				// (新增)
-				.antMatchers(HttpMethod.POST, system_gro).hasAuthority(actionRole(system_gro, "AC"))
+				.antMatchers(HttpMethod.POST, system_gro + ".AC").hasAuthority(actionRole(system_gro, "AC"))
 				// (修改)
-				.antMatchers(HttpMethod.PUT, system_gro).hasAuthority(actionRole(system_gro, "AU"))
+				.antMatchers(HttpMethod.PUT, system_gro + ".AU").hasAuthority(actionRole(system_gro, "AU"))
 				// (移除)
-				.antMatchers(HttpMethod.DELETE, system_gro).hasAuthority(actionRole(system_gro, "AD"))
+				.antMatchers(HttpMethod.DELETE, system_gro + ".AD").hasAuthority(actionRole(system_gro, "AD"))
 
 				// ----請求-sys_user-(訪問) ----
 				.antMatchers(HttpMethod.POST, system_use).hasAuthority(actionRole(system_use, ""))
 				// (查詢)
-				.antMatchers(HttpMethod.POST, system_use).hasAuthority(actionRole(system_use, "AR"))
+				.antMatchers(HttpMethod.POST, system_use + ".AR").hasAuthority(actionRole(system_use, "AR"))
 				// (新增)
-				.antMatchers(HttpMethod.POST, system_use).hasAuthority(actionRole(system_use, "AC"))
+				.antMatchers(HttpMethod.POST, system_use + ".AC").hasAuthority(actionRole(system_use, "AC"))
 				// (修改)
-				.antMatchers(HttpMethod.PUT, system_use).hasAuthority(actionRole(system_use, "AU"))
+				.antMatchers(HttpMethod.PUT, system_use + ".AU").hasAuthority(actionRole(system_use, "AU"))
 				// (移除)
-				.antMatchers(HttpMethod.DELETE, system_use).hasAuthority(actionRole(system_use, "AD"))
+				.antMatchers(HttpMethod.DELETE, system_use + ".AD").hasAuthority(actionRole(system_use, "AD"))
 
 				// 請求需要檢驗-全部請求
 				.anyRequest().authenticated();

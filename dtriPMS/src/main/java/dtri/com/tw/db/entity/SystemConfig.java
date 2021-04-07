@@ -35,6 +35,7 @@ public class SystemConfig {
 		this.sysnote = "";
 		this.syssort = 0;
 		this.sysstatus = 0;
+		this.sysheader = false;
 	}
 
 	// 共用型
@@ -62,10 +63,13 @@ public class SystemConfig {
 	@Column(name = "sys_status", columnDefinition = "int default 0")
 	private Integer sysstatus;
 
+	@Column(name = "sys_header", nullable = false, columnDefinition = "boolean default false")
+	private Boolean sysheader;
+
 	// 功能權限
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_config_seq") 
-    @SequenceGenerator(name = "system_config_seq", sequenceName = "system_config_seq") 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_config_seq")
+	@SequenceGenerator(name = "system_config_seq", sequenceName = "system_config_seq")
 	@Column(name = "sc_id")
 	private Integer scid;
 
@@ -80,6 +84,14 @@ public class SystemConfig {
 
 	@Column(name = "sc_value", nullable = false, columnDefinition = "varchar(50)")
 	private String scvalue;
+
+	public Boolean getSysheader() {
+		return sysheader;
+	}
+
+	public void setSysheader(Boolean sysgheader) {
+		this.sysheader = sysgheader;
+	}
 
 	public Date getSyscdate() {
 		return syscdate;
@@ -185,6 +197,4 @@ public class SystemConfig {
 		this.scvalue = scvalue;
 	}
 
-	
-	
 }

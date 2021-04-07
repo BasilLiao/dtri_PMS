@@ -86,7 +86,7 @@
 			//查詢-模板
 			$("#index #search_tab").load("./html/model/search.html", function() {
 				search.setDataTitle(main.allData.header);
-				search.setDataList(main.allData.body.search);
+				search.setDataList(main.allData.body.search,main.allData.body_type);
 				search.setSearch(main.allData.cell_searchs);
 				search.selectAllInit();
 			});
@@ -108,7 +108,7 @@
 			//$("#index #workstation_tab").load("./html/model/workstation.html");
 			
 			//模板-關閉不需要的分頁 disabled
-            //$("#index #home_nav").addClass("disabled");
+            $("#index #home_nav").addClass("disabled");
             //$("#index #search_nav").addClass("disabled");
             //$("#index #modify_nav").addClass("disabled");
             $("#index #print_nav").addClass("disabled");
@@ -117,9 +117,9 @@
             $("#index #analysis_nav").addClass("disabled");
             $("#index #workstation_nav").addClass("disabled");
             //模板-預設分頁 active
-            $("#index #home_nav").addClass("active");
-            $("#index #home_tab").addClass("show");
-            $("#index #home_tab").addClass("active");
+            $("#index #search_nav").addClass("active");
+            $("#index #search_tab").addClass("show");
+            $("#index #search_tab").addClass("active");
 		},
 		//可呼叫方法
 		methods : {

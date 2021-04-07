@@ -26,6 +26,7 @@ public class PackageBean {
 	private String action;// 請求 動作行為
 	private JSONObject header;// title 名稱表
 	private JSONObject body;// 資料 內 容物
+	private String body_type;// 資料 內 容物類型()
 	private Integer page_total;// 每次 總頁數 ex :10
 	private Integer page_batch;// 第幾批
 	private Integer page_now_nb;// 第幾分頁
@@ -41,6 +42,7 @@ public class PackageBean {
 	public PackageBean() {
 		this.info = info_message_danger + info_administrator;
 		this.info_color = info_color_danger;
+		this.body_type = "general";//general / fatherSon
 		this.date = new Date();
 	}
 
@@ -170,5 +172,13 @@ public class PackageBean {
 
 	public void setCall_bk_vals(JSONObject call_bk_vals) {
 		this.call_bk_vals = call_bk_vals;
+	}
+
+	public String getBody_type() {
+		return body_type;
+	}
+
+	public void setBody_type(String body_type) {
+		this.body_type = body_type;
 	}
 }

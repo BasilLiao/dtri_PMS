@@ -49,6 +49,7 @@ public class WorkstationProject {
 		this.sysnote = "";
 		this.syssort = 0;
 		this.sysstatus = 0;
+		this.sysgheader =false;
 	}
 
 	// 共用型
@@ -75,6 +76,9 @@ public class WorkstationProject {
 
 	@Column(name = "sys_sort", columnDefinition = "int default 0")
 	private Integer syssort;
+	
+	@Column(name = "sys_g_header", nullable = false, columnDefinition = "boolean default false")
+	private Boolean sysgheader;
 
 	// 工作站
 	@Id
@@ -100,4 +104,134 @@ public class WorkstationProject {
 	@Column(name = "wo_employee", columnDefinition = "varchar(200) default ''")
 	private String woemployee;
 
+	public Date getSyscdate() {
+		return syscdate;
+	}
+
+	public void setSyscdate(Date syscdate) {
+		this.syscdate = syscdate;
+	}
+
+	public String getSyscuser() {
+		return syscuser;
+	}
+
+	public void setSyscuser(String syscuser) {
+		this.syscuser = syscuser;
+	}
+
+	public Date getSysmdate() {
+		return sysmdate;
+	}
+
+	public void setSysmdate(Date sysmdate) {
+		this.sysmdate = sysmdate;
+	}
+
+	public String getSysmuser() {
+		return sysmuser;
+	}
+
+	public void setSysmuser(String sysmuser) {
+		this.sysmuser = sysmuser;
+	}
+
+	public Integer getSysver() {
+		return sysver;
+	}
+
+	public void setSysver(Integer sysver) {
+		this.sysver = sysver;
+	}
+
+	public String getSysnote() {
+		return sysnote;
+	}
+
+	public void setSysnote(String sysnote) {
+		this.sysnote = sysnote;
+	}
+
+	public Integer getSysstatus() {
+		return sysstatus;
+	}
+
+	public void setSysstatus(Integer sysstatus) {
+		this.sysstatus = sysstatus;
+	}
+
+	public Integer getSyssort() {
+		return syssort;
+	}
+
+	public void setSyssort(Integer syssort) {
+		this.syssort = syssort;
+	}
+
+	public Boolean getSysgheader() {
+		return sysgheader;
+	}
+
+	public void setSysgheader(Boolean sysgheader) {
+		this.sysgheader = sysgheader;
+	}
+
+	public Integer getWoiid() {
+		return woiid;
+	}
+
+	public void setWoiid(Integer woiid) {
+		this.woiid = woiid;
+	}
+
+	public Integer getWogid() {
+		return wogid;
+	}
+
+	public void setWogid(Integer wogid) {
+		this.wogid = wogid;
+	}
+
+	public String getWocodename() {
+		return wocodename;
+	}
+
+	public void setWocodename(String wocodename) {
+		this.wocodename = wocodename;
+	}
+
+	public String getWogname() {
+		return wogname;
+	}
+
+	public void setWogname(String wogname) {
+		this.wogname = wogname;
+	}
+
+	public String getWoiname() {
+		return woiname;
+	}
+
+	public void setWoiname(String woiname) {
+		this.woiname = woiname;
+	}
+
+	public String getWocontrol() {
+		return wocontrol;
+	}
+
+	public void setWocontrol(String wocontrol) {
+		this.wocontrol = wocontrol;
+	}
+
+	public String getWoemployee() {
+		return woemployee;
+	}
+
+	public void setWoemployee(String woemployee) {
+		this.woemployee = woemployee;
+	}
+
+	
+	
 }

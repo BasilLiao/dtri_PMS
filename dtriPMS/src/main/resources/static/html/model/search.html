@@ -2,7 +2,7 @@
 <style>
 .radio_size {
 	width: 22px;
-	height: 22px;
+	height: 20px;
 }
 </style>
 <div id="search">
@@ -85,60 +85,60 @@
 				</div>
 			</div>
 			<table class="table table-sm table-hover table-striped table-bordered table-responsive m-0" style="min-height: 410px;">
-				<thead class="thead bg-dark table-dark search_example_title">
+				<thead class="thead bg-dark table-dark search_example_title" style="white-space: nowrap;">
 					<tr>
-						<th style="min-width: 35px;"><i class="btn btn-outline-light p-0 pr-1 pl-1 bi bi-shield"></i></th>
-						<th style="min-width: 35px;"><i class="btn btn-outline-secondary p-0 pr-1 pl-1 bi bi-receipt"></i></th>
-						<th style="min-width: 35px;"><i class="btn btn-outline-success p-0 pr-1 pl-1 bi bi-files"></i></th>
-						<th style="min-width: 35px;"><i class="btn btn-outline-warning p-0 pr-1 pl-1 bi bi-vector-pen"></i></th>
-						<th style="min-width: 35px;"><i class="btn btn-outline-danger p-0 pr-1 pl-1 bi bi-x-octagon"></i></th>
-						<th style="min-width: 35px;"><i class="btn btn-outline-primary p-0 pr-1 pl-1 bi bi-printer"></i></th>
-						<th style="min-width: 35px;"><i class="btn btn-outline-info p-0 pr-1 pl-1 bi bi-cloud-download"></i></th>
-						<th class="s_title_body" style="min-width: 100px;">Last</th>
-						<th class="s_title_last" style="min-width: 100px; width: 100%;">Handle</th>
+						<th class="p-1" style="min-width: 35px;"><i class="btn btn-outline-light p-0 pr-1 pl-1 bi bi-shield"></i></th>
+						<th class="p-1" style="min-width: 35px;"><i class="btn btn-outline-secondary p-0 pr-1 pl-1 bi bi-receipt"></i></th>
+						<th class="p-1" style="min-width: 35px;"><i class="btn btn-outline-success p-0 pr-1 pl-1 bi bi-files"></i></th>
+						<th class="p-1" style="min-width: 35px;"><i class="btn btn-outline-warning p-0 pr-1 pl-1 bi bi-vector-pen"></i></th>
+						<th class="p-1" style="min-width: 35px;"><i class="btn btn-outline-danger p-0 pr-1 pl-1 bi bi-x-octagon"></i></th>
+						<th class="p-1" style="min-width: 35px;"><i class="btn btn-outline-primary p-0 pr-1 pl-1 bi bi-printer"></i></th>
+						<th class="p-1" style="min-width: 35px;"><i class="btn btn-outline-info p-0 pr-1 pl-1 bi bi-cloud-download"></i></th>
+						<th class="s_title_body" style="min-width: 150px;">
+							<div class="row p-0 m-0 justify-content-between">
+								<div class="title_name">Last</div>
+								<div class="title_order">
+									<i class="bi bi-sort-alpha-down "></i> <i class="bi bi-sort-alpha-up-alt  d-none"></i>
+								</div>
+							</div>
+						</th>
+						<th class="s_title_last p-1" style="min-width: 150px; width: 100%;">
+							<div class="row p-0 m-0 justify-content-between">
+								<div class="title_name">Handle</div>
+								<div class="title_order">
+									<i class="bi bi-sort-alpha-down "></i> <i class="bi bi-sort-alpha-up-alt d-none"></i>
+								</div>
+							</div>
+						</th>
 					</tr>
 				</thead>
 				<tbody class="search_example_list" style="white-space: nowrap;">
 					<tr class="search_example_content">
-						<td class="p-0 pt-1 search_radio_0">
-							<div class="m-0">
-								<input type="radio" id="line_0_0" name="line_0" class="radio_size position-static" value="lock" />
-							</div>
-						</td>
-						<td class="p-0 pt-1 search_radio_1">
-							<div class="m-0">
-								<input type="radio" id="line_0_1" name="line_1" class="radio_size position-static" value="detail" />
-							</div>
-						</td>
-						<td class="p-0 pt-1 search_radio_2">
-							<div class="m-0">
-								<input type="radio" id="line_0_2" name="line_2" class="radio_size position-static" value="save_as" />
-							</div>
-						</td>
-						<td class="p-0 pt-1 search_radio_3">
-							<div class="m-0">
-								<input type="radio" id="line_0_3" name="line_3" class="radio_size position-static" value="modify" />
-							</div>
-						</td>
-						<td class="p-0 pt-1 search_radio_4">
-							<div class="m-0">
-								<input type="radio" id="line_0_4" name="line_4" class="radio_size position-static" value="delete" />
-							</div>
-						</td>
-						<td class="p-0 pt-1 search_radio_5">
-							<div class="m-0">
-								<input type="radio" id="line_0_5" name="line_5" class="radio_size position-static" value="print" />
-							</div>
-						</td>
-						<td class="p-0 pt-1 search_radio_6">
-							<div class=" m-0">
-								<input type="radio" id="line_0_6" name="line_6" class="radio_size position-static" value="download" />
-							</div>
-						</td>
+						<td class="p-0 search_radio_0"><label class="m-0 p-1" for="line_0_0"> <input type="radio" id="line_0_0" name="line_0" class="mt-1 radio_size position-static" value="lock" />
+						</label></td>
+						<td class="p-0 search_radio_1"><label class="m-0 p-1" for="line_0_1"> <input type="radio" id="line_0_1" name="line_1" class="mt-1 radio_size position-static" value="detail" />
+						</label></td>
+						<td class="p-0 search_radio_2"><label class="m-0 p-1" for="line_0_2"> <input type="radio" id="line_0_2" name="line_2" class="mt-1 radio_size position-static" value="save_as" />
+						</label></td>
+						<td class="p-0 search_radio_3"><label class="m-0 p-1" for="line_0_3"> <input type="radio" id="line_0_3" name="line_3" class="mt-1 radio_size position-static" value="modify" />
+						</label></td>
+						<td class="p-0 search_radio_4"><label class="m-0 p-1" for="line_0_4"> <input type="radio" id="line_0_4" name="line_4" class="mt-1 radio_size position-static" value="delete" />
+						</label></td>
+						<td class="p-0 search_radio_5"><label class="m-0 p-1" for="line_0_5"> <input type="radio" id="line_0_5" name="line_5" class="mt-1 radio_size position-static" value="print" />
+						</label></td>
+						<td class="p-0 search_radio_6"><label class="m-0 p-1" for="line_0_6"> <input type="radio" id="line_0_6" name="line_6" class="mt-1 radio_size position-static" value="download" />
+						</label></td>
 						<td title="" class="s_list_body">1</td>
 					</tr>
 				</tbody>
 			</table>
+			<!-- 子目錄 暫存區 -->
+			<table id="data_item_son" class="d-none">
+				<tbody class="search_example_list_son" style="white-space: nowrap;">
+
+				</tbody>
+			</table>
+
 		</div>
 	</div>
 </div>
@@ -155,6 +155,9 @@
             page_show_size: main.page_show_size, //目前_每分頁顯示數量
             page_now_size: main.page_now_size, //目前_實際筆數
             page_now: main.page_now, //目前_頁數
+            data_type:"general",//資料: 一般模式(general) 父子群組模式(fatherSon)
+            data_item_f_id:"",//父類別ID
+            
         },
         //初始化
         created() {
@@ -169,25 +172,30 @@
                 for (var i = 0; i < Object.keys(title).length - 1; i++) {
                     var one_item = $(".search_example_title .s_title_body").clone(); //複製樣本
                     var key_id = Object.keys(title)[i];
-                    var value_name = title[Object.keys(title)[i]];
+                    var value_name = title[Object.keys(title)[i]].name;
+                    var value_size = title[Object.keys(title)[i]].size;
                     //console.log(key_id+" "+value_name);
-                    one_item[0].className = "";
+                    one_item[0].className = "p-1 ";
                     one_item[0].id = key_id;
-                    one_item[0].innerText = value_name;
+                    one_item[0].children[0].children[0].innerText = value_name;
                     one_item.insertBefore(".s_title_last");
+                    $("#"+key_id).css("min-width",value_size);
                 }
                 //結尾
                 var key_id = Object.keys(title)[Object.keys(title).length - 1];
-                var value_name = title[Object.keys(title)[Object.keys(title).length - 1]];
+                var value_name = title[Object.keys(title)[Object.keys(title).length - 1]].name;
                 $(".s_title_last").attr("id", key_id);
-                $(".s_title_last").text(value_name);
+                $(".s_title_last .title_name").text(value_name);
                 //關閉範例
                 $(".s_title_body").addClass("d-none");
             },
-            setDataList(list) {
-                //清單注入資訊
-                //console.log( list.length);
-                //就有資料清除
+            setDataList(list,type) {
+                //清單注入[資訊,類型(可能是一般類型(清單)/父子類型(壓縮))] general/fatherSon
+            	var data_item_sons =[];
+            	this.data_type = type;
+                console.log( list.length,type);
+                
+                //舊有資料清除
                 if (list.length < 1) {
                     t_alert.alertshow("warning", "[777] Didn't find anything [WARNING]!!");
                     if (this.page_batch >= 1) {
@@ -195,11 +203,14 @@
                     }
                     return false;
                 }
+                $(".search_example_list_son tr").remove();
                 $(".search_data_list").remove();
+                
                 //開啟樣式
                 $(".s_list_body").removeClass("d-none");
                 $(".search_example_content").removeClass("d-none");
                 for (var j = 0; j < list.length; j++) {
+                	
                     //排序
                     list[j] = main.orderedSort(list[j]);
                     //資料筆數
@@ -207,6 +218,7 @@
                     list_item[0].className = "search_data_list";
                     list_item[0].id = "search_data_" + (j + 1);
                     list_item.appendTo(".search_example_list");
+
 
                     //選紐欄位(lock=0/save_as=1/detail=2/modify=3/delete=4/print=5/download=6)
                     for (var r = 0; r <= 6; r++) {
@@ -216,7 +228,7 @@
                     }
                     $("#" + list_item[0].id + " .search_radio_0 input").prop("checked", true);
 
-                    //資料欄位
+                    //每筆 資料欄位
                     for (var i = 0; i < Object.keys(list[j]).length; i++) {
                         var one_item = $(".search_example_content .s_list_body").clone(); //複製樣本
                         var key_id = Object.keys(list[j])[i];
@@ -229,10 +241,37 @@
                         one_item.insertBefore("#" + list_item[0].id + " .s_list_body");
                     }
                     $("#search_data_" + j + " .s_list_body").remove();
+                    
+                    //vv--fatherSon__因為 父子類別 (只顯示父類資訊)/子類別另存--vv
+                    if(type=="fatherSon"){
+	                    for (var i = 0; i < Object.keys(list[j]).length; i++) {
+		                    if((Object.keys(list[j])[i]).indexOf("sys_hearder")>=1){
+		                        var value_name = list[j][Object.keys(list[j])[i]];
+		        				if(value_name || ((j== list.length-1) &&(i==Object.keys(list[j]).length-1))){
+		        					//父類別
+		        					//console.log(list_item[0].id);
+		        					this.data_item_f_id = list_item[0].id;
+		        					continue;
+		        				}else{
+		        					//子類別
+		        					var data_item_son = $("#"+list_item[0].id).clone();
+		        					//data_item_son[0].id="";
+		        					data_item_son[0].className = this.data_item_f_id;
+		        					data_item_son.appendTo('#data_item_son tbody');
+		        					$("#"+list_item[0].id).remove();
+		        					continue;
+		        				}
+		        			}
+	                    }
+	                    console.log(this.data_item_son);
+                    }
+                  	//^^--fatherSon__因為 父子類別 (只顯示父類資訊)--^^
+                    
                 }
                 //關閉樣式
                 $(".s_list_body").addClass("d-none");
                 $(".search_example_content").addClass("d-none");
+                //分頁換算
                 this.pageInit();
             },
             setSearch(search) {
@@ -321,16 +360,18 @@
                 var obj_all = {},a_save_as = [],a_detail = [];
                 var a_modify = [], a_delete = [],a_print = [];
                 var a_download = [];
-                for (var s = 1; s <= $(".search_data_list").length; s++) {
-                    var line_id = $("#search_data_" + s + ' input[name="line_' + s + '"]:checked').val();
+                for (var s = 0; s < $(".search_data_list").length; s++) {
+                	var id = $(".search_data_list")[s].id;
+                	
+                    var line_id = $("#" + id + ' input[name="'+id.replace("search_data_","line_")+'"]:checked').val();
                     var sp = "_b__";
-                    var arrays = $("#search_data_" + s + " .datalist");
+                    var arrays =  $("#" + id + " .datalist");
                     var obj_one = {};
                     //key value 建置
                     for (var c = 0; c < arrays.length; c++) {
                         var key = arrays[c].title.split(sp)[1];
                         var value = arrays[c].innerText;
-                       // console.log(key + " : " + value);
+                      //  console.log(key + " : " + value);
                         obj_one[key] = value;
                     }
 					//分類包裝
@@ -348,6 +389,39 @@
                         case "download":a_download.push(obj_one);
                             break;
                     }
+					
+                    //vv--fatherSon__因為 父子類別 (只顯示父類資訊)/子類別另存--vv
+                    if(this.data_type=="fatherSon"){
+    	                for (var k = 0; k < $("#data_item_son tbody ." + id).length; k++) {
+    	                	var id_son = $("#data_item_son tbody ." + id)[k].id;
+    	                    var obj_one_son = {};
+    	                    var arrays_son = $("#data_item_son tbody #" +id_son+ " .datalist");
+    	                    for (var t = 0; t < arrays_son.length; t++) {
+    	                        var key_son = arrays_son[t].title.split(sp)[1];
+    	                        var value_son = arrays_son[t].innerText;
+    	                      //  console.log(key_son + " : " + value_son);
+    	                        obj_one_son[key_son] = value_son;
+    	                    }
+    	                  //分類包裝
+    	                    switch (line_id) {
+    	                        case "detail":a_detail.push(obj_one_son);
+    	                            break;
+    	                        case "save_as":a_save_as.push(obj_one_son);
+    	                            break;
+    	                        case "modify":a_modify.push(obj_one_son);
+    	                            break;
+    	                        case "delete":a_delete.push(obj_one_son);
+    	                            break;
+    	                        case "print":a_print.push(obj_one_son);
+    	                            break;
+    	                        case "download":a_download.push(obj_one_son);
+    	                            break;
+    	                    }
+    	                }
+    	                
+    	                console.log(a_detail);
+                    }
+                    //^^--fatherSon__因為 父子類別 (只顯示父類資訊)/子類別另存--^^
                 }
                 obj_all.a_detail = a_detail;
                 obj_all.a_save_as = a_save_as;
@@ -413,7 +487,7 @@
             },
             searchReturn() {
                 console.log("searchReturn");
-                this.setDataList(main.allData.body.search);
+                this.setDataList(main.allData.body.search,main.allData.body_type);
             },
             //v====[分頁功能]====v
             pageInit() {

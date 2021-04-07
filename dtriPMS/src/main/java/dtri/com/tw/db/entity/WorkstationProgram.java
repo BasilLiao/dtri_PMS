@@ -49,6 +49,7 @@ public class WorkstationProgram {
 		this.sysnote = "";
 		this.syssort = 0;
 		this.sysstatus = 0;
+		this.sysgheader = false;
 	}
 
 	// 共用型
@@ -76,29 +77,39 @@ public class WorkstationProgram {
 	@Column(name = "sys_sort", columnDefinition = "int default 0")
 	private Integer syssort;
 
+	@Column(name = "sys_g_header", nullable = false, columnDefinition = "boolean default false")
+	private Boolean sysgheader;
 	// 工作站
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "wp_id")
 	private Integer wpid;
 
-	@Column(name = "wp_g_id",nullable = false)
+	@Column(name = "wp_g_id", nullable = false)
 	private Integer wpgid;
 
-	@Column(name = "wp_name",nullable = false, columnDefinition = "varchar(50)")
+	@Column(name = "wp_name", nullable = false, columnDefinition = "varchar(50)")
 	private String wpname;
 
-	@Column(name = "wp_g_work",nullable = false)
+	@Column(name = "wp_g_work", nullable = false)
 	private Integer wpgwork;
 
-	@Column(name = "wp_s_work",nullable = false)
+	@Column(name = "wp_s_work", nullable = false)
 	private Integer wpswork;
 
-	@Column(name = "wp_codename",nullable = false, columnDefinition = "varchar(50)")
+	@Column(name = "wp_codename", nullable = false, columnDefinition = "varchar(50)")
 	private String wpcodename;
 
-	@Column(name = "wp_o_work",nullable = false)
+	@Column(name = "wp_o_work", nullable = false)
 	private Integer wpowork;
+
+	public Boolean getSysgheader() {
+		return sysgheader;
+	}
+
+	public void setSysgheader(Boolean sysgheader) {
+		this.sysgheader = sysgheader;
+	}
 
 	public Date getSyscdate() {
 		return syscdate;
@@ -220,5 +231,4 @@ public class WorkstationProgram {
 		this.wpowork = wpowork;
 	}
 
-	
 }

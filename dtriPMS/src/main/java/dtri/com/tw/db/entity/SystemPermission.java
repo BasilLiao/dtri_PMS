@@ -38,6 +38,19 @@ public class SystemPermission {
 		this.sysnote = "";
 		this.syssort = 0;
 		this.sysstatus = 0;
+		this.sysheader = false;
+	}
+	public SystemPermission(Integer spid) {
+		this.syscdate = new Date();
+		this.syscuser = "system";
+		this.sysmdate = new Date();
+		this.sysmuser = "system";
+		this.sysver = 0;
+		this.sysnote = "";
+		this.syssort = 0;
+		this.sysstatus = 0;
+		this.sysheader = false;
+		this.spid = spid;
 	}
 
 	// 共用型
@@ -65,10 +78,12 @@ public class SystemPermission {
 	@Column(name = "sys_status", columnDefinition = "int default 0")
 	private Integer sysstatus;
 
+	@Column(name = "sys_header", nullable = false, columnDefinition = "boolean default false")
+	private Boolean sysheader;
 	// 功能權限
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_permission_seq") 
-    @SequenceGenerator(name = "system_permission_seq", sequenceName = "system_permission_seq") 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_permission_seq")
+	@SequenceGenerator(name = "system_permission_seq", sequenceName = "system_permission_seq")
 	@Column(name = "sp_id")
 	private Integer spid;
 
@@ -87,9 +102,17 @@ public class SystemPermission {
 	@Column(name = "sp_permission", nullable = false, columnDefinition = "varchar(10)")
 	private String sppermission;
 
-	//@OrderBy(clause =  "sg_g_id ASC")
+	// @OrderBy(clause = "sg_g_id ASC")
 	@OneToMany(mappedBy = "systemPermission")
 	private List<SystemGroup> systemGroup;
+
+	public Boolean getSysheader() {
+		return sysheader;
+	}
+
+	public void setSysheader(Boolean sysgheader) {
+		this.sysheader = sysgheader;
+	}
 
 	public Date getSyscdate() {
 		return syscdate;
