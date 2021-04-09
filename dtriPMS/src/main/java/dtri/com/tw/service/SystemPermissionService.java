@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dtri.com.tw.bean.PackageBean;
+import dtri.com.tw.db.entity.SystemGroup;
 import dtri.com.tw.db.entity.SystemPermission;
 import dtri.com.tw.db.entity.SystemUser;
+import dtri.com.tw.db.pgsql.dao.SystemGroupDao;
 import dtri.com.tw.db.pgsql.dao.SystemPermissionDao;
 import dtri.com.tw.tools.Fm_Time;
 
@@ -23,6 +25,8 @@ public class SystemPermissionService {
 	private SystemPermissionDao permissionDao;
 	@Autowired
 	private FrontFormatService f_f;
+	@Autowired
+	private SystemGroupDao groupDao;
 
 	// 取得當前 資料清單
 	public PackageBean getData(JSONObject body, int page, int p_size) {
@@ -38,33 +42,34 @@ public class SystemPermissionService {
 		// 初次載入需要標頭 / 之後就不用
 		if (body == null || body.isNull("search")) {
 			// 全查
-			systemPermissions = permissionDao.findAllByOrderBySpgidAscSpidAsc(page_r);
+			systemPermissions = permissionDao.findAllByPermission(null,null,0,page_r);
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
-			object_header.put("01_h__sp_id", f_f.h_title("功能ID", "100px"));
-			object_header.put("02_h__sp_g_id", f_f.h_title("功能組ID", "100px"));
-			object_header.put("03_h__sp_g_name", f_f.h_title("功能組名稱", "150px"));
-			object_header.put("04_h__sp_name", f_f.h_title("功能名稱", "150px"));
-			object_header.put("05_h__sp_control", f_f.h_title("功能控制", "150px"));
-			object_header.put("06_h__sp_permission", f_f.h_title("權限範圍", "150px"));
-			
-			object_header.put("07_h__sys_c_date", f_f.h_title("建立時間", "150px"));
-			object_header.put("08_h__sys_c_user", f_f.h_title("建立人", "100px"));
-			object_header.put("09_h__sys_m_date", f_f.h_title("修改時間", "150px"));
-			object_header.put("10_h__sys_m_user", f_f.h_title("修改人", "100px"));
+			String inp = "input", tex = "textarea", sel = "select";
+			String text = "text", numb = "number";
+			String dis = "disabled", sho = "show";
 
-			object_header.put("11_h__sys_note", f_f.h_title("備註", "100px"));
-			object_header.put("12_h__sys_sort", f_f.h_title("排序", "100px"));
-			object_header.put("13_h__sys_ver", f_f.h_title("版本", "100px"));
-			object_header.put("14_h__sys_status", f_f.h_title("狀態", "100px"));
+			object_header.put("01_h__sp_id", f_f.h_title("功能ID", "100px", sho));
+			object_header.put("02_h__sp_g_id", f_f.h_title("功能組ID", "100px", sho));
+			object_header.put("03_h__sp_g_name", f_f.h_title("功能組名稱", "150px", sho));
+			object_header.put("04_h__sp_name", f_f.h_title("功能名稱", "150px", sho));
+			object_header.put("05_h__sp_control", f_f.h_title("功能控制", "150px", sho));
+			object_header.put("06_h__sp_permission", f_f.h_title("權限範圍", "150px", sho));
+
+			object_header.put("07_h__sys_c_date", f_f.h_title("建立時間", "150px", sho));
+			object_header.put("08_h__sys_c_user", f_f.h_title("建立人", "100px", sho));
+			object_header.put("09_h__sys_m_date", f_f.h_title("修改時間", "150px", sho));
+			object_header.put("10_h__sys_m_user", f_f.h_title("修改人", "100px", sho));
+
+			object_header.put("11_h__sys_note", f_f.h_title("備註", "100px", sho));
+			object_header.put("12_h__sys_sort", f_f.h_title("排序", "100px", sho));
+			object_header.put("13_h__sys_ver", f_f.h_title("版本", "100px", sho));
+			object_header.put("14_h__sys_status", f_f.h_title("狀態", "100px", dis));
 			bean.setHeader(object_header);
 
 			// 放入修改 [m__(key)](modify/Create/Delete) 格式
 			JSONArray obj_m = new JSONArray();
 			JSONArray values = new JSONArray();
-			String inp = "input", tex = "textarea", sel = "select";
-			String text = "text", numb = "number";
-			String dis = "disabled", sho = "show";
 
 			obj_m.put(f_f.h_modify(inp, text, "", dis, "col-md-2", false, values, "m__sp_id", "功能ID"));
 			obj_m.put(f_f.h_modify(inp, text, "", dis, "col-md-2", false, values, "m__sp_g_id", "功能組ID"));
@@ -155,15 +160,28 @@ public class SystemPermissionService {
 
 				// 檢查群組名稱重複
 				ArrayList<SystemPermission> sys_p_g = permissionDao.findAllByPermissionGroupTop1(sys_p.getSpgname(), PageRequest.of(0, 1));
+				SystemGroup sys_g = new SystemGroup();
 				if (sys_p_g != null && sys_p_g.size() > 0) {
 					// 重複 則取同樣G_ID
 					sys_p.setSpgid(sys_p_g.get(0).getSpgid());
+					// 同步添加到ADMIN
+					sys_g.setSggid(1);
+					sys_g.setSystemPermission(sys_p);
+					sys_g.setSyssort(sys_p.getSyssort());
+					sys_g.setSgpermission("1111111111");
 				} else {
 					// 取得最新G_ID
 					sys_p_g = permissionDao.findAllByTop1(PageRequest.of(0, 1));
 					sys_p.setSpgid((sys_p_g.get(0).getSpgid() + 1));
+					// 同步添加到ADMIN
+					sys_g.setSggid(1);
+					sys_g.setSystemPermission(sys_p);
+					sys_g.setSyssort(sys_p.getSyssort());
+					sys_g.setSgpermission("1111111111");
+
 				}
 				permissionDao.save(sys_p);
+				//groupDao.save(sys_g);
 				check = true;
 			}
 
@@ -182,8 +200,14 @@ public class SystemPermissionService {
 				sys_p.setSysmuser(user.getSuname());
 				sys_p.setSyscuser(user.getSuname());
 
+				/*SystemGroup sys_g = groupDao.findBySgidOrderBySgidAscSyssortAsc(1).get(0);
+				int new_sgid = groupDao.findAllByTop1(PageRequest.of(0, 1)).get(0).getSgid() + 1;
+				sys_g.setSyssort(sys_p.getSyssort());
+				sys_g.setSgpermission("1111111111");
+				sys_g.setSgid(new_sgid);*/
+
 				// 檢查群組名稱重複
-				ArrayList<SystemPermission> sys_p_g = permissionDao.findAllByPermissionGroupTop1(sys_p.getSpgname(), PageRequest.of(0, 1));
+				ArrayList<SystemPermission> sys_p_g = permissionDao.findAllByPermissionGroupTop1(sys_p.getSpgname(), PageRequest.of(0, 1));				
 				if (sys_p_g != null && sys_p_g.size() > 0) {
 					// 重複 則取同樣G_ID
 					sys_p.setSpgid(sys_p_g.get(0).getSpgid());
@@ -192,9 +216,20 @@ public class SystemPermissionService {
 					// 取得最新G_ID
 					sys_p_g = permissionDao.findAllByTop1(PageRequest.of(0, 1));
 					sys_p.setSpgid((sys_p_g.get(0).getSpgid() + 1));
-					sys_p.setSysheader(true);
+					sys_p.setSysheader(false);
 				}
 				permissionDao.save(sys_p);
+				
+				 //同步添加到ADMIN
+				SystemGroup sys_g = groupDao.findBySgidOrderBySgidAscSyssortAsc(1).get(0);
+				SystemGroup sys_g_new = new SystemGroup();
+				sys_g_new.setSystemPermission(sys_p);
+				sys_g_new.setSggid(sys_g.getSgid());
+				sys_g_new.setSgname(sys_g.getSgname());
+				sys_g_new.setSgpermission("1111111111");
+				sys_g_new.setSyssort(sys_p.getSyssort());
+				groupDao.save(sys_g_new);
+				
 				check = true;
 			}
 
@@ -259,7 +294,7 @@ public class SystemPermissionService {
 				JSONObject data = (JSONObject) one;
 				sys_p.setSpid(data.getInt("sp_id"));
 
-				permissionDao.deleteBySpidAndSysheader(sys_p.getSpid(),false);
+				permissionDao.deleteBySpidAndSysheader(sys_p.getSpid(), false);
 				check = true;
 			}
 		} catch (Exception e) {

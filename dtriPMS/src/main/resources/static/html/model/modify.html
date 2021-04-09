@@ -194,8 +194,8 @@
 					<thead class="thead bg-dark table-dark delete_example_title" style="white-space: nowrap;">
 						<tr>
 							<th style="min-width: 35px"><i class="m-1 bi bi-pencil-square"></i></th>
-							<th class="d_title_body" >ID</th>
-							<th class="d_title_last" style=" width: 100%;">Handle</th>
+							<th class="d_title_body"  style="min-width:50px">ID</th>
+							<th class="d_title_last" style="width: 100%;">Handle</th>
 						</tr>
 					</thead>
 					<tbody class="delete_example_body" style="white-space: nowrap;">
@@ -267,16 +267,19 @@
                 one_item[0].className = "";
                 one_item[0].id = key_id;
                 one_item[0].innerText = value_name.name;
-               
+                one_item[0].attributes.style.value="min-width : "+value_name.size;
                 one_item.insertBefore(".d_title_last");
-                $('.delete_example_title #'+key_id).css('min-width', value_name.size);
+                
            		}
             //結尾
             var key_id = Object.keys(title)[Object.keys(title).length - 1];
             var value_name = title[Object.keys(title)[Object.keys(title).length - 1]];
+            
             $(".d_title_last").attr("id", key_id);
             $(".d_title_last").text(value_name.name);
-            $('#'+key_id).css('min-width', value_name.size);
+            $(".d_title_last").css('min-width', value_name.size);
+            console.log(key_id+" "+value_name);
+            console.log($('.delete_example thead #'+key_id));
             //關閉範例
             $(".d_title_body").remove();
 			},
@@ -319,7 +322,7 @@
 						input[0].className="p-2 save_key "+title[d].col+" "+title[d].id;
 						input.appendTo(".save_as_example_body");
 						$(".save_as_example ."+title[d].id+" .save_as_name").text(title[d].name);
-						$(".save_as_example ."+title[d].id+" .save_as_name").attr("type",title[d].type);
+						$(".save_as_example ."+title[d].id+" .save_value").attr("type",title[d].type);
 						if(title[d].required){
 							$(".save_as_example ."+title[d].id+" input").attr("required","required");							
 						}
@@ -332,7 +335,7 @@
 						input[0].className="p-2 save_key "+title[d].col+" "+title[d].id;
 						input.appendTo(".modify_example_body");
 						$(".modify_example ."+title[d].id+" .modify_name").text(title[d].name);
-						$(".modify_example ."+title[d].id+" .modify_name").attr("type",title[d].type);
+						$(".modify_example ."+title[d].id+" .save_value").attr("type",title[d].type);
 						if(title[d].required){
 							$(".modify_example ."+title[d].id+" input").attr("required","required");							
 						}
@@ -732,6 +735,20 @@
 	                search.searchSend();
 	                $("#search_nav").trigger("click");
                 }
+                //新增成功
+                if(main.allData['action']=="AC"){
+                	$(".create_really_tr").remove();
+    				$(".save_as_really_tr").remove();
+                }
+                //修改成功
+                if(main.allData['action']=="AU"){
+	     			$(".modify_really_tr").remove();
+                }
+                //刪除成功
+                if(main.allData['action']=="AD"){
+                	$(".delete_really_tr").remove();
+                }
+            	
             },
             selectAllInit() {
                 //監聽-同步相同屬性

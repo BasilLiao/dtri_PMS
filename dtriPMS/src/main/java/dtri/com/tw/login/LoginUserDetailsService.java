@@ -34,7 +34,7 @@ public class LoginUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException(account);
 		}
 		// Step2.取得group+Permission
-		List<SystemGroup> systemGroups = groupDao.findBySggidOrderBySgidAscSyssortAsc(user.getSusggid());
+		List<SystemGroup> systemGroups = groupDao.findBySggidOrderBySggidAscSyssortAsc(user.getSusggid());
 		if (systemGroups == null) {
 			throw new UsernameNotFoundException(account);
 		}

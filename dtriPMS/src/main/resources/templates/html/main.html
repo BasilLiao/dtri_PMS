@@ -67,7 +67,7 @@ body {
 			//基本資料
 			this.allData = JSON.parse(/*[[${initMain}]]*/+"")['resp_content'];
 			this.info_user = this.allData['info_user'];
-			console.log(this.allData);
+			//console.log(this.allData);
 			//模板-清單-家(default)
 			$("#header_t_all").load("./html/header/header_index.html");
 			//模版-Menu
@@ -124,9 +124,12 @@ body {
 						console.log("ajax to success:"+JSON.stringify(event));
 						//Step1.顯示 訊息
 						if(event['resp_content']!=""){
-							t_alert.alertshow(main.allData['info_color'],main.allData['info']);
+							t_alert.alertshow(event['resp_content']['info_color'],event['resp_content']['info']);
+							if(event['resp_content']['info_color']!="success")
+							return null;
 						}else{
 							t_alert.alertshow("danger", "[007] The command was executed [ERROR]!!");
+							return null;
 						}
 						//Step2.是否 轉跳畫面
 						if(event['resp_content']['html_body']!=""){
@@ -163,6 +166,7 @@ body {
                                 case "modify":
                                 	main.allData['call_bk_fn'] = event['resp_content']['call_bk_fn'];
                                 	main.allData['call_bk_vals'] = event['resp_content']['call_bk_vals'];
+                                	main.allData['action'] = event['resp_content']['action'];
                                 	modify.modifyReturn();
                                     break;
                             }
@@ -186,7 +190,7 @@ body {
 							window.location.replace("login.basil");
 						}
 						else if (event.status == 404) {
-							t_alert.alertshow("danger", "[404] The command failed [ERROR]!!");
+							t_alert.alertshow("warning", "[404] The command failed [Warning]!!");
 							//沒有網頁時 不移動
 						
 						}else if (event.status == 403) {

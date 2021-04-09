@@ -15,24 +15,24 @@ import dtri.com.tw.bean.PackageBean;
 import dtri.com.tw.db.entity.SystemUser;
 import dtri.com.tw.login.LoginUserDetails;
 import dtri.com.tw.service.PackageService;
-import dtri.com.tw.service.SystemConfigService;
+import dtri.com.tw.service.SystemUserService;
 
 
 @Controller
-public class SystemConfig {
+public class SystemUserController {
 	// 功能
-	final static String SYS_F = "sys_config.basil";
+	final static String SYS_F = "sys_user.basil";
 
 	@Autowired
 	PackageService packageService;
 	@Autowired
-	SystemConfigService configService;
+	SystemUserService userService;
 
 	/**
 	 * 訪問
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_config.basil" }, method = {
+	@RequestMapping(value = { "/ajax/system_user.basil" }, method = {
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String sysPermissionAccess(@RequestBody String json_object) {
 		System.out.println("---controller - sysPermissionAccess Check");
@@ -43,7 +43,7 @@ public class SystemConfig {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = configService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = userService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color);
 		// 回傳-資料
@@ -54,7 +54,7 @@ public class SystemConfig {
 	 * 查詢
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_config.basil.AR" }, method = {
+	@RequestMapping(value = { "/ajax/system_user.basil.AR" }, method = {
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String sysConfigSearch(@RequestBody String json_object) {
 		System.out.println("---controller - sysConfigSearch Check");
@@ -65,7 +65,7 @@ public class SystemConfig {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = configService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = userService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color);
 		// 回傳-資料
@@ -76,7 +76,7 @@ public class SystemConfig {
 	 * 新增
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_config.basil.AC" }, method = {
+	@RequestMapping(value = { "/ajax/system_user.basil.AC" }, method = {
 			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String sysConfigCreate(@RequestBody String json_object) {
 		System.out.println("---controller - sysConfigCreate Check");
@@ -97,7 +97,7 @@ public class SystemConfig {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = configService.createData(req.getBody(), user);
+		check = userService.createData(req.getBody(), user);
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
@@ -115,7 +115,7 @@ public class SystemConfig {
 	 * 修改
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_config.basil.AU" }, method = {
+	@RequestMapping(value = { "/ajax/system_user.basil.AU" }, method = {
 			RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
 	public String sysConfigModify(@RequestBody String json_object) {
 		System.out.println("---controller - sysConfigModify Check");
@@ -136,7 +136,7 @@ public class SystemConfig {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = configService.updateData(req.getBody(), user);
+		check = userService.updateData(req.getBody(), user);
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
@@ -154,7 +154,7 @@ public class SystemConfig {
 	 * 移除
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_config.basil.AD" }, method = {
+	@RequestMapping(value = { "/ajax/system_user.basil.AD" }, method = {
 			RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
 	public String sysConfigDelete(@RequestBody String json_object) {
 		System.out.println("---controller - sysConfigDelete Check");
@@ -167,7 +167,7 @@ public class SystemConfig {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = configService.deleteData(req.getBody());
+		check = userService.deleteData(req.getBody());
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳

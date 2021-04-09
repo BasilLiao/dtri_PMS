@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import dtri.com.tw.db.entity.SystemGroup;
 import dtri.com.tw.db.entity.SystemUser;
@@ -17,13 +19,14 @@ public class LoginUserDetails implements UserDetails {
 	private SystemUser user;
 	private List<SystemGroup> group;
 	private Collection<? extends GrantedAuthority> authorities;
+	PasswordEncoder pwdEncoder;
 
-	public LoginUserDetails(SystemUser user, List<SystemGroup> group,
-			Collection<? extends GrantedAuthority> authorities) {
+	public LoginUserDetails(SystemUser user, List<SystemGroup> group, Collection<? extends GrantedAuthority> authorities) {
 		super();
 		this.user = user;
 		this.group = group;
 		this.authorities = authorities;
+		pwdEncoder = new BCryptPasswordEncoder();
 	}
 
 	public List<SystemGroup> getSystemGroup() {
@@ -48,12 +51,12 @@ public class LoginUserDetails implements UserDetails {
 
 	/**
 	 * 注意密碼加密"{noop}" +
-	 * 
+	 * "{noop}" + user.getSupassword()
 	 * PasswordEncoder
 	 **/
 	@Override
 	public String getPassword() {
-		return "{noop}" + user.getSupassword();
+		return user.getSupassword();
 	}
 
 	@Override
@@ -89,8 +92,7 @@ public class LoginUserDetails implements UserDetails {
 	/** 顯示全部 **/
 	@Override
 	public String toString() {
-		return "MyUserDetails [id=" + user.getSuid() + ", useraccount=" + user.getSuaccount() + ", password="
-				+ user.getSupassword() + ", enabled=" + (user.getSysstatus() == 0) + ", authorities=" + authorities
-				+ "]";
+		return "MyUserDetails [id=" + user.getSuid() + ", useraccount=" + user.getSuaccount() + ", password=" + user.getSupassword() + ", enabled="
+				+ (user.getSysstatus() == 0) + ", authorities=" + authorities + "]";
 	}
 }

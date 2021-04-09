@@ -174,18 +174,25 @@
                     var key_id = Object.keys(title)[i];
                     var value_name = title[Object.keys(title)[i]].name;
                     var value_size = title[Object.keys(title)[i]].size;
+                    var value_show = title[Object.keys(title)[i]].show;
                     //console.log(key_id+" "+value_name);
                     one_item[0].className = "p-1 ";
                     one_item[0].id = key_id;
                     one_item[0].children[0].children[0].innerText = value_name;
                     one_item.insertBefore(".s_title_last");
                     $("#"+key_id).css("min-width",value_size);
+                    $("#"+key_id).addClass(value_show=="disabled"?"d-none":"");
+                    
                 }
                 //結尾
                 var key_id = Object.keys(title)[Object.keys(title).length - 1];
                 var value_name = title[Object.keys(title)[Object.keys(title).length - 1]].name;
+                var value_show = title[Object.keys(title)[Object.keys(title).length - 1]].show;
+                
                 $(".s_title_last").attr("id", key_id);
                 $(".s_title_last .title_name").text(value_name);
+                $("#"+key_id).css("min-width",value_size);
+                $("#"+key_id).addClass(value_show=="disabled"?"d-none":"");
                 //關閉範例
                 $(".s_title_body").addClass("d-none");
             },
@@ -234,7 +241,13 @@
                         var key_id = Object.keys(list[j])[i];
                         var value_name = list[j][Object.keys(list[j])[i]];
                         //console.log(key_id+" "+value_name);
-                        one_item[0].className = "datalist";
+                        //取得title 是否顯示
+                        if($("#"+key_id.replace("_b__","_h__")).hasClass('d-none')){
+                        	one_item[0].className = "datalist d-none";
+                        }else{
+	                        one_item[0].className = "datalist";
+                        	
+                        }
                         one_item[0].id = "";
                         one_item[0].title = key_id;
                         one_item[0].innerText = value_name;

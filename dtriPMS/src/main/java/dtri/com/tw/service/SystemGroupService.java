@@ -40,51 +40,53 @@ public class SystemGroupService {
 			p_size = 100;
 		}
 		PageRequest page_r = PageRequest.of(page, p_size, Sort.by("sggid").descending());
+		String sg_name = null;
+		String status = "0";
 		// 初次載入需要標頭 / 之後就不用
 		if (body == null || body.isNull("search")) {
-			// 全查
-			systemGroup = groupDao.findAllByOrderBySgidAscSggidAsc(page_r);
+
 			page_r = PageRequest.of(page, 999, Sort.by("spgid").descending());
 			permissions = permissionDao.findAllByPermission(null, null, 0, page_r);
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
-			object_header.put("01_h__sg_id", f_f.h_title("ID", "50px"));
-			object_header.put("02_h__sg_g_id", f_f.h_title("群組ID", "100px"));
-			object_header.put("03_h__sg_name", f_f.h_title("群組名稱", "150px"));
-			object_header.put("04_h__sg_sp_name", f_f.h_title("單元名稱", "150px"));
-			object_header.put("05_h__sys_header", f_f.h_title("群組代表", "100px"));
-			object_header.put("06_h__sg_sp_id", f_f.h_title("關聯ID", "100px"));
-
-			// (sg_permission[特殊3(512),特殊2(256),特殊1(128),訪問(64),下載(32),上傳(16),新增(8),修改(4),刪除(2),查詢(1)])
-			object_header.put("07_h__sg_permission_512", f_f.h_title("S3", "50px"));
-			object_header.put("08_h__sg_permission_256", f_f.h_title("S2", "50px"));
-			object_header.put("09_h__sg_permission_128", f_f.h_title("S1", "50px"));
-			object_header.put("10_h__sg_permission_64", f_f.h_title("訪", "50px"));
-			object_header.put("11_h__sg_permission_32", f_f.h_title("下", "50px"));
-			object_header.put("12_h__sg_permission_16", f_f.h_title("上", "50px"));
-			object_header.put("13_h__sg_permission_8", f_f.h_title("增", "50px"));
-			object_header.put("14_h__sg_permission_4", f_f.h_title("改", "50px"));
-			object_header.put("15_h__sg_permission_2", f_f.h_title("刪", "50px"));
-			object_header.put("16_h__sg_permission_1", f_f.h_title("查", "50px"));
-
-			object_header.put("17_h__sys_c_date", f_f.h_title("建立時間", "150px"));
-			object_header.put("18_h__sys_c_user", f_f.h_title("建立人", "100px"));
-			object_header.put("19_h__sys_m_date", f_f.h_title("修改時間", "150px"));
-			object_header.put("20_h__sys_m_user", f_f.h_title("修改人", "100px"));
-
-			object_header.put("21_h__sys_note", f_f.h_title("備註", "100px"));
-			object_header.put("22_h__sys_sort", f_f.h_title("排序", "100px"));
-			object_header.put("23_h__sys_ver", f_f.h_title("版本", "100px"));
-			object_header.put("24_h__sys_status", f_f.h_title("狀態", "100px"));
-
-			bean.setHeader(object_header);
-
-			// 放入修改 [m__(key)](modify/Create/Delete) 格式
-			JSONArray obj_m = new JSONArray();
-			JSONArray values = new JSONArray();
 			String inp = "input", tex = "textarea", sel = "select";
 			String text = "text", numb = "number";
 			String dis = "disabled", sho = "show";
+
+			object_header.put("01_h__sg_id", f_f.h_title("ID", "50px", sho));
+			object_header.put("02_h__sg_g_id", f_f.h_title("群組ID", "100px", sho));
+			object_header.put("03_h__sg_name", f_f.h_title("群組名稱", "150px", sho));
+			object_header.put("04_h__sg_sp_name", f_f.h_title("單元名稱", "150px", sho));
+			object_header.put("05_h__sys_header", f_f.h_title("群組代表", "100px", sho));
+			object_header.put("06_h__sg_sp_id", f_f.h_title("關聯ID", "100px", sho));
+
+			// (sg_permission[特殊3(512),特殊2(256),特殊1(128),訪問(64),下載(32),上傳(16),新增(8),修改(4),刪除(2),查詢(1)])
+			object_header.put("07_h__sg_permission_512", f_f.h_title("S3", "50px", sho));
+			object_header.put("08_h__sg_permission_256", f_f.h_title("S2", "50px", sho));
+			object_header.put("09_h__sg_permission_128", f_f.h_title("S1", "50px", sho));
+			object_header.put("10_h__sg_permission_64", f_f.h_title("訪", "50px", sho));
+			object_header.put("11_h__sg_permission_32", f_f.h_title("下", "50px", sho));
+			object_header.put("12_h__sg_permission_16", f_f.h_title("上", "50px", sho));
+			object_header.put("13_h__sg_permission_8", f_f.h_title("增", "50px", sho));
+			object_header.put("14_h__sg_permission_4", f_f.h_title("改", "50px", sho));
+			object_header.put("15_h__sg_permission_2", f_f.h_title("刪", "50px", sho));
+			object_header.put("16_h__sg_permission_1", f_f.h_title("查", "50px", sho));
+
+			object_header.put("17_h__sys_c_date", f_f.h_title("建立時間", "150px", sho));
+			object_header.put("18_h__sys_c_user", f_f.h_title("建立人", "100px", sho));
+			object_header.put("19_h__sys_m_date", f_f.h_title("修改時間", "150px", sho));
+			object_header.put("20_h__sys_m_user", f_f.h_title("修改人", "100px", sho));
+
+			object_header.put("21_h__sys_note", f_f.h_title("備註", "100px", sho));
+			object_header.put("22_h__sys_sort", f_f.h_title("排序", "100px", sho));
+			object_header.put("23_h__sys_ver", f_f.h_title("版本", "100px", sho));
+			object_header.put("24_h__sys_status", f_f.h_title("狀態", "100px", sho));
+
+			bean.setHeader(object_header);
+
+			// 放入修改 [m__(key)](modify/Create/Delete) 格式 
+			JSONArray obj_m = new JSONArray();
+			JSONArray values = new JSONArray();
 
 			obj_m.put(f_f.h_modify(inp, text, "", dis, "col-md-2", false, values, "m__sg_id", "群組ID"));
 			obj_m.put(f_f.h_modify(inp, text, "", dis, "col-md-2", false, values, "m__sg_g_id", "群組類別ID"));
@@ -146,13 +148,19 @@ public class SystemGroupService {
 			bean.setCell_searchs(object_searchs);
 		} else {
 			// 進行-特定查詢
-			String sg_name = body.getJSONObject("search").getString("sg_name");
+			sg_name = body.getJSONObject("search").getString("sg_name");
 			sg_name = sg_name.equals("") ? null : sg_name;
-			String status = body.getJSONObject("search").getString("sys_status");
+			status = body.getJSONObject("search").getString("sys_status");
 			status = status.equals("") ? "0" : status;
-
-			systemGroup = groupDao.findAllBySystemGroup(sg_name, Integer.parseInt(status), page_r);
 		}
+		
+		// 全查
+		page_r = PageRequest.of(page, 999, Sort.by("sggid").descending());
+		List<Integer> sggid = new ArrayList<Integer>();
+		groupDao.findAllBySysheader(true, page_r).forEach(s -> {
+			sggid.add(s.getSggid());
+		});
+		systemGroup = groupDao.findAllBySystemGroup(null, 0, sggid);
 
 		// 放入包裝(body) [01 是排序][_b__ 是分割直][資料庫欄位名稱]
 		JSONArray object_bodys = new JSONArray();
@@ -164,7 +172,7 @@ public class SystemGroupService {
 			object_body.put("04_b__sg_sp_name", one.getSystemPermission().getSpname());
 			object_body.put("05_b__sys_hearder", one.getSysheader());
 			object_body.put("06_b__sg_sp_id", one.getSystemPermission().getSpid());
-			
+
 			object_body.put("07_b__sg_permission_512", Character.toString(one.getSgpermission().charAt(0)));
 			object_body.put("08_b__sg_permission_256", Character.toString(one.getSgpermission().charAt(1)));
 			object_body.put("09_b__sg_permission_128", Character.toString(one.getSgpermission().charAt(2)));
@@ -210,7 +218,7 @@ public class SystemGroupService {
 						+ data.getString("sg_permission_64") + data.getString("sg_permission_32") + data.getString("sg_permission_16")
 						+ data.getString("sg_permission_8") + data.getString("sg_permission_4") + data.getString("sg_permission_2")
 						+ data.getString("sg_permission_1"));
-				//sys_p.setSysnote(data.getString("sys_note"));
+				// sys_p.setSysnote(data.getString("sys_note"));
 				sys_p.setSyssort(data.getInt("sys_sort"));
 				sys_p.setSysstatus(data.getInt("sys_status"));
 				sys_p.setSysmuser(user.getSuname());
@@ -220,8 +228,9 @@ public class SystemGroupService {
 				ArrayList<SystemGroup> sys_p_g = groupDao.findAllByGroupTop1(sys_p.getSgname(), PageRequest.of(0, 1));
 				if (sys_p_g != null && sys_p_g.size() > 0) {
 					// 重複 則取同樣G_ID
-					sys_p.setSggid(sys_p_g.get(0).getSggid());
-					groupDao.save(sys_p);
+					//sys_p.setSggid(sys_p_g.get(0).getSggid());
+					//groupDao.save(sys_p);
+					return false;
 				} else {
 
 					// 新建 群組頭
@@ -242,9 +251,9 @@ public class SystemGroupService {
 					// 新建 取得最新G_ID
 					sys_p.setSggid((sys_p_g.get(0).getSggid() + 1));
 					groupDao.save(sys_p);
+					check = true;
 				}
 
-				check = true;
 			}
 
 			list = body.getJSONArray("save_as");
@@ -261,7 +270,7 @@ public class SystemGroupService {
 						+ data.getString("sg_permission_64") + data.getString("sg_permission_32") + data.getString("sg_permission_16")
 						+ data.getString("sg_permission_8") + data.getString("sg_permission_4") + data.getString("sg_permission_2")
 						+ data.getString("sg_permission_1"));
-				//sys_p.setSysnote(data.getString("sys_note"));
+				// sys_p.setSysnote(data.getString("sys_note"));
 				sys_p.setSyssort(data.getInt("sys_sort"));
 				sys_p.setSysstatus(data.getInt("sys_status"));
 				sys_p.setSysmuser(user.getSuname());
@@ -271,8 +280,9 @@ public class SystemGroupService {
 				ArrayList<SystemGroup> sys_p_g = groupDao.findAllByGroupTop1(sys_p.getSgname(), PageRequest.of(0, 1));
 				if (sys_p_g != null && sys_p_g.size() > 0) {
 					// 重複(不存) 則取同樣G_ID
-					//sys_p.setSggid(sys_p_g.get(0).getSggid());
-					//groupDao.save(sys_p);
+					// sys_p.setSggid(sys_p_g.get(0).getSggid());
+					// groupDao.save(sys_p);
+					return false;
 				} else {
 					// 新建 群組頭
 					sys_p_g = groupDao.findAllByTop1(PageRequest.of(0, 1));
@@ -281,7 +291,7 @@ public class SystemGroupService {
 					sys_p_h.setSgname(sys_p.getSgname());
 					sys_p_h.setSgpermission("0000000000");
 					sys_p_h.setSysheader(true);
-					sys_p_h.setSystemPermission(new SystemPermission(0));
+					sys_p_h.setSystemPermission(new SystemPermission(1));
 
 					sys_p_h.setSysnote("");
 					sys_p_h.setSyssort(0);
@@ -292,12 +302,13 @@ public class SystemGroupService {
 					// 新建 取得最新G_ID
 					sys_p.setSggid((sys_p_g.get(0).getSggid() + 1));
 					groupDao.save(sys_p);
+					check = true;
 				}
-				check = true;
 			}
 
 		} catch (Exception e) {
 			System.out.println(e);
+			return check;
 		}
 		return check;
 	}
@@ -323,7 +334,7 @@ public class SystemGroupService {
 						+ data.getString("sg_permission_64") + data.getString("sg_permission_32") + data.getString("sg_permission_16")
 						+ data.getString("sg_permission_8") + data.getString("sg_permission_4") + data.getString("sg_permission_2")
 						+ data.getString("sg_permission_1"));
-				//sys_p.setSysnote(data.getString("sys_note"));
+				// sys_p.setSysnote(data.getString("sys_note"));
 				sys_p.setSyssort(data.getInt("sys_sort"));
 				sys_p.setSysstatus(data.getInt("sys_status"));
 				sys_p.setSysmdate(new Date());
@@ -331,33 +342,32 @@ public class SystemGroupService {
 				// 檢查[群組名稱]重複
 				ArrayList<SystemGroup> sys_p_g = groupDao.findAllByGroupTop1(sys_p.getSgname(), PageRequest.of(0, 1));
 				if (sys_p_g != null && sys_p_g.size() > 0) {
-					//如果是 父類別(限定修改)+(子類別全數修改)
-					if(groupDao.findBySgidOrderBySgidAscSyssortAsc(sys_p.getSgid()).get(0).getSysheader()) {
-						List<SystemGroup> sys_p_g_old = groupDao.findBySggidOrderBySgidAscSyssortAsc(sys_p.getSggid());
-						sys_p_g_old.forEach(d->{
+					// 如果是 父類別(限定修改)+(子類別全數修改)
+					if (groupDao.findBySgidOrderBySgidAscSyssortAsc(sys_p.getSgid()).get(0).getSysheader()) {
+						List<SystemGroup> sys_p_g_old = groupDao.findBySggidOrderBySggidAscSyssortAsc(sys_p.getSggid());
+						sys_p_g_old.forEach(d -> {
 							d.setSgname(sys_p.getSgname());
 							d.setSysstatus(sys_p.getSysstatus());
 							d.setSgpermission(sys_p.getSgpermission());
 							groupDao.save(d);
 						});
-						//父類別(限定修改) 還原
+						// 父類別(限定修改) 還原
 						sys_p.setSgpermission("0000000000");
 						sys_p.setSysheader(true);
-						sys_p.setSystemPermission(new SystemPermission(0));
+						sys_p.setSystemPermission(new SystemPermission(1));
 						sys_p.setSyssort(0);
 						groupDao.save(sys_p);
-					}else {
+					} else {
 						// 重複 則取同樣G_ID
 						sys_p.setSggid(sys_p_g.get(0).getSggid());
-						groupDao.save(sys_p);						
+						groupDao.save(sys_p);
 					}
 					check = true;
 				} else {
-					//如果 不是修改類 則
+					// 如果 不是修改類 則
 					check = false;
 				}
-			
-				
+
 			}
 		} catch (Exception e) {
 			System.out.println(e);
@@ -377,7 +387,10 @@ public class SystemGroupService {
 				SystemGroup sys_p = new SystemGroup();
 				JSONObject data = (JSONObject) one;
 				sys_p.setSgid(data.getInt("sg_id"));
-
+				if (data.getInt("sg_sp_id") == 0) {
+					// 父類別 關聯全清除
+					groupDao.deleteBySggid(data.getInt("sg_g_id"));
+				}
 				groupDao.delete(sys_p);
 				check = true;
 			}

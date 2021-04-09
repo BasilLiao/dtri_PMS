@@ -2,12 +2,15 @@ package dtri.com.tw.db.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -15,18 +18,22 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * @author Basil
- * @see 系統設定<br>
- *      sc_id : ID<br>
- *      sc_name : 名稱<br>
- *      sc_g_id : 群組ID<br>
- *      sc_g_name : 群組名稱<br>
- *      sc_value : 設定參數<br>
+ * @see 產品製程<br>
+ *      ph_id : ID<br>
+ *      ph_model : 產品型號<br>
+ *      ph_prec_id : 製令工單<br>
+ *      ph_body_g : 關聯-製令工單號<br>
+ *      ph_wpro_id : 工作站<br>
+ *      ph_s_date : 開始製成 <br>
+ *      ph_e_date : 結束製成 <br>
+ *      ph_schedule : 進度{A站:{A1項目:Y,A2項目:N},{B站:{...},...}}<br>
+ * 
  */
 @Entity
-@Table(name = "system_config")
+@Table(name = "production_header")
 @EntityListeners(AuditingEntityListener.class)
-public class SystemConfig {
-	public SystemConfig() {
+public class ProductionHeader {
+	public ProductionHeader() {
 		this.syscdate = new Date();
 		this.syscuser = "system";
 		this.sysmdate = new Date();
@@ -68,30 +75,32 @@ public class SystemConfig {
 
 	// 功能項目
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_config_seq")
-	@SequenceGenerator(name = "system_config_seq", sequenceName = "system_config_seq")
-	@Column(name = "sc_id")
-	private Integer scid;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "production_header_seq")
+	@SequenceGenerator(name = "production_header_seq", sequenceName = "production_header_seq")
+	@Column(name = "ph_id")
+	private Integer phid;
 
-	@Column(name = "sc_name", nullable = false, columnDefinition = "varchar(50)")
-	private String scname;
+	@Column(name = "ph_model", nullable = false, columnDefinition = "varchar(50)")
+	private String phmodel;
 
-	@Column(name = "sc_g_id", nullable = false)
-	private Integer scgid;
+	@Column(name = "ph_pr_id", nullable = false, columnDefinition = "varchar(50)")
+	private String phprid;
 
-	@Column(name = "sc_g_name", nullable = false, columnDefinition = "varchar(50)")
-	private String scgname;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ph_pb_id", referencedColumnName = "pb_id")
+	private ProductionBody productionBody;
 
-	@Column(name = "sc_value", nullable = false, columnDefinition = "varchar(50)")
-	private String scvalue;
+	@Column(name = "ph_wp_id", nullable = false)
+	private Integer phwpid;
 
-	public Boolean getSysheader() {
-		return sysheader;
-	}
+	@Column(name = "ph_s_date", columnDefinition = "TIMESTAMP")
+	private Date phsdate;
 
-	public void setSysheader(Boolean sysgheader) {
-		this.sysheader = sysgheader;
-	}
+	@Column(name = "ph_e_date",  columnDefinition = "TIMESTAMP")
+	private Date phedate;
+
+	@Column(name = "ph_schedule",  columnDefinition = "varchar(255)")
+	private String phschedule;
 
 	public Date getSyscdate() {
 		return syscdate;
@@ -157,44 +166,76 @@ public class SystemConfig {
 		this.sysstatus = sysstatus;
 	}
 
-	public Integer getScid() {
-		return scid;
+	public Boolean getSysheader() {
+		return sysheader;
 	}
 
-	public void setScid(Integer scid) {
-		this.scid = scid;
+	public void setSysheader(Boolean sysheader) {
+		this.sysheader = sysheader;
 	}
 
-	public String getScname() {
-		return scname;
+	public Integer getPhid() {
+		return phid;
 	}
 
-	public void setScname(String scname) {
-		this.scname = scname;
+	public void setPhid(Integer phid) {
+		this.phid = phid;
 	}
 
-	public Integer getScgid() {
-		return scgid;
+	public String getPhmodel() {
+		return phmodel;
 	}
 
-	public void setScgid(Integer scgid) {
-		this.scgid = scgid;
+	public void setPhmodel(String phmodel) {
+		this.phmodel = phmodel;
 	}
 
-	public String getScgname() {
-		return scgname;
+	public String getPhprid() {
+		return phprid;
 	}
 
-	public void setScgname(String scgname) {
-		this.scgname = scgname;
+	public void setPhprid(String phprid) {
+		this.phprid = phprid;
 	}
 
-	public String getScvalue() {
-		return scvalue;
+	public ProductionBody getProductionBody() {
+		return productionBody;
 	}
 
-	public void setScvalue(String scvalue) {
-		this.scvalue = scvalue;
+	public void setProductionBody(ProductionBody productionBody) {
+		this.productionBody = productionBody;
+	}
+
+	public Integer getPhwpid() {
+		return phwpid;
+	}
+
+	public void setPhwpid(Integer phwpid) {
+		this.phwpid = phwpid;
+	}
+
+	public Date getPhsdate() {
+		return phsdate;
+	}
+
+	public void setPhsdate(Date phsdate) {
+		this.phsdate = phsdate;
+	}
+
+	public Date getPhedate() {
+		return phedate;
+	}
+
+	public void setPhedate(Date phedate) {
+		this.phedate = phedate;
+	}
+
+	public String getPhschedule() {
+		return phschedule;
+	}
+
+	public void setPhschedule(String phschedule) {
+		this.phschedule = phschedule;
 	}
 
 }

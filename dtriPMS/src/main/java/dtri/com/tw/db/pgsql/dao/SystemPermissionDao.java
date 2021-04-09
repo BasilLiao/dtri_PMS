@@ -22,7 +22,7 @@ public interface SystemPermissionDao extends JpaRepository<SystemPermission, Lon
 	// 查詢一部分
 	@Query("SELECT c FROM SystemPermission c "
 			+ "WHERE (:spname is null or c.spname LIKE %:spname% ) and (:spgname is null or c.spgname LIKE %:spgname% ) and ( c.sysstatus = :sysstatus )  "
-			+ "order by c.spgid asc,c.spid asc")
+			+ "order by c.spgid asc,c.sysmdate desc")
 	ArrayList<SystemPermission> findAllByPermission(@Param("spname") String spname, @Param("spgname") String spgname,
 			@Param("sysstatus") Integer sysstatus, Pageable pageable);
 

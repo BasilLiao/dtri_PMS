@@ -135,7 +135,7 @@ public class SystemUser {
 	@Column(name = "su_account", nullable = false, columnDefinition = "varchar(50)")
 	private String suaccount;
 
-	@Column(name = "su_password", nullable = false, columnDefinition = "varchar(50)")
+	@Column(name = "su_password", nullable = false, columnDefinition = "varchar(256)")
 	private String supassword;
 
 	@Column(name = "su_email", columnDefinition = "varchar(200) default ''")

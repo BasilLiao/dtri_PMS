@@ -67,10 +67,11 @@ public class FrontFormatService {
 	 * 
 	 * @return 格式 : {name:xxx,size:50px}
 	 **/
-	public JSONObject h_title(String name, String size) {
+	public JSONObject h_title(String name, String size, String show) {
 		JSONObject one_title = new JSONObject();
-		one_title.put("name", name);
-		one_title.put("size", size);
+		one_title.put("name", name);// 欄位名稱
+		one_title.put("size", size);// 寬度?
+		one_title.put("show", show);// 顯示?
 		return one_title;
 	}
 

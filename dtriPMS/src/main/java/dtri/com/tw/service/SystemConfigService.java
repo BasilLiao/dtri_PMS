@@ -41,29 +41,30 @@ public class SystemConfigService {
 			systemConfigs = configDao.findAllByOrderByScgidAscScidAsc(page_r);
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
-			object_header.put("01_h__sc_id", f_f.h_title("ID", "100px"));
-			object_header.put("02_h__sc_g_id", f_f.h_title("群組ID", "100px"));
-			object_header.put("03_h__sc_g_name", f_f.h_title("群組名稱", "100px"));
-			object_header.put("04_h__sc_name", f_f.h_title("名稱", "100px"));
-			object_header.put("05_h__sc_value", f_f.h_title("參數", "100px"));
-			
-			object_header.put("06_h__sys_c_date", f_f.h_title("建立時間", "150px"));
-			object_header.put("07_h__sys_c_user", f_f.h_title("建立人", "100px"));
-			object_header.put("08_h__sys_m_date", f_f.h_title("修改時間", "150px"));
-			object_header.put("09_h__sys_m_user", f_f.h_title("修改人", "100px"));
+			String inp = "input", tex = "textarea", sel = "select";
+			String text = "text", numb = "number";
+			String dis = "disabled", sho = "show";
 
-			object_header.put("10_h__sys_note", f_f.h_title("備註", "100px"));
-			object_header.put("11_h__sys_sort", f_f.h_title("排序", "100px"));
-			object_header.put("12_h__sys_ver", f_f.h_title("版本", "100px"));
-			object_header.put("13_h__sys_status", f_f.h_title("狀態", "100px"));
+			object_header.put("01_h__sc_id", f_f.h_title("ID", "100px", sho));
+			object_header.put("02_h__sc_g_id", f_f.h_title("群組ID", "100px", sho));
+			object_header.put("03_h__sc_g_name", f_f.h_title("群組名稱", "100px", sho));
+			object_header.put("04_h__sc_name", f_f.h_title("名稱", "100px", sho));
+			object_header.put("05_h__sc_value", f_f.h_title("參數", "100px", sho));
+
+			object_header.put("06_h__sys_c_date", f_f.h_title("建立時間", "150px", sho));
+			object_header.put("07_h__sys_c_user", f_f.h_title("建立人", "100px", sho));
+			object_header.put("08_h__sys_m_date", f_f.h_title("修改時間", "150px", sho));
+			object_header.put("09_h__sys_m_user", f_f.h_title("修改人", "100px", sho));
+
+			object_header.put("10_h__sys_note", f_f.h_title("備註", "100px", sho));
+			object_header.put("11_h__sys_sort", f_f.h_title("排序", "100px", sho));
+			object_header.put("12_h__sys_ver", f_f.h_title("版本", "100px", sho));
+			object_header.put("13_h__sys_status", f_f.h_title("狀態", "100px", sho));
 			bean.setHeader(object_header);
 
 			// 放入修改 [m__(key)](modify/Create/Delete) 格式
 			JSONArray obj_m = new JSONArray();
 			JSONArray values = new JSONArray();
-			String inp = "input", tex = "textarea", sel = "select";
-			String text = "text", numb = "number";
-			String dis = "disabled", sho = "show";
 
 			obj_m.put(f_f.h_modify(inp, text, "", dis, "col-md-2", false, new JSONArray(), "m__sc_id", "ID"));
 			obj_m.put(f_f.h_modify(inp, text, "", dis, "col-md-2", false, new JSONArray(), "m__sc_g_id", "群組ID"));
@@ -250,7 +251,7 @@ public class SystemConfigService {
 				JSONObject data = (JSONObject) one;
 				sys_p.setScid(data.getInt("sc_id"));
 
-				configDao.deleteByScidAndSysheader(sys_p.getScid(),false);
+				configDao.deleteByScidAndSysheader(sys_p.getScid(), false);
 				check = true;
 			}
 		} catch (Exception e) {
