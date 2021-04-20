@@ -116,7 +116,7 @@ public class SystemUser {
 	// 主體型
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_user_seq") 
-    @SequenceGenerator(name = "system_user_seq", sequenceName = "system_user_seq") 
+    @SequenceGenerator(name = "system_user_seq", sequenceName = "system_user_seq",allocationSize =1) 
 	@Column(name = "su_id")
 	private Integer suid;
 

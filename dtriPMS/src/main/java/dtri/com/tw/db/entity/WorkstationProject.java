@@ -8,6 +8,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -82,7 +83,8 @@ public class WorkstationProject {
 
 	// 工作站
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY , generator = "workstation_project_seq")
+	@SequenceGenerator(name = "workstation_project_seq", sequenceName = "workstation_project_seq",allocationSize =1) 
 	@Column(name = "wo_i_id")
 	private Integer woiid;
 

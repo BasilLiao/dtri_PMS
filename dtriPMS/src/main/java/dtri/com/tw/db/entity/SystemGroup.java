@@ -81,7 +81,7 @@ public class SystemGroup {
 	// 群組型
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_group_seq")
-	@SequenceGenerator(name = "system_group_seq", sequenceName = "system_group_seq")
+	@SequenceGenerator(name = "system_group_seq", sequenceName = "system_group_seq",allocationSize =1)
 	@Column(name = "sg_id")
 	private Integer sgid;
 

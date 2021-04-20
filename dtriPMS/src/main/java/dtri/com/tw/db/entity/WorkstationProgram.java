@@ -8,6 +8,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -81,8 +82,9 @@ public class WorkstationProgram {
 	private Boolean sysgheader;
 	// 工作站
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "wp_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "workstation_program_seq")
+	@SequenceGenerator(name = "workstation_program_seq", sequenceName = "workstation_program_seq",allocationSize =1) 
 	private Integer wpid;
 
 	@Column(name = "wp_g_id", nullable = false)

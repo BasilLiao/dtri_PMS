@@ -32,6 +32,8 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 		String system_per = "/ajax/system_permission.basil";
 		String system_gro = "/ajax/system_group.basil";
 		String system_use = "/ajax/system_user.basil";
+		String production_head = "/ajax/production_header.basil";
+		String production_body = "/ajax/production_body.basil";
 		http.authorizeRequests()
 				// thirdparty && img 資料夾靜態資料可 直接 存取 (預設皆有 訪問權限 資料可[匿名]存取)
 				.antMatchers(HttpMethod.GET, "/thirdparty/**", "/img/**", "/login.basil", "/login.html").permitAll()
@@ -39,48 +41,46 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, "/ajax/index.basil").hasAuthority(actionRole("index.basil", ""))
 
 				// ----請求-system_config-(訪問) ----
-				.antMatchers(HttpMethod.POST, system_con).hasAuthority(actionRole(system_con, ""))
-				// (查詢)
-				.antMatchers(HttpMethod.POST, system_con + ".AR").hasAuthority(actionRole(system_con, "AR"))
-				// (新增)
-				.antMatchers(HttpMethod.POST, system_con + ".AC").hasAuthority(actionRole(system_con, "AC"))
-				// (修改)
-				.antMatchers(HttpMethod.PUT, system_con + ".AU").hasAuthority(actionRole(system_con, "AU"))
-				// (移除)
-				.antMatchers(HttpMethod.DELETE, system_con + ".AD").hasAuthority(actionRole(system_con, "AD"))
+				.antMatchers(HttpMethod.POST, system_con).hasAuthority(actionRole(system_con, ""))				
+				.antMatchers(HttpMethod.POST, system_con + ".AR").hasAuthority(actionRole(system_con, "AR"))// (查詢)
+				.antMatchers(HttpMethod.POST, system_con + ".AC").hasAuthority(actionRole(system_con, "AC"))// (新增)
+				.antMatchers(HttpMethod.PUT, system_con + ".AU").hasAuthority(actionRole(system_con, "AU"))// (修改)
+				.antMatchers(HttpMethod.DELETE, system_con + ".AD").hasAuthority(actionRole(system_con, "AD"))// (移除)
 
 				// ----請求-system_permission-(訪問) ----
 				.antMatchers(HttpMethod.POST, system_per).hasAuthority(actionRole(system_per, ""))
-				// (查詢)
-				.antMatchers(HttpMethod.POST, system_per + ".AR").hasAuthority(actionRole(system_per, "AR"))
-				// (新增)
-				.antMatchers(HttpMethod.POST, system_per + ".AC").hasAuthority(actionRole(system_per, "AC"))
-				// (修改)
-				.antMatchers(HttpMethod.PUT, system_per + ".AU").hasAuthority(actionRole(system_per, "AU"))
-				// (移除)
-				.antMatchers(HttpMethod.DELETE, system_per + ".AD").hasAuthority(actionRole(system_per, "AD"))
+				.antMatchers(HttpMethod.POST, system_per + ".AR").hasAuthority(actionRole(system_per, "AR"))// (查詢)
+				.antMatchers(HttpMethod.POST, system_per + ".AC").hasAuthority(actionRole(system_per, "AC"))// (新增)
+				.antMatchers(HttpMethod.PUT, system_per + ".AU").hasAuthority(actionRole(system_per, "AU"))// (修改)
+				.antMatchers(HttpMethod.DELETE, system_per + ".AD").hasAuthority(actionRole(system_per, "AD"))// (移除)
 
 				// ----請求-sys_group-(訪問) ----
 				.antMatchers(HttpMethod.POST, system_gro).hasAuthority(actionRole(system_gro, ""))
-				// (查詢)
-				.antMatchers(HttpMethod.POST, system_gro + ".AR").hasAuthority(actionRole(system_gro, "AR"))
-				// (新增)
-				.antMatchers(HttpMethod.POST, system_gro + ".AC").hasAuthority(actionRole(system_gro, "AC"))
-				// (修改)
-				.antMatchers(HttpMethod.PUT, system_gro + ".AU").hasAuthority(actionRole(system_gro, "AU"))
-				// (移除)
-				.antMatchers(HttpMethod.DELETE, system_gro + ".AD").hasAuthority(actionRole(system_gro, "AD"))
+				.antMatchers(HttpMethod.POST, system_gro + ".AR").hasAuthority(actionRole(system_gro, "AR"))// (查詢)
+				.antMatchers(HttpMethod.POST, system_gro + ".AC").hasAuthority(actionRole(system_gro, "AC"))// (新增)
+				.antMatchers(HttpMethod.PUT, system_gro + ".AU").hasAuthority(actionRole(system_gro, "AU"))// (修改)
+				.antMatchers(HttpMethod.DELETE, system_gro + ".AD").hasAuthority(actionRole(system_gro, "AD"))// (移除)
 
 				// ----請求-sys_user-(訪問) ----
 				.antMatchers(HttpMethod.POST, system_use).hasAuthority(actionRole(system_use, ""))
-				// (查詢)
-				.antMatchers(HttpMethod.POST, system_use + ".AR").hasAuthority(actionRole(system_use, "AR"))
-				// (新增)
-				.antMatchers(HttpMethod.POST, system_use + ".AC").hasAuthority(actionRole(system_use, "AC"))
-				// (修改)
-				.antMatchers(HttpMethod.PUT, system_use + ".AU").hasAuthority(actionRole(system_use, "AU"))
-				// (移除)
-				.antMatchers(HttpMethod.DELETE, system_use + ".AD").hasAuthority(actionRole(system_use, "AD"))
+				.antMatchers(HttpMethod.POST, system_use + ".AR").hasAuthority(actionRole(system_use, "AR"))// (查詢)
+				.antMatchers(HttpMethod.POST, system_use + ".AC").hasAuthority(actionRole(system_use, "AC"))// (新增)
+				.antMatchers(HttpMethod.PUT, system_use + ".AU").hasAuthority(actionRole(system_use, "AU"))// (修改)
+				.antMatchers(HttpMethod.DELETE, system_use + ".AD").hasAuthority(actionRole(system_use, "AD"))// (移除)
+				
+				// ----請求-production_header-(訪問) ----
+				.antMatchers(HttpMethod.POST, production_head).hasAuthority(actionRole(production_head, ""))
+				.antMatchers(HttpMethod.POST, production_head + ".AR").hasAuthority(actionRole(production_head, "AR"))// (查詢)
+				.antMatchers(HttpMethod.POST, production_head + ".AC").hasAuthority(actionRole(production_head, "AC"))// (新增)
+				.antMatchers(HttpMethod.PUT, production_head + ".AU").hasAuthority(actionRole(production_head, "AU"))// (修改)
+				.antMatchers(HttpMethod.DELETE, production_head + ".AD").hasAuthority(actionRole(production_head, "AD"))// (移除)
+				
+				// ----請求-production_body-(訪問) ----
+				.antMatchers(HttpMethod.POST, production_body).hasAuthority(actionRole(production_body, ""))
+				.antMatchers(HttpMethod.POST, production_body + ".AR").hasAuthority(actionRole(production_body, "AR"))// (查詢)
+				.antMatchers(HttpMethod.POST, production_body + ".AC").hasAuthority(actionRole(production_body, "AC"))// (新增)
+				.antMatchers(HttpMethod.PUT, production_body + ".AU").hasAuthority(actionRole(production_body, "AU"))// (修改)
+				.antMatchers(HttpMethod.DELETE, production_body + ".AD").hasAuthority(actionRole(production_body, "AD"))// (移除)
 
 				// 請求需要檢驗-全部請求
 				.anyRequest().authenticated();
@@ -110,7 +110,6 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 		// 在 Thymeleaf 或 JSP 中，Token 名稱與值可分別使用 ${_csrf.parameterName} 與 ${_csrf.token}
 		// 來取得，發送請求時，必須得包含這個 Token，否則就會被拒絕請求。
 		http.csrf().disable();
-
 	}
 
 	@Override

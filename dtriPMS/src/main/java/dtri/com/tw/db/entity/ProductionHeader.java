@@ -1,16 +1,15 @@
 package dtri.com.tw.db.entity;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -21,8 +20,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  * @see 產品製程<br>
  *      ph_id : ID<br>
  *      ph_model : 產品型號<br>
- *      ph_prec_id : 製令工單<br>
- *      ph_body_g : 關聯-製令工單號<br>
+ *      ph_pr_id : 關聯-製令工單<br>
+ *      ph_pb_id : 關聯-SN清單<br>
  *      ph_wpro_id : 工作站<br>
  *      ph_s_date : 開始製成 <br>
  *      ph_e_date : 結束製成 <br>
@@ -76,7 +75,7 @@ public class ProductionHeader {
 	// 功能項目
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "production_header_seq")
-	@SequenceGenerator(name = "production_header_seq", sequenceName = "production_header_seq")
+	@SequenceGenerator(name = "production_header_seq", sequenceName = "production_header_seq", allocationSize = 1)
 	@Column(name = "ph_id")
 	private Integer phid;
 
@@ -86,9 +85,16 @@ public class ProductionHeader {
 	@Column(name = "ph_pr_id", nullable = false, columnDefinition = "varchar(50)")
 	private String phprid;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ph_pb_id", referencedColumnName = "pb_id")
-	private ProductionBody productionBody;
+	
+	/*
+	 * @OneToOne(cascade = CascadeType.ALL)
+	 * 
+	 * @JoinColumns({ @JoinColumn(name = "ph_pb_id", referencedColumnName =
+	 * "pb_id"),
+	 * 
+	 * @JoinColumn(name = "ph_pb_sys_ver", referencedColumnName = "sys_ver") })
+	 * private ProductionBody productionBody;
+	 */
 
 	@Column(name = "ph_wp_id", nullable = false)
 	private Integer phwpid;
@@ -96,11 +102,22 @@ public class ProductionHeader {
 	@Column(name = "ph_s_date", columnDefinition = "TIMESTAMP")
 	private Date phsdate;
 
-	@Column(name = "ph_e_date",  columnDefinition = "TIMESTAMP")
+	@Column(name = "ph_e_date", columnDefinition = "TIMESTAMP")
 	private Date phedate;
 
-	@Column(name = "ph_schedule",  columnDefinition = "varchar(255)")
+	@Column(name = "ph_schedule", columnDefinition = "varchar(50)")
 	private String phschedule;
+
+	@OneToMany(mappedBy = "productionHeader")
+	private List<ProductionBody> productionBody;
+
+	public List<ProductionBody> getProductionBody() {
+		return productionBody;
+	}
+
+	public void setProductionBody(List<ProductionBody> productionBody) {
+		this.productionBody = productionBody;
+	}
 
 	public Date getSyscdate() {
 		return syscdate;
@@ -196,14 +213,6 @@ public class ProductionHeader {
 
 	public void setPhprid(String phprid) {
 		this.phprid = phprid;
-	}
-
-	public ProductionBody getProductionBody() {
-		return productionBody;
-	}
-
-	public void setProductionBody(ProductionBody productionBody) {
-		this.productionBody = productionBody;
 	}
 
 	public Integer getPhwpid() {

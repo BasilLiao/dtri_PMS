@@ -98,6 +98,7 @@ public class SystemConfigController {
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
 		check = configService.createData(req.getBody(), user);
+		check = configService.save_asData(req.getBody(), user);
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳

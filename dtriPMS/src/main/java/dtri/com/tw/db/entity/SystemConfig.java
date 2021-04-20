@@ -69,7 +69,7 @@ public class SystemConfig {
 	// 功能項目
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_config_seq")
-	@SequenceGenerator(name = "system_config_seq", sequenceName = "system_config_seq")
+	@SequenceGenerator(name = "system_config_seq", sequenceName = "system_config_seq",allocationSize =1)
 	@Column(name = "sc_id")
 	private Integer scid;
 

@@ -15,33 +15,26 @@ import dtri.com.tw.bean.PackageBean;
 import dtri.com.tw.db.entity.SystemUser;
 import dtri.com.tw.login.LoginUserDetails;
 import dtri.com.tw.service.PackageService;
-import dtri.com.tw.service.SystemPermissionService;
+import dtri.com.tw.service.ProductionHeaderService;
 
 @Controller
-public class SystemPermissionController {
+public class ProductionHeaderController {
 	// 功能
-	final static String SYS_F = "sys_group.basil";
+	final static String SYS_F = "production_header.basil";
 
 	@Autowired
 	PackageService packageService;
 	@Autowired
-	SystemPermissionService permissionService;
+	ProductionHeaderService headerService;
 
 	/**
 	 * 訪問
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_permission.basil" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/production_header.basil" }, method = {
+			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String sysPermissionAccess(@RequestBody String json_object) {
 		System.out.println("---controller - sysPermissionAccess Check");
-		// 取得-當前用戶資料
-		SystemUser user = new SystemUser();
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			// Step1.查詢資料
-			user = userDetails.getSystemUser();
-		}
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		String info = null, info_color = null;
@@ -49,7 +42,7 @@ public class SystemPermissionController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = permissionService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(), user.getSuaccount());
+		resp = headerService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color);
 		// 回傳-資料
@@ -60,17 +53,10 @@ public class SystemPermissionController {
 	 * 查詢
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_permission.basil.AR" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public String sysPermissionSearch(@RequestBody String json_object) {
-		System.out.println("---controller - sysPermissionSearch Check");
-		// 取得-當前用戶資料
-		SystemUser user = new SystemUser();
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			// Step1.查詢資料
-			user = userDetails.getSystemUser();
-		}
+	@RequestMapping(value = { "/ajax/production_header.basil.AR" }, method = {
+			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	public String sysConfigSearch(@RequestBody String json_object) {
+		System.out.println("---controller - sysConfigSearch Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		String info = null, info_color = null;
@@ -78,7 +64,7 @@ public class SystemPermissionController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = permissionService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(), user.getSuaccount());
+		resp = headerService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color);
 		// 回傳-資料
@@ -89,33 +75,41 @@ public class SystemPermissionController {
 	 * 新增
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_permission.basil.AC" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public String sysPermissionCreate(@RequestBody String json_object) {
-		System.out.println("---controller - sysPermissionCreate Check");
+	@RequestMapping(value = { "/ajax/production_header.basil.AC" }, method = {
+			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	public String sysConfigCreate(@RequestBody String json_object) {
+		System.out.println("---controller - sysConfigCreate Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
-		boolean check = false;
+		boolean check = true;
 		String info = null, info_color = null;
 		System.out.println(json_object);
 		// 取得-當前用戶資料
 		SystemUser user = new SystemUser();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication()
+					.getPrincipal();
 			// Step1.查詢資料
 			user = userDetails.getSystemUser();
 		}
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = permissionService.createData(req.getBody(), user);
+		if(req.getBody().getJSONArray("create").length()>0) {
+			check = headerService.createData(req.getBody(), user);
+		}
+		if(req.getBody().getJSONArray("save_as").length()>0 && check) {
+			check = headerService.save_asData(req.getBody(), user);
+		}
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
 			resp = packageService.setObjResp(resp, req, info, info_color);
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning,
+					PackageBean.info_color_warning);
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -125,9 +119,10 @@ public class SystemPermissionController {
 	 * 修改
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_permission.basil.AU" }, method = { RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
-	public String sysPermissionModify(@RequestBody String json_object) {
-		System.out.println("---controller - sysPermissionModify Check");
+	@RequestMapping(value = { "/ajax/production_header.basil.AU" }, method = {
+			RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
+	public String sysConfigModify(@RequestBody String json_object) {
+		System.out.println("---controller - sysConfigModify Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;
@@ -137,21 +132,23 @@ public class SystemPermissionController {
 		SystemUser user = new SystemUser();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication()
+					.getPrincipal();
 			// Step1.查詢資料
 			user = userDetails.getSystemUser();
 		}
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = permissionService.updateData(req.getBody(), user);
+		check = headerService.updateData(req.getBody(), user);
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
 			resp = packageService.setObjResp(resp, req, info, info_color);
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning,
+					PackageBean.info_color_warning);
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -161,9 +158,10 @@ public class SystemPermissionController {
 	 * 移除
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_permission.basil.AD" }, method = { RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
-	public String sysPermissionDelete(@RequestBody String json_object) {
-		System.out.println("---controller - sysPermissionDelete Check");
+	@RequestMapping(value = { "/ajax/production_header.basil.AD" }, method = {
+			RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
+	public String sysConfigDelete(@RequestBody String json_object) {
+		System.out.println("---controller - sysConfigDelete Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;
@@ -173,14 +171,15 @@ public class SystemPermissionController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = permissionService.deleteData(req.getBody());
+		check = headerService.deleteData(req.getBody());
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
 			resp = packageService.setObjResp(resp, req, info, info_color);
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning,
+					PackageBean.info_color_warning);
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);

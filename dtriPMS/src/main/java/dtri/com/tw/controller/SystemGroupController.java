@@ -31,10 +31,17 @@ public class SystemGroupController {
 	 * 訪問
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_group.basil" }, method = {
-			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/system_group.basil" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String sysGroupAccess(@RequestBody String json_object) {
 		System.out.println("---controller - sysGroupAccess Check");
+		// 取得-當前用戶資料
+		SystemUser user = new SystemUser();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			// Step1.查詢資料
+			user = userDetails.getSystemUser();
+		}
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		String info = null, info_color = null;
@@ -42,7 +49,7 @@ public class SystemGroupController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = groupService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = groupService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(), user.getSuaccount());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color);
 		// 回傳-資料
@@ -53,10 +60,17 @@ public class SystemGroupController {
 	 * 查詢
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_group.basil.AR" }, method = {
-			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/system_group.basil.AR" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String sysGroupSearch(@RequestBody String json_object) {
 		System.out.println("---controller - sysGroupSearch Check");
+		// 取得-當前用戶資料
+		SystemUser user = new SystemUser();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			// Step1.查詢資料
+			user = userDetails.getSystemUser();
+		}
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		String info = null, info_color = null;
@@ -64,7 +78,7 @@ public class SystemGroupController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = groupService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = groupService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(), user.getSuaccount());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color);
 		// 回傳-資料
@@ -75,8 +89,7 @@ public class SystemGroupController {
 	 * 新增
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_group.basil.AC" }, method = {
-			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/system_group.basil.AC" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String sysGroupCreate(@RequestBody String json_object) {
 		System.out.println("---controller - sysGroupCreate Check");
 		PackageBean req = new PackageBean();
@@ -88,8 +101,7 @@ public class SystemGroupController {
 		SystemUser user = new SystemUser();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication()
-					.getPrincipal();
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			// Step1.查詢資料
 			user = userDetails.getSystemUser();
 		}
@@ -97,14 +109,14 @@ public class SystemGroupController {
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
 		check = groupService.createData(req.getBody(), user);
+		check = groupService.save_asData(req.getBody(), user);
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
 			resp = packageService.setObjResp(resp, req, info, info_color);
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning,
-					PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -114,8 +126,7 @@ public class SystemGroupController {
 	 * 修改
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_group.basil.AU" }, method = {
-			RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/system_group.basil.AU" }, method = { RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
 	public String sysGroupModify(@RequestBody String json_object) {
 		System.out.println("---controller - sysGroupModify Check");
 		PackageBean req = new PackageBean();
@@ -127,8 +138,7 @@ public class SystemGroupController {
 		SystemUser user = new SystemUser();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication()
-					.getPrincipal();
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			// Step1.查詢資料
 			user = userDetails.getSystemUser();
 		}
@@ -142,8 +152,7 @@ public class SystemGroupController {
 			resp = packageService.setObjResp(resp, req, info, info_color);
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning,
-					PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -153,8 +162,7 @@ public class SystemGroupController {
 	 * 移除
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/system_group.basil.AD" }, method = {
-			RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/system_group.basil.AD" }, method = { RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
 	public String sysGroupDelete(@RequestBody String json_object) {
 		System.out.println("---controller - sysGroupDelete Check");
 		PackageBean req = new PackageBean();
@@ -173,8 +181,7 @@ public class SystemGroupController {
 			resp = packageService.setObjResp(resp, req, info, info_color);
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning,
-					PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);

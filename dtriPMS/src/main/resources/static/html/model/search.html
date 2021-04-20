@@ -4,6 +4,10 @@
 	width: 22px;
 	height: 20px;
 }
+.datalist {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
 </style>
 <div id="search">
 	<div class="shadow mt-0 text-left">
@@ -84,7 +88,7 @@
 					</ul>
 				</div>
 			</div>
-			<table class="table table-sm table-hover table-striped table-bordered table-responsive m-0" style="min-height: 410px;">
+			<table class="table table-sm table-hover table-striped table-bordered table-responsive m-0" style="min-height: 450px;">
 				<thead class="thead bg-dark table-dark search_example_title" style="white-space: nowrap;">
 					<tr>
 						<th class="p-1" style="min-width: 35px;"><i class="btn btn-outline-light p-0 pr-1 pl-1 bi bi-shield"></i></th>
@@ -181,6 +185,7 @@
                     one_item[0].children[0].children[0].innerText = value_name;
                     one_item.insertBefore(".s_title_last");
                     $("#"+key_id).css("min-width",value_size);
+                    $("#"+key_id).css("max-width",value_size);
                     $("#"+key_id).addClass(value_show=="disabled"?"d-none":"");
                     
                 }
@@ -192,6 +197,7 @@
                 $(".s_title_last").attr("id", key_id);
                 $(".s_title_last .title_name").text(value_name);
                 $("#"+key_id).css("min-width",value_size);
+                $("#"+key_id).css("max-width",value_size);
                 $("#"+key_id).addClass(value_show=="disabled"?"d-none":"");
                 //關閉範例
                 $(".s_title_body").addClass("d-none");
@@ -240,16 +246,19 @@
                         var one_item = $(".search_example_content .s_list_body").clone(); //複製樣本
                         var key_id = Object.keys(list[j])[i];
                         var value_name = list[j][Object.keys(list[j])[i]];
-                        //console.log(key_id+" "+value_name);
+                        //取得title Size顯示
+                        console.log(key_id+" "+value_name);
+                        var value_size = $("#"+key_id.replace("_b__","_h__")).css("maxWidth");
                         //取得title 是否顯示
                         if($("#"+key_id.replace("_b__","_h__")).hasClass('d-none')){
                         	one_item[0].className = "datalist d-none";
                         }else{
 	                        one_item[0].className = "datalist";
-                        	
                         }
+                        
                         one_item[0].id = "";
                         one_item[0].title = key_id;
+                        one_item[0].style = "max-width:"+value_size;
                         one_item[0].innerText = value_name;
                         one_item.insertBefore("#" + list_item[0].id + " .s_list_body");
                     }
@@ -258,7 +267,7 @@
                     //vv--fatherSon__因為 父子類別 (只顯示父類資訊)/子類別另存--vv
                     if(type=="fatherSon"){
 	                    for (var i = 0; i < Object.keys(list[j]).length; i++) {
-		                    if((Object.keys(list[j])[i]).indexOf("sys_hearder")>=1){
+		                    if((Object.keys(list[j])[i]).indexOf("sys_header")>=1){
 		                        var value_name = list[j][Object.keys(list[j])[i]];
 		        				if(value_name || ((j== list.length-1) &&(i==Object.keys(list[j]).length-1))){
 		        					//父類別
@@ -534,7 +543,7 @@
             },
             pageChange(even) {
                 var id = even.id;
-                console.log("page : " + id.replace("page_", ""));
+                //console.log("page : " + id.replace("page_", ""));
                 if (id.replace("page_", "") == "n") {
                     //換頁批次 (下)
                     if (this.page_now_size != this.page_total) {
@@ -542,6 +551,9 @@
                     }
                     this.page_batch += 1;
                     this.searchSend();
+                    for (var p = 1; p <= 10; p++) {
+                    	$(".pagination #page_" + p +" a").text((this.page_batch*10)+p);
+                    }
                 } else if (id.replace("page_", "") == "p") {
                     //換頁批次 (前)
                     if (this.page_batch == 0) {
@@ -549,6 +561,9 @@
                     }
                     this.page_batch -= 1;
                     this.searchSend();
+                    for (var p = 1; p <= 10; p++) {
+                    	$(".pagination #page_" + p +" a").text((this.page_batch*10)+p);
+                    }
                 } else if (!$("#" + id).hasClass("disabled")) {
                     //換頁
                     var d = "disabled";

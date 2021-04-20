@@ -31,6 +31,12 @@ public interface SystemConfigDao extends JpaRepository<SystemConfig, Long> {
 	// 取得最新G_ID
 	@Query("SELECT c FROM SystemConfig c order by c.scgid desc")
 	ArrayList<SystemConfig> findAllByTop1(Pageable pageable);
+	
+	//取得ID
+	@Query(value = "SELECT CURRVAL('production_config_seq')", nativeQuery = true)
+    Integer getProduction_config_seq();
+
+
 
 	//delete
 	Long deleteByScidAndSysheader(Integer id, Boolean sysheader);

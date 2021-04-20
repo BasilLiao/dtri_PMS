@@ -83,7 +83,7 @@ public class SystemPermission {
 	// 功能權限
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "system_permission_seq")
-	@SequenceGenerator(name = "system_permission_seq", sequenceName = "system_permission_seq")
+	@SequenceGenerator(name = "system_permission_seq", sequenceName = "system_permission_seq",allocationSize =1)
 	@Column(name = "sp_id")
 	private Integer spid;
 
@@ -102,7 +102,6 @@ public class SystemPermission {
 	@Column(name = "sp_permission", nullable = false, columnDefinition = "varchar(10)")
 	private String sppermission;
 
-	// @OrderBy(clause = "sg_g_id ASC")
 	@OneToMany(mappedBy = "systemPermission")
 	private List<SystemGroup> systemGroup;
 
