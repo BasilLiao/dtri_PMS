@@ -34,6 +34,9 @@ public interface ProductionHeaderDao extends JpaRepository<ProductionHeader, Lon
 	
 	//查詢重複製令
 	List<ProductionHeader> findAllByPhprid(String phprid);
+	
+	//查詢ID
+	List<ProductionHeader> findAllByPhid(Integer phprid);
 
 	// delete(header)
 	Long deleteByPhidAndSysheader(Integer id, Boolean sysheader);

@@ -34,6 +34,7 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 		String system_use = "/ajax/system_user.basil";
 		String production_head = "/ajax/production_header.basil";
 		String production_body = "/ajax/production_body.basil";
+		String production_reco = "/ajax/production_records.basil";
 		http.authorizeRequests()
 				// thirdparty && img 資料夾靜態資料可 直接 存取 (預設皆有 訪問權限 資料可[匿名]存取)
 				.antMatchers(HttpMethod.GET, "/thirdparty/**", "/img/**", "/login.basil", "/login.html").permitAll()
@@ -81,6 +82,13 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, production_body + ".AC").hasAuthority(actionRole(production_body, "AC"))// (新增)
 				.antMatchers(HttpMethod.PUT, production_body + ".AU").hasAuthority(actionRole(production_body, "AU"))// (修改)
 				.antMatchers(HttpMethod.DELETE, production_body + ".AD").hasAuthority(actionRole(production_body, "AD"))// (移除)
+				
+				// ----請求-production_records-(訪問) ----
+				.antMatchers(HttpMethod.POST, production_reco).hasAuthority(actionRole(production_reco, ""))
+				.antMatchers(HttpMethod.POST, production_reco + ".AR").hasAuthority(actionRole(production_reco, "AR"))// (查詢)
+				.antMatchers(HttpMethod.POST, production_reco + ".AC").hasAuthority(actionRole(production_reco, "AC"))// (新增)
+				.antMatchers(HttpMethod.PUT, production_reco + ".AU").hasAuthority(actionRole(production_reco, "AU"))// (修改)
+				.antMatchers(HttpMethod.DELETE, production_reco + ".AD").hasAuthority(actionRole(production_reco, "AD"))// (移除)
 
 				// 請求需要檢驗-全部請求
 				.anyRequest().authenticated();

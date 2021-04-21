@@ -32,8 +32,8 @@ public class SystemPermissionController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_permission.basil" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public String sysPermissionAccess(@RequestBody String json_object) {
-		System.out.println("---controller - sysPermissionAccess Check");
+	public String access(@RequestBody String json_object) {
+		System.out.println("---controller -access " + SYS_F + " Check");
 		// 取得-當前用戶資料
 		SystemUser user = new SystemUser();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -61,8 +61,8 @@ public class SystemPermissionController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_permission.basil.AR" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public String sysPermissionSearch(@RequestBody String json_object) {
-		System.out.println("---controller - sysPermissionSearch Check");
+	public String search(@RequestBody String json_object) {
+		System.out.println("---controller -search " + SYS_F + " Check");
 		// 取得-當前用戶資料
 		SystemUser user = new SystemUser();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -90,8 +90,8 @@ public class SystemPermissionController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_permission.basil.AC" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public String sysPermissionCreate(@RequestBody String json_object) {
-		System.out.println("---controller - sysPermissionCreate Check");
+	public String create(@RequestBody String json_object) {
+		System.out.println("---controller -create " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;
@@ -109,6 +109,9 @@ public class SystemPermissionController {
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
 		check = permissionService.createData(req.getBody(), user);
+		if (check) {
+			check = permissionService.save_asData(req.getBody(), user);
+		}
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
@@ -126,8 +129,8 @@ public class SystemPermissionController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_permission.basil.AU" }, method = { RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
-	public String sysPermissionModify(@RequestBody String json_object) {
-		System.out.println("---controller - sysPermissionModify Check");
+	public String modify(@RequestBody String json_object) {
+		System.out.println("---controller -modify " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;
@@ -162,8 +165,8 @@ public class SystemPermissionController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_permission.basil.AD" }, method = { RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
-	public String sysPermissionDelete(@RequestBody String json_object) {
-		System.out.println("---controller - sysPermissionDelete Check");
+	public String delete(@RequestBody String json_object) {
+		System.out.println("---controller -delete " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;

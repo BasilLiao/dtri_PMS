@@ -45,64 +45,64 @@ public class SystemUserService {
 
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
+			int ord = 0;
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "su_id", FFS.h_t("ID", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "su_sg_g_id", FFS.h_t("群組ID", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "su_name", FFS.h_t("姓名", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "su_e_name", FFS.h_t("英文姓名", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "su_position", FFS.h_t("職位", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "su_account", FFS.h_t("帳號", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "su_email", FFS.h_t("Email", "100px", FFS.SHO));
 
-			object_header.put("01_h__su_id", FFS.h_t("ID", "100px", FFS.SHO));
-			object_header.put("02_h__su_sg_g_id", FFS.h_t("群組ID", "100px", FFS.SHO));
-			object_header.put("03_h__su_name", FFS.h_t("姓名", "100px", FFS.SHO));
-			object_header.put("04_h__su_e_name", FFS.h_t("英文姓名", "100px", FFS.SHO));
-			object_header.put("05_h__su_position", FFS.h_t("職位", "100px", FFS.SHO));
-			object_header.put("06_h__su_account", FFS.h_t("帳號", "100px", FFS.SHO));
-			object_header.put("07_h__su_email", FFS.h_t("Email", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_c_date", FFS.h_t("建立時間", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_c_user", FFS.h_t("建立人", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_m_date", FFS.h_t("修改時間", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_m_user", FFS.h_t("修改人", "100px", FFS.SHO));
 
-			object_header.put("08_h__sys_c_date", FFS.h_t("建立時間", "150px", FFS.SHO));
-			object_header.put("09_h__sys_c_user", FFS.h_t("建立人", "100px", FFS.SHO));
-			object_header.put("10_h__sys_m_date", FFS.h_t("修改時間", "150px", FFS.SHO));
-			object_header.put("11_h__sys_m_user", FFS.h_t("修改人", "100px", FFS.SHO));
-
-			object_header.put("12_h__sys_note", FFS.h_t("備註", "100px", FFS.DIS));
-			object_header.put("13_h__sys_sort", FFS.h_t("排序", "100px", FFS.DIS));
-			object_header.put("14_h__sys_ver", FFS.h_t("版本", "100px", FFS.DIS));
-			object_header.put("15_h__sys_status", FFS.h_t("狀態", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_note", FFS.h_t("備註", "100px", FFS.DIS));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_sort", FFS.h_t("排序", "100px", FFS.DIS));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_ver", FFS.h_t("版本", "100px", FFS.DIS));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_status", FFS.h_t("狀態", "100px", FFS.SHO));
 			bean.setHeader(object_header);
 
-			// 放入修改 [m__(key)](modify/Create/Delete) 格式
-			JSONArray obj_m = new JSONArray();
-			JSONArray values = new JSONArray();
+			// 放入修改 [(key)](modify/Create/Delete) 格式
 
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-1", false, new JSONArray(), "m__su_id", "ID"));
+			JSONArray obj_m = new JSONArray();
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-1", false, new JSONArray(), "su_id", "ID"));
 
 			JSONArray groups = new JSONArray();
 			groupDao.findAllBySysheader(true, PageRequest.of(0, 999)).forEach(s -> {
 				groups.put((new JSONObject()).put("value", s.getSgname()).put("key", s.getSggid()));
 			});
 
-			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, groups, "m__su_sg_g_id", "群組ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-1", true, new JSONArray(), "m__su_position", "職位"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "m__su_name", "姓名"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "m__su_e_name", "英文姓名"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "m__su_account", "帳號"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.PASS, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "m__su_password", "密碼"));
+			JSONArray value = new JSONArray();
+			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, groups, "su_sg_g_id", "群組ID"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-1", true, value, "su_position", "職位"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, value, "su_name", "姓名"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, value, "su_e_name", "英文姓名"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, value, "su_account", "帳號"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.PASS, "", "", FFS.SHO, "col-md-2", true, value, "su_password", "密碼"));
 
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-4", true, new JSONArray(), "m__su_email", "Email"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, new JSONArray(), "m__sys_c_date", "建立時間"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, new JSONArray(), "m__sys_c_user", "建立人"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, new JSONArray(), "m__sys_m_date", "修改時間"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, new JSONArray(), "m__sys_m_user", "修改人"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-4", true, value, "su_email", "Email"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, value, "sys_c_date", "建立時間"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, value, "sys_c_user", "建立人"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, value, "sys_m_date", "修改時間"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, value, "sys_m_user", "修改人"));
 
-			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-12", false, new JSONArray(), "m__sys_note", "備註"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "m__sys_sort", "排序"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "m__sys_ver", "版本"));
+			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-12", false, value, "sys_note", "備註"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false, value, "sys_ver", "版本"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.SHO, "col-md-2", true, value, "sys_sort", "排序"));
 
-			values = new JSONArray();
+			JSONArray values = new JSONArray();
 			values.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			values.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.SHO, "col-md-2", true, values, "m__sys_status", "狀態"));
+			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.SHO, "col-md-2", true, values, "sys_status", "狀態"));
 			bean.setCell_modify(obj_m);
 
 			// 放入包裝(search)
 			JSONArray object_searchs = new JSONArray();
-			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "su_account", "帳號", new JSONArray()));
-			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "su_name", "姓名", new JSONArray()));
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "su_account", "帳號", value));
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "su_name", "姓名", value));
 
 			values = new JSONArray();
 			values.put((new JSONObject()).put("value", "正常").put("key", "0"));
@@ -126,22 +126,23 @@ public class SystemUserService {
 		JSONArray object_bodys = new JSONArray();
 		systemUsers.forEach(one -> {
 			JSONObject object_body = new JSONObject();
-			object_body.put("01_b__su_id", one.getSuid());
-			object_body.put("02_b__su_sg_g_id", one.getSusggid());
-			object_body.put("03_b__su_name", one.getSuname());
-			object_body.put("04_b__su_e_name", one.getSuename());
-			object_body.put("05_b__su_position", one.getSuposition());
-			object_body.put("06_b__su_account", one.getSuaccount());
-			object_body.put("07_b__su_email", one.getSuemail());
+			int ord = 0;
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "su_id", one.getSuid());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "su_sg_g_id", one.getSusggid());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "su_name", one.getSuname());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "su_e_name", one.getSuename());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "su_position", one.getSuposition());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "su_account", one.getSuaccount());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "su_email", one.getSuemail());
 
-			object_body.put("08_b__sys_c_date", Fm_Time.to_yMd_Hms(one.getSyscdate()));
-			object_body.put("09_b__sys_c_user", one.getSyscuser());
-			object_body.put("10_b__sys_m_date", Fm_Time.to_yMd_Hms(one.getSysmdate()));
-			object_body.put("11_b__sys_m_user", one.getSysmuser());
-			object_body.put("12_b__sys_note", one.getSysnote());
-			object_body.put("13_b__sys_sort", one.getSyssort());
-			object_body.put("14_b__sys_ver", one.getSysver());
-			object_body.put("15_b__sys_status", one.getSysstatus());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_c_date", Fm_Time.to_yMd_Hms(one.getSyscdate()));
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_c_user", one.getSyscuser());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_m_date", Fm_Time.to_yMd_Hms(one.getSysmdate()));
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_m_user", one.getSysmuser());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_note", one.getSysnote());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_sort", one.getSyssort());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_ver", one.getSysver());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_status", one.getSysstatus());
 			object_bodys.put(object_body);
 		});
 		bean.setBody(new JSONObject().put("search", object_bodys));
@@ -176,13 +177,25 @@ public class SystemUserService {
 				// 帳號重複
 				if (userDao.findBySuaccount(sys_c.getSuaccount()) != null) {
 					check = false;
+					return check;
 				} else {
 					userDao.save(sys_c);
-					check = true;
 				}
 			}
+			check = true;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return check;
+	}
 
-			list = body.getJSONArray("save_as");
+	// 存檔 資料清單
+	@Transactional
+	public boolean save_asData(JSONObject body, SystemUser user) {
+		boolean check = false;
+		PasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
+		try {
+			JSONArray list = body.getJSONArray("save_as");
 			for (Object one : list) {
 				// 物件轉換
 				SystemUser sys_c = new SystemUser();
@@ -204,15 +217,14 @@ public class SystemUserService {
 				// 帳號重複
 				if (userDao.findBySuaccount(sys_c.getSuaccount()) != null) {
 					check = false;
+					return check;
 				} else {
 					userDao.save(sys_c);
-					check = true;
 				}
 			}
-
+			check = true;
 		} catch (Exception e) {
 			System.out.println(e);
-			return false;
 		}
 		return check;
 	}
@@ -241,12 +253,10 @@ public class SystemUserService {
 				sys_c.setSyssort(data.getInt("sys_sort"));
 				sys_c.setSysstatus(data.getInt("sys_status"));
 				sys_c.setSysmuser(user.getSuname());
-				sys_c.setSyscuser(user.getSuname());
 				sys_c.setSysmdate(new Date());
 
 				userDao.save(sys_c);
 				check = true;
-
 			}
 		} catch (Exception e) {
 			System.out.println(e);
@@ -268,10 +278,9 @@ public class SystemUserService {
 				JSONObject data = (JSONObject) one;
 				sys_p.setSuid(data.getInt("su_id"));
 
-				if (userDao.deleteBySuid(sys_p.getSuid()) > 1) {
+				if (userDao.deleteBySuid(sys_p.getSuid()) > 0) {
 					check = true;
 				}
-
 			}
 		} catch (Exception e) {
 			System.out.println(e);

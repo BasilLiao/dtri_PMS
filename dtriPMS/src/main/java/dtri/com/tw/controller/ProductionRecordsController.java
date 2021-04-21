@@ -15,23 +15,23 @@ import dtri.com.tw.bean.PackageBean;
 import dtri.com.tw.db.entity.SystemUser;
 import dtri.com.tw.login.LoginUserDetails;
 import dtri.com.tw.service.PackageService;
-import dtri.com.tw.service.ProductionHeaderService;
+import dtri.com.tw.service.SystemConfigService;
 
 @Controller
-public class ProductionHeaderController {
+public class ProductionRecordsController {
 	// 功能
-	final static String SYS_F = "production_header.basil";
+	final static String SYS_F = "production_records.basil";
 
 	@Autowired
 	PackageService packageService;
 	@Autowired
-	ProductionHeaderService headerService;
+	SystemConfigService configService;
 
 	/**
 	 * 訪問
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_header.basil" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/production_records.basil" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String access(@RequestBody String json_object) {
 		System.out.println("---controller -access " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
@@ -41,7 +41,7 @@ public class ProductionHeaderController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = headerService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = configService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color);
 		// 回傳-資料
@@ -52,9 +52,9 @@ public class ProductionHeaderController {
 	 * 查詢
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_header.basil.AR" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/production_records.basil.AR" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String search(@RequestBody String json_object) {
-		System.out.println("---controller -search  " + SYS_F + " Check");
+		System.out.println("---controller -search " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		String info = null, info_color = null;
@@ -62,7 +62,7 @@ public class ProductionHeaderController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = headerService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = configService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color);
 		// 回傳-資料
@@ -73,12 +73,12 @@ public class ProductionHeaderController {
 	 * 新增
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_header.basil.AC" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/production_records.basil.AC" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String create(@RequestBody String json_object) {
-		System.out.println("---controller -create  " + SYS_F + " Check");
+		System.out.println("---controller -create " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
-		boolean check = true;
+		boolean check = false;
 		String info = null, info_color = null;
 		System.out.println(json_object);
 		// 取得-當前用戶資料
@@ -92,9 +92,9 @@ public class ProductionHeaderController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = headerService.createData(req.getBody(), user);
+		check = configService.createData(req.getBody(), user);
 		if (check) {
-			check = headerService.save_asData(req.getBody(), user);
+			check = configService.save_asData(req.getBody(), user);
 		}
 		// Step3.進行判定
 		if (check) {
@@ -112,9 +112,9 @@ public class ProductionHeaderController {
 	 * 修改
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_header.basil.AU" }, method = { RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/production_records.basil.AU" }, method = { RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
 	public String modify(@RequestBody String json_object) {
-		System.out.println("---controller -modify  " + SYS_F + " Check");
+		System.out.println("---controller -modify " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;
@@ -131,7 +131,7 @@ public class ProductionHeaderController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = headerService.updateData(req.getBody(), user);
+		check = configService.updateData(req.getBody(), user);
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
@@ -148,7 +148,7 @@ public class ProductionHeaderController {
 	 * 移除
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_header.basil.AD" }, method = { RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/production_records.basil.AD" }, method = { RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
 	public String delete(@RequestBody String json_object) {
 		System.out.println("---controller -delete " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
@@ -160,7 +160,7 @@ public class ProductionHeaderController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = headerService.deleteData(req.getBody());
+		check = configService.deleteData(req.getBody());
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳

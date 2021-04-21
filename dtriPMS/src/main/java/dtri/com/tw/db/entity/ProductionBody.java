@@ -93,13 +93,12 @@ public class ProductionBody implements Serializable {
 
 	@Column(name = "pb_f_note", columnDefinition = "varchar(255)")
 	private String pbfnote;
-	
+
 	@Column(name = "pb_schedule", columnDefinition = "varchar(255)")
 	private String pbschedule;
-	
-	@Column(name = "pb_check", columnDefinition = "boolean DEFAULT false")
+
+	@Column(name = "pb_check", nullable = false, columnDefinition = "boolean default false")
 	private Boolean pbcheck;
-	
 
 	@Column(name = "pb_value01", columnDefinition = "varchar(50)")
 	private String pbvalue01;
@@ -253,7 +252,7 @@ public class ProductionBody implements Serializable {
 
 	@Column(name = "pb_l_text", columnDefinition = "text default ''")
 	private String pbltext;
-	
+
 	@Column(name = "pb_l_path", columnDefinition = "varchar(255) default ''")
 	private String pblpath;
 
@@ -289,8 +288,6 @@ public class ProductionBody implements Serializable {
 		}
 	}
 
-	
-	
 	public Boolean getPbcheck() {
 		return pbcheck;
 	}
@@ -814,8 +811,6 @@ public class ProductionBody implements Serializable {
 	public void setPbvalue50(String pbvalue50) {
 		this.pbvalue50 = pbvalue50;
 	}
-
-	
 
 	public String getPbltext() {
 		return pbltext;

@@ -17,7 +17,6 @@ import dtri.com.tw.login.LoginUserDetails;
 import dtri.com.tw.service.PackageService;
 import dtri.com.tw.service.ProductionBodyService;
 
-
 @Controller
 public class ProductionBodyController {
 	// 功能
@@ -32,10 +31,9 @@ public class ProductionBodyController {
 	 * 訪問
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_body.basil" }, method = {
-			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public String sysPermissionAccess(@RequestBody String json_object) {
-		System.out.println("---controller - sysPermissionAccess Check");
+	@RequestMapping(value = { "/ajax/production_body.basil" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	public String access(@RequestBody String json_object) {
+		System.out.println("---controller -access " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		String info = null, info_color = null;
@@ -54,10 +52,9 @@ public class ProductionBodyController {
 	 * 查詢
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_body.basil.AR" }, method = {
-			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public String productionBodySearch(@RequestBody String json_object) {
-		System.out.println("---controller - productionBodySearch Check");
+	@RequestMapping(value = { "/ajax/production_body.basil.AR" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	public String search(@RequestBody String json_object) {
+		System.out.println("---controller -search " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		String info = null, info_color = null;
@@ -76,10 +73,9 @@ public class ProductionBodyController {
 	 * 新增
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_body.basil.AC" }, method = {
-			RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public String productionBodyCreate(@RequestBody String json_object) {
-		System.out.println("---controller - productionBodyCreate Check");
+	@RequestMapping(value = { "/ajax/production_body.basil.AC" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	public String create(@RequestBody String json_object) {
+		System.out.println("---controller -create " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;
@@ -89,8 +85,7 @@ public class ProductionBodyController {
 		SystemUser user = new SystemUser();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication()
-					.getPrincipal();
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			// Step1.查詢資料
 			user = userDetails.getSystemUser();
 		}
@@ -98,15 +93,16 @@ public class ProductionBodyController {
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
 		check = pBodyService.createData(req.getBody(), user);
-		check = pBodyService.save_asData(req.getBody(), user);
+		if (check) {
+			check = pBodyService.save_asData(req.getBody(), user);
+		}
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
 			resp = packageService.setObjResp(resp, req, info, info_color);
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning,
-					PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -116,10 +112,9 @@ public class ProductionBodyController {
 	 * 修改
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_body.basil.AU" }, method = {
-			RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
-	public String productionBodyModify(@RequestBody String json_object) {
-		System.out.println("---controller - productionBodyModify Check");
+	@RequestMapping(value = { "/ajax/production_body.basil.AU" }, method = { RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
+	public String modify(@RequestBody String json_object) {
+		System.out.println("---controller -modify " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;
@@ -129,8 +124,7 @@ public class ProductionBodyController {
 		SystemUser user = new SystemUser();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication()
-					.getPrincipal();
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			// Step1.查詢資料
 			user = userDetails.getSystemUser();
 		}
@@ -144,8 +138,7 @@ public class ProductionBodyController {
 			resp = packageService.setObjResp(resp, req, info, info_color);
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning,
-					PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -155,10 +148,9 @@ public class ProductionBodyController {
 	 * 移除
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_body.basil.AD" }, method = {
-			RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
-	public String productionBodyDelete(@RequestBody String json_object) {
-		System.out.println("---controller - productionBodyDelete Check");
+	@RequestMapping(value = { "/ajax/production_body.basil.AD" }, method = { RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
+	public String delete(@RequestBody String json_object) {
+		System.out.println("---controller -delete " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;
@@ -175,8 +167,7 @@ public class ProductionBodyController {
 			resp = packageService.setObjResp(resp, req, info, info_color);
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning,
-					PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);

@@ -14,13 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 import dtri.com.tw.bean.PackageBean;
 import dtri.com.tw.db.entity.SystemConfig;
 import dtri.com.tw.db.entity.SystemUser;
-import dtri.com.tw.db.pgsql.dao.SystemConfigDao;
+import dtri.com.tw.db.pgsql.dao.ProductionRecordsDao;
 import dtri.com.tw.tools.Fm_Time;
 
 @Service
-public class SystemConfigService {
+public class ProductionRecordsService {
 	@Autowired
-	private SystemConfigDao configDao;
+	private ProductionRecordsDao recordsDao;
 
 	// 取得當前 資料清單
 	public PackageBean getData(JSONObject body, int page, int p_size) {
@@ -103,7 +103,7 @@ public class SystemConfigService {
 			status = body.getJSONObject("search").getString("sys_status");
 			status = status.equals("") ? "0" : status;
 		}
-		systemConfigs = configDao.findAllByConfig(sc_name, sc_g_name, Integer.parseInt(status), page_r);
+		systemConfigs = recordsDao.findAllByConfig(sc_name, sc_g_name, Integer.parseInt(status), page_r);
 
 		// 放入包裝(body) [01 是排序][_b__ 是分割直][資料庫欄位名稱]
 		JSONArray object_bodys = new JSONArray();
@@ -150,16 +150,16 @@ public class SystemConfigService {
 				sys_c.setSyscuser(user.getSuname());
 
 				// 檢查群組名稱重複
-				ArrayList<SystemConfig> sys_p_g = configDao.findAllByConfigGroupTop1(sys_c.getScgname(), PageRequest.of(0, 1));
+				ArrayList<SystemConfig> sys_p_g = recordsDao.findAllByConfigGroupTop1(sys_c.getScgname(), PageRequest.of(0, 1));
 				if (sys_p_g != null && sys_p_g.size() > 0) {
 					// 重複 則取同樣G_ID
 					sys_c.setScgid(sys_p_g.get(0).getScgid());
 				} else {
 					// 取得最新G_ID
-					sys_p_g = configDao.findAllByTop1(PageRequest.of(0, 1));
+					sys_p_g = recordsDao.findAllByTop1(PageRequest.of(0, 1));
 					sys_c.setScgid((sys_p_g.get(0).getScgid() + 1));
 				}
-				configDao.save(sys_c);
+				recordsDao.save(sys_c);
 			}
 			check = true;
 		} catch (Exception e) {
@@ -188,16 +188,16 @@ public class SystemConfigService {
 				sys_c.setSyscuser(user.getSuname());
 
 				// 檢查群組名稱重複
-				ArrayList<SystemConfig> sys_c_g = configDao.findAllByConfigGroupTop1(sys_c.getScgname(), PageRequest.of(0, 1));
+				ArrayList<SystemConfig> sys_c_g = recordsDao.findAllByConfigGroupTop1(sys_c.getScgname(), PageRequest.of(0, 1));
 				if (sys_c_g != null && sys_c_g.size() > 0) {
 					// 重複 則取同樣G_ID
 					sys_c.setScgid(sys_c_g.get(0).getScgid());
 				} else {
 					// 取得最新G_ID
-					sys_c_g = configDao.findAllByTop1(PageRequest.of(0, 1));
+					sys_c_g = recordsDao.findAllByTop1(PageRequest.of(0, 1));
 					sys_c.setScgid((sys_c_g.get(0).getScgid() + 1));
 				}
-				configDao.save(sys_c);
+				recordsDao.save(sys_c);
 			}
 			check = true;
 		} catch (Exception e) {
@@ -228,16 +228,16 @@ public class SystemConfigService {
 				sys_p.setSysmdate(new Date());
 
 				// 檢查群組名稱重複
-				ArrayList<SystemConfig> sys_p_g = configDao.findAllByConfigGroupTop1(sys_p.getScgname(), PageRequest.of(0, 1));
+				ArrayList<SystemConfig> sys_p_g = recordsDao.findAllByConfigGroupTop1(sys_p.getScgname(), PageRequest.of(0, 1));
 				if (sys_p_g != null && sys_p_g.size() > 0) {
 					// 重複 則取同樣G_ID
 					sys_p.setScgid(sys_p_g.get(0).getScgid());
 				} else {
 					// 取得最新G_ID
-					sys_p_g = configDao.findAllByTop1(PageRequest.of(0, 1));
+					sys_p_g = recordsDao.findAllByTop1(PageRequest.of(0, 1));
 					sys_p.setScgid((sys_p_g.get(0).getScgid() + 1));
 				}
-				configDao.save(sys_p);
+				recordsDao.save(sys_p);
 			}
 			// 有更新才正確
 			if (list.length() > 0) {
@@ -263,7 +263,7 @@ public class SystemConfigService {
 				JSONObject data = (JSONObject) one;
 				sys_p.setScid(data.getInt("sc_id"));
 
-				configDao.deleteByScidAndSysheader(sys_p.getScid(), false);
+				recordsDao.deleteByScidAndSysheader(sys_p.getScid(), false);
 				check = true;
 			}
 		} catch (Exception e) {

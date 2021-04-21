@@ -178,11 +178,30 @@ public class SystemPermissionService {
 
 				}
 				permissionDao.save(sys_p);
-				// groupDao.save(sys_g);
-				check = true;
-			}
 
-			list = body.getJSONArray("save_as");
+				// 同步添加到ADMIN
+				sys_g = groupDao.findBySgidOrderBySgidAscSyssortAsc(1).get(0);
+				SystemGroup sys_g_new = new SystemGroup();
+				sys_g_new.setSystemPermission(sys_p);
+				sys_g_new.setSggid(sys_g.getSgid());
+				sys_g_new.setSgname(sys_g.getSgname());
+				sys_g_new.setSgpermission("1111111111");
+				sys_g_new.setSyssort(sys_p.getSyssort());
+				groupDao.save(sys_g_new);
+			}
+			check = true;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return check;
+	}
+
+	// 存檔 資料清單
+	@Transactional
+	public boolean save_asData(JSONObject body, SystemUser user) {
+		boolean check = false;
+		try {
+			JSONArray list = body.getJSONArray("save_as");
 			for (Object one : list) {
 				// 物件轉換
 				SystemPermission sys_p = new SystemPermission();
@@ -220,10 +239,8 @@ public class SystemPermissionService {
 				sys_g_new.setSgpermission("1111111111");
 				sys_g_new.setSyssort(sys_p.getSyssort());
 				groupDao.save(sys_g_new);
-
-				check = true;
 			}
-
+			check = true;
 		} catch (Exception e) {
 			System.out.println(e);
 		}

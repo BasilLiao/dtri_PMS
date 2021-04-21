@@ -38,7 +38,7 @@ public class IndexController {
 	 */
 	@RequestMapping(value = { "/", "/login.basil", "/index.basil", "/logout.basil" }, method = { RequestMethod.GET })
 	public ModelAndView loginCheck(HttpServletRequest request) {
-		System.out.println("---controller - login(logout) Check");
+		System.out.println("---controller -login(logout) " + SYS_F + " Check");
 		// 可能有錯誤碼
 		String error = request.getParameter("status");
 		// 回傳-模板
@@ -51,15 +51,14 @@ public class IndexController {
 	 */
 	@RequestMapping(value = { "/index.basil" }, method = { RequestMethod.POST })
 	public ModelAndView indexCheck() {
-		System.out.println("---controller - index(init) Check");
+		System.out.println("---controller -index(init) " + SYS_F + " Check");
 		PackageBean req_object = new PackageBean();
 		PackageBean resp_object = new PackageBean();
 		String info = null, info_color = null;
 		// 取得-當前用戶資料
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication()
-					.getPrincipal();
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			// Step1.查詢資料
 			SystemUser user = userDetails.getSystemUser();
 			List<SystemGroup> nav = userDetails.getSystemGroup();
@@ -83,7 +82,7 @@ public class IndexController {
 	@ResponseBody
 	@RequestMapping(value = { "ajax/index.basil" }, method = { RequestMethod.POST })
 	public String index(@RequestBody String json_object) {
-		System.out.println("---controller - index(again) Check");
+		System.out.println("---controller -index(again) " + SYS_F + " Check");
 		PackageBean req_object = new PackageBean();
 		PackageBean resp_object = new PackageBean();
 		// Step1.包裝解析
@@ -92,8 +91,7 @@ public class IndexController {
 		// 取得-當前用戶資料
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication()
-					.getPrincipal();
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			// Step2.查詢資料
 			SystemUser user = userDetails.getSystemUser();
 			List<SystemGroup> nav = userDetails.getSystemGroup();

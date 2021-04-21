@@ -32,8 +32,8 @@ public class SystemGroupController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_group.basil" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public String sysGroupAccess(@RequestBody String json_object) {
-		System.out.println("---controller - sysGroupAccess Check");
+	public String access(@RequestBody String json_object) {
+		System.out.println("---controller -access "+SYS_F+" Check");
 		// 取得-當前用戶資料
 		SystemUser user = new SystemUser();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -61,8 +61,8 @@ public class SystemGroupController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_group.basil.AR" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public String sysGroupSearch(@RequestBody String json_object) {
-		System.out.println("---controller - sysGroupSearch Check");
+	public String search(@RequestBody String json_object) {
+		System.out.println("---controller -search "+SYS_F+" Check");
 		// 取得-當前用戶資料
 		SystemUser user = new SystemUser();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -90,8 +90,8 @@ public class SystemGroupController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_group.basil.AC" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
-	public String sysGroupCreate(@RequestBody String json_object) {
-		System.out.println("---controller - sysGroupCreate Check");
+	public String create(@RequestBody String json_object) {
+		System.out.println("---controller -create "+SYS_F+" Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;
@@ -109,7 +109,9 @@ public class SystemGroupController {
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
 		check = groupService.createData(req.getBody(), user);
-		check = groupService.save_asData(req.getBody(), user);
+		if (check) {
+			check = groupService.save_asData(req.getBody(), user);
+		}
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
@@ -127,8 +129,8 @@ public class SystemGroupController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_group.basil.AU" }, method = { RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
-	public String sysGroupModify(@RequestBody String json_object) {
-		System.out.println("---controller - sysGroupModify Check");
+	public String modify(@RequestBody String json_object) {
+		System.out.println("---controller -modify "+SYS_F+" Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;
@@ -163,8 +165,8 @@ public class SystemGroupController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_group.basil.AD" }, method = { RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
-	public String sysGroupDelete(@RequestBody String json_object) {
-		System.out.println("---controller - sysGroupDelete Check");
+	public String delete(@RequestBody String json_object) {
+		System.out.println("---controller -delete "+SYS_F+" Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;

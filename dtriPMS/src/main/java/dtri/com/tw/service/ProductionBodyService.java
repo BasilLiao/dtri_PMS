@@ -3,6 +3,7 @@ package dtri.com.tw.service;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -18,14 +19,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dtri.com.tw.bean.PackageBean;
 import dtri.com.tw.db.entity.ProductionBody;
+import dtri.com.tw.db.entity.ProductionHeader;
 import dtri.com.tw.db.entity.SystemUser;
 import dtri.com.tw.db.pgsql.dao.ProductionBodyDao;
+import dtri.com.tw.db.pgsql.dao.ProductionHeaderDao;
 import dtri.com.tw.tools.Fm_Time;
 
 @Service
 public class ProductionBodyService {
 	@Autowired
 	private ProductionBodyDao bodyDao;
+	@Autowired
+	private ProductionHeaderDao headerDao;
+
 	@Autowired
 	EntityManager em;
 
@@ -46,39 +52,37 @@ public class ProductionBodyService {
 		String pb_sn_value = "";
 		String pb_sn_name = "";
 		String pb_sn = "";
+		String pb_sn_check = "";
 		List<Integer> pbphid = null;
 		// 初次載入需要標頭 / 之後就不用
 		if (body == null || body.isNull("search")) {
 
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
-			int ord = 1;
-			String.format("%02d", (ord += 1));
+			int ord = 0;
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_id", FFS.h_t("SN_ID", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_ph_id", FFS.h_t("TL_ID", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "ph_pr_id", FFS.h_t("TL_工單號", "160px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "ph_model", FFS.h_t("TL_產品型號", "160px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_sn", FFS.h_t("SN_(出貨/產品)", "250px", FFS.SHO));
 
-			object_header.put("01_h__pb_id", FFS.h_t("SN_ID", "100px", FFS.SHO));
-			object_header.put("02_h__pb_ph_id", FFS.h_t("TL_ID", "100px", FFS.SHO));
-			object_header.put("03_h__ph_pr_id", FFS.h_t("TL_工單號", "160px", FFS.SHO));
-			object_header.put("04_h__ph_model", FFS.h_t("TL_產品型號", "160px", FFS.SHO));
-			object_header.put("05_h__pb_sn", FFS.h_t("SN_(出貨/產品)", "250px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_f_value", FFS.h_t("SN_維修項目", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_f_note", FFS.h_t("SN_維修說明", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_check", FFS.h_t("SN_流程完成", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_l_path", FFS.h_t("SN_檢測Log位置", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_l_text", FFS.h_t("SN_檢測Log內容", "150px", FFS.SHO));
 
-			object_header.put("06_h__pb_f_value", FFS.h_t("SN_維修項目", "150px", FFS.SHO));
-			object_header.put("07_h__pb_f_note", FFS.h_t("SN_維修說明", "150px", FFS.SHO));
-			object_header.put("08_h__pb_check", FFS.h_t("SN_檢驗完成", "150px", FFS.SHO));
-			object_header.put("09_h__pb_l_path", FFS.h_t("SN_檢測Log位置", "150px", FFS.SHO));
-			object_header.put("10_h__pb_l_text", FFS.h_t("SN_檢測Log內容", "150px", FFS.SHO));
-
+			// sn關聯表
 			int j = 0;
-			int j_now = 10;
 			Method method;
 			for (j = 0; j < 50; j++) {
 				String m_name = "getPbvalue" + String.format("%02d", j + 1);
 				try {
 					method = body_one.getClass().getMethod(m_name);
 					String value = (String) method.invoke(body_one);
-					String name = String.format("%02d", j + 11) + "_h__pb_value" + String.format("%02d", j + 1);
+					String name = "pb_value" + String.format("%02d", j + 1);
 					if (value != null && !value.equals("")) {
-						object_header.put(name, FFS.h_t("SN_" + value, "180px", FFS.SHO));
-						j_now += 1;
+						object_header.put(FFS.ord((ord += 1), FFS.H) + name, FFS.h_t("SN_" + value, "180px", FFS.SHO));
 					}
 				} catch (NoSuchMethodException e) {
 					e.printStackTrace();
@@ -89,38 +93,38 @@ public class ProductionBodyService {
 				} catch (IllegalArgumentException e) {
 					e.printStackTrace();
 				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 
-			object_header.put((j_now + 1) + "_h__sys_c_date", FFS.h_t("建立時間", "150px", FFS.SHO));
-			object_header.put((j_now + 2) + "_h__sys_c_user", FFS.h_t("建立人", "100px", FFS.SHO));
-			object_header.put((j_now + 3) + "_h__sys_m_date", FFS.h_t("修改時間", "150px", FFS.SHO));
-			object_header.put((j_now + 4) + "_h__sys_m_user", FFS.h_t("修改人", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_c_date", FFS.h_t("建立時間", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_c_user", FFS.h_t("建立人", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_m_date", FFS.h_t("修改時間", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_m_user", FFS.h_t("修改人", "100px", FFS.SHO));
 
-			object_header.put((j_now + 5) + "_h__sys_note", FFS.h_t("備註", "100px", FFS.SHO));
-			object_header.put((j_now + 6) + "_h__sys_sort", FFS.h_t("排序", "100px", FFS.SHO));
-			object_header.put((j_now + 7) + "_h__sys_ver", FFS.h_t("版本", "100px", FFS.SHO));
-			object_header.put((j_now + 8) + "_h__sys_status", FFS.h_t("狀態", "100px", FFS.SHO));
-			object_header.put((j_now + 9) + "_h__sys_header", FFS.h_t("群組", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_note", FFS.h_t("備註", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_sort", FFS.h_t("排序", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_ver", FFS.h_t("版本", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_status", FFS.h_t("狀態", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_header", FFS.h_t("群組", "100px", FFS.SHO));
 			bean.setHeader(object_header);
 
 			// 放入修改 [m__(key)](modify/Create/Delete) 格式
 			JSONArray obj_m = new JSONArray();
-			JSONArray values = new JSONArray();
+			JSONArray a_val = new JSONArray();
+			JSONArray n_val = new JSONArray();
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "pb_id", "SN_ID"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "pb_ph_id", "TL_ID"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "ph_model", "TL_產品型號"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "ph_pr_id", "TL_工單號"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "pb_sn", "SN_(出貨/產品)"));
 
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "m__pb_id", "SN_ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "m__pb_ph_id", "TL_ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "m__ph_pr_id", "TL_工單號"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "m__ph_model", "TL_產品型號"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "m__pb_sn", "SN_(出貨/產品)"));
-
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "m__pb_f_value", "SN_維修項目"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "m__pb_f_note", "SN_維修說明"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "m__pb_check", "SN_流程完成"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "m__pb_l_path", "SN_檢測Log位置"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "m__pb_l_text", "SN_檢測Log內容"));
+			a_val = new JSONArray();
+			a_val.put((new JSONObject()).put("value", "完成").put("key", "true"));
+			a_val.put((new JSONObject()).put("value", "未完成").put("key", "false"));
+			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "false", "false", FFS.SHO, "col-md-2", true, a_val, "pb_check", "SN_流程完成"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-12", true, n_val, "pb_f_value", "SN_維修項目"));
+			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.DIS, "col-md-12", true, n_val, "pb_f_note", "SN_維修說明"));
 
 			// sn關聯表
 			for (j = 0; j < 50; j++) {
@@ -128,9 +132,9 @@ public class ProductionBodyService {
 				try {
 					method = body_one.getClass().getMethod(m_name);
 					String value = (String) method.invoke(body_one);
-					String name = "m__pb_value" + String.format("%02d", j + 1);
+					String name = "pb_value" + String.format("%02d", j + 1);
 					if (value != null && !value.equals("")) {
-						obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, values, name, value));
+						obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, n_val, name, value));
 					}
 				} catch (NoSuchMethodException e) {
 					e.printStackTrace();
@@ -141,41 +145,45 @@ public class ProductionBodyService {
 				} catch (IllegalArgumentException e) {
 					e.printStackTrace();
 				} catch (InvocationTargetException e) {
-
 					e.printStackTrace();
 				}
 			}
 
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "m__sys_c_date", "建立時間"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "m__sys_c_user", "建立人"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "m__sys_m_date", "修改時間"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "m__sys_m_user", "修改人"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-12", false, n_val, "pb_l_path", "SN_檢測Log位置"));
+			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.DIS, "col-md-12", false, n_val, "pb_l_text", "SN_檢測Log內容"));
+			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-12", false, n_val, "sys_note", "備註"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-1", false, n_val, "sys_header", "群組代表?"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_ver", "版本"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_c_date", "建立時間"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_c_user", "建立人"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_m_date", "修改時間"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_m_user", "修改人"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "0", "0", FFS.SHO, "col-md-1", true, n_val, "sys_sort", "排序"));
 
-			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-12", false, new JSONArray(), "m__sys_note", "備註"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "0", "0", FFS.SHO, "col-md-2", true, new JSONArray(), "m__sys_sort", "排序"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "m__sys_ver", "版本"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-1", false, new JSONArray(), "m__sys_header", "群組"));
-
-			values = new JSONArray();
-			values.put((new JSONObject()).put("value", "正常").put("key", "0"));
-			values.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.SHO, "col-md-2", true, values, "m__sys_status", "狀態"));
+			a_val = new JSONArray();
+			a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
+			a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
+			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.SHO, "col-md-2", true, a_val, "sys_status", "狀態"));
 			bean.setCell_modify(obj_m);
 
 			// 放入包裝(search)
 			JSONArray object_searchs = new JSONArray();
-			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "ph_model", "TL_產品型號", new JSONArray()));
-			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "ph_pr_id", "TL_製令單號", new JSONArray()));
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "ph_model", "TL_產品型號", n_val));
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "ph_pr_id", "TL_製令單號", n_val));
 
-			values = new JSONArray();
-			values.put((new JSONObject()).put("value", "正常").put("key", "0"));
-			values.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			object_searchs.put(FFS.h_s(FFS.SEL, FFS.TEXT, "0", "col-md-1", "sys_status", "TL_狀態", values));
+			a_val = new JSONArray();
+			a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
+			a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
+			object_searchs.put(FFS.h_s(FFS.SEL, FFS.TEXT, "0", "col-md-1", "sys_status", "TL_狀態", a_val));
 
 			// 項目查詢(選單)
-			values = new JSONArray();
-			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "pb_sn", "SN_出貨序號", new JSONArray()));
-
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "pb_sn", "SN_出貨序號", n_val));
+			a_val = new JSONArray();
+			a_val.put((new JSONObject()).put("value", "完成").put("key", "true"));
+			a_val.put((new JSONObject()).put("value", "未完成").put("key", "false"));
+			object_searchs.put(FFS.h_s(FFS.SEL, FFS.TEXT, "0", "col-md-1", "pb_sn_check", "SN_流程完成?", a_val));
+			// SN
+			a_val = new JSONArray();
 			for (j = 0; j < 50; j++) {
 				String m_name = "getPbvalue" + String.format("%02d", j + 1);
 				try {
@@ -183,7 +191,7 @@ public class ProductionBodyService {
 					String value = (String) method.invoke(body_one);
 					String name = String.format("pb_value" + String.format("%02d", j + 1));
 					if (value != null && !value.equals("")) {
-						values.put((new JSONObject()).put("value", value).put("key", name));
+						a_val.put((new JSONObject()).put("value", value).put("key", name));
 					}
 				} catch (NoSuchMethodException e) {
 					e.printStackTrace();
@@ -197,9 +205,9 @@ public class ProductionBodyService {
 					e.printStackTrace();
 				}
 			}
-			object_searchs.put(FFS.h_s(FFS.SEL, FFS.TEXT, "0", "col-md-2", "pb_sn_name", "SN_類型", values));
-			values = new JSONArray();
-			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "0", "col-md-2", "pb_sn_value", "SN_值", values));
+			object_searchs.put(FFS.h_s(FFS.SEL, FFS.TEXT, "0", "col-md-2", "pb_sn_name", "SN_類型", a_val));
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "0", "col-md-2", "pb_sn_value", "SN_值", n_val));
+
 			bean.setCell_searchs(object_searchs);
 		} else {
 
@@ -226,6 +234,8 @@ public class ProductionBodyService {
 				pb_sn_value = "";
 				pb_sn_name = "";
 			}
+			pb_sn_check = body.getJSONObject("search").getString("pb_sn_check");
+			pb_sn_check = (pb_sn_check.equals("")) ? null : pb_sn_check;
 		}
 
 		// 查詢SN欄位
@@ -246,26 +256,31 @@ public class ProductionBodyService {
 			em.clear();
 			em.close();
 		}
+		if (pb_sn_check == null) {
+			productionBodies = bodyDao.findAllByProductionBody(phmodel, phprid, Integer.parseInt(sysstatus), pbphid, page_r);
 
-		productionBodies = bodyDao.findAllByProductionBody(phmodel, phprid, Integer.parseInt(sysstatus), pbphid, page_r);
+		} else {
+			productionBodies = bodyDao.findAllByProductionBody(phmodel, phprid, Integer.parseInt(sysstatus), pbphid,
+					Boolean.parseBoolean(pb_sn_check), page_r);
+		}
 
 		// 放入包裝(body) [01 是排序][_b__ 是分割直][資料庫欄位名稱]
 		JSONArray object_bodys = new JSONArray();
 		productionBodies.forEach(one -> {
 			JSONObject object_body = new JSONObject();
-			object_body.put("01_b__pb_id", one.getPbid());
-			object_body.put("02_b__pb_ph_id", one.getProductionHeader().getPhid());
-			object_body.put("03_b__ph_pr_id", one.getProductionHeader().getPhprid());
-			object_body.put("04_b__ph_model", one.getProductionHeader().getPhmodel());
-			object_body.put("05_b__pb_sn", one.getPbsn());
+			int ord = 0;
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_id", one.getPbid());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_ph_id", one.getProductionHeader().getPhid());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "ph_pr_id", one.getProductionHeader().getPhprid());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "ph_model", one.getProductionHeader().getPhmodel());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_sn", one.getPbsn());
 
-			object_body.put("06_b__pb_f_value", one.getPbfvalue() == null ? "" : one.getPbfvalue());
-			object_body.put("07_b__pb_f_note", one.getPbfnote() == null ? "" : one.getPbfnote());
-			object_body.put("08_b__pb_check", one.getPbcheck());
-			object_body.put("09_b__pb_l_path", one.getPblpath() == null ? "" : one.getPblpath());
-			object_body.put("10_b__pb_l_text", one.getPbltext() == null ? "" : one.getPbltext());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_f_value", one.getPbfvalue() == null ? "" : one.getPbfvalue());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_f_note", one.getPbfnote() == null ? "" : one.getPbfnote());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_check", one.getPbcheck());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_l_path", one.getPblpath() == null ? "" : one.getPblpath());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_l_text", one.getPbltext() == null ? "" : one.getPbltext());
 
-			int j_now = 11;
 			try {
 				// 有效設定的欄位
 				for (int k = 0; k < 50; k++) {
@@ -278,9 +293,8 @@ public class ProductionBodyService {
 						String name_b = "getPbvalue" + String.format("%02d", k + 1);
 						Method method_b = one.getClass().getMethod(name_b);
 						String value_b = (String) method_b.invoke(one);
-						String key_b = String.format("%02d", j_now) + "_b__pb_value" + String.format("%02d", k + 1);
-						object_body.put(key_b, (value_b == null ? "" : value_b));
-						j_now += 1;
+						String key_b = "pb_value" + String.format("%02d", k + 1);
+						object_body.put(FFS.ord((ord += 1), FFS.B) + key_b, (value_b == null ? "" : value_b));
 					}
 				}
 
@@ -296,19 +310,18 @@ public class ProductionBodyService {
 				e.printStackTrace();
 			}
 
-			object_body.put((j_now) + "_b__sys_c_date", Fm_Time.to_yMd_Hms(one.getSyscdate()));
-			object_body.put((j_now + 1) + "_b__sys_c_user", one.getSyscuser());
-			object_body.put((j_now + 2) + "_b__sys_m_date", Fm_Time.to_yMd_Hms(one.getSysmdate()));
-			object_body.put((j_now + 3) + "_b__sys_m_user", one.getSysmuser());
-			object_body.put((j_now + 4) + "_b__sys_note", one.getSysnote());
-			object_body.put((j_now + 5) + "_b__sys_sort", one.getSyssort());
-			object_body.put((j_now + 6) + "_b__sys_ver", one.getSysver());
-			object_body.put((j_now + 7) + "_b__sys_status", one.getSysstatus());
-			object_body.put((j_now + 8) + "_b__sys_header", one.getSysheader());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_c_date", Fm_Time.to_yMd_Hms(one.getSyscdate()));
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_c_user", one.getSyscuser());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_m_date", Fm_Time.to_yMd_Hms(one.getSysmdate()));
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_m_user", one.getSysmuser());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_note", one.getSysnote());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_sort", one.getSyssort());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_ver", one.getSysver());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_status", one.getSysstatus());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_header", one.getSysheader());
 			object_bodys.put(object_body);
 		});
 		bean.setBody(new JSONObject().put("search", object_bodys));
-		// bean.setBody_type("fatherSon");
 		return bean;
 	}
 
@@ -316,37 +329,68 @@ public class ProductionBodyService {
 	@Transactional
 	public boolean createData(JSONObject body, SystemUser user) {
 		boolean check = false;
-//		try {
-//			JSONArray list = body.getJSONArray("create");
-//			for (Object one : list) {
-//				// 物件轉換
-//				ProductionBody sys_c = new ProductionBody();
-//				JSONObject data = (JSONObject) one;
-//				sys_c.setScname(data.getString("sc_name"));
-//				sys_c.setScgname(data.getString("sc_g_name"));
-//				sys_c.setScvalue(data.getString("sc_value"));
-//				sys_c.setSysnote(data.getString("sys_note"));
-//				sys_c.setSyssort(data.getInt("sys_sort"));
-//				sys_c.setSysstatus(data.getInt("sys_status"));
-//				sys_c.setSysmuser(user.getSuname());
-//				sys_c.setSyscuser(user.getSuname());
-//
-//				// 檢查群組名稱重複
-//				ArrayList<ProductionBody> sys_p_g = bodyDao.findAllByConfigGroupTop1(sys_c.getScgname(), PageRequest.of(0, 1));
-//				if (sys_p_g != null && sys_p_g.size() > 0) {
-//					// 重複 則取同樣G_ID
-//					sys_c.setScgid(sys_p_g.get(0).getScgid());
-//				} else {
-//					// 取得最新G_ID
-//					sys_p_g = bodyDao.findAllByTop1(PageRequest.of(0, 1));
-//					sys_c.setScgid((sys_p_g.get(0).getScgid() + 1));
-//				}
-//				bodyDao.save(sys_c);
-//				check = true;
-//			}
-//		} catch (Exception e) {
-//			System.out.println(e);
-//		}
+		try {
+			JSONArray list = body.getJSONArray("create");
+			for (Object one : list) {
+				// 物件轉換
+				ProductionBody p_body = new ProductionBody();
+				JSONObject data = (JSONObject) one;
+
+				List<ProductionHeader> p_Headers = headerDao.findAllByPhprid(data.getString("ph_pr_id"));
+				List<ProductionBody> p_Bodys = bodyDao.findAllByPbsn(data.getString("pb_sn"));
+				// 有資料
+				if (p_Headers.size() < 1) {
+					return check;
+				}
+				// 重複?
+				if (p_Bodys.size() > 0) {
+					return check;
+				}
+
+				p_body.setProductionHeader(p_Headers.get(0));
+				p_body.setPbsn(data.getString("pb_sn"));
+				p_body.setPbcheck(data.getBoolean("pb_check"));
+				p_body.setSysnote(data.getString("sys_note"));
+				p_body.setSyssort(data.getInt("sys_sort"));
+				p_body.setSysstatus(data.getInt("sys_status"));
+				p_body.setSysmuser(user.getSuname());
+				p_body.setSyscuser(user.getSuname());
+				// SN類別
+				try {
+					for (int k = 0; k < 50; k++) {
+						// 有欄位?
+						if (data.has("pb_value" + String.format("%02d", k + 1))) {
+							String value = data.getString("pb_value" + String.format("%02d", k + 1));
+							String in_name = "setPbvalue" + String.format("%02d", k + 1);
+							Method in_method = p_body.getClass().getMethod(in_name, String.class);
+							// 欄位有值
+							if (value != null && !value.equals("")) {
+								in_method.invoke(p_body, value);
+							}
+						}
+					}
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+					return check;
+				} catch (SecurityException e) {
+					e.printStackTrace();
+					return check;
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+					return check;
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+					return check;
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+					return check;
+				}
+				bodyDao.save(p_body);
+			}
+			check = true;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		return check;
 	}
 
@@ -354,38 +398,63 @@ public class ProductionBodyService {
 	@Transactional
 	public boolean save_asData(JSONObject body, SystemUser user) {
 		boolean check = false;
-//		try {
-//			JSONArray list = body.getJSONArray("save_as");
-//			for (Object one : list) {
-//				// 物件轉換
-//				ProductionBody sys_c = new ProductionBody();
-//				JSONObject data = (JSONObject) one;
-//				sys_c.setScname(data.getString("sc_name"));
-//				sys_c.setScgname(data.getString("sc_g_name"));
-//				sys_c.setScvalue(data.getString("sc_value"));
-//				sys_c.setSysnote(data.getString("sys_note"));
-//				sys_c.setSyssort(data.getInt("sys_sort"));
-//				sys_c.setSysstatus(data.getInt("sys_status"));
-//				sys_c.setSysmuser(user.getSuname());
-//				sys_c.setSyscuser(user.getSuname());
-//
-//				// 檢查群組名稱重複
-//				ArrayList<ProductionBody> sys_c_g = bodyDao.findAllByConfigGroupTop1(sys_c.getScgname(), PageRequest.of(0, 1));
-//				if (sys_c_g != null && sys_c_g.size() > 0) {
-//					// 重複 則取同樣G_ID
-//					sys_c.setScgid(sys_c_g.get(0).getScgid());
-//				} else {
-//					// 取得最新G_ID
-//					sys_c_g = bodyDao.findAllByTop1(PageRequest.of(0, 1));
-//					sys_c.setScgid((sys_c_g.get(0).getScgid() + 1));
-//				}
-//				bodyDao.save(sys_c);
-//				check = true;
-//			}
-//
-//		} catch (Exception e) {
-//			System.out.println(e);
-//		}
+		try {
+			JSONArray list = body.getJSONArray("save_as");
+			for (Object one : list) {
+				// 物件轉換
+				ProductionBody p_body = new ProductionBody();
+				JSONObject data = (JSONObject) one;
+
+				List<ProductionHeader> p_Headers = headerDao.findAllByPhprid(data.getString("ph_pr_id"));
+				List<ProductionBody> p_Bodys = bodyDao.findAllByPbsn(data.getString("pb_sn"));
+				// 有資料
+				if (p_Headers.size() < 1) {
+					return check;
+				}
+				// 重複?
+				if (p_Bodys.size() > 0) {
+					return check;
+				}
+
+				p_body.setProductionHeader(p_Headers.get(0));
+				p_body.setPbsn(data.getString("pb_sn"));
+				p_body.setPbcheck(data.getBoolean("pb_check"));
+				p_body.setSysnote(data.getString("sys_note"));
+				p_body.setSyssort(data.getInt("sys_sort"));
+				p_body.setSysstatus(data.getInt("sys_status"));
+				p_body.setSysmuser(user.getSuname());
+				p_body.setSyscuser(user.getSuname());
+				// SN類別
+				try {
+					for (int k = 0; k < 50; k++) {
+						// 有欄位?
+						if (data.has("pb_value" + String.format("%02d", k + 1))) {
+							String value = data.getString("pb_value" + String.format("%02d", k + 1));
+							String in_name = "setPbvalue" + String.format("%02d", k + 1);
+							Method in_method = p_body.getClass().getMethod(in_name, String.class);
+							// 欄位有值
+							if (value != null && !value.equals("")) {
+								in_method.invoke(p_body, value);
+							}
+						}
+					}
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+				bodyDao.save(p_body);
+			}
+			check = true;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		return check;
 	}
 
@@ -393,38 +462,63 @@ public class ProductionBodyService {
 	@Transactional
 	public boolean updateData(JSONObject body, SystemUser user) {
 		boolean check = false;
-//		try {
-//			JSONArray list = body.getJSONArray("modify");
-//			for (Object one : list) {
-//				// 物件轉換
-//				ProductionBody sys_p = new ProductionBody();
-//				JSONObject data = (JSONObject) one;
-//				sys_p.setScid(data.getInt("sc_id"));
-//				sys_p.setScname(data.getString("sc_name"));
-//				sys_p.setScgid(data.getInt("sc_g_id"));
-//				sys_p.setScgname(data.getString("sc_g_name"));
-//				sys_p.setScvalue(data.getString("sc_value"));
-//				sys_p.setSysnote(data.getString("sys_note"));
-//				sys_p.setSyssort(data.getInt("sys_sort"));
-//				sys_p.setSysstatus(data.getInt("sys_status"));
-//				sys_p.setSysmdate(new Date());
-//
-//				// 檢查群組名稱重複
-//				ArrayList<ProductionBody> sys_p_g = bodyDao.findAllByConfigGroupTop1(sys_p.getScgname(), PageRequest.of(0, 1));
-//				if (sys_p_g != null && sys_p_g.size() > 0) {
-//					// 重複 則取同樣G_ID
-//					sys_p.setScgid(sys_p_g.get(0).getScgid());
-//				} else {
-//					// 取得最新G_ID
-//					sys_p_g = bodyDao.findAllByTop1(PageRequest.of(0, 1));
-//					sys_p.setScgid((sys_p_g.get(0).getScgid() + 1));
-//				}
-//				bodyDao.save(sys_p);
-//				check = true;
-//			}
-//		} catch (Exception e) {
-//			System.out.println(e);
-//		}
+		try {
+			JSONArray list = body.getJSONArray("modify");
+			for (Object one : list) {
+				JSONObject data = (JSONObject) one;
+				List<ProductionBody> p_Bodys = bodyDao.findAllByPbsn(data.getString("pb_sn"));
+				List<ProductionHeader> p_Headers = headerDao.findAllByPhprid(data.getString("ph_pr_id"));
+				// 有資料?
+				if (p_Headers.size() < 1) {
+					return check;
+				}
+				// 重複? 不包含自己
+				if (p_Bodys.size() > 0 && (!p_Bodys.get(0).getPbsn().equals(data.getString("pb_sn")))) {
+					return check;
+				}
+				// 物件轉換
+				ProductionBody pro_b = new ProductionBody();
+				pro_b.setPbid(data.getInt("pb_id"));
+				pro_b.setProductionHeader(p_Headers.get(0));
+				pro_b.setPbsn(data.getString("pb_sn"));
+				pro_b.setPbcheck(data.getBoolean("pb_check"));
+				pro_b.setPbfvalue(data.getString("pb_f_value"));
+				pro_b.setPbltext(data.getString("pb_l_text"));
+				pro_b.setSysstatus(data.getInt("sys_status"));
+				pro_b.setSyssort(data.getInt("sys_sort"));
+				pro_b.setSysmuser(user.getSuname());
+				pro_b.setSysmdate(new Date());
+				try {
+					for (int k = 0; k < 50; k++) {
+						// 有欄位?
+						if (data.has("pb_value" + String.format("%02d", k + 1))) {
+							String value = data.getString("pb_value" + String.format("%02d", k + 1));
+							String in_name = "setPbvalue" + String.format("%02d", k + 1);
+							Method in_method = pro_b.getClass().getMethod(in_name, String.class);
+							// 欄位有值
+							if (value != null && !value.equals("")) {
+								in_method.invoke(pro_b, value);
+							}
+						}
+					}
+
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+				bodyDao.save(pro_b);
+				check = true;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		return check;
 	}
 
@@ -433,20 +527,17 @@ public class ProductionBodyService {
 	public boolean deleteData(JSONObject body) {
 
 		boolean check = false;
-//		try {
-//			JSONArray list = body.getJSONArray("delete");
-//			for (Object one : list) {
-//				// 物件轉換
-//				ProductionBody sys_p = new ProductionBody();
-//				JSONObject data = (JSONObject) one;
-//				sys_p.setScid(data.getInt("sc_id"));
-//
-//				bodyDao.deleteByScidAndSysheader(sys_p.getScid(), false);
-//				check = true;
-//			}
-//		} catch (Exception e) {
-//			System.out.println(e);
-//		}
+		try {
+			JSONArray list = body.getJSONArray("delete");
+			for (Object one : list) {
+				// 物件轉換
+				JSONObject data = (JSONObject) one;
+				bodyDao.deleteByPbid(data.getInt("pb_id"));
+				check = true;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		return check;
 	}
 }
