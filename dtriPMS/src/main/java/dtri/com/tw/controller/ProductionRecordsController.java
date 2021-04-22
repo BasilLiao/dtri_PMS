@@ -15,7 +15,7 @@ import dtri.com.tw.bean.PackageBean;
 import dtri.com.tw.db.entity.SystemUser;
 import dtri.com.tw.login.LoginUserDetails;
 import dtri.com.tw.service.PackageService;
-import dtri.com.tw.service.SystemConfigService;
+import dtri.com.tw.service.ProductionRecordsService;
 
 @Controller
 public class ProductionRecordsController {
@@ -25,7 +25,7 @@ public class ProductionRecordsController {
 	@Autowired
 	PackageService packageService;
 	@Autowired
-	SystemConfigService configService;
+	ProductionRecordsService productionService;
 
 	/**
 	 * 訪問
@@ -41,7 +41,7 @@ public class ProductionRecordsController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = configService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = productionService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color);
 		// 回傳-資料
@@ -62,7 +62,7 @@ public class ProductionRecordsController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = configService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = productionService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color);
 		// 回傳-資料
@@ -92,9 +92,9 @@ public class ProductionRecordsController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = configService.createData(req.getBody(), user);
+		check = productionService.createData(req.getBody(), user);
 		if (check) {
-			check = configService.save_asData(req.getBody(), user);
+			check = productionService.save_asData(req.getBody(), user);
 		}
 		// Step3.進行判定
 		if (check) {
@@ -131,7 +131,7 @@ public class ProductionRecordsController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = configService.updateData(req.getBody(), user);
+		check = productionService.updateData(req.getBody(), user);
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
@@ -160,7 +160,7 @@ public class ProductionRecordsController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = configService.deleteData(req.getBody());
+		check = productionService.deleteData(req.getBody());
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳

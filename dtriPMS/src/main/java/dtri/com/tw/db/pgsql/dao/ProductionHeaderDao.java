@@ -16,7 +16,7 @@ public interface ProductionHeaderDao extends JpaRepository<ProductionHeader, Lon
 	// 查詢全部
 	List<ProductionHeader> findAll();
 
-	// 查詢一部分_Header
+	// 查詢一部分_Header+Body
 	@Query("SELECT h FROM ProductionHeader h join h.productionBody b WHERE "//
 			+ "(:phmodel is null or h.phmodel LIKE %:phmodel% ) and "//
 			+ "(:phprid is null or h.phprid LIKE %:phprid% ) and "//
@@ -25,8 +25,19 @@ public interface ProductionHeaderDao extends JpaRepository<ProductionHeader, Lon
 			+ "(h.phid != 0) and "//
 			+ "(b.sysheader = true)"//
 			+ " order by h.sysmdate desc ,b.sysheader desc")
-	List<ProductionHeader> findAllByProductionHeader(@Param("phmodel") String phmodel, @Param("phprid") String phprid,
+	List<ProductionHeader> findAllByProductionHeaderAndProductionBody(@Param("phmodel") String phmodel, @Param("phprid") String phprid,
 			@Param("sysstatus") Integer sysstatus,@Param("pbphid")List<Integer> pbphid, Pageable pageable);
+	
+	// 查詢一部分_Header
+		@Query("SELECT h FROM ProductionHeader h  WHERE "//
+				+ "(:phmodel is null or h.phmodel LIKE %:phmodel% ) and "//
+				+ "(:phprid is null or h.phprid LIKE %:phprid% ) and "//
+				+ "( h.sysstatus = :sysstatus ) and "//
+				+ "(coalesce(:pbphid, null) is null or h.phid IN :pbphid ) and "//coalesce 回傳非NULL值
+				+ "(h.phid != 0) "//
+				+ " order by h.sysmdate desc ")
+		List<ProductionHeader> findAllByProductionHeader(@Param("phmodel") String phmodel, @Param("phprid") String phprid,
+				@Param("sysstatus") Integer sysstatus,@Param("pbphid")List<Integer> pbphid, Pageable pageable);
 
 	// 取得下一筆ID
 	@Query(value = "SELECT CURRVAL('production_header_seq')", nativeQuery = true)

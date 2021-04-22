@@ -24,16 +24,15 @@ INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (11, 4, '產品製程', '0001001101', 1201, '製令-製程管理', 'production_header.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (12, 4, '產品製程', '0001001101', 1202, '製令-關聯物料', 'production_body.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (13, 4, '產品製程', '0001001101', 1203, '製令-規格紀錄', 'production_records.basil');
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (14, 4, '產品製程', '0001001101', 1204, '製程-製令紀錄', 'manufacturing_records.basil');
 --工作站
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (15, 3, '工作站', '0001001101', 1301, '工作-規則管理', 'workstation_config.basil');
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (16, 3, '工作站', '0001001101', 1302, '工作-項目管理', 'workstation_project.basil');
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (17, 3, '工作站', '0001001101', 1303, '工作-流程管理', 'workstation_propgram.basil');
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (18, 3, '工作站', '0001001101', 1304, '作業-SN補單據', 'workstation_snadd.basil');
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (19, 3, '工作站', '0001001101', 1305, '作業-製程工作站', 'workstation_work.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (14, 3, '工作站', '0001001101', 1301, '工作-規則管理', 'workstation_config.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (15, 3, '工作站', '0001001101', 1302, '工作-項目管理', 'workstation_project.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (16, 3, '工作站', '0001001101', 1303, '工作-流程管理', 'workstation_propgram.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (17, 3, '工作站', '0001001101', 1304, '作業-SN補單據', 'workstation_snadd.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (18, 3, '工作站', '0001001101', 1305, '作業-製程工作站', 'workstation_work.basil');
 
 
-SELECT setval('public.system_permission_seq', 19, true);
+SELECT setval('public.system_permission_seq', 18, true);
 
 --system_group(sg_permission[特殊3(512),特殊2(256),特殊1(128),訪問(64),下載(32),上傳(16),新增(8),修改(4),刪除(2),查詢(1)])
 ----admin
@@ -52,19 +51,19 @@ INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_so
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (11,1, '系統管理者', '1111111111', 11,1201);
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (12,1, '系統管理者', '1111111111', 12,1202);
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (13,1, '系統管理者', '1111111111', 13,1203);
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (14,1, '系統管理者', '1111111111', 14,1204);
 
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (15,1, '系統管理者', '1111111111', 15,1204);
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (16,1, '系統管理者', '1111111111', 16,1301);
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (17,1, '系統管理者', '1111111111', 17,1302);
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (18,1, '系統管理者', '1111111111', 18,1303);
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (19,1, '系統管理者', '1111111111', 19,1304);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (14,1, '系統管理者', '1111111111', 14,1301);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (15,1, '系統管理者', '1111111111', 15,1302);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (16,1, '系統管理者', '1111111111', 16,1303);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (17,1, '系統管理者', '1111111111', 17,1304);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (18,1, '系統管理者', '1111111111', 18,1305);
+
 ----user
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort,sys_header) VALUES (20,2, '一般使用者_Group', '0000000000', 1,0,true);
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (21,2, '一般使用者', '0001000001', 8,1101);
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (22,2, '一般使用者', '0001000001', 9,1102);
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (23,2, '一般使用者', '0001000001', 10,1103);
-SELECT setval('public.system_group_seq', 23, true);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort,sys_header) VALUES (19,2, '一般使用者_Group', '0000000000', 1,0,true);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (20,2, '一般使用者', '0001000001', 8,1101);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (21,2, '一般使用者', '0001000001', 9,1102);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (22,2, '一般使用者', '0001000001', 10,1103);
+SELECT setval('public.system_group_seq', 22, true);
 
 --system_user
 INSERT INTO system_user(su_id,su_account, su_e_name, su_email, su_name, su_password, su_position,su_sg_g_id) VALUES (1,'admin','Admin_en', 'admin@dtr.com', 'Admin', '$2a$10$2tt8kwMSweSbTY/Jx1T9HuWcmrHzy50fZuOJWm/XORjJEOtpIoUdy', '超級管理者',1 );
@@ -79,19 +78,32 @@ SELECT setval('public.production_header_seq', 2, true);
 
 --production_body
 INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_value01, pb_value02 ,pb_value03 ,pb_value04 ,pb_value05 ,pb_value06 ,pb_value07,pb_value08,pb_value09,pb_sn, sys_header) VALUES ( 0,0, 0,'SN_MB(UUID)' ,'SN_MAC_ID(1)' ,'SN_MAC_ID(2)' ,'SN_WiFi_MAC' ,'SN_(4G)IMEI','SN_Battery(1)','SN_Battery(2)','SN_Battery(3)','SN_SSD','', true);
-INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule) VALUES ( 1,1, 0, 'SN_Group' , true,'');
-INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 2,1, 0, '測試_出貨序號_SN101' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號11');
-INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 3,1, 0, '測試_出貨序號_SN102' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號12');
-INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 4,1, 0, '測試_出貨序號_SN103' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號13');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 1,1, 0, '測試_出貨序號_SN101' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號11');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 2,1, 0, '測試_出貨序號_SN102' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號12');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 3,1, 0, '測試_出貨序號_SN103' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號13');
 
-INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule) VALUES ( 5,2, 0, 'SN_Group' , true,'');
-INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 6,2, 0, '測試_出貨序號_SN201' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號21');
-INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 7,2, 0, '測試_出貨序號_SN202' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號22');
-INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01,pb_l_text) VALUES ( 8,2, 0, '測試_出貨序號_SN203' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號23','999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999');
-SELECT setval('public.production_body_seq', 8, true);
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 4,2, 0, '測試_出貨序號_SN201' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號21');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 5,2, 0, '測試_出貨序號_SN202' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號22');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01,pb_l_text) VALUES ( 6,2, 0, '測試_出貨序號_SN203' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號23','999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 7,2, 0, '測試_出貨序號_SN204' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號24');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 8,2, 0, '測試_出貨序號_SN205' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號25');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 9,2, 0, '測試_出貨序號_SN206' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號26');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 10,2, 0, '測試_出貨序號_SN207' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號27');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 11,2, 0, '測試_出貨序號_SN208' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號28');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 12,2, 0, '測試_出貨序號_SN209' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號29');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 13,2, 0, '測試_出貨序號_SN210' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號30');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 14,2, 0, '測試_出貨序號_SN211' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號31');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 15,2, 0, '測試_出貨序號_SN212' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號32');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 16,2, 0, '測試_出貨序號_SN213' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號33');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 17,2, 0, '測試_出貨序號_SN214' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號21');
+INSERT INTO production_body(pb_id,pb_ph_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 18,2, 0, '測試_出貨序號_SN215' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號22');
+
+
+SELECT setval('public.production_body_seq', 18, true);
 
 --production_records
-
+INSERT INTO production_records(pr_id, pr_bom_id, pr_c_from,pr_c_name,pr_s_sn, pr_e_sn, pr_order_id, pr_p_model,pr_p_quantity,pr_b_item, pr_s_item) VALUES ('A511-123456789',  '90-363-G100001', '生產注意事項','MAYA(Isreal)', 'A051','A150','訂單編號(OP-2021042001)', 'DT363GL',100, '{"CPU":i500,"RAM":"4G"}','{"M/B 版本":"R5.5.P","ECN":"D6B"}');
+INSERT INTO production_records(pr_id, pr_bom_id, pr_c_from,pr_c_name,pr_s_sn, pr_e_sn, pr_order_id, pr_p_model,pr_p_quantity,pr_b_item, pr_s_item) VALUES ('A512-123456789',  '90-363-G100001', '生產注意事項','MAYA(Isreal)', 'A151','A250','訂單編號(OP-2021042002)', 'DT363GL',100, '{"CPU":i500,"RAM":"4G"}','{"M/B 版本":"R5.5.P","ECN":"D6B"}');
 
 
 --workstation_prohect

@@ -53,7 +53,7 @@ public class ProductionBodyService {
 		String pb_sn_name = "";
 		String pb_sn = "";
 		String pb_sn_check = "";
-		List<Integer> pbphid = null;
+		List<Integer> pbid = null;
 		// 初次載入需要標頭 / 之後就不用
 		if (body == null || body.isNull("search")) {
 
@@ -240,27 +240,27 @@ public class ProductionBodyService {
 
 		// 查詢SN欄位
 		if (!pb_sn.equals("") || !pb_sn_value.equals("")) {
-			String nativeQuery = "SELECT pb_ph_id FROM production_body WHERE ";
+			String nativeQuery = "SELECT pb_id FROM production_body WHERE ";
 			if (!pb_sn_value.equals("")) {
 				nativeQuery += " (:pb_sn_value='' or " + pb_sn_name + " LIKE :pb_sn_value) and ";
 			}
 			nativeQuery += " (:pb_sn='' or pb_sn LIKE :pb_sn) and ";
-			nativeQuery += " (pb_ph_id != 0) group by pb_ph_id ";
+			nativeQuery += " (pb_ph_id != 0) group by pb_id ";
 
 			Query query = em.createNativeQuery(nativeQuery);
 			if (!pb_sn_value.equals("")) {
 				query.setParameter("pb_sn_value", "%" + pb_sn_value + "%");
 			}
 			query.setParameter("pb_sn", "%" + pb_sn + "%");
-			pbphid = (List<Integer>) query.getResultList();
+			pbid = (List<Integer>) query.getResultList();
 			em.clear();
 			em.close();
 		}
 		if (pb_sn_check == null) {
-			productionBodies = bodyDao.findAllByProductionBody(phmodel, phprid, Integer.parseInt(sysstatus), pbphid, page_r);
+			productionBodies = bodyDao.findAllByProductionBody(phmodel, phprid, Integer.parseInt(sysstatus), pbid, page_r);
 
 		} else {
-			productionBodies = bodyDao.findAllByProductionBody(phmodel, phprid, Integer.parseInt(sysstatus), pbphid,
+			productionBodies = bodyDao.findAllByProductionBody(phmodel, phprid, Integer.parseInt(sysstatus), pbid,
 					Boolean.parseBoolean(pb_sn_check), page_r);
 		}
 

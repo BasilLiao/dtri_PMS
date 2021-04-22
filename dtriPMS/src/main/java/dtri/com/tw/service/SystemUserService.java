@@ -84,14 +84,14 @@ public class SystemUserService {
 			obj_m.put(FFS.h_m(FFS.INP, FFS.PASS, "", "", FFS.SHO, "col-md-2", true, value, "su_password", "密碼"));
 
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-4", true, value, "su_email", "Email"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, value, "sys_c_date", "建立時間"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, value, "sys_c_user", "建立人"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, value, "sys_m_date", "修改時間"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, value, "sys_m_user", "修改人"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, value, "sys_c_date", "建立時間"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, value, "sys_c_user", "建立人"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, value, "sys_m_date", "修改時間"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, value, "sys_m_user", "修改人"));
 
 			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-12", false, value, "sys_note", "備註"));
 			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false, value, "sys_ver", "版本"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.SHO, "col-md-2", true, value, "sys_sort", "排序"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "0", "0", FFS.SHO, "col-md-2", true, value, "sys_sort", "排序"));
 
 			JSONArray values = new JSONArray();
 			values.put((new JSONObject()).put("value", "正常").put("key", "0"));

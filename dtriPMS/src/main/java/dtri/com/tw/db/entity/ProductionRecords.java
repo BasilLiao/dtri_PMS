@@ -5,10 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,11 +13,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 /**
  * @author Basil
  * @see 系統設定<br>
- *      sc_id : ID<br>
- *      sc_name : 名稱<br>
- *      sc_g_id : 群組ID<br>
- *      sc_g_name : 群組名稱<br>
- *      sc_value : 設定參數<br>
+ *      pr_id : 工單序號ID<br>
+ *      pr_order_id : 訂單編號<br>
+ *      pr_c_name : 客戶名稱<br>
+ *      pr_p_quantity : 生產數量<br>
+ *      pr_p_model : 產品型號<br>
+ *      pr_bom_id : BOM料號<br>
+ *      pr_c_from : 單據來源<br>
+ *      pr_b_item : 規格定義{"名稱1":"內容1","名稱2":"內容2"}<br>
+ *      pr_s_item : 軟體定義{"名稱1":"內容1","名稱2":"內容2"}<br>
+ *      pr_s_sn : 產品序號 開始 EX:xxxxxx 01YW12042J044-<br>
+ *      pr_e_sn : 產品序號 結束 EX: xxxxxx 01YW12042J050<br>
+ * 
+ * 
  */
 @Entity
 @Table(name = "production_records")
@@ -86,8 +91,8 @@ public class ProductionRecords {
 	@Column(name = "pr_bom_id", nullable = false, columnDefinition = "varchar(50) default ''")
 	private String prbomid;
 
-	@Column(name = "pr_v_motherboard", nullable = false, columnDefinition = "varchar(50) default ''")
-	private String prvmotherboard;
+	//@Column(name = "pr_v_motherboard", nullable = false, columnDefinition = "varchar(50) default ''")
+	//private String prvmotherboard;
 
 	@Column(name = "pr_c_from", nullable = false, columnDefinition = "varchar(50) default ''")
 	private String prcfrom;
@@ -104,4 +109,163 @@ public class ProductionRecords {
 	@Column(name = "pr_e_sn", nullable = false, columnDefinition = "varchar(50) default ''")
 	private String presn;
 
+	public Date getSyscdate() {
+		return syscdate;
+	}
+
+	public void setSyscdate(Date syscdate) {
+		this.syscdate = syscdate;
+	}
+
+	public String getSyscuser() {
+		return syscuser;
+	}
+
+	public void setSyscuser(String syscuser) {
+		this.syscuser = syscuser;
+	}
+
+	public Date getSysmdate() {
+		return sysmdate;
+	}
+
+	public void setSysmdate(Date sysmdate) {
+		this.sysmdate = sysmdate;
+	}
+
+	public String getSysmuser() {
+		return sysmuser;
+	}
+
+	public void setSysmuser(String sysmuser) {
+		this.sysmuser = sysmuser;
+	}
+
+	public Integer getSysver() {
+		return sysver;
+	}
+
+	public void setSysver(Integer sysver) {
+		this.sysver = sysver;
+	}
+
+	public String getSysnote() {
+		return sysnote;
+	}
+
+	public void setSysnote(String sysnote) {
+		this.sysnote = sysnote;
+	}
+
+	public Integer getSyssort() {
+		return syssort;
+	}
+
+	public void setSyssort(Integer syssort) {
+		this.syssort = syssort;
+	}
+
+	public Integer getSysstatus() {
+		return sysstatus;
+	}
+
+	public void setSysstatus(Integer sysstatus) {
+		this.sysstatus = sysstatus;
+	}
+
+	public Boolean getSysheader() {
+		return sysheader;
+	}
+
+	public void setSysheader(Boolean sysheader) {
+		this.sysheader = sysheader;
+	}
+
+	public String getPrid() {
+		return prid;
+	}
+
+	public void setPrid(String prid) {
+		this.prid = prid;
+	}
+
+	public String getProrderid() {
+		return prorderid;
+	}
+
+	public void setProrderid(String prorderid) {
+		this.prorderid = prorderid;
+	}
+
+	public String getPrcname() {
+		return prcname;
+	}
+
+	public void setPrcname(String prcname) {
+		this.prcname = prcname;
+	}
+
+	public Integer getPrpquantity() {
+		return prpquantity;
+	}
+
+	public void setPrpquantity(Integer prpquantity) {
+		this.prpquantity = prpquantity;
+	}
+
+	public String getPrpmodel() {
+		return prpmodel;
+	}
+
+	public void setPrpmodel(String prpmodel) {
+		this.prpmodel = prpmodel;
+	}
+
+	public String getPrbomid() {
+		return prbomid;
+	}
+
+	public void setPrbomid(String prbomid) {
+		this.prbomid = prbomid;
+	}
+
+	public String getPrcfrom() {
+		return prcfrom;
+	}
+
+	public void setPrcfrom(String prcfrom) {
+		this.prcfrom = prcfrom;
+	}
+
+	public String getPrbitem() {
+		return prbitem;
+	}
+
+	public void setPrbitem(String prbitem) {
+		this.prbitem = prbitem;
+	}
+
+	public String getPrsitem() {
+		return prsitem;
+	}
+
+	public void setPrsitem(String prsitem) {
+		this.prsitem = prsitem;
+	}
+
+	public String getPrssn() {
+		return prssn;
+	}
+
+	public void setPrssn(String prssn) {
+		this.prssn = prssn;
+	}
+
+	public String getPresn() {
+		return presn;
+	}
+
+	public void setPresn(String presn) {
+		this.presn = presn;
+	}
 }
