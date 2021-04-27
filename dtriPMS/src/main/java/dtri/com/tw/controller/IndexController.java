@@ -1,5 +1,6 @@
 package dtri.com.tw.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dtri.com.tw.bean.PackageBean;
 import dtri.com.tw.db.entity.SystemGroup;
+import dtri.com.tw.db.entity.SystemPermission;
 import dtri.com.tw.db.entity.SystemUser;
 import dtri.com.tw.login.LoginUserDetails;
 import dtri.com.tw.service.IndexService;
@@ -55,6 +57,7 @@ public class IndexController {
 		PackageBean req_object = new PackageBean();
 		PackageBean resp_object = new PackageBean();
 		String info = null, info_color = null;
+		List<SystemGroup> systemGroup = new ArrayList<SystemGroup>();
 		// 取得-當前用戶資料
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -64,13 +67,22 @@ public class IndexController {
 			List<SystemGroup> nav = userDetails.getSystemGroup();
 			resp_object = indexService.getNav(nav);
 			resp_object.setInfo_user(indexService.getUserInfo(user));
+			// Step1.查詢資料權限
+			systemGroup = userDetails.getSystemGroup();
 		} else {
 			// 取得用戶失敗
 			info = PackageBean.info_message_warning + PackageBean.info_administrator;
 			info_color = PackageBean.info_color_warning;
 		}
+		// UI限制功能
+		SystemPermission one = new SystemPermission();
+		systemGroup.forEach(p -> {
+			if (p.getSystemPermission().getSpcontrol().equals(SYS_F)) {
+				one.setSppermission(p.getSystemPermission().getSppermission());
+			}
+		});
 		// Step2.包裝回傳
-		resp_object = packageService.setObjResp(resp_object, req_object, info, info_color);
+		resp_object = packageService.setObjResp(resp_object, req_object, info, info_color,"");
 
 		// 回傳-模板
 		return new ModelAndView("/html/main", "initMain", packageService.objToJson(resp_object));
@@ -103,7 +115,7 @@ public class IndexController {
 			info_color = PackageBean.info_color_warning;
 		}
 		// Step2.包裝回傳
-		resp_object = packageService.setObjResp(resp_object, req_object, info, info_color);
+		resp_object = packageService.setObjResp(resp_object, req_object, info, info_color,"");
 
 		// 回傳-模板
 		return packageService.objToJson(resp_object);

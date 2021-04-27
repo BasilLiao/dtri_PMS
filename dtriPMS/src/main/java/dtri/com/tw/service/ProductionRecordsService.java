@@ -191,7 +191,9 @@ public class ProductionRecordsService {
 				// 檢查是否有 製令規格
 				ArrayList<ProductionRecords> entitys = recordsDao.findAllByPrid(data.getString("pr_id"), PageRequest.of(0, 10));
 				// 檢查是否有-製令單 one to one
-				List<ProductionHeader> headers = headerDao.findAllByPhprid(data.getString("pr_id"));
+				ProductionRecords search = new ProductionRecords();
+				search.setPrid(data.getString("pr_id"));
+				List<ProductionHeader> headers = headerDao.findAllByproductionRecords(search);
 				if (entitys.size() < 1 && headers.size() == 1) {
 					recordsDao.save(entity);
 				} else {
@@ -232,7 +234,9 @@ public class ProductionRecordsService {
 				// 檢查是否有 製令規格
 				ArrayList<ProductionRecords> entitys = recordsDao.findAllByPrid(data.getString("pr_id"), PageRequest.of(0, 10));
 				// 檢查是否有-製令單 one to one
-				List<ProductionHeader> headers = headerDao.findAllByPhprid(data.getString("pr_id"));
+				ProductionRecords search = new ProductionRecords();
+				search.setPrid(data.getString("pr_id"));
+				List<ProductionHeader> headers = headerDao.findAllByproductionRecords(search);
 				if (entitys.size() < 1 && headers.size() == 1) {
 					recordsDao.save(entity);
 				} else {
@@ -273,7 +277,9 @@ public class ProductionRecordsService {
 				// ArrayList<ProductionRecords> entitys =
 				// recordsDao.findAllByPrid(data.getString("pr_id"), PageRequest.of(0, 10));
 				// 檢查是否有-製令單 one to one
-				List<ProductionHeader> headers = headerDao.findAllByPhprid(data.getString("pr_id"));
+				ProductionRecords search = new ProductionRecords();
+				search.setPrid(data.getString("pr_id"));
+				List<ProductionHeader> headers = headerDao.findAllByproductionRecords(search);
 				if (headers.size() == 1) {
 					recordsDao.save(entity);
 				} else {

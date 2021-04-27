@@ -63,6 +63,7 @@ public class PackageService {
 		data.put("call_bk_fn", object.getCall_bk_fn());
 		data.put("call_bk_vals", object.getCall_bk_vals());
 		data.put("html_body", object.getHtml_body());
+		data.put("html_permission", object.getHtml_permission());
 		data.put("cell_searchs", object.getCell_searchs());
 		data.put("cell_modify", object.getCell_modify());
 
@@ -78,7 +79,7 @@ public class PackageService {
 	 * @param info        訊息
 	 * @param info_color  顏色
 	 **/
-	public PackageBean setObjResp(PackageBean resp_object, PackageBean req_object, String info, String info_color) {
+	public PackageBean setObjResp(PackageBean resp_object, PackageBean req_object, String info, String info_color,String html_permission) {
 		resp_object.setAction(req_object.getaction() == null ? "AR" : req_object.getaction());
 		resp_object.setCall_bk_fn(req_object.getCall_bk_fn() == null ? "" : req_object.getCall_bk_fn());
 		resp_object.setCall_bk_vals(
@@ -89,6 +90,7 @@ public class PackageService {
 		resp_object.setPage_now_nb(req_object.getPage_now_nb() == null ? 1 : req_object.getPage_now_nb());
 		resp_object.setPage_total(req_object.getPage_total() == null ? 100 : req_object.getPage_total());
 		resp_object.setHtml_body(req_object.getHtml_body() == null ? "" : req_object.getHtml_body());
+		resp_object.setHtml_permission(html_permission);
 		return resp_object;
 	}
 }

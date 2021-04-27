@@ -233,11 +233,12 @@
                     list_item.appendTo(".search_example_list");
 
 
-                    //選紐欄位(lock=0/save_as=1/detail=2/modify=3/delete=4/print=5/download=6)
+                    //選紐欄位(lock=0/save_as=1/detail=2/modify=3/delete=4/print=5/download=6) 權限false=disabled
                     for (var r = 0; r <= 6; r++) {
                         $("#" + list_item[0].id + " .search_radio_" + r + " input").attr("name", "line_" + (j + 1));
                         $("#" + list_item[0].id + " .search_radio_" + r + " input").attr("id", "line_" + (j + 1) + "_" + r);
                         $("#" + list_item[0].id + " .search_radio_" + r + " label").attr("for", "line_" + (j + 1) + "_" + r);
+                        
                     }
                     $("#" + list_item[0].id + " .search_radio_0 input").prop("checked", true);
 

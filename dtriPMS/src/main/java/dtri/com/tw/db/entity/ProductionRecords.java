@@ -5,7 +5,11 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -73,6 +77,9 @@ public class ProductionRecords {
 
 	// 功能項目
 	@Id
+	//因為是文字 故無用 自動累加
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "production_records_seq")
+	//@SequenceGenerator(name = "production_records_seq", sequenceName = "production_records_seq", allocationSize = 1)
 	@Column(name = "pr_id")
 	private String prid;
 
@@ -85,14 +92,18 @@ public class ProductionRecords {
 	@Column(name = "pr_p_quantity", nullable = false, columnDefinition = "int default 0")
 	private Integer prpquantity;
 
+	@Column(name = "pr_p_ok_quantity", nullable = false, columnDefinition = "int default 0")
+	private Integer prpokquantity;
+
 	@Column(name = "pr_p_model", nullable = false, columnDefinition = "varchar(50) default ''")
 	private String prpmodel;
 
 	@Column(name = "pr_bom_id", nullable = false, columnDefinition = "varchar(50) default ''")
 	private String prbomid;
 
-	//@Column(name = "pr_v_motherboard", nullable = false, columnDefinition = "varchar(50) default ''")
-	//private String prvmotherboard;
+	// @Column(name = "pr_v_motherboard", nullable = false, columnDefinition =
+	// "varchar(50) default ''")
+	// private String prvmotherboard;
 
 	@Column(name = "pr_c_from", nullable = false, columnDefinition = "varchar(50) default ''")
 	private String prcfrom;
@@ -108,6 +119,17 @@ public class ProductionRecords {
 
 	@Column(name = "pr_e_sn", nullable = false, columnDefinition = "varchar(50) default ''")
 	private String presn;
+	
+   @OneToOne(mappedBy = "productionRecords")
+    private ProductionHeader header;
+
+	public Integer getPrpokquantity() {
+		return prpokquantity;
+	}
+
+	public void setPrpokquantity(Integer prpokquantity) {
+		this.prpokquantity = prpokquantity;
+	}
 
 	public Date getSyscdate() {
 		return syscdate;

@@ -1,5 +1,8 @@
 package dtri.com.tw.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import dtri.com.tw.bean.PackageBean;
+import dtri.com.tw.db.entity.SystemGroup;
+import dtri.com.tw.db.entity.SystemPermission;
 import dtri.com.tw.db.entity.SystemUser;
 import dtri.com.tw.login.LoginUserDetails;
 import dtri.com.tw.service.PackageService;
@@ -34,6 +39,22 @@ public class ProductionHeaderController {
 	@RequestMapping(value = { "/ajax/production_header.basil" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String access(@RequestBody String json_object) {
 		System.out.println("---controller -access " + SYS_F + " Check");
+		// 取得-當前用戶資料
+		List<SystemGroup> systemGroup = new ArrayList<SystemGroup>();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			// Step1.查詢資料權限
+			systemGroup = userDetails.getSystemGroup();
+		}
+		//UI限制功能
+		SystemPermission one = new SystemPermission();
+		systemGroup.forEach(p->{
+			if(p.getSystemPermission().getSpcontrol().equals(SYS_F)) {
+				one.setSppermission(p.getSystemPermission().getSppermission());
+			}
+		});
+		
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		String info = null, info_color = null;
@@ -43,7 +64,7 @@ public class ProductionHeaderController {
 		// Step2.進行查詢
 		resp = headerService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
-		resp = packageService.setObjResp(resp, req, info, info_color);
+		resp = packageService.setObjResp(resp, req, info, info_color,one.getSppermission());
 		// 回傳-資料
 		return packageService.objToJson(resp);
 	}
@@ -64,7 +85,7 @@ public class ProductionHeaderController {
 		// Step2.進行查詢
 		resp = headerService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
-		resp = packageService.setObjResp(resp, req, info, info_color);
+		resp = packageService.setObjResp(resp, req, info, info_color,"");
 		// 回傳-資料
 		return packageService.objToJson(resp);
 	}
@@ -99,10 +120,10 @@ public class ProductionHeaderController {
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, info, info_color);
+			resp = packageService.setObjResp(resp, req, info, info_color,"");
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning,"");
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -135,10 +156,10 @@ public class ProductionHeaderController {
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, info, info_color);
+			resp = packageService.setObjResp(resp, req, info, info_color,"");
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning,"");
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -164,10 +185,10 @@ public class ProductionHeaderController {
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, info, info_color);
+			resp = packageService.setObjResp(resp, req, info, info_color,"");
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning,"");
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);

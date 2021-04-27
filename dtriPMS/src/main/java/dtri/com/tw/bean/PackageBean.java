@@ -35,6 +35,7 @@ public class PackageBean {
 	private String call_bk_fn;// 回傳呼叫方法
 	private JSONObject call_bk_vals;// 回傳呼叫傳遞值
 	private String html_body;// 切換頁面
+	private String html_permission;// 權限頁面限制
 	private JSONObject info_user;// 使用者資訊
 	private JSONArray cell_searchs;// 查詢欄位
 	private JSONArray cell_modify;// 修改欄位
@@ -181,4 +182,13 @@ public class PackageBean {
 	public void setBody_type(String body_type) {
 		this.body_type = body_type;
 	}
+
+	public String getHtml_permission() {
+		return html_permission;
+	}
+
+	public void setHtml_permission(String html_permission) {
+		this.html_permission = html_permission;
+	}
+	
 }

@@ -6,13 +6,10 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -85,8 +82,17 @@ public class ProductionBody implements Serializable {
 	@Column(name = "pb_id")
 	private Integer pbid;
 
+	@Column(name = "pb_g_id")
+	private Integer pbgid;
+
 	@Column(name = "pb_sn", nullable = false, columnDefinition = "varchar(50)")
 	private String pbsn;
+
+	@Column(name = "pb_old_sn", columnDefinition = "varchar(50)")
+	private String pboldsn;
+
+	@Column(name = "pb_useful_sn", nullable = false, columnDefinition = "integer DEFAULT 0")
+	private Integer pbusefulsn;
 
 	@Column(name = "pb_f_value", columnDefinition = "varchar(255)")
 	private String pbfvalue;
@@ -256,14 +262,14 @@ public class ProductionBody implements Serializable {
 	@Column(name = "pb_l_path", columnDefinition = "varchar(255) default ''")
 	private String pblpath;
 
-	/*
-	 * @OneToOne(mappedBy = "productionBody") private ProductionHeader
-	 * productionHeader;
-	 */
+	@Column(name = "pb_l_size")
+	private String pblsize;
 
-	@ManyToOne(targetEntity = ProductionHeader.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "pb_ph_id")
-	private ProductionHeader productionHeader;
+	@Column(name = "pb_shipping_date")
+	private String pbshippingdate;
+
+	@Column(name = "pb_recycling_date")
+	private String pbrecyclingdate;
 
 	public static class PrimaryKey implements Serializable {
 
@@ -286,6 +292,54 @@ public class ProductionBody implements Serializable {
 		public void setPbid(Integer pbid) {
 			this.pbid = pbid;
 		}
+	}
+
+	public String getPboldsn() {
+		return pboldsn;
+	}
+
+	public void setPboldsn(String pboldsn) {
+		this.pboldsn = pboldsn;
+	}
+
+	public Integer getPbusefulsn() {
+		return pbusefulsn;
+	}
+
+	public void setPbusefulsn(Integer pbusefulsn) {
+		this.pbusefulsn = pbusefulsn;
+	}
+
+	public String getPblsize() {
+		return pblsize;
+	}
+
+	public void setPblsize(String pblsize) {
+		this.pblsize = pblsize;
+	}
+
+	public String getPbshippingdate() {
+		return pbshippingdate;
+	}
+
+	public void setPbshippingdate(String pbshippingdate) {
+		this.pbshippingdate = pbshippingdate;
+	}
+
+	public String getPbrecyclingdate() {
+		return pbrecyclingdate;
+	}
+
+	public void setPbrecyclingdate(String pbrecyclingdate) {
+		this.pbrecyclingdate = pbrecyclingdate;
+	}
+
+	public Integer getPbgid() {
+		return pbgid;
+	}
+
+	public void setPbgid(Integer pbgid) {
+		this.pbgid = pbgid;
 	}
 
 	public Boolean getPbcheck() {
@@ -827,13 +881,4 @@ public class ProductionBody implements Serializable {
 	public void setPblpath(String pblpath) {
 		this.pblpath = pblpath;
 	}
-
-	public ProductionHeader getProductionHeader() {
-		return productionHeader;
-	}
-
-	public void setProductionHeader(ProductionHeader productionHeader) {
-		this.productionHeader = productionHeader;
-	}
-
 }

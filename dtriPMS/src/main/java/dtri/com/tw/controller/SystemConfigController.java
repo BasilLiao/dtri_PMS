@@ -43,7 +43,7 @@ public class SystemConfigController {
 		// Step2.進行查詢
 		resp = configService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
-		resp = packageService.setObjResp(resp, req, info, info_color);
+		resp = packageService.setObjResp(resp, req, info, info_color,"");
 		// 回傳-資料
 		return packageService.objToJson(resp);
 	}
@@ -64,7 +64,7 @@ public class SystemConfigController {
 		// Step2.進行查詢
 		resp = configService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
-		resp = packageService.setObjResp(resp, req, info, info_color);
+		resp = packageService.setObjResp(resp, req, info, info_color,"");
 		// 回傳-資料
 		return packageService.objToJson(resp);
 	}
@@ -99,10 +99,10 @@ public class SystemConfigController {
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, info, info_color);
+			resp = packageService.setObjResp(resp, req, info, info_color,"");
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning,"");
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -135,10 +135,10 @@ public class SystemConfigController {
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, info, info_color);
+			resp = packageService.setObjResp(resp, req, info, info_color,"");
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning,"");
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -164,10 +164,10 @@ public class SystemConfigController {
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, info, info_color);
+			resp = packageService.setObjResp(resp, req, info, info_color,"");
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning);
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning,"");
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);

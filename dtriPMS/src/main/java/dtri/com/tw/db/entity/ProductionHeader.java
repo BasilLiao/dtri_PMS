@@ -1,15 +1,16 @@
 package dtri.com.tw.db.entity;
 
 import java.util.Date;
-import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -23,6 +24,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  *      ph_pr_id : 關聯-製令工單<br>
  *      ph_pr_type : 類型-製令工單<br>
  *      ph_pb_id : 關聯-SN清單<br>
+ *      ph_pb_g_id :關聯群組-SN清單<br>
  *      ph_wpro_id : 工作站<br>
  *      ph_s_date : 開始製成 <br>
  *      ph_e_date : 結束製成 <br>
@@ -80,25 +82,20 @@ public class ProductionHeader {
 	@Column(name = "ph_id")
 	private Integer phid;
 
+	@Column(name = "ph_pb_g_id")
+	private Integer phpbgid;
+
 	@Column(name = "ph_model", nullable = false, columnDefinition = "varchar(50)")
 	private String phmodel;
 
-	@Column(name = "ph_pr_id", nullable = false, columnDefinition = "varchar(50)")
-	private String phprid;
-	
-	@Column(name = "ph_pr_type", columnDefinition = "varchar(50)")
-	private String phprtype;
+	// @Column(name = "ph_pr_id", nullable = false, columnDefinition =
+	// "varchar(50)")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ph_pr_id", referencedColumnName = "pr_id")
+	private ProductionRecords productionRecords;
 
-	
-	/*
-	 * @OneToOne(cascade = CascadeType.ALL)
-	 * 
-	 * @JoinColumns({ @JoinColumn(name = "ph_pb_id", referencedColumnName =
-	 * "pb_id"),
-	 * 
-	 * @JoinColumn(name = "ph_pb_sys_ver", referencedColumnName = "sys_ver") })
-	 * private ProductionBody productionBody;
-	 */
+	@Column(name = "ph_type", columnDefinition = "varchar(50)")
+	private String phtype;
 
 	@Column(name = "ph_wp_id", nullable = false)
 	private Integer phwpid;
@@ -112,23 +109,20 @@ public class ProductionHeader {
 	@Column(name = "ph_schedule", columnDefinition = "varchar(50)")
 	private String phschedule;
 
-	@OneToMany(mappedBy = "productionHeader")
-	private List<ProductionBody> productionBody;
-
-	public List<ProductionBody> getProductionBody() {
-		return productionBody;
+	public Integer getPhpbgid() {
+		return phpbgid;
 	}
 
-	public void setProductionBody(List<ProductionBody> productionBody) {
-		this.productionBody = productionBody;
+	public void setPhpbgid(Integer phpbgid) {
+		this.phpbgid = phpbgid;
 	}
 
-	public String getPhprtype() {
-		return phprtype;
+	public String getPhtype() {
+		return phtype;
 	}
 
-	public void setPhprtype(String phprtype) {
-		this.phprtype = phprtype;
+	public void setPhtype(String phtype) {
+		this.phtype = phtype;
 	}
 
 	public Date getSyscdate() {
@@ -219,12 +213,14 @@ public class ProductionHeader {
 		this.phmodel = phmodel;
 	}
 
-	public String getPhprid() {
-		return phprid;
+	
+
+	public ProductionRecords getProductionRecords() {
+		return productionRecords;
 	}
 
-	public void setPhprid(String phprid) {
-		this.phprid = phprid;
+	public void setProductionRecords(ProductionRecords productionRecords) {
+		this.productionRecords = productionRecords;
 	}
 
 	public Integer getPhwpid() {
