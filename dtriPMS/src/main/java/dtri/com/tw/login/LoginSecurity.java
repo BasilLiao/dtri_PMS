@@ -35,6 +35,9 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 		String production_head = "/ajax/production_header.basil";
 		String production_body = "/ajax/production_body.basil";
 		String production_reco = "/ajax/production_records.basil";
+		String workstation_item = "/ajax/workstation_item.basil";
+		String workstation_work = "/ajax/workstation_work.basil";
+		
 		http.authorizeRequests()
 				// thirdparty && img 資料夾靜態資料可 直接 存取 (預設皆有 訪問權限 資料可[匿名]存取)
 				.antMatchers(HttpMethod.GET, "/thirdparty/**", "/img/**", "/login.basil", "/login.html").permitAll()
@@ -89,6 +92,20 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, production_reco + ".AC").hasAuthority(actionRole(production_reco, "AC"))// (新增)
 				.antMatchers(HttpMethod.PUT, production_reco + ".AU").hasAuthority(actionRole(production_reco, "AU"))// (修改)
 				.antMatchers(HttpMethod.DELETE, production_reco + ".AD").hasAuthority(actionRole(production_reco, "AD"))// (移除)
+				
+				// ----請求-workstation_item-(訪問) ----
+				.antMatchers(HttpMethod.POST, workstation_item).hasAuthority(actionRole(workstation_item, ""))
+				.antMatchers(HttpMethod.POST, workstation_item + ".AR").hasAuthority(actionRole(workstation_item, "AR"))// (查詢)
+				.antMatchers(HttpMethod.POST, workstation_item + ".AC").hasAuthority(actionRole(workstation_item, "AC"))// (新增)
+				.antMatchers(HttpMethod.PUT, workstation_item + ".AU").hasAuthority(actionRole(workstation_item, "AU"))// (修改)
+				.antMatchers(HttpMethod.DELETE, workstation_item + ".AD").hasAuthority(actionRole(workstation_item, "AD"))// (移除)
+				
+				// ----請求-workstation_work-(訪問) ----
+				.antMatchers(HttpMethod.POST, workstation_work).hasAuthority(actionRole(workstation_work, ""))
+				.antMatchers(HttpMethod.POST, workstation_work + ".AR").hasAuthority(actionRole(workstation_work, "AR"))// (查詢)
+				.antMatchers(HttpMethod.POST, workstation_work + ".AC").hasAuthority(actionRole(workstation_work, "AC"))// (新增)
+				.antMatchers(HttpMethod.PUT, workstation_work + ".AU").hasAuthority(actionRole(workstation_work, "AU"))// (修改)
+				.antMatchers(HttpMethod.DELETE, workstation_work + ".AD").hasAuthority(actionRole(workstation_work, "AD"))// (移除)
 
 				// 請求需要檢驗-全部請求
 				.anyRequest().authenticated();

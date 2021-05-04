@@ -60,38 +60,39 @@ public class SystemConfigService {
 
 			// 放入修改 [(key)](modify/Create/Delete) 格式
 			JSONArray obj_m = new JSONArray();
-			JSONArray values = new JSONArray();
+			JSONArray n_val = new JSONArray();
+			JSONArray a_val = new JSONArray();
 
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "sc_id", "ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "sc_g_id", "群組ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "sc_g_name", "群組名稱"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "sc_name", "名稱"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "sc_value", "參數"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sc_id", "ID"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sc_g_id", "群組ID"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "sc_g_name", "群組名稱"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "sc_name", "名稱"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "sc_value", "參數"));
 
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "sys_c_date", "建立時間"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "sys_c_user", "建立人"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "sys_m_date", "修改時間"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "sys_m_user", "修改人"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_c_date", "建立時間"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_c_user", "建立人"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_m_date", "修改時間"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_m_user", "修改人"));
 
-			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-12", false, new JSONArray(), "sys_note", "備註"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "0", "0", FFS.SHO, "col-md-2", true, new JSONArray(), "sys_sort", "排序"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "sys_ver", "版本"));
+			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-12", false, n_val, "sys_note", "備註"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "0", "0", FFS.SHO, "col-md-2", true, n_val, "sys_sort", "排序"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_ver", "版本"));
 
-			values = new JSONArray();
-			values.put((new JSONObject()).put("value", "正常").put("key", "0"));
-			values.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.SHO, "col-md-2", true, values, "sys_status", "狀態"));
+			a_val = new JSONArray();
+			a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
+			a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
+			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.SHO, "col-md-2", true, a_val, "sys_status", "狀態"));
 			bean.setCell_modify(obj_m);
 
 			// 放入包裝(search)
 			JSONArray object_searchs = new JSONArray();
-			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "sc_g_name", "群組名稱", new JSONArray()));
-			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "sc_name", "名稱", new JSONArray()));
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "sc_g_name", "群組名稱", n_val));
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "sc_name", "名稱", n_val));
 
-			values = new JSONArray();
-			values.put((new JSONObject()).put("value", "正常").put("key", "0"));
-			values.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			object_searchs.put(FFS.h_s(FFS.SEL, FFS.TEXT, "0", "col-md-2", "sys_status", "狀態", values));
+			a_val = new JSONArray();
+			a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
+			a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
+			object_searchs.put(FFS.h_s(FFS.SEL, FFS.TEXT, "0", "col-md-2", "sys_status", "狀態", a_val));
 			bean.setCell_searchs(object_searchs);
 		} else {
 

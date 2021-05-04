@@ -20,7 +20,7 @@ import dtri.com.tw.service.SystemGroupService;
 @Controller
 public class SystemGroupController {
 	// 功能
-	final static String SYS_F = "sys_group.basil";
+	final static String SYS_F = "system_group.basil";
 
 	@Autowired
 	PackageService packageService;
@@ -33,7 +33,7 @@ public class SystemGroupController {
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_group.basil" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String access(@RequestBody String json_object) {
-		System.out.println("---controller -access "+SYS_F+" Check");
+		System.out.println("---controller -access " + SYS_F + " Check");
 		// 取得-當前用戶資料
 		SystemUser user = new SystemUser();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -51,7 +51,7 @@ public class SystemGroupController {
 		// Step2.進行查詢
 		resp = groupService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(), user.getSuaccount());
 		// Step3.包裝回傳
-		resp = packageService.setObjResp(resp, req, info, info_color,"");
+		resp = packageService.setObjResp(resp, req, info, info_color, "");
 		// 回傳-資料
 		return packageService.objToJson(resp);
 	}
@@ -62,7 +62,7 @@ public class SystemGroupController {
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_group.basil.AR" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String search(@RequestBody String json_object) {
-		System.out.println("---controller -search "+SYS_F+" Check");
+		System.out.println("---controller -search " + SYS_F + " Check");
 		// 取得-當前用戶資料
 		SystemUser user = new SystemUser();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -80,7 +80,7 @@ public class SystemGroupController {
 		// Step2.進行查詢
 		resp = groupService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(), user.getSuaccount());
 		// Step3.包裝回傳
-		resp = packageService.setObjResp(resp, req, info, info_color,"");
+		resp = packageService.setObjResp(resp, req, info, info_color, "");
 		// 回傳-資料
 		return packageService.objToJson(resp);
 	}
@@ -91,7 +91,7 @@ public class SystemGroupController {
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_group.basil.AC" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String create(@RequestBody String json_object) {
-		System.out.println("---controller -create "+SYS_F+" Check");
+		System.out.println("---controller -create " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;
@@ -115,10 +115,10 @@ public class SystemGroupController {
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, info, info_color,"");
+			resp = packageService.setObjResp(resp, req, info, info_color, "");
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning,"");
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning, "");
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -130,7 +130,7 @@ public class SystemGroupController {
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_group.basil.AU" }, method = { RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
 	public String modify(@RequestBody String json_object) {
-		System.out.println("---controller -modify "+SYS_F+" Check");
+		System.out.println("---controller -modify " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;
@@ -151,10 +151,10 @@ public class SystemGroupController {
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, info, info_color,"");
+			resp = packageService.setObjResp(resp, req, info, info_color, "");
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning,"");
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning, "");
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -166,24 +166,31 @@ public class SystemGroupController {
 	@ResponseBody
 	@RequestMapping(value = { "/ajax/system_group.basil.AD" }, method = { RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
 	public String delete(@RequestBody String json_object) {
-		System.out.println("---controller -delete "+SYS_F+" Check");
+		System.out.println("---controller -delete " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
 		PackageBean resp = new PackageBean();
 		boolean check = false;
 		String info = null, info_color = null;
 		System.out.println(json_object);
-
+		// 取得-當前用戶資料
+		SystemUser user = new SystemUser();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			// Step1.查詢資料
+			user = userDetails.getSystemUser();
+		}
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = groupService.deleteData(req.getBody());
+		check = groupService.deleteData(req.getBody(),user);
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, info, info_color,"");
+			resp = packageService.setObjResp(resp, req, info, info_color, "");
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning,"");
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning, "");
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);

@@ -4,89 +4,416 @@
 		<i class="bi bi-joystick mr-1"></i>Workstation-<b>組裝工作站</b>
 	</div>
 	<div class="p-2">
-		<form onsubmit="return templateBody.send_added_or_update_save();">
+		<form onsubmit="return workstation.send_save();">
 			<table class="table table-sm  table-bordered table-responsive m-0 bg-white" style="min-height: 60vh">
 				<thead class="thead bg-dark table-dark">
 					<tr>
-						<th style="min-width: 35px;" class="text-center"><i class="bi bi-upc-scan"></i></th>
-						<th style="min-width: 400px;">Barcode Action</th>
-						<th style="min-width: 600px; width: 100%;">Info</th>
-						<th style="min-width: 35px;"><i class="bi bi-shield-slash btn btn-outline-danger p-0 pl-1 pr-1 d-none"></i> <i class="bi bi-shield-lock btn btn-outline-success p-0 pl-1 pr-1"></i></th>
+						<th style="min-width: 35px;" class="text-center">
+							<div>
+								<i id="barcode_open" class="bi bi-upc-scan btn btn-outline-primary p-0 pl-1 pr-1"></i>
+							</div>
+						</th>
+						<th style="min-width: 10px;">
+							<div id="barcode_status" class="barcode_open" style="display: none;">
+								<div style="min-width: 80px;">Barcode</div>
+							</div>
+						</th>
+						<th style="min-width: 300px; width: 100%;">Info</th>
+						<th class="">
+							<div>
+								<i id="fix_open" class="bi bi-tools btn btn-outline-primary p-0 pl-1 pr-1"></i>
+							</div>
+						</th>
+						<th style="min-width: 35px;">
+							<div>
+								<i class="bi bi-shield-slash btn btn-outline-danger p-0 pl-1 pr-1 d-none"></i>
+							</div>
+							<div>
+								<i class="bi bi-shield-lock btn btn-outline-success p-0 pl-1 pr-1"></i>
+							</div>
+						</th>
+						<th style="min-width: 35px;" class="text-center">
+							<div>
+								<i id="doc_open" class="bi bi-layout-text-sidebar-reverse btn btn-outline-primary p-0 pl-1 pr-1"></i>
+							</div>
+						</th>
+						<th style="min-width: 10px;">
+							<div id="doc_status" class="doc_open" style="display: none;">
+								<div style="min-width: 380px;">Doc</div>
+							</div>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
+						<!-- fix -->
+						<td colspan="7" class="p-0 border border-dark">
+							<div class="row justify-content-between m-0">
+								<div class="row m-0 p-2">
+									<div>open_barcode[BC008]</div>
+									<div class="m-1" id="barcode_open_barcode"></div>
+								</div>
+								<div class="row m-0 p-2">
+									<div>open_fix[BC009]</div>
+									<div class="m-1" id="barcode_open_fix"></div>
+								</div>
+								<div class="row m-0 p-2">
+									<div>open_doc[BC010]</div>
+									<div class="m-1" id="barcode_open_doc"></div>
+								</div>
+							</div> <!-- 維修條碼_類型(浮動) -->
+							<div class="fix_open col-12 row justify-content-between m-0 text-center p-0 border border-secondary rounded" style="display: none;">
+								<div class="col-12 m-0 p-0 h4">Fix-type</div>
+								<div class="p-2">
+									<div class="row m-0 p-1">
+										<div class="btn btn-outline-secondary p-0 pr-2 pl-2">XXXXXXXXX</div>
+										<div class="m-1" id="barcode_fix_1">1</div>
+									</div>
+								</div>
+								<div class="p-2">
+									<div class="row m-0 p-1">
+										<div class="btn btn-outline-secondary p-0 pr-2 pl-2">XXXXXXXXX</div>
+										<div class="m-1" id="barcode_fix_2">1</div>
+									</div>
+								</div>
+								<div class="p-2">
+									<div class="row m-0 p-1">
+										<div class="btn btn-outline-secondary p-0 pr-2 pl-2">XXXXXXXXX</div>
+										<div class="m-1" id="barcode_fix_3">1</div>
+									</div>
+								</div>
+								<div class="p-2">
+									<div class="row m-0 p-1">
+										<div class="btn btn-outline-secondary p-0 pr-2 pl-2">XXXXXXXXX</div>
+										<div class="m-1" id="barcode_fix_4">1</div>
+									</div>
+								</div>
+								<div class="p-2">
+									<div class="row m-0 p-1">
+										<div id="BC15" class="fix_type btn btn-outline-secondary p-0 pr-2 pl-2">XXXXX[BC15]</div>
+										<div class="m-1" id="barcode_fix_5">1</div>
+									</div>
+								</div>
+								<div class="p-2">
+									<div class="row m-0 p-1">
+										<div id="BC16" class="fix_type btn btn-outline-secondary p-0 pr-2 pl-2">XXXXXXXXX</div>
+										<div class="m-1" id="barcode_fix_6">1</div>
+									</div>
+								</div>
+							</div> <!-- 維修條碼_項目(浮動) -->
+							<div id="fix_item_open" class="col-12 row justify-content-between m-0 text-center p-0 border border-secondary rounded" style="display: none;">
+								<div class="col-12 m-0 p-0 h4">Fix-item</div>
+								<div class="p-2">
+									<div class="row m-0">
+										<div>XXXXXXXXX</div>
+										<div class="m-1" id="barcode_fix_1">1</div>
+									</div>
+								</div>
+								<div class="p-2">
+									<div class="row m-0">
+										<div>XXXXXXXXX:</div>
+										<div class="m-1" id="barcode_fix_2">1</div>
+									</div>
+								</div>
+								<div class="p-2">
+									<div class="row m-0">
+										<div>XXXXXXXXX:</div>
+										<div class="m-1" id="barcode_fix_3">1</div>
+									</div>
+								</div>
+								<div class="p-2">
+									<div class="row m-0">
+										<div>XXXXXXXXX:</div>
+										<div class="m-1" id="barcode_fix_4">1</div>
+									</div>
+								</div>
+								<div class="p-2">
+									<div class="row m-0">
+										<div>XXXXXXXXX:</div>
+										<div class="m-1" id="barcode_fix_5">1</div>
+									</div>
+								</div>
+								<div class="p-2">
+									<div class="row m-0">
+										<div>XXXXXXXXX:</div>
+										<div class="m-1" id="barcode_fix_6">1</div>
+									</div>
+								</div>
+
+							</div>
+						</td>
+
+					</tr>
+					<tr class="font-weight-bold">
 						<!-- 動作機制 -->
-						<td colspan="2" rowspan="100" class="p-0 pl-2 pr-2 text-center">
-							<div class="p-2 m-0 h4" id="action">目前條碼:動作</div>
-							<div class="p-1">
-								<input class="col p-1 border border-dark rounded" id="now_barcode" type="text">
+						<td colspan="2" rowspan="100" class="p-0 pl-1 pr-1 font-weight-bold text-center small border-dark border">
+							<div class="barcode_open" style="display: none;">
+								<div class="p-2" id="previous">
+									<div id="barcode_previous"></div>
+									<div>previous(上)[BC001]</div>
+								</div>
+								<div class="p-2" id="next">
+									<div id="barcode_next"></div>
+									<div>next(下)[BC002]</div>
+								</div>
+								<div class="dropdown-divider p-1 mt-3"></div>
+								<div class="p-2" id="sure">
+									<div id="barcode_sure"></div>
+									<div>sure(確認)[BC003]</div>
+								</div>
+								<div class="p-2" id="clear">
+									<div id="barcode_clear"></div>
+									<div>clear(清除)[BC004]</div>
+								</div>
+								<div class="dropdown-divider p-1 mt-3"></div>
+								<div class="p-2" id="save">
+									<div id="barcode_save"></div>
+									<div>save(完成)[BC005]</div>
+								</div>
+								<div class="p-2" id="cancel">
+									<div id="barcode_cancel"></div>
+									<div>cancel(取消)[BC006]</div>
+								</div>
+								<div class="dropdown-divider p-1 mt-3"></div>
+								<div class="p-2" id="back">
+									<div id="barcode_back"></div>
+									<div>back(回首頁)[BC007]</div>
+								</div>
 							</div>
-							<div class="dropdown-divider p-0"></div>
-							<div class="p-2 h5" id="previous">previous(上)</div>
-							<div class="p-2 h5" id="next">next(下)</div>
-							<div class="dropdown-divider p-0"></div>
-							<div class="p-2 h5" id="sure">sure(確認)</div>
-							<div class="p-2 h5" id="clear">clear(清除)</div>
-							<div class="dropdown-divider p-0"></div>
-							<div class="p-2 h5" id="save">save(完成)</div>
-							<div class="p-2 h5" id="cancel">cancel(取消)</div>
-							<div class="dropdown-divider p-0"></div>
-							<div class="p-2 h5" id="back">back(回首頁)</div>
 						</td>
-						<!-- 製令單號(固定) -->
-						<td class="p-1 m-0 row">
-							<div class="col-4 p-1 h5 m-0">*製令單號:</div>
-							<div class="col-8 p-0">
-								<input class="col p-1 border border-dark rounded" id="m_order" type="text" required>
+						<td colspan="2" class="p-0">
+							<div class=" row p-1 m-0 border  border-light rounded">
+								<div class="col-5 p-1 m-0">*工作站:</div>
+								<div class="col-7 p-0">
+									<input disabled="disabled" class="col p-1 border-1 border-primary rounded" id="w_item_1" type="text" required>
+								</div>
 							</div>
 						</td>
-						<td class="p-1"><i class="bi bi-shield-check text-success p-0 h3"></i><i class="bi bi-shield-exclamation text-warning p-0 h3 d-none"></i></td>
+						<td class="p-1  border border-dark border-bottom-0">
+							<div>
+								<i class="bi bi-shield-check text-success p-0 h3 d-none"> </i>
+							</div>
+							<div>
+								<i class="bi bi-shield-exclamation text-warning p-0 h3"></i>
+							</div>
+							<div>
+								<i class="bi bi-shield-x text-danger p-0 h3 d-none"></i>
+							</div>
+						</td>
+						<!-- Doc -->
+						<td colspan="2" class="p-1 border border-dark" rowspan="100">
+							<!-- (固定)顯特定內容 -->
+							<div class="doc_open" style="display: none;">
+								<div style="min-width: 380px;">
+									<div class="border border-secondary rounded">
+										<div class="p-1 ">製令資訊</div>
+										<div class="p-0 row m-0" id="">
+											<div class="col-6 p-1 row m-0">
+												<div class="col-4 p-1" id="">XXX</div>
+												<input disabled="disabled" class="col-8 p-1 border border-light rounded" id="" type="text" required>
+											</div>
+											<div class="col-6 p-1 row m-0">
+												<div class="col-4 p-1" id="">XXX</div>
+												<input disabled="disabled" class="col-8 p-1 border border-light rounded" id="" type="text" required>
+											</div>
+										</div>
+									</div>
+									<!-- (固定)顯特定內容 -->
+									<div class="border border-secondary rounded">
+										<div class=" p-1 ">軟體定義</div>
+										<div class="p-0 row m-0" id="">
+											<div class="col-6 p-1 row m-0">
+												<div class="col-4 p-1" id="">XXX</div>
+												<input disabled="disabled" class="col-8 p-1 border border-light rounded" id="" type="text" required>
+											</div>
+											<div class="col-6 p-1 row m-0">
+												<div class="col-4 p-1" id="">XXX</div>
+												<input disabled="disabled" class="col-8 p-1 border border-light rounded" id="" type="text" required>
+											</div>
+										</div>
+									</div>
+									<!-- (固定)顯特定內容 -->
+									<div class="border border-secondary rounded">
+										<div class="p-1 ">規格定義</div>
+										<div class="p-0 row m-0" id="">
+											<div class="col-6 p-1 row m-0">
+												<div class="col-4 p-1" id="">XXX</div>
+												<input disabled="disabled" class="col-8 p-1 border border-light rounded" id="" type="text" required>
+											</div>
+											<div class="col-6 p-1 row m-0">
+												<div class="col-4 p-1" id="">XXX</div>
+												<input disabled="disabled" class="col-8 p-1 border border-light rounded" id="" type="text" required>
+											</div>
+										</div>
+										<div class="p-0 row m-0" id="">
+											<div class="col-6 p-1 row m-0">
+												<div class="col-4 p-1" id="">XXX</div>
+												<input disabled="disabled" class="col-8 p-1 border border-light rounded" id="" type="text" required>
+											</div>
+											<div class="col-6 p-1 row m-0">
+												<div class="col-4 p-1" id="">XXX</div>
+												<input disabled="disabled" class="col-8 p-1 border border-light rounded" id="" type="text" required>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<!--(固定) -->
+					<tr class="font-weight-bold">
+						<td colspan="2" class="p-0">
+							<div class=" row p-1 m-0 border border-light rounded">
+								<div class="col-5 p-1 m-0">*製令單:</div>
+								<div class="col-7 p-0">
+									<input disabled="disabled" class="col p-1 border border-light rounded" id="w_item_1" type="text" required>
+								</div>
+							</div>
+						</td>
+						<td class="p-1">
+							<div>
+								<i class="bi bi-shield-check text-success p-0 h3 d-none"></i>
+							</div>
+							<div>
+								<i class="bi bi-shield-exclamation text-warning p-0 h3"></i>
+							</div>
+							<div>
+								<i class="bi bi-shield-x text-danger p-0 h3 d-none"></i>
+							</div>
+						</td>
+					</tr>
+					<!--(固定) -->
+					<tr class="font-weight-bold">
+						<td colspan="2" class="p-0">
+							<div class=" row p-1 m-0 border border-light rounded">
+								<div class="col-5 p-1 m-0">*產品SN:</div>
+								<div class="col-7 p-0">
+									<input disabled="disabled" class="col p-1 border border-light rounded" id="w_item_1" type="text" required>
+								</div>
+							</div>
+						</td>
+						<td class="p-1">
+							<div>
+								<i class="bi bi-shield-check text-success p-0 h3 d-none"> </i>
+							</div>
+							<div>
+								<i class="bi bi-shield-exclamation text-warning p-0 h3"></i>
+							</div>
+							<div>
+								<i class="bi bi-shield-x text-danger p-0 h3 d-none"></i>
+							</div>
+						</td>
+					</tr>
+					<!--(固定) -->
+					<tr class="font-weight-bold">
+						<td colspan="2" class="p-0">
+							<div class=" row p-1 m-0 border border-light rounded">
+								<div class="col-5 p-1 m-0">*故障代碼(可複數):</div>
+								<div class="col-7 p-0">
+									<input disabled="disabled" class="col p-1 border border-light rounded" id="w_item_1" type="text" required>
+								</div>
+							</div>
+						</td>
+						<td class="p-1">
+							<div>
+								<i class="bi bi-shield-check text-success p-0 h3 d-none"> </i>
+							</div>
+							<div>
+								<i class="bi bi-shield-exclamation text-warning p-0 h3"></i>
+							</div>
+							<div>
+								<i class="bi bi-shield-x text-danger p-0 h3 d-none"></i>
+							</div>
+						</td>
+					</tr>
+					<!--(固定) -->
+					<tr class="font-weight-bold">
+						<td colspan="2" class="p-0 ">
+							<div class=" row p-1 m-0 border border-light rounded">
+								<div class="col-5 p-1 m-0">*置物位置:</div>
+								<div class="col-7 p-0">
+									<input disabled="disabled" class="col p-1 border border-light rounded" id="w_item_1" type="text" required>
+								</div>
+							</div>
+						</td>
+						<td class="p-1 ">
+							<div>
+								<i class="bi bi-shield-check text-success p-0 h3 d-none"> </i>
+							</div>
+							<div>
+								<i class="bi bi-shield-exclamation text-warning p-0 h3"></i>
+							</div>
+							<div>
+								<i class="bi bi-shield-x text-danger p-0 h3 d-none"></i>
+							</div>
+						</td>
+					</tr>
+					<tr class="font-weight-bold">
+						<td colspan="3" class="pr-0 pl-0">
+							<div class="dropdown-divider p-0 m-0 border border-dark"></div>
+						</td>
+					</tr>
+					<tr class="font-weight-bold">
+						<!--(固定)目前條碼 -->
+						<td colspan="2" class="p-0">
+							<div class=" row p-1 m-0 border border-light rounded h2">
+								<div class="col-5 p-1 m-0">Barcode in:</div>
+								<div class="col-7 p-0">
+									<input autocomplete="off" class="col p-1 rounded" id="m_order" type="text" required autofocus>
+								</div>
+							</div>
+						</td>
+						<!-- 鎖定 -->
+						<td class="p-1">
+							<div>
+								<i class="bi bi-shield-check text-success p-0 h3"></i>
+							</div>
+							<div>
+								<i class="bi bi-shield-exclamation text-warning p-0 h3 d-none"></i>
+							</div>
+						</td>
+					</tr>
+					<tr class="font-weight-bold">
+						<td colspan="3" class="pr-0 pl-0">
+							<div class="dropdown-divider p-0 m-0 border border-dark"></div>
+						</td>
+					</tr>
+					<!-- 工作項目(浮動) Manufacturing order-->
+					<tr class="workstation_example">
+						<td colspan="2" class="p-0">
+							<div class=" row p-1 m-0 border border-light rounded">
+								<div class="col-5 p-1 m-0">項目XXX:</div>
+								<div class="col-7 p-0">
+									<input class="col p-1 border border-light rounded" disabled="disabled" id="w_item_2" type="text" required>
+								</div>
+							</div>
+						</td>
+						<td class="p-1">
+							<div>
+								<i class="bi bi-shield-check text-success p-0 h3 d-none"> </i>
+							</div>
+							<div>
+								<i class="bi bi-shield-exclamation text-warning p-0 h3 d-none"></i>
+							</div>
+							<div>
+								<i class="bi bi-shield-x text-danger p-0 h3 "></i>
+							</div>
+						</td>
 					</tr>
 
-					<tr>
-						<!-- 工作項目(浮動) Manufacturing order-->
-						<td class="p-1 m-0 row">
-							<div class="col-4 p-1 h5 m-0">登記1.SN出貨序號:</div>
-							<div class="col-8 p-0">
-								<input class="col p-1 border border-dark rounded" id="w_item_1" type="text" required>
-							</div>
-						</td>
-						<td class="p-1"><i class="bi bi-shield-check text-success p-0 h3 d-none"></i> <i class="bi bi-shield-exclamation text-warning p-0 h3"></i> <i
-							class="bi bi-shield-x text-danger p-0 h3 d-none"></i></td>
-					</tr>
-					<tr>
-						<td class="p-1 m-0 row">
-							<div class="col-4 p-1 h5 m-0">登記2.MB序號:</div>
-							<div class="col-8 p-0">
-								<input class="col p-1 border border-dark rounded" disabled="disabled" id="w_item_2" type="text" required>
-							</div>
-						</td>
-						<td class="p-1"><i class="bi bi-shield-check text-success p-0 h3 d-none"></i> <i class="bi bi-shield-exclamation text-warning p-0 h3 d-none"></i> <i
-							class="bi bi-shield-x text-danger p-0 h3 "></i></td>
-					</tr>
-					<tr>
-						<td class="p-1 m-0 row">
-							<div class="col-4 p-1 h5 m-0">登記3.其他序號:</div>
-							<div class="col-8 p-0">
-								<input class="col p-1 border-1 border-primary rounded" disabled="disabled" id="w_item_3" type="text" value="A991-9987" required>
-							</div>
-						</td>
-						<td class="p-1"><i class="bi bi-shield-check text-success p-0 h3 d-none"></i><i class="bi bi-shield-exclamation text-warning p-0 h3"></i></td>
-					</tr>
 					<!-- 功能(固定) -->
 					<tr>
-						<td colspan="2" class="p-0">
+						<td colspan="3" rowspan="2" class="p-0 border border-dark">
 							<div class="shadow-sm text-left">
 								<div class=" bg-white rounded-top m-0 pl-1 h5">
-									<i class="bi bi-file-earmark-check mr-1"></i>Action
+									<i class="bi bi-file-earmark-check mr-1"></i> Action
 								</div>
 								<div class="col-12 p-2 m-0 row justify-content-center">
-									<button class="col-sm-2 mt-1 btn btn-primary btn-sm" type="submit">Save</button>
+									<button class="col-sm-3 mt-1 btn btn-primary btn-sm" type="submit">Save</button>
 									<div class="col-1"></div>
-									<button class="col-sm-2 mt-1 btn btn-info btn-sm" type="submit">Print Barcode</button>
+									<button class="col-sm-3 mt-1 btn btn-info btn-sm" type="button">Print Barcode</button>
 									<div class="col-1"></div>
-									<button class="col-sm-2 mt-1 btn btn-warning btn-sm" type="button">Cancel</button>
+									<button class="col-sm-3 mt-1 btn btn-warning btn-sm" type="button">Cancel</button>
 								</div>
 							</div>
 						</td>
@@ -107,16 +434,124 @@
 		//初始化
 		created : function() {
 			console.log("workstation.html(created)");
+			//限制動作5碼
+			this.create_barcode("barcode_previous","BC001","code39");
+			this.create_barcode("barcode_next","BC002","code39");
+			this.create_barcode("barcode_sure","BC003","code39");
+			this.create_barcode("barcode_clear","BC004","code39");
+			this.create_barcode("barcode_save","BC005","code39");
+			this.create_barcode("barcode_cancel","BC006","code39");
+			this.create_barcode("barcode_back","BC007","code39");
+			//標籤開關
+			this.create_barcode("barcode_open_barcode","BC008","code39");
+			this.create_barcode("barcode_open_fix","BC009","code39");
+			this.create_barcode("barcode_open_doc","BC010","code39");
+			//維修代號
+			this.create_barcode("barcode_fix_1","BC11","code39");
+			this.create_barcode("barcode_fix_2","BC12","code39");
+			this.create_barcode("barcode_fix_3","BC13","code39");
+			this.create_barcode("barcode_fix_4","BC14","code39");
+			this.create_barcode("barcode_fix_5","BC15","code39");
+			this.create_barcode("barcode_fix_6","BC16","code39");
+			this.create_barcode("barcode_fix_7","BC17","code39");
+			this.create_barcode("barcode_fix_8","BC18","code39");
+			
+			
+			
+			//barcode_open 顯示 ?
+			$(document).on("click", "#barcode_open", function (event) {
+			    console.log("barcode_open");
+				   $(".barcode_open").toggle("fast");
+
+			});
+			//doc_open 顯示 ?
+			$(document).on("click", "#doc_open", function (event) {
+			    console.log("doc_open");
+			    $(".doc_open").toggle("fast");
+			});
+			//fix_open 顯示?
+			$(document).on("click", "#fix_open", function (event) {
+			    console.log("doc_open");
+			    $(".fix_open").slideToggle("fast");
+			    if($("#fix_item_open").css('display')!='none'){
+			    	  $("#fix_item_open").slideToggle("fast");
+			    }
+			});
+			//fix_type->fix_item 顯示?
+			$(document).on("click", ".fix_type", function (event) {
+			    console.log("fix_type");
+			    console.log(event.currentTarget.id);
+			    $("#fix_item_open").slideToggle("fast");
+			});
+			
+			
 		},
 		//可呼叫方法
 		methods : {
-			ajaxSend : function(url, dataSend) {
+			//建立 一維條碼
+			create_barcode(taget_id,barcode_val,code){
+				/*
+				barWidth: 1,barHeight: 50,
+				moduleSize: 5,showHRI: true,
+				addQuietZone: true,	marginHRI: 5,
+				bgColor: "#FFFFFF",	color: "#000000",
+				fontSize: 10,output: "css",
+				posX: 0,posY: 0
+				*/
+				var barcode_f = {barWidth:1,barHeight:15,showHRI:false,};
+				$("#"+taget_id).barcode(barcode_val,code,barcode_f);     
+			},
+			//執行動作
+			send_save(){
+				setTimeout(function(){
+					console.log("send_save :"+$('#m_order').val() );
+					var code = $('#m_order').val();
+					//指令類型
+					switch(code){
+					case "BC008":
+						$("#barcode_open" ).trigger( "click" );
+						return false;
+						break;
+					case "BC009":
+						$("#fix_open" ).trigger( "click" );
+						if($("#fix_item_open").css("display")!="none"){
+						 $("#fix_item_open").slideToggle("fast");							
+						}
+						return false;
+						break;
+					case "BC010":
+						$("#doc_open" ).trigger( "click" );
+						return false;
+						break;
+					}
+					//是否為維修代碼
+					if(code=="BC15"){
+						 $("#fix_item_open").slideToggle("fast");
+					}
+
+				  }, 400);
+				setTimeout(function(){
+					//清除
+					$('#m_order').val('');
+					$('#m_order').focus();
+				  }, 500);
+				
+				return false; //防止真傳送
+			},
+			ajaxSend(url, dataSend) {
 
 			},
 		},
 		//移除監聽事件
-		beforeDestroy : function() {
+		beforeDestroy() {
 			console.log("workstation.html(beforeDestroy)");
+			$(document).off("click", "#barcode_open");
+			$(document).off("click", "#doc_open");
+			$(document).off("click", "#fix_open");
+			$(document).off("click", ".fix_type");
+			
+			
+			
 		}
 	});
 </script>

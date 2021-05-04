@@ -391,7 +391,7 @@ public class SystemGroupService {
 
 	// 移除 資料清單
 	@Transactional
-	public boolean deleteData(JSONObject body) {
+	public boolean deleteData(JSONObject body, SystemUser user) {
 
 		boolean check = false;
 		try {
@@ -399,12 +399,20 @@ public class SystemGroupService {
 			for (Object one : list) {
 				// 物件轉換
 				SystemGroup sys_p = new SystemGroup();
+
 				JSONObject data = (JSONObject) one;
 				sys_p.setSgid(data.getInt("sg_id"));
-				if (data.getInt("sg_sp_id") == 0) {
-					// 父類別 關聯全清除
-					groupDao.deleteBySggid(data.getInt("sg_g_id"));
+
+				// 不得刪除自己
+				if (data.getInt("sg_id") != user.getSusggid()) {
+					if (data.getInt("sg_sp_id") == 0) {
+						// 父類別 關聯全清除
+						groupDao.deleteBySggid(data.getInt("sg_g_id"));
+					}
+				} else {
+					return false;
 				}
+
 				groupDao.delete(sys_p);
 				check = true;
 			}

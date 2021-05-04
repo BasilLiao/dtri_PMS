@@ -20,7 +20,7 @@ import dtri.com.tw.service.SystemUserService;
 @Controller
 public class SystemUserController {
 	// 功能
-	final static String SYS_F = "sys_user.basil";
+	final static String SYS_F = "system_user.basil";
 
 	@Autowired
 	PackageService packageService;
@@ -43,7 +43,7 @@ public class SystemUserController {
 		// Step2.進行查詢
 		resp = userService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
-		resp = packageService.setObjResp(resp, req, info, info_color,"");
+		resp = packageService.setObjResp(resp, req, info, info_color, "");
 		// 回傳-資料
 		return packageService.objToJson(resp);
 	}
@@ -64,7 +64,7 @@ public class SystemUserController {
 		// Step2.進行查詢
 		resp = userService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
-		resp = packageService.setObjResp(resp, req, info, info_color,"");
+		resp = packageService.setObjResp(resp, req, info, info_color, "");
 		// 回傳-資料
 		return packageService.objToJson(resp);
 	}
@@ -99,10 +99,10 @@ public class SystemUserController {
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, info, info_color,"");
+			resp = packageService.setObjResp(resp, req, info, info_color, "");
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning,"");
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning, "");
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -135,10 +135,10 @@ public class SystemUserController {
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, info, info_color,"");
+			resp = packageService.setObjResp(resp, req, info, info_color, "");
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning,"");
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning, "");
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
@@ -156,18 +156,25 @@ public class SystemUserController {
 		boolean check = false;
 		String info = null, info_color = null;
 		System.out.println(json_object);
-
+		// 取得-當前用戶資料
+		SystemUser user = new SystemUser();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			// Step1.查詢資料
+			user = userDetails.getSystemUser();
+		}
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
-		// Step2.進行新增
-		check = userService.deleteData(req.getBody());
+		// Step2.進行移除(不得刪除自己)
+		check = userService.deleteData(req.getBody(), user);
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, info, info_color,"");
+			resp = packageService.setObjResp(resp, req, info, info_color, "");
 		} else {
 			// Step4.包裝回傳
-			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning,"");
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning, "");
 		}
 		// 回傳-資料
 		return packageService.objToJson(resp);

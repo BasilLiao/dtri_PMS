@@ -3,7 +3,6 @@ package dtri.com.tw.service;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -24,15 +23,12 @@ import dtri.com.tw.db.entity.ProductionRecords;
 import dtri.com.tw.db.entity.SystemUser;
 import dtri.com.tw.db.pgsql.dao.ProductionBodyDao;
 import dtri.com.tw.db.pgsql.dao.ProductionHeaderDao;
-import dtri.com.tw.db.pgsql.dao.ProductionRecordsDao;
 import dtri.com.tw.tools.Fm_Time;
 
 @Service
 public class ProductionHeaderService {
 	@Autowired
 	private ProductionHeaderDao productionHeaderDao;
-	@Autowired
-	private ProductionRecordsDao productionRecordsDao;
 
 	@Autowired
 	private ProductionBodyDao productionBodyDao;
@@ -90,7 +86,7 @@ public class ProductionHeaderService {
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pr_p_ok_quantity", FFS.h_t("PR_完成數量", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pr_s_sn", FFS.h_t("PR_產品SN_開始", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pr_e_sn", FFS.h_t("PR_產品SN_結束", "150px", FFS.SHO));
-			
+
 			// sys
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_c_date", FFS.h_t("TL_建立時間", "180px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_c_user", FFS.h_t("TL_建立人", "100px", FFS.SHO));
@@ -118,11 +114,11 @@ public class ProductionHeaderService {
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", true, n_val, "ph_s_date", "TL_開始(時)"));
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", true, n_val, "ph_e_date", "TL_結束(時)"));
 			a_val = new JSONArray();
-			a_val.put((new JSONObject()).put("value","一般製令" ).put("key", "A511"));
-			a_val.put((new JSONObject()).put("value","重工製令" ).put("key", "A521"));
-			a_val.put((new JSONObject()).put("value","維護製令" ).put("key", "A522"));
-			a_val.put((new JSONObject()).put("value","拆解製令" ).put("key", "A431"));
-			a_val.put((new JSONObject()).put("value","委外製令" ).put("key", "A512"));
+			a_val.put((new JSONObject()).put("value", "一般製令").put("key", "A511"));
+			a_val.put((new JSONObject()).put("value", "重工製令").put("key", "A521"));
+			a_val.put((new JSONObject()).put("value", "維護製令").put("key", "A522"));
+			a_val.put((new JSONObject()).put("value", "拆解製令").put("key", "A431"));
+			a_val.put((new JSONObject()).put("value", "委外製令").put("key", "A512"));
 			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "A511", "A511", FFS.SHO, "col-md-2", true, a_val, "ph_type", "TL_製令類型"));
 			// 規格-ProductionRecords
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "pr_order_id", "PR_訂單編號"));
@@ -320,10 +316,7 @@ public class ProductionHeaderService {
 				ProductionBody pro_b = new ProductionBody();
 				ProductionRecords pro_r = new ProductionRecords();
 				JSONObject data = (JSONObject) one;
-				// header
-				int id_h = productionHeaderDao.getProductionHeaderSeq();
-				int id_b = productionBodyDao.getProductionBodySeq();
-				int id_b_g =productionBodyDao.getProductionBodyGSeq();
+
 				// 查詢重複
 				ProductionRecords search = new ProductionRecords();
 				search.setPrid(data.getString("ph_pr_id"));
@@ -334,6 +327,10 @@ public class ProductionHeaderService {
 				}
 				// 無重複->新建
 				if (headers.size() < 1) {
+					// header
+					int id_h = productionHeaderDao.getProductionHeaderSeq();
+					int id_b = productionBodyDao.getProductionBodySeq();
+					int id_b_g = productionBodyDao.getProductionBodyGSeq();
 					// 規格
 					pro_r.setPrid(data.getString("ph_pr_id"));
 					pro_r.setPrbomid(data.getString("pr_bom_id"));
@@ -407,8 +404,9 @@ public class ProductionHeaderService {
 				// 物件轉換
 				ProductionHeader pro_h = new ProductionHeader();
 				ProductionBody pro_b = new ProductionBody();
+				ProductionRecords pro_r = new ProductionRecords();
 				JSONObject data = (JSONObject) one;
-				// header
+
 				// 查詢重複
 				ProductionRecords search = new ProductionRecords();
 				search.setPrid(data.getString("ph_pr_id"));
@@ -416,18 +414,38 @@ public class ProductionHeaderService {
 				if (headers.size() > 0) {
 					pro_h = headers.get(0);
 				}
-				int id_b = productionBodyDao.getProductionBodySeq();
-				int id_h = productionHeaderDao.getProductionHeaderSeq();
 				// 無重複->新建
 				if (headers.size() < 1) {
-					pro_h = new ProductionHeader();
-					ProductionRecords pro_r = new ProductionRecords();
+					// header
+					int id_h = productionHeaderDao.getProductionHeaderSeq();
+					int id_b = productionBodyDao.getProductionBodySeq();
+					int id_b_g = productionBodyDao.getProductionBodyGSeq();
+					// 規格
 					pro_r.setPrid(data.getString("ph_pr_id"));
+					pro_r.setPrbomid(data.getString("pr_bom_id"));
+					pro_r.setPrcfrom("MES");
+					pro_r.setPrcname(data.getString("pr_c_name"));
+					pro_r.setPrssn(data.getString("pr_s_sn"));
+					pro_r.setPresn(data.getString("pr_e_sn"));
+					pro_r.setProrderid(data.getString("pr_order_id"));
+					pro_r.setPrpmodel(data.getString("ph_model"));
+					pro_r.setPrbomid(data.getString("pr_bom_id"));
+					pro_r.setPrpquantity(data.getInt("pr_p_quantity"));
+					pro_r.setPrpokquantity(data.getInt("pr_p_ok_quantity"));
+					pro_r.setPrbitem("");
+					pro_r.setPrsitem("");
+					pro_r.setSysmuser(user.getSuname());
+					pro_r.setSyscuser(user.getSuname());
+					// productionRecordsDao.save(pro_r);
+
+					// header
+					pro_h = new ProductionHeader();
 					pro_h.setPhid(id_h + 1);
 					pro_h.setPhmodel(data.getString("ph_model"));
+					pro_h.setPhtype(data.getString("ph_type"));
 					pro_h.setProductionRecords(pro_r);
 					pro_h.setPhwpid(0);
-					pro_h.setPhschedule("");
+					pro_h.setPhschedule(data.getInt("pr_p_ok_quantity") + "／" + data.getInt("pr_p_quantity"));
 					pro_h.setSysheader(true);
 					pro_h.setSysnote(data.getString("sys_note"));
 					pro_h.setSyssort(data.getInt("sys_sort"));
@@ -435,21 +453,25 @@ public class ProductionHeaderService {
 					pro_h.setSysstatus(data.getInt("sys_status"));
 					pro_h.setSysmuser(user.getSuname());
 					pro_h.setSyscuser(user.getSuname());
+					pro_h.setPhpbgid(id_b_g);
+					productionHeaderDao.save(pro_h);
 
 					// body
 					pro_b = new ProductionBody();
-					pro_b.setPbgid(pro_h.getPhid());
 					pro_b.setPbschedule("");
 					pro_b.setSysver(0);
 					pro_b.setPbid(id_b + 1);
+					pro_b.setPbgid(id_b_g);
 					pro_b.setSysheader(false);
 					pro_b.setPbsn("");
 					pro_b.setPbcheck(false);
+					pro_b.setPbusefulsn(0);
 					pro_b.setSysstatus(data.getInt("sys_status"));
 					pro_b.setSyssort(data.getInt("sys_sort"));
 					pro_b.setSysmuser(user.getSuname());
 					pro_b.setSyscuser(user.getSuname());
 					productionBodyDao.save(pro_b);
+
 				} else {
 					return false;
 				}
@@ -471,7 +493,7 @@ public class ProductionHeaderService {
 				// 物件轉換
 				ProductionHeader pro_h = new ProductionHeader();
 				JSONObject data = (JSONObject) one;
-				// header
+				
 				// 查詢重複
 				ProductionRecords search = new ProductionRecords();
 				search.setPrid(data.getString("ph_pr_id"));
@@ -480,23 +502,41 @@ public class ProductionHeaderService {
 				if (headers.size() != 1) {
 					return check;
 				}
-				pro_h = new ProductionHeader();
+				// 規格
 				ProductionRecords pro_r = new ProductionRecords();
 				pro_r.setPrid(data.getString("ph_pr_id"));
+				pro_r.setPrbomid(data.getString("pr_bom_id"));
+				pro_r.setPrcfrom("MES");
+				pro_r.setPrcname(data.getString("pr_c_name"));
+				pro_r.setPrssn(data.getString("pr_s_sn"));
+				pro_r.setPresn(data.getString("pr_e_sn"));
+				pro_r.setProrderid(data.getString("pr_order_id"));
+				pro_r.setPrpmodel(data.getString("ph_model"));
+				pro_r.setPrbomid(data.getString("pr_bom_id"));
+				pro_r.setPrpquantity(data.getInt("pr_p_quantity"));
+				pro_r.setPrpokquantity(data.getInt("pr_p_ok_quantity"));
+				pro_r.setPrbitem("");
+				pro_r.setPrsitem("");
+				pro_r.setSysmuser(user.getSuname());
+				pro_r.setSyscuser(user.getSuname());
+				// header
 				pro_h = new ProductionHeader();
 				pro_h.setPhid(data.getInt("ph_id"));
 				pro_h.setPhmodel(data.getString("ph_model"));
+				pro_h.setPhtype(data.getString("ph_type"));
 				pro_h.setProductionRecords(pro_r);
-				pro_h.setPhwpid(data.getInt("ph_wp_id"));
-				pro_h.setPhschedule(data.getString("ph_schedule"));
+				pro_h.setPhwpid(0);
+				pro_h.setPhschedule(data.getInt("pr_p_ok_quantity") + "／" + data.getInt("pr_p_quantity"));
 				pro_h.setSysheader(true);
 				pro_h.setSysnote(data.getString("sys_note"));
 				pro_h.setSyssort(data.getInt("sys_sort"));
-				pro_h.setSysver(data.getInt("sys_ver"));
+				pro_h.setSysver(0);
 				pro_h.setSysstatus(data.getInt("sys_status"));
 				pro_h.setSysmuser(user.getSuname());
-				pro_h.setSysmdate(new Date());
+				pro_h.setSyscuser(user.getSuname());
+				pro_h.setPhpbgid(data.getInt("ph_pb_g_id"));
 				productionHeaderDao.save(pro_h);
+				
 				check = true;
 			}
 		} catch (Exception e) {

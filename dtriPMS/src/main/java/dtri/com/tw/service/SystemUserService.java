@@ -267,7 +267,7 @@ public class SystemUserService {
 
 	// 移除 資料清單
 	@Transactional
-	public boolean deleteData(JSONObject body) {
+	public boolean deleteData(JSONObject body, SystemUser user) {
 
 		boolean check = false;
 		try {
@@ -277,9 +277,13 @@ public class SystemUserService {
 				SystemUser sys_p = new SystemUser();
 				JSONObject data = (JSONObject) one;
 				sys_p.setSuid(data.getInt("su_id"));
-
-				if (userDao.deleteBySuid(sys_p.getSuid()) > 0) {
-					check = true;
+				// 不得刪除自己
+				if (!data.getString("su_account").equals(user.getSuaccount())) {
+					if (userDao.deleteBySuid(sys_p.getSuid()) > 0) {
+						check = true;
+					}
+				} else {
+					return false;
 				}
 			}
 		} catch (Exception e) {

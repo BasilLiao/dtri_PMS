@@ -51,6 +51,7 @@ public class ProductionRecordsService {
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pr_order_id", FFS.h_t("PR_訂單編號", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pr_c_name", FFS.h_t("PR_客戶名稱", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pr_p_quantity", FFS.h_t("PR_生產數量", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pr_p_ok_quantity", FFS.h_t("PR_完成數量", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pr_p_model", FFS.h_t("PR_產品型號", "150px", FFS.SHO));
 
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pr_bom_id", FFS.h_t("PR_BOM料號", "150px", FFS.SHO));
@@ -73,45 +74,50 @@ public class ProductionRecordsService {
 
 			// 放入修改 [(key)](modify/Create/Delete) 格式
 			JSONArray obj_m = new JSONArray();
-			JSONArray values = new JSONArray();
+			JSONArray n_val = new JSONArray();
+			JSONArray a_val = new JSONArray();
 
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "pr_id", "PR_工單序號ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", false, new JSONArray(), "pr_order_id", "PR_訂單編號"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "pr_c_name", "PR_客戶名稱"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "pr_p_quantity", "PR_生產數量"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "pr_p_model", "PR_產品型號"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "pr_id", "PR_工單序號ID"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "pr_order_id", "PR_訂單編號"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", true, n_val, "pr_c_name", "PR_客戶名稱"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "0", "0", FFS.DIS, "col-md-1", true, n_val, "pr_p_quantity", "PR_生產數量"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "0", "0", FFS.DIS, "col-md-1", true, n_val, "pr_p_ok_quantity", "PR_完成數量"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", true, n_val, "pr_p_model", "PR_產品型號"));
 
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "pr_bom_id", "PR_BOM料號"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "pr_c_from", "PR_單據來源"));
-			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-6", true, new JSONArray(), "pr_b_item", "PR_規格定義"));
-			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-6", true, new JSONArray(), "pr_s_item", "PR_軟體定義"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "pr_s_sn", "PR_產品SN_開始"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, new JSONArray(), "pr_e_sn", "PR_產品SN_結束"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "pr_bom_id", "PR_BOM料號"));
+			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-6", true, n_val, "pr_b_item", "PR_規格定義"));
+			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-6", true, n_val, "pr_s_item", "PR_軟體定義"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", true, n_val, "pr_s_sn", "PR_產品SN_開始"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", true, n_val, "pr_e_sn", "PR_產品SN_結束"));
 
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "sys_c_date", "PR_建立時間"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "sys_c_user", "PR_建立人"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "sys_m_date", "PR_修改時間"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "sys_m_user", "PR_修改人"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_c_date", "PR_建立時間"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_c_user", "PR_建立人"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_m_date", "PR_修改時間"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_m_user", "PR_修改人"));
 
-			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-12", false, new JSONArray(), "sys_note", "PR_備註"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "0", "0", FFS.SHO, "col-md-2", true, new JSONArray(), "sys_sort", "PR_排序"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false, new JSONArray(), "sys_ver", "PR_版本"));
+			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-12", false, n_val, "sys_note", "PR_備註"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "pr_c_from", "PR_單據來源"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "0", "0", FFS.SHO, "col-md-2", true, n_val, "sys_sort", "PR_排序"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_ver", "PR_版本"));
 
-			values = new JSONArray();
-			values.put((new JSONObject()).put("value", "正常").put("key", "0"));
-			values.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.SHO, "col-md-2", true, values, "sys_status", "狀態"));
+			a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
+			a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
+			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.SHO, "col-md-2", true, a_val, "sys_status", "狀態"));
 			bean.setCell_modify(obj_m);
 
 			// 放入包裝(search)
 			JSONArray object_searchs = new JSONArray();
-			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "pr_c_name", "客戶名稱", new JSONArray()));
-			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "pr_id", "製令工單號", new JSONArray()));
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "pr_c_name", "客戶名稱", n_val));
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "pr_id", "製令工單號", n_val));
 
-			values = new JSONArray();
-			values.put((new JSONObject()).put("value", "正常").put("key", "0"));
-			values.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			object_searchs.put(FFS.h_s(FFS.SEL, FFS.TEXT, "0", "col-md-2", "sys_status", "狀態", values));
+			a_val = new JSONArray();
+			a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
+			a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
+			object_searchs.put(FFS.h_s(FFS.SEL, FFS.TEXT, "0", "col-md-2", "sys_status", "狀態", a_val));
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "pr_s_sn", "SN區間", n_val));
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "pr_bom_id", "BOM號", n_val));
+			
+			
 			bean.setCell_searchs(object_searchs);
 		} else {
 			// 進行-特定查詢
@@ -122,10 +128,10 @@ public class ProductionRecordsService {
 			prorderid = prorderid.equals("") ? null : prorderid;
 
 			prssn = body.getJSONObject("search").getString("pr_s_sn");
-			prssn = prorderid.equals("") ? null : prssn;
+			prssn = prssn.equals("") ? null : prssn;
 
 			prbomid = body.getJSONObject("search").getString("pr_bom_id");
-			prbomid = prorderid.equals("") ? null : prbomid;
+			prbomid = prbomid.equals("") ? null : prbomid;
 
 			sysstatus = body.getJSONObject("search").getString("sys_status");
 			sysstatus = sysstatus.equals("") ? "0" : sysstatus;
@@ -141,6 +147,7 @@ public class ProductionRecordsService {
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pr_order_id", one.getProrderid());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pr_c_name", one.getPrcname());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pr_p_quantity", one.getPrpquantity());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pr_p_ok_quantity", one.getPrpokquantity());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pr_p_model", one.getPrpmodel());
 
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pr_bom_id", one.getPrbomid());
@@ -174,6 +181,17 @@ public class ProductionRecordsService {
 				// 物件轉換
 				ProductionRecords entity = new ProductionRecords();
 				JSONObject data = (JSONObject) one;
+				// 檢查是否有 製令規格
+				ArrayList<ProductionRecords> entitys = recordsDao.findAllByPrid(data.getString("pr_id"), PageRequest.of(0, 10));
+				// 檢查是否有-製令單 one to one
+				ProductionRecords search = new ProductionRecords();
+				search.setPrid(data.getString("pr_id"));
+				List<ProductionHeader> headers = headerDao.findAllByproductionRecords(search);
+				if (entitys.size() < 1 && headers.size() == 1) {
+					recordsDao.save(entity);
+				} else {
+					return false;
+				}
 				entity.setPrid(data.getString("pr_id"));
 				entity.setPrbomid(data.getString("pr_bom_id"));
 				entity.setPrcfrom(data.getString("pr_c_from"));
@@ -188,17 +206,7 @@ public class ProductionRecordsService {
 				entity.setSysmuser(user.getSuname());
 				entity.setSyscuser(user.getSuname());
 
-				// 檢查是否有 製令規格
-				ArrayList<ProductionRecords> entitys = recordsDao.findAllByPrid(data.getString("pr_id"), PageRequest.of(0, 10));
-				// 檢查是否有-製令單 one to one
-				ProductionRecords search = new ProductionRecords();
-				search.setPrid(data.getString("pr_id"));
-				List<ProductionHeader> headers = headerDao.findAllByproductionRecords(search);
-				if (entitys.size() < 1 && headers.size() == 1) {
-					recordsDao.save(entity);
-				} else {
-					return false;
-				}
+				
 			}
 			check = true;
 		} catch (Exception e) {
@@ -269,6 +277,7 @@ public class ProductionRecordsService {
 				entity.setProrderid(data.getString("pr_order_id"));
 				entity.setPrpmodel(data.getString("pr_p_model"));
 				entity.setPrpquantity(data.getInt("pr_p_quantity"));
+				entity.setPrpokquantity(data.getInt("pr_p_ok_quantity"));
 				entity.setPrbitem(data.getString("pr_b_item"));
 				entity.setPrsitem(data.getString("pr_s_item"));
 				entity.setSysmuser(user.getSuname());

@@ -23,8 +23,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  *      pb_sn :SN(出貨序號)<br>
  *      pb_f_value : SN(需維修項目) (JSON 包裝)<br>
  *      pb_f_note : 損壞說明<br>
+ *      pb_w_name : 工作站完成人<br>
  *      pb_value : pb_value1-50 SN(材料序號) <br>
  *      pb_text : PLT_Log 內容資訊 <br>
+ *      pb_position : 置物位置 <br>
+ *      pb_w_years: 保固年份 <br>
+ *      pb_shipping_date: 出貨日<br>
+ *      pb_recycling_date :回收日<br>
  * 
  */
 @IdClass(ProductionBody.PrimaryKey.class)
@@ -106,153 +111,148 @@ public class ProductionBody implements Serializable {
 	@Column(name = "pb_check", nullable = false, columnDefinition = "boolean default false")
 	private Boolean pbcheck;
 
+	@Column(name = "pb_position", columnDefinition = "varchar(50)")
+	private String pbposition;
+
+	@Column(name = "pb_w_name01", columnDefinition = "varchar(30)")
+	private String pbwname01;
+	@Column(name = "pb_w_name02", columnDefinition = "varchar(30)")
+	private String pbwname02;
+	@Column(name = "pb_w_name03", columnDefinition = "varchar(30)")
+	private String pbwname03;
+	@Column(name = "pb_w_name04", columnDefinition = "varchar(30)")
+	private String pbwname04;
+	@Column(name = "pb_w_name05", columnDefinition = "varchar(30)")
+	private String pbwname05;
+	@Column(name = "pb_w_name06", columnDefinition = "varchar(30)")
+	private String pbwname06;
+	@Column(name = "pb_w_name07", columnDefinition = "varchar(30)")
+	private String pbwname07;
+	@Column(name = "pb_w_name08", columnDefinition = "varchar(30)")
+	private String pbwname08;
+	@Column(name = "pb_w_name09", columnDefinition = "varchar(30)")
+	private String pbwname09;
+	@Column(name = "pb_w_name10", columnDefinition = "varchar(30)")
+	private String pbwname10;
+	@Column(name = "pb_w_name11", columnDefinition = "varchar(30)")
+	private String pbwname11;
+	@Column(name = "pb_w_name12", columnDefinition = "varchar(30)")
+	private String pbwname12;
+	@Column(name = "pb_w_name13", columnDefinition = "varchar(30)")
+	private String pbwname13;
+	@Column(name = "pb_w_name14", columnDefinition = "varchar(30)")
+	private String pbwname14;
+	@Column(name = "pb_w_name15", columnDefinition = "varchar(30)")
+	private String pbwname15;
+	@Column(name = "pb_w_name16", columnDefinition = "varchar(30)")
+	private String pbwname16;
+	@Column(name = "pb_w_name17", columnDefinition = "varchar(30)")
+	private String pbwname17;
+	@Column(name = "pb_w_name18", columnDefinition = "varchar(30)")
+	private String pbwname18;
+	@Column(name = "pb_w_name19", columnDefinition = "varchar(30)")
+	private String pbwname19;
+	@Column(name = "pb_w_name20", columnDefinition = "varchar(30)")
+	private String pbwname20;
+
 	@Column(name = "pb_value01", columnDefinition = "varchar(50)")
 	private String pbvalue01;
-
 	@Column(name = "pb_value02", columnDefinition = "varchar(50)")
 	private String pbvalue02;
-
 	@Column(name = "pb_value03", columnDefinition = "varchar(50)")
 	private String pbvalue03;
-
 	@Column(name = "pb_value04", columnDefinition = "varchar(50)")
 	private String pbvalue04;
-
 	@Column(name = "pb_value05", columnDefinition = "varchar(50)")
 	private String pbvalue05;
-
 	@Column(name = "pb_value06", columnDefinition = "varchar(50)")
 	private String pbvalue06;
-
 	@Column(name = "pb_value07", columnDefinition = "varchar(50)")
 	private String pbvalue07;
-
 	@Column(name = "pb_value08", columnDefinition = "varchar(50)")
 	private String pbvalue08;
-
 	@Column(name = "pb_value09", columnDefinition = "varchar(50)")
 	private String pbvalue09;
-
 	@Column(name = "pb_value10", columnDefinition = "varchar(50)")
 	private String pbvalue10;
-
 	@Column(name = "pb_value11", columnDefinition = "varchar(50)")
 	private String pbvalue11;
-
 	@Column(name = "pb_value12", columnDefinition = "varchar(50)")
 	private String pbvalue12;
-
 	@Column(name = "pb_value13", columnDefinition = "varchar(50)")
 	private String pbvalue13;
-
 	@Column(name = "pb_value14", columnDefinition = "varchar(50)")
 	private String pbvalue14;
-
 	@Column(name = "pb_value15", columnDefinition = "varchar(50)")
 	private String pbvalue15;
-
 	@Column(name = "pb_value16", columnDefinition = "varchar(50)")
 	private String pbvalue16;
-
 	@Column(name = "pb_value17", columnDefinition = "varchar(50)")
 	private String pbvalue17;
-
 	@Column(name = "pb_value18", columnDefinition = "varchar(50)")
 	private String pbvalue18;
-
 	@Column(name = "pb_value19", columnDefinition = "varchar(50)")
 	private String pbvalue19;
-
 	@Column(name = "pb_value20", columnDefinition = "varchar(50)")
 	private String pbvalue20;
-
 	@Column(name = "pb_value21", columnDefinition = "varchar(50)")
 	private String pbvalue21;
-
 	@Column(name = "pb_value22", columnDefinition = "varchar(50)")
 	private String pbvalue22;
-
 	@Column(name = "pb_value23", columnDefinition = "varchar(50)")
 	private String pbvalue23;
-
 	@Column(name = "pb_value24", columnDefinition = "varchar(50)")
 	private String pbvalue24;
-
 	@Column(name = "pb_value25", columnDefinition = "varchar(50)")
 	private String pbvalue25;
-
 	@Column(name = "pb_value26", columnDefinition = "varchar(50)")
 	private String pbvalue26;
-
 	@Column(name = "pb_value27", columnDefinition = "varchar(50)")
 	private String pbvalue27;
-
 	@Column(name = "pb_value28", columnDefinition = "varchar(50)")
 	private String pbvalue28;
-
 	@Column(name = "pb_value29", columnDefinition = "varchar(50)")
 	private String pbvalue29;
-
 	@Column(name = "pb_value30", columnDefinition = "varchar(50)")
 	private String pbvalue30;
-
 	@Column(name = "pb_value31", columnDefinition = "varchar(50)")
 	private String pbvalue31;
-
 	@Column(name = "pb_value32", columnDefinition = "varchar(50)")
 	private String pbvalue32;
-
 	@Column(name = "pb_value33", columnDefinition = "varchar(50)")
 	private String pbvalue33;
-
 	@Column(name = "pb_value34", columnDefinition = "varchar(50)")
 	private String pbvalue34;
-
 	@Column(name = "pb_value35", columnDefinition = "varchar(50)")
 	private String pbvalue35;
-
 	@Column(name = "pb_value36", columnDefinition = "varchar(50)")
 	private String pbvalue36;
-
 	@Column(name = "pb_value37", columnDefinition = "varchar(50)")
 	private String pbvalue37;
-
 	@Column(name = "pb_value38", columnDefinition = "varchar(50)")
 	private String pbvalue38;
-
 	@Column(name = "pb_value39", columnDefinition = "varchar(50)")
 	private String pbvalue39;
-
 	@Column(name = "pb_value40", columnDefinition = "varchar(50)")
 	private String pbvalue40;
-
 	@Column(name = "pb_value41", columnDefinition = "varchar(50)")
 	private String pbvalue41;
-
 	@Column(name = "pb_value42", columnDefinition = "varchar(50)")
 	private String pbvalue42;
-
 	@Column(name = "pb_value43", columnDefinition = "varchar(50)")
 	private String pbvalue43;
-
 	@Column(name = "pb_value44", columnDefinition = "varchar(50)")
 	private String pbvalue44;
-
 	@Column(name = "pb_value45", columnDefinition = "varchar(50)")
 	private String pbvalue45;
-
 	@Column(name = "pb_value46", columnDefinition = "varchar(50)")
 	private String pbvalue46;
-
 	@Column(name = "pb_value47", columnDefinition = "varchar(50)")
 	private String pbvalue47;
-
 	@Column(name = "pb_value48", columnDefinition = "varchar(50)")
 	private String pbvalue48;
-
 	@Column(name = "pb_value49", columnDefinition = "varchar(50)")
 	private String pbvalue49;
-
 	@Column(name = "pb_value50", columnDefinition = "varchar(50)")
 	private String pbvalue50;
 
@@ -265,11 +265,30 @@ public class ProductionBody implements Serializable {
 	@Column(name = "pb_l_size")
 	private String pblsize;
 
+	@Column(name = "pb_w_years", nullable = false, columnDefinition = "TIMESTAMP default now()")
+	private Date pbwyears;
+
 	@Column(name = "pb_shipping_date")
-	private String pbshippingdate;
+	private Date pbshippingdate;
 
 	@Column(name = "pb_recycling_date")
-	private String pbrecyclingdate;
+	private Date pbrecyclingdate;
+
+	public String getPbposition() {
+		return pbposition;
+	}
+
+	public void setPbposition(String pbposition) {
+		this.pbposition = pbposition;
+	}
+
+	public Date getPbwyears() {
+		return pbwyears;
+	}
+
+	public void setPbwyears(Date pbwyears) {
+		this.pbwyears = pbwyears;
+	}
 
 	public static class PrimaryKey implements Serializable {
 
@@ -318,19 +337,19 @@ public class ProductionBody implements Serializable {
 		this.pblsize = pblsize;
 	}
 
-	public String getPbshippingdate() {
+	public Date getPbshippingdate() {
 		return pbshippingdate;
 	}
 
-	public void setPbshippingdate(String pbshippingdate) {
+	public void setPbshippingdate(Date pbshippingdate) {
 		this.pbshippingdate = pbshippingdate;
 	}
 
-	public String getPbrecyclingdate() {
+	public Date getPbrecyclingdate() {
 		return pbrecyclingdate;
 	}
 
-	public void setPbrecyclingdate(String pbrecyclingdate) {
+	public void setPbrecyclingdate(Date pbrecyclingdate) {
 		this.pbrecyclingdate = pbrecyclingdate;
 	}
 
@@ -864,6 +883,166 @@ public class ProductionBody implements Serializable {
 
 	public void setPbvalue50(String pbvalue50) {
 		this.pbvalue50 = pbvalue50;
+	}
+
+	public String getPbwname01() {
+		return pbwname01;
+	}
+
+	public void setPbwname01(String pbwname01) {
+		this.pbwname01 = pbwname01;
+	}
+
+	public String getPbwname02() {
+		return pbwname02;
+	}
+
+	public void setPbwname02(String pbwname02) {
+		this.pbwname02 = pbwname02;
+	}
+
+	public String getPbwname03() {
+		return pbwname03;
+	}
+
+	public void setPbwname03(String pbwname03) {
+		this.pbwname03 = pbwname03;
+	}
+
+	public String getPbwname04() {
+		return pbwname04;
+	}
+
+	public void setPbwname04(String pbwname04) {
+		this.pbwname04 = pbwname04;
+	}
+
+	public String getPbwname05() {
+		return pbwname05;
+	}
+
+	public void setPbwname05(String pbwname05) {
+		this.pbwname05 = pbwname05;
+	}
+
+	public String getPbwname06() {
+		return pbwname06;
+	}
+
+	public void setPbwname06(String pbwname06) {
+		this.pbwname06 = pbwname06;
+	}
+
+	public String getPbwname07() {
+		return pbwname07;
+	}
+
+	public void setPbwname07(String pbwname07) {
+		this.pbwname07 = pbwname07;
+	}
+
+	public String getPbwname08() {
+		return pbwname08;
+	}
+
+	public void setPbwname08(String pbwname08) {
+		this.pbwname08 = pbwname08;
+	}
+
+	public String getPbwname09() {
+		return pbwname09;
+	}
+
+	public void setPbwname09(String pbwname09) {
+		this.pbwname09 = pbwname09;
+	}
+
+	public String getPbwname10() {
+		return pbwname10;
+	}
+
+	public void setPbwname10(String pbwname10) {
+		this.pbwname10 = pbwname10;
+	}
+
+	public String getPbwname11() {
+		return pbwname11;
+	}
+
+	public void setPbwname11(String pbwname11) {
+		this.pbwname11 = pbwname11;
+	}
+
+	public String getPbwname12() {
+		return pbwname12;
+	}
+
+	public void setPbwname12(String pbwname12) {
+		this.pbwname12 = pbwname12;
+	}
+
+	public String getPbwname13() {
+		return pbwname13;
+	}
+
+	public void setPbwname13(String pbwname13) {
+		this.pbwname13 = pbwname13;
+	}
+
+	public String getPbwname14() {
+		return pbwname14;
+	}
+
+	public void setPbwname14(String pbwname14) {
+		this.pbwname14 = pbwname14;
+	}
+
+	public String getPbwname15() {
+		return pbwname15;
+	}
+
+	public void setPbwname15(String pbwname15) {
+		this.pbwname15 = pbwname15;
+	}
+
+	public String getPbwname16() {
+		return pbwname16;
+	}
+
+	public void setPbwname16(String pbwname16) {
+		this.pbwname16 = pbwname16;
+	}
+
+	public String getPbwname17() {
+		return pbwname17;
+	}
+
+	public void setPbwname17(String pbwname17) {
+		this.pbwname17 = pbwname17;
+	}
+
+	public String getPbwname18() {
+		return pbwname18;
+	}
+
+	public void setPbwname18(String pbwname18) {
+		this.pbwname18 = pbwname18;
+	}
+
+	public String getPbwname19() {
+		return pbwname19;
+	}
+
+	public void setPbwname19(String pbwname19) {
+		this.pbwname19 = pbwname19;
+	}
+
+	public String getPbwname20() {
+		return pbwname20;
+	}
+
+	public void setPbwname20(String pbwname20) {
+		this.pbwname20 = pbwname20;
 	}
 
 	public String getPbltext() {

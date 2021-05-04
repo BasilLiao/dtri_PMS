@@ -63,16 +63,20 @@ public class ProductionBodyService {
 			int ord = 0;
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_id", FFS.h_t("SN_ID", "100px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_g_id", FFS.h_t("SN_G_ID", "100px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "ph_id", FFS.h_t("TL_ID", "160px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "ph_id", FFS.h_t("TL_ID", "100px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "ph_pr_id", FFS.h_t("TL_工單號", "160px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "ph_model", FFS.h_t("TL_產品型號", "160px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_sn", FFS.h_t("SN_(出貨/產品)", "250px", FFS.SHO));
 
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_shipping_date", FFS.h_t("SN_出貨日", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_recycling_date", FFS.h_t("SN_回收日", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_position", FFS.h_t("SN_保固年", "150px", FFS.SHO));
+
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_f_value", FFS.h_t("SN_維修項目", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_f_note", FFS.h_t("SN_維修說明", "150px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_check", FFS.h_t("SN_流程", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_check", FFS.h_t("SN_完成?", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_useful_sn", FFS.h_t("SN_狀態", "150px", FFS.SHO));
-			
+
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_l_path", FFS.h_t("SN_檢測Log位置", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_l_text", FFS.h_t("SN_檢測Log內容", "150px", FFS.SHO));
 
@@ -87,6 +91,28 @@ public class ProductionBodyService {
 					String name = "pb_value" + String.format("%02d", j + 1);
 					if (value != null && !value.equals("")) {
 						object_header.put(FFS.ord((ord += 1), FFS.H) + name, FFS.h_t("SN_" + value, "180px", FFS.SHO));
+					}
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			}
+			// 過站簽名
+			for (j = 0; j < 20; j++) {
+				String m_name = "getPbwname" + String.format("%02d", j + 1);
+				try {
+					method = body_one.getClass().getMethod(m_name);
+					String value = (String) method.invoke(body_one);
+					String name = "pb_w_name" + String.format("%02d", j + 1);
+					if (value != null && !value.equals("")) {
+						object_header.put(FFS.ord((ord += 1), FFS.H) + name, FFS.h_t("SN_過站簽名[" + value + "]", "270px", FFS.SHO));
 					}
 				} catch (NoSuchMethodException e) {
 					e.printStackTrace();
@@ -134,7 +160,7 @@ public class ProductionBodyService {
 			a_val.put((new JSONObject()).put("value", "可拆解").put("key", "2"));
 			a_val.put((new JSONObject()).put("value", "已失效").put("key", "3"));
 			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "false", "false", FFS.SHO, "col-md-1", true, a_val, "pb_useful_sn", "SN_狀態"));
-			
+
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-12", true, n_val, "pb_f_value", "SN_維修項目"));
 			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.DIS, "col-md-12", true, n_val, "pb_f_note", "SN_維修說明"));
 
@@ -294,11 +320,15 @@ public class ProductionBodyService {
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "ph_model", productionHeader.getPhmodel());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_sn", one.getPbsn());
 
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_shipping_date", one.getPbshippingdate() == null ? "" : one.getPbshippingdate());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_recycling_date", one.getPbrecyclingdate() == null ? "" : one.getPbrecyclingdate());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_position", one.getPbposition() == null ? "" : one.getPbposition());
+
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_f_value", one.getPbfvalue() == null ? "" : one.getPbfvalue());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_f_note", one.getPbfnote() == null ? "" : one.getPbfnote());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_check", one.getPbcheck());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_useful_sn", one.getPbusefulsn());
-			
+
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_l_path", one.getPblpath() == null ? "" : one.getPblpath());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_l_text", one.getPbltext() == null ? "" : one.getPbltext());
 
@@ -330,7 +360,34 @@ public class ProductionBodyService {
 			} catch (InvocationTargetException e) {
 				e.printStackTrace();
 			}
+			try {
+				// 有效設定的欄位
+				for (int k = 0; k < 20; k++) {
+					String in_name = "getPbwname" + String.format("%02d", k + 1);
+					Method in_method = body_one.getClass().getMethod(in_name);
+					String value = (String) in_method.invoke(body_one);
+					// 欄位有定義的顯示
+					if (value != null && !value.equals("")) {
+						// sn關聯表
+						String name_b = "getPbwname" + String.format("%02d", k + 1);
+						Method method_b = one.getClass().getMethod(name_b);
+						String value_b = (String) method_b.invoke(one);
+						String key_b = "pb_w_name" + String.format("%02d", k + 1);
+						object_body.put(FFS.ord((ord += 1), FFS.B) + key_b, (value_b == null ? "" : value_b));
+					}
+				}
 
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_c_date", Fm_Time.to_yMd_Hms(one.getSyscdate()));
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_c_user", one.getSyscuser());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_m_date", Fm_Time.to_yMd_Hms(one.getSysmdate()));
@@ -369,7 +426,7 @@ public class ProductionBodyService {
 				if (p_Bodys.size() > 0) {
 					return check;
 				}
-				//ProductionBody
+				// ProductionBody
 				p_body.setPbusefulsn(data.getInt("pb_useful_sn"));
 				p_body.setPbsn(data.getString("pb_sn"));
 				p_body.setPbgid(p_Headers.get(0).getPhpbgid());

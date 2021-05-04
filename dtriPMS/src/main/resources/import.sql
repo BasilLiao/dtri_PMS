@@ -26,13 +26,14 @@ INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (13, 4, '產品製程', '0001001101', 1203, '製令-規格紀錄', 'production_records.basil');
 --工作站
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (14, 3, '工作站', '0001001101', 1301, '工作-規則管理', 'workstation_config.basil');
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (15, 3, '工作站', '0001001101', 1302, '工作-項目管理', 'workstation_project.basil');
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (16, 3, '工作站', '0001001101', 1303, '工作-流程管理', 'workstation_propgram.basil');
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (17, 3, '工作站', '0001001101', 1304, '作業-SN補單據', 'workstation_snadd.basil');
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (18, 3, '工作站', '0001001101', 1305, '作業-製程工作站', 'workstation_work.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (15, 3, '工作站', '0001001101', 1302, '工作-項目管理', 'workstation_item.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (16, 3, '工作站', '0001001101', 1303, '工作-內容管理', 'workstation.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (17, 3, '工作站', '0001001101', 1304, '工作-流程管理', 'workstation_propgram.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (18, 3, '工作站', '0001001101', 1305, '作業-SN補單據', 'workstation_snadd.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (19, 3, '工作站', '0001001101', 1306, '作業-工作站', 'workstation_work.basil');
 
 
-SELECT setval('public.system_permission_seq', 18, true);
+SELECT setval('public.system_permission_seq', 19, true);
 
 --system_group(sg_permission[特殊3(512),特殊2(256),特殊1(128),訪問(64),下載(32),上傳(16),新增(8),修改(4),刪除(2),查詢(1)])
 ----admin
@@ -57,13 +58,14 @@ INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_so
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (16,1, '系統管理者', '1111111111', 16,1303);
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (17,1, '系統管理者', '1111111111', 17,1304);
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (18,1, '系統管理者', '1111111111', 18,1305);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (19,1, '系統管理者', '1111111111', 19,1306);
 
 ----user
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort,sys_header) VALUES (19,2, '一般使用者_Group', '0000000000', 1,0,true);
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (20,2, '一般使用者', '0001000001', 8,1101);
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (21,2, '一般使用者', '0001000001', 9,1102);
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (22,2, '一般使用者', '0001000001', 10,1103);
-SELECT setval('public.system_group_seq', 22, true);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort,sys_header) VALUES (20,2, '一般使用者_Group', '0000000000', 1,0,true);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (21,2, '一般使用者', '0001000001', 8,1101);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (22,2, '一般使用者', '0001000001', 9,1102);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (23,2, '一般使用者', '0001000001', 10,1103);
+SELECT setval('public.system_group_seq', 23, true);
 
 --system_user
 INSERT INTO system_user(su_id,su_account, su_e_name, su_email, su_name, su_password, su_position,su_sg_g_id) VALUES (1,'admin','Admin_en', 'admin@dtr.com', 'Admin', '$2a$10$2tt8kwMSweSbTY/Jx1T9HuWcmrHzy50fZuOJWm/XORjJEOtpIoUdy', '超級管理者',1 );
@@ -84,7 +86,7 @@ SELECT setval('public.production_header_seq', 3, true);
 
 
 ----production_body
-INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_value01, pb_value02 ,pb_value03 ,pb_value04 ,pb_value05 ,pb_value06 ,pb_value07,pb_value08,pb_value09,pb_sn, sys_header) VALUES ( 0,0, 0,'SN_MB(UUID)' ,'SN_MAC_ID(1)' ,'SN_MAC_ID(2)' ,'SN_WiFi_MAC' ,'SN_(4G)IMEI','SN_Battery(1)','SN_Battery(2)','SN_Battery(3)','SN_SSD','', true);
+INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_value01, pb_value02 ,pb_value03 ,pb_value04 ,pb_value05 ,pb_value06 ,pb_value07,pb_value08,pb_value09,pb_sn, sys_header,pb_w_name01,pb_w_name02,pb_w_name03,pb_w_name04,pb_w_name05,pb_w_name06,pb_w_name07,pb_w_name08) VALUES ( 0,0, 0,'MB(UUID)' ,'MAC_ID(1)' ,'MAC_ID(2)' ,'WiFi_MAC' ,'(4G)IMEI','Battery(1)','Battery(2)','Battery(3)','SSD','', true,'PCB_processing','PCB_burnin','PCB_function_test','Assembly','Burnin','T1','T2','Package');
 INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 1,1, 0, '測試_出貨序號_SN101' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號11');
 INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 2,1, 0, '測試_出貨序號_SN102' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號12');
 INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 3,1, 0, '測試_出貨序號_SN103' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號13');
@@ -106,6 +108,21 @@ INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedu
 INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 18,2, 0, '測試_出貨序號_SN215' , false, '{A站:{A1項目:N,A2項目:Y}}','主版號22');
 
 SELECT setval('public.production_body_seq', 18, true);
+
+--workstation_item
+INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (1, false,'pb_value01' , 'SN_MB(UUID)');
+INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (2, false,'pb_value02' , 'SN_MAC_ID(1)');
+INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (3, false,'pb_value03' , 'SN_MAC_ID(2)');
+SELECT setval('public.workstation_item_seq', 3, true);
+
+--workstation
+INSERT INTO workstation(w_id, sys_g_header, w_codename, w_g_id, w_name, w_s_group, w_i_id)VALUES (1, false, 'BC088', 1, '包裝站', 1, 1);
+INSERT INTO workstation(w_id, sys_g_header, w_codename, w_g_id, w_name, w_s_group, w_i_id)VALUES (2, false, 'BC088', 1, '包裝站', 1, 2);
+INSERT INTO workstation(w_id, sys_g_header, w_codename, w_g_id, w_name, w_s_group, w_i_id)VALUES (3, false, 'BC088', 1, '包裝站', 1, 3);
+INSERT INTO workstation(w_id, sys_g_header, w_codename, w_g_id, w_name, w_s_group, w_i_id)VALUES (4, false, 'BC088', 1, '包水餃站', 2, 1);
+INSERT INTO workstation(w_id, sys_g_header, w_codename, w_g_id, w_name, w_s_group, w_i_id)VALUES (5, false, 'BC088', 1, '包水餃站', 2, 2);
+SELECT setval('public.workstation_seq', 5, true);
+
 
 --群組計數
 DROP sequence IF EXISTS PRODUCTION_BODY_G_SEQ CASCADE;
