@@ -23,6 +23,8 @@ public interface WorkstationItemDao extends JpaRepository<WorkstationItem, Long>
 	ArrayList<WorkstationItem> findAllByWorkstationItem(@Param("wipbcell") String wipbcell, @Param("wipbvalue") String wipbvalue,
 			@Param("sysstatus") Integer sysstatus, Pageable pageable);
 
+	ArrayList<WorkstationItem> findAllBySysheader(Boolean sysheader);
+
 	// delete
 	Long deleteByWiidAndSysheader(Integer id, Boolean sysheader);
 }

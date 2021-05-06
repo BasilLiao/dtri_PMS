@@ -33,8 +33,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  *      w_g_id : 群組<br>
  *      w_i_id : 項目ID<br>
  *      w_codename : 登記工作站條碼用<br>
- *      w_name : 工作站名稱<br>
- *      w_s_group : 可使用此工作站群組<br>
+ *      w_pb_name : 工作站名稱(來自於pb_w_name)<br>
+ *      w_pb_cell : 工作站名稱(來自於pb 欄位名稱)<br>
+ *      w_sg_id : 可使用此工作站群組[ID]<br>
+ *      w_sg_name : 可使用此工作站群組[名稱]<br>
+ * 
  * 
  * 
  **/
@@ -52,7 +55,7 @@ public class Workstation {
 		this.sysnote = "";
 		this.syssort = 0;
 		this.sysstatus = 0;
-		this.sysgheader = false;
+		this.sysheader = false;
 	}
 
 	// 共用型
@@ -80,8 +83,8 @@ public class Workstation {
 	@Column(name = "sys_sort", columnDefinition = "int default 0")
 	private Integer syssort;
 
-	@Column(name = "sys_g_header", nullable = false, columnDefinition = "boolean default false")
-	private Boolean sysgheader;
+	@Column(name = "sys_header", nullable = false, columnDefinition = "boolean default false")
+	private Boolean sysheader;
 
 	// 工作站
 	@Id
@@ -97,14 +100,155 @@ public class Workstation {
 	@JoinColumn(name = "w_i_id")
 	private WorkstationItem workstationItem;
 
+	@Column(name = "w_c_name", nullable = false, columnDefinition = "varchar(50)")
+	private String wcname;
 
-	@Column(name = "w_codename", nullable = false, columnDefinition = "varchar(50)")
-	private String wcodename;
+	@Column(name = "w_pb_name", nullable = false, columnDefinition = "varchar(50)")
+	private String wpbname;
 
-	@Column(name = "w_name", nullable = false, columnDefinition = "varchar(50)")
-	private String wname;
+	@Column(name = "w_pb_cell", nullable = false, columnDefinition = "varchar(50)")
+	private String wpbcell;
 
-	@Column(name = "w_s_group", columnDefinition = "int default 0")
-	private Integer wsgroup;
+	@Column(name = "w_sg_id", columnDefinition = "int default 0")
+	private Integer wsgid;
 
+	@Column(name = "w_sg_name", columnDefinition = "varchar(50) default ''")
+	private String wsgname;
+
+	public Date getSyscdate() {
+		return syscdate;
+	}
+
+	public void setSyscdate(Date syscdate) {
+		this.syscdate = syscdate;
+	}
+
+	public String getSyscuser() {
+		return syscuser;
+	}
+
+	public void setSyscuser(String syscuser) {
+		this.syscuser = syscuser;
+	}
+
+	public Date getSysmdate() {
+		return sysmdate;
+	}
+
+	public void setSysmdate(Date sysmdate) {
+		this.sysmdate = sysmdate;
+	}
+
+	public String getSysmuser() {
+		return sysmuser;
+	}
+
+	public void setSysmuser(String sysmuser) {
+		this.sysmuser = sysmuser;
+	}
+
+	public Integer getSysver() {
+		return sysver;
+	}
+
+	public void setSysver(Integer sysver) {
+		this.sysver = sysver;
+	}
+
+	public String getSysnote() {
+		return sysnote;
+	}
+
+	public void setSysnote(String sysnote) {
+		this.sysnote = sysnote;
+	}
+
+	public Integer getSysstatus() {
+		return sysstatus;
+	}
+
+	public void setSysstatus(Integer sysstatus) {
+		this.sysstatus = sysstatus;
+	}
+
+	public Integer getSyssort() {
+		return syssort;
+	}
+
+	public void setSyssort(Integer syssort) {
+		this.syssort = syssort;
+	}
+
+	public Boolean getSysheader() {
+		return sysheader;
+	}
+
+	public void setSysheader(Boolean sysheader) {
+		this.sysheader = sysheader;
+	}
+
+	public Integer getWid() {
+		return wid;
+	}
+
+	public void setWid(Integer wid) {
+		this.wid = wid;
+	}
+
+	public Integer getWgid() {
+		return wgid;
+	}
+
+	public void setWgid(Integer wgid) {
+		this.wgid = wgid;
+	}
+
+	public WorkstationItem getWorkstationItem() {
+		return workstationItem;
+	}
+
+	public void setWorkstationItem(WorkstationItem workstationItem) {
+		this.workstationItem = workstationItem;
+	}
+
+	public String getWcname() {
+		return wcname;
+	}
+
+	public void setWcname(String wcname) {
+		this.wcname = wcname;
+	}
+
+	public String getWpbname() {
+		return wpbname;
+	}
+
+	public void setWpbname(String wpbname) {
+		this.wpbname = wpbname;
+	}
+
+	public String getWpbcell() {
+		return wpbcell;
+	}
+
+	public void setWpbcell(String wpbcell) {
+		this.wpbcell = wpbcell;
+	}
+
+	public Integer getWsgid() {
+		return wsgid;
+	}
+
+	public void setWsgid(Integer wsgid) {
+		this.wsgid = wsgid;
+	}
+
+	public String getWsgname() {
+		return wsgname;
+	}
+
+	public void setWsgname(String wsgname) {
+		this.wsgname = wsgname;
+	}
+	
 }

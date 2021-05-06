@@ -34,10 +34,10 @@ public interface SystemPermissionDao extends JpaRepository<SystemPermission, Lon
 			+ "order by c.spgid desc")
 	ArrayList<SystemPermission> findAllByPermissionGroupTop1(@Param("spgname") String spgname,Pageable pageable);
 
-	// 取得最新G_ID
-	@Query("SELECT c FROM SystemPermission c order by c.spgid desc")
-	ArrayList<SystemPermission> findAllByTop1(Pageable pageable);
-
+	// 取得G_ID
+	@Query(value = "SELECT NEXTVAL('system_permission_g_seq')", nativeQuery = true)
+	Integer getSystem_config_g_seq();
+	
 	//delete
 	Long deleteBySpidAndSysheader(Integer id, Boolean sysheader);
 }

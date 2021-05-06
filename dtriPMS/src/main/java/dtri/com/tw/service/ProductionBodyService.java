@@ -90,7 +90,7 @@ public class ProductionBodyService {
 					String value = (String) method.invoke(body_one);
 					String name = "pb_value" + String.format("%02d", j + 1);
 					if (value != null && !value.equals("")) {
-						object_header.put(FFS.ord((ord += 1), FFS.H) + name, FFS.h_t("SN_" + value, "180px", FFS.SHO));
+						object_header.put(FFS.ord((ord += 1), FFS.H) + name, FFS.h_t("SN_[" + value + "]", "180px", FFS.SHO));
 					}
 				} catch (NoSuchMethodException e) {
 					e.printStackTrace();
@@ -112,7 +112,7 @@ public class ProductionBodyService {
 					String value = (String) method.invoke(body_one);
 					String name = "pb_w_name" + String.format("%02d", j + 1);
 					if (value != null && !value.equals("")) {
-						object_header.put(FFS.ord((ord += 1), FFS.H) + name, FFS.h_t("SN_過站簽名[" + value + "]", "270px", FFS.SHO));
+						object_header.put(FFS.ord((ord += 1), FFS.H) + name, FFS.h_t("WP_過站簽名[" + value + "]", "270px", FFS.SHO));
 					}
 				} catch (NoSuchMethodException e) {
 					e.printStackTrace();

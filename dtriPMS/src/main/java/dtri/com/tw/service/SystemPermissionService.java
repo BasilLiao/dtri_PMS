@@ -168,8 +168,8 @@ public class SystemPermissionService {
 					sys_g.setSgpermission("1111111111");
 				} else {
 					// 取得最新G_ID
-					sys_p_g = permissionDao.findAllByTop1(PageRequest.of(0, 1));
-					sys_p.setSpgid((sys_p_g.get(0).getSpgid() + 1));
+
+					sys_p.setSpgid((permissionDao.getSystem_config_g_seq()));
 					// 同步添加到ADMIN
 					sys_g.setSggid(1);
 					sys_g.setSystemPermission(sys_p);
@@ -224,8 +224,7 @@ public class SystemPermissionService {
 					sys_p.setSysheader(false);
 				} else {
 					// 取得最新G_ID
-					sys_p_g = permissionDao.findAllByTop1(PageRequest.of(0, 1));
-					sys_p.setSpgid((sys_p_g.get(0).getSpgid() + 1));
+					sys_p.setSpgid((permissionDao.getSystem_config_g_seq()));
 					sys_p.setSysheader(false);
 				}
 				permissionDao.save(sys_p);
@@ -276,8 +275,7 @@ public class SystemPermissionService {
 					sys_p.setSysheader(false);
 				} else {
 					// 取得最新G_ID
-					sys_p_g = permissionDao.findAllByTop1(PageRequest.of(0, 1));
-					sys_p.setSpgid((sys_p_g.get(0).getSpgid() + 1));
+					sys_p.setSpgid((permissionDao.getSystem_config_g_seq()));
 					sys_p.setSysheader(true);
 				}
 				permissionDao.save(sys_p);

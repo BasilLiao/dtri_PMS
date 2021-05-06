@@ -194,6 +194,8 @@ public class SystemGroupService {
 		boolean check = false;
 		try {
 			JSONArray list = body.getJSONArray("create");
+			String sg_name = "";
+			Integer sg_g_id = 0;
 			for (Object one : list) {
 				// 物件轉換
 				SystemGroup sys_p = new SystemGroup();
@@ -207,39 +209,40 @@ public class SystemGroupService {
 						+ (data.getBoolean("sg_permission_32") ? "1" : "0") + (data.getBoolean("sg_permission_16") ? "1" : "0")
 						+ (data.getBoolean("sg_permission_8") ? "1" : "0") + (data.getBoolean("sg_permission_4") ? "1" : "0")
 						+ (data.getBoolean("sg_permission_2") ? "1" : "0") + (data.getBoolean("sg_permission_1") ? "1" : "0"));
-
+				// sys_p.setSysnote(data.getString("sys_note"));
 				sys_p.setSyssort(data.getInt("sys_sort"));
 				sys_p.setSysstatus(data.getInt("sys_status"));
 				sys_p.setSysmuser(user.getSuname());
 				sys_p.setSyscuser(user.getSuname());
+				sys_p.setSysnote("");
 
-				// 檢查群組名稱重複
-				ArrayList<SystemGroup> sys_p_g = groupDao.findAllByGroupTop1(sys_p.getSgname(), PageRequest.of(0, 1));
-				if (sys_p_g != null && sys_p_g.size() > 0) {
-					// 重複 則取同樣G_ID
-					sys_p.setSggid(sys_p_g.get(0).getSggid());
-					groupDao.save(sys_p);
+				// 新建 群組代表名稱-父類別
+				// SystemGroup sys_p_h = new SystemGroup();
+				if (sg_g_id == 0) {
+					sys_p.setSggid(groupDao.getSystem_group_g_seq());
+					sg_g_id = sys_p.getSggid();
+					sg_name = sys_p.getSgname();
 
-				} else {
-					// 新建 群組(代表)+一般資料
-					sys_p_g = groupDao.findAllByTop1(PageRequest.of(0, 1));
 					SystemGroup sys_p_h = new SystemGroup();
-					sys_p_h.setSggid((sys_p_g.get(0).getSggid() + 1));
-					sys_p_h.setSgname(sys_p.getSgname());
+					sys_p_h.setSgname(sg_name);
+					sys_p_h.setSggid(sg_g_id);
 					sys_p_h.setSgpermission("0000000000");
 					sys_p_h.setSysheader(true);
 					sys_p_h.setSystemPermission(new SystemPermission(1));
-
-					sys_p_h.setSysnote("");
 					sys_p_h.setSyssort(0);
 					sys_p_h.setSysstatus(0);
-					sys_p_h.setSysmuser(user.getSuname());
-					sys_p_h.setSyscuser(user.getSuname());
 					groupDao.save(sys_p_h);
-					// 新建 取得最新G_ID
-					sys_p.setSggid((sys_p_g.get(0).getSggid() + 1));
+
+					// 登記子類別
+					sys_p.setSysheader(false);
+					groupDao.save(sys_p);
+				} else {
+					// 登記子類別
+					sys_p.setSgname(sg_name);
+					sys_p.setSggid(sg_g_id);
 					groupDao.save(sys_p);
 				}
+
 			}
 			check = true;
 		} catch (Exception e) {
@@ -257,6 +260,11 @@ public class SystemGroupService {
 			JSONArray list = body.getJSONArray("save_as");
 			String sg_name = "";
 			Integer sg_g_id = 0;
+			// 如果沒資料則不做事
+			if (list.length() == 0) {
+				return true;
+			}
+
 			// 檢查群組名稱重複(沒重複 則定義 group_name)
 			for (Object one : list) {
 				JSONObject data = (JSONObject) one;
@@ -292,10 +300,10 @@ public class SystemGroupService {
 				// 新建 群組代表名稱-父類別
 				if (data.getBoolean("sys_header")) {
 					// 查詢最新 群組ID
-					sg_g_id = groupDao.findAllByTop1(PageRequest.of(0, 1)).get(0).getSggid() + 1;
+					// sg_g_id = groupDao.findAllByTop1(PageRequest.of(0, 1)).get(0).getSggid() + 1;
 					// 登記父類 群組代表名稱
 					SystemGroup sys_p_h = new SystemGroup();
-					sys_p_h.setSggid(sg_g_id);
+					sys_p_h.setSggid(groupDao.getSystem_group_g_seq());
 					sys_p_h.setSgname(sg_name);
 					sys_p_h.setSgpermission("0000000000");
 					sys_p_h.setSysheader(true);
@@ -306,6 +314,7 @@ public class SystemGroupService {
 					sys_p_h.setSysstatus(0);
 					sys_p_h.setSysmuser(user.getSuname());
 					sys_p_h.setSyscuser(user.getSuname());
+					sg_g_id = sys_p_h.getSggid();
 					groupDao.save(sys_p_h);
 				} else {
 					// 登記子類別

@@ -18,7 +18,7 @@ import dtri.com.tw.db.pgsql.dao.SystemConfigDao;
 import dtri.com.tw.tools.Fm_Time;
 
 @Service
-public class SystemConfigService {
+public class ProductinoSnService {
 	@Autowired
 	private SystemConfigDao configDao;
 
@@ -41,11 +41,11 @@ public class SystemConfigService {
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
 			int ord = 0;
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "sc_id", FFS.h_t("ID", "100px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "sc_g_id", FFS.h_t("群組ID", "100px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "sc_g_name", FFS.h_t("群組名稱", "100px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "sc_name", FFS.h_t("名稱", "100px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "sc_value", FFS.h_t("參數", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "ps_id", FFS.h_t("ID", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "ps_g_id", FFS.h_t("群組ID", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "ps_g_name", FFS.h_t("群組名稱", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "ps_name", FFS.h_t("名稱", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "ps_value", FFS.h_t("參數", "100px", FFS.SHO));
 
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_c_date", FFS.h_t("建立時間", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_c_user", FFS.h_t("建立人", "100px", FFS.SHO));
@@ -56,6 +56,7 @@ public class SystemConfigService {
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_sort", FFS.h_t("排序", "100px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_ver", FFS.h_t("版本", "100px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_status", FFS.h_t("狀態", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_header", FFS.h_t("群組代表?", "100px", FFS.DIS));
 			bean.setHeader(object_header);
 
 			// 放入修改 [(key)](modify/Create/Delete) 格式
@@ -63,11 +64,11 @@ public class SystemConfigService {
 			JSONArray n_val = new JSONArray();
 			JSONArray a_val = new JSONArray();
 
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sc_id", "ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sc_g_id", "群組ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "sc_g_name", "群組名稱"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "sc_name", "名稱"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "sc_value", "參數"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "ps_id", "ID"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "ps_g_id", "群組ID"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "ps_g_name", "群組名稱"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "ps_name", "名稱"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "ps_value", "參數"));
 
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_c_date", "建立時間"));
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_c_user", "建立人"));
@@ -82,6 +83,7 @@ public class SystemConfigService {
 			a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
 			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.SHO, "col-md-2", true, a_val, "sys_status", "狀態"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_header", "群組代表"));
 			bean.setCell_modify(obj_m);
 
 			// 放入包裝(search)

@@ -270,7 +270,7 @@
 	                    for (var i = 0; i < Object.keys(list[j]).length; i++) {
 		                    if((Object.keys(list[j])[i]).indexOf("sys_header")>=1){
 		                        var value_name = list[j][Object.keys(list[j])[i]];
-		        				if(value_name || ((j== list.length-1) &&(i==Object.keys(list[j]).length-1))){
+		        				if(value_name/* || ((j== list.length-1) &&(i==Object.keys(list[j]).length-1))*/){
 		        					//父類別
 		        					//console.log(list_item[0].id);
 		        					this.data_item_f_id = list_item[0].id;

@@ -50,7 +50,7 @@ public interface ProductionHeaderDao extends JpaRepository<ProductionHeader, Lon
 			@Param("prcname") String pr_c_name, @Param("prbomid") String pr_bom_id, @Param("prbitem") String pr_b_item,
 			@Param("prsitem") String pr_s_item, Pageable pageable);
 
-	// 取得下一筆ID
+	// 取得當筆ID
 	@Query(value = "SELECT CURRVAL('production_header_seq')", nativeQuery = true)
 	Integer getProductionHeaderSeq();
 

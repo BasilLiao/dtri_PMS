@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class FFS {
 	// 屬性設置
 	public static final String INP = "input", TTA = "textarea", SEL = "select", CHE = "checkbox";
-	public static final String TEXT = "text", NUMB = "number",PASS = "password";
+	public static final String TEXT = "text", NUMB = "number", PASS = "password",DATE="date";
 	public static final String DIS = "disabled", SHO = "show";
 	// 大小
 	public static final String S10 = "100px", S15 = "150px", S20 = "200px", S30 = "300px";

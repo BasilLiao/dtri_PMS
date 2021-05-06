@@ -50,7 +50,7 @@ public class WorkstationProgram {
 		this.sysnote = "";
 		this.syssort = 0;
 		this.sysstatus = 0;
-		this.sysgheader = false;
+		this.sysheader = false;
 	}
 
 	// 共用型
@@ -78,13 +78,13 @@ public class WorkstationProgram {
 	@Column(name = "sys_sort", columnDefinition = "int default 0")
 	private Integer syssort;
 
-	@Column(name = "sys_g_header", nullable = false, columnDefinition = "boolean default false")
-	private Boolean sysgheader;
+	@Column(name = "sys_header", nullable = false, columnDefinition = "boolean default false")
+	private Boolean sysheader;
 	// 工作站
 	@Id
 	@Column(name = "wp_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "workstation_program_seq")
-	@SequenceGenerator(name = "workstation_program_seq", sequenceName = "workstation_program_seq",allocationSize =1) 
+	@SequenceGenerator(name = "workstation_program_seq", sequenceName = "workstation_program_seq", allocationSize = 1)
 	private Integer wpid;
 
 	@Column(name = "wp_g_id", nullable = false)
@@ -105,12 +105,12 @@ public class WorkstationProgram {
 	@Column(name = "wp_o_work", nullable = false)
 	private Integer wpowork;
 
-	public Boolean getSysgheader() {
-		return sysgheader;
+	public Boolean getSysheader() {
+		return sysheader;
 	}
 
-	public void setSysgheader(Boolean sysgheader) {
-		this.sysgheader = sysgheader;
+	public void setSysheader(Boolean sysgheader) {
+		this.sysheader = sysgheader;
 	}
 
 	public Date getSyscdate() {

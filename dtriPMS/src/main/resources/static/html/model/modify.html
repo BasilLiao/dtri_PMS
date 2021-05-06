@@ -469,7 +469,26 @@
 						}
 						
 						break;
+					case "input":
+						var input =$(".detail_example .detail_example_input").clone();
+						input[0].className="p-2 save_key "+title[d].col+" "+title[d].id;
+						input.appendTo(".detail_example_body");
+						$(".detail_example ."+title[d].id+" .detail_name").text(title[d].name);
 						
+						//新增模板
+						input =$(".create_example .create_example_input").clone();
+						input[0].className="p-2 save_key "+title[d].col+" "+title[d].id;
+						input.appendTo(".create_example_body");
+						$(".create_example ."+title[d].id+" .create_name").text(title[d].name);
+						$(".create_example ."+title[d].id+" .save_value").attr("type",title[d].type);
+						$(".create_example ."+title[d].id+" .save_value").attr("placeholder",title[d].placeholder);
+						$(".create_example ."+title[d].id+" .save_value").attr("value",title[d].value);
+						if(title[d].required){
+							$(".create_example ."+title[d].id+" input").attr("required","required");							
+						}
+						if(title[d].show=='disabled'){
+							$(".create_example ."+title[d].id+" input").attr("disabled","disabled");
+						}	
 					case "select":
 						var select =$(".detail_example .detail_example_select").clone();
 						select[0].className="p-2 save_key "+title[d].col+" "+title[d].id;
@@ -606,6 +625,7 @@
 				
 				$(".create_example .example_select_one").remove();
 				$(".create_example .create_example_input").remove();
+				$(".create_example .create_example_date").remove();
 				$(".create_example .create_example_select").remove();
 				$(".create_example .create_example_textarea").remove();
 				$(".create_example .create_example_textarea").remove();

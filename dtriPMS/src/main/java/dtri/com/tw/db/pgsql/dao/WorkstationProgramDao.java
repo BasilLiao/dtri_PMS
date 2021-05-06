@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import dtri.com.tw.db.entity.SystemConfig;
 
-public interface SystemConfigDao extends JpaRepository<SystemConfig, Long> {
+public interface WorkstationProgramDao extends JpaRepository<SystemConfig, Long> {
 
 	// 查詢全部
 	ArrayList<SystemConfig> findAll();
