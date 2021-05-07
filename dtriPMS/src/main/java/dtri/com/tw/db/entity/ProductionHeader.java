@@ -20,7 +20,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  * @author Basil
  * @see 產品製程<br>
  *      ph_id : ID<br>
- *      ph_model : 產品型號<br>
  *      ph_pr_id : 關聯-製令工單<br>
  *      ph_pr_type : 類型-製令工單<br>
  *      ph_pb_id : 關聯-SN清單<br>
@@ -84,9 +83,6 @@ public class ProductionHeader {
 
 	@Column(name = "ph_pb_g_id")
 	private Integer phpbgid;
-
-	@Column(name = "ph_model", nullable = false, columnDefinition = "varchar(50)")
-	private String phmodel;
 
 	// @Column(name = "ph_pr_id", nullable = false, columnDefinition =
 	// "varchar(50)")
@@ -204,15 +200,6 @@ public class ProductionHeader {
 	public void setPhid(Integer phid) {
 		this.phid = phid;
 	}
-
-	public String getPhmodel() {
-		return phmodel;
-	}
-
-	public void setPhmodel(String phmodel) {
-		this.phmodel = phmodel;
-	}
-
 	
 
 	public ProductionRecords getProductionRecords() {

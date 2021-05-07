@@ -34,7 +34,7 @@ public interface ProductionHeaderDao extends JpaRepository<ProductionHeader, Lon
 //	
 	// 查詢一部分_ProductionHeader+ProductionRecords
 	@Query("SELECT h FROM ProductionHeader h join h.productionRecords r  WHERE "//
-			+ "(:phmodel is null or h.phmodel LIKE %:phmodel% ) and "//
+			+ "(:prpmodel is null or r.prpmodel LIKE %:prpmodel% ) and "//
 			+ "(:phprid is null or r.prid LIKE %:phprid% ) and "//
 			+ "(:prorderid is null or r.prorderid LIKE %:prorderid% ) and "//
 			+ "(:prcname is null or r.prcname LIKE %:prcname% ) and "//
@@ -45,7 +45,7 @@ public interface ProductionHeaderDao extends JpaRepository<ProductionHeader, Lon
 			+ "(coalesce(:phpbgid, null) is null or h.phpbgid IN :phpbgid ) and "// coalesce 回傳非NULL值
 			+ "(h.phid != 0) "//
 			+ " order by h.sysmdate desc ")
-	List<ProductionHeader> findAllByProductionHeader(@Param("phmodel") String phmodel, @Param("phprid") String phprid,
+	List<ProductionHeader> findAllByProductionHeader(@Param("prpmodel") String prpmodel, @Param("phprid") String phprid,
 			@Param("sysstatus") Integer sysstatus, @Param("phpbgid") List<Integer> phpbgid, @Param("prorderid") String pr_order_id,
 			@Param("prcname") String pr_c_name, @Param("prbomid") String pr_bom_id, @Param("prbitem") String pr_b_item,
 			@Param("prsitem") String pr_s_item, Pageable pageable);

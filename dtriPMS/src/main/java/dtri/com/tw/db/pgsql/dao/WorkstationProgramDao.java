@@ -7,32 +7,49 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import dtri.com.tw.db.entity.SystemConfig;
+import dtri.com.tw.db.entity.WorkstationProgram;
 
-public interface WorkstationProgramDao extends JpaRepository<SystemConfig, Long> {
+public interface WorkstationProgramDao extends JpaRepository<WorkstationProgram, Long> {
 
 	// 查詢全部
-	ArrayList<SystemConfig> findAll();
+	ArrayList<WorkstationProgram> findAll();
+
+	// 查詢全部 wp_name or wp_c_name
+	ArrayList<WorkstationProgram> findAllByWpcnameOrWpname(String wp_c_name, String wp_name);
+
+	// 查詢全部 wp_c_name + 排除自己
+	ArrayList<WorkstationProgram> findAllByWpcnameAndWpcnameNot(String wp_c_name, String wp_c_name2);
+
+	// 查詢全部 wp_name + 排除自己
+	ArrayList<WorkstationProgram> findAllByWpnameAndWpnameNot(String wp_name, String wp_name2);
+
+	// 查詢全部 By Group
+	ArrayList<WorkstationProgram> findAllByWpgidOrderBySyssortAsc(Integer wp_g_id);
+	
+	// 查詢全部 By Group 代表
+	ArrayList<WorkstationProgram> findAllBySysheader(Boolean sysheader);
+
+	// 查詢全部 By wp_w_g_id 關聯工作站
+	ArrayList<WorkstationProgram> findAllByWpwgid(Integer Wpwgid);
 
 	// 查詢一部分
-	@Query("SELECT c FROM SystemConfig c "
-			+ "WHERE (:scname is null or c.scname LIKE %:scname% ) and (:scgname is null or c.scgname LIKE %:scgname% ) and ( c.sysstatus = :sysstatus )  "
-			+ "order by c.scgid asc,c.sysmdate desc")
-	ArrayList<SystemConfig> findAllByConfig(@Param("scname") String scname, @Param("scgname") String scgname, @Param("sysstatus") Integer sysstatus,
-			Pageable pageable);
+	@Query("SELECT c FROM WorkstationProgram c "
+			+ "WHERE (:wpname is null or c.wpname LIKE %:wpname% ) and (:wpcname is null or c.wpcname LIKE %:wpcname% ) and ( c.sysstatus = :sysstatus )  "
+			+ "order by c.wpgid asc,c.sysheader desc,c.syssort asc")
+	ArrayList<WorkstationProgram> findAllByProgram(@Param("wpname") String wp_name, @Param("wpcname") String wp_c_name,
+			@Param("sysstatus") Integer sysstatus, Pageable pageable);
 
-	// 查詢是否重複 群組
-	@Query("SELECT c FROM SystemConfig c " + "WHERE  (c.scgname = :scgname) " + "order by c.scgid desc")
-	ArrayList<SystemConfig> findAllByConfigGroupTop1(@Param("scgname") String scgname, Pageable pageable);
-
-	// 取得G_ID
-	@Query(value = "SELECT NEXTVAL('system_config_g_seq')", nativeQuery = true)
-	Integer getSystem_config_g_seq();
+	// 取得G_ID WORKSTATION_PROGRAM_G_SEQ
+	@Query(value = "SELECT NEXTVAL('workstation_program_g_seq')", nativeQuery = true)
+	Integer getWorkstation_program_g_seq();
 
 	// 取得ID
-	@Query(value = "SELECT CURRVAL('system_config_seq')", nativeQuery = true)
-	Integer getSystem_config_seq();
+	@Query(value = "SELECT CURRVAL('workstation_program_seq')", nativeQuery = true)
+	Integer getWorkstation_program_seq();
 
 	// delete
-	Long deleteByScidAndSysheader(Integer id, Boolean sysheader);
+	Long deleteByWpidAndSysheader(Integer id, Boolean sysheader);
+
+	// delete group
+	Long deleteByWpgid(Integer id);
 }

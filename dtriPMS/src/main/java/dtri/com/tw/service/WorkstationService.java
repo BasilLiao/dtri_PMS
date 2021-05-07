@@ -3,7 +3,6 @@ package dtri.com.tw.service;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -15,15 +14,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dtri.com.tw.bean.PackageBean;
-import dtri.com.tw.db.entity.Workstation;
-import dtri.com.tw.db.entity.WorkstationItem;
 import dtri.com.tw.db.entity.ProductionBody;
 import dtri.com.tw.db.entity.SystemGroup;
 import dtri.com.tw.db.entity.SystemUser;
+import dtri.com.tw.db.entity.Workstation;
+import dtri.com.tw.db.entity.WorkstationItem;
 import dtri.com.tw.db.pgsql.dao.ProductionBodyDao;
 import dtri.com.tw.db.pgsql.dao.SystemGroupDao;
 import dtri.com.tw.db.pgsql.dao.WorkstationDao;
 import dtri.com.tw.db.pgsql.dao.WorkstationItemDao;
+import dtri.com.tw.db.pgsql.dao.WorkstationProgramDao;
 import dtri.com.tw.tools.Fm_Time;
 
 @Service
@@ -36,6 +36,8 @@ public class WorkstationService {
 	private ProductionBodyDao bodyDao;
 	@Autowired
 	private SystemGroupDao groupDao;
+	@Autowired
+	private WorkstationProgramDao workpDao;
 
 	// 取得當前 資料清單
 	public PackageBean getData(JSONObject body, int page, int p_size) {
@@ -86,7 +88,7 @@ public class WorkstationService {
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "0", "0", FFS.DIS, "col-md-1", false, n_val, "w_id", "W_ID"));
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "0", "0", FFS.DIS, "col-md-1", false, n_val, "w_g_id", "W_群組ID"));
 
-			workstationItems = itemDao.findAllByWorkstationItem(null, null, 0, PageRequest.of(0, 999));
+			workstationItems = itemDao.findAll();
 			JSONArray a_vals1 = new JSONArray();
 			workstationItems.forEach(s -> {
 				a_vals1.put((new JSONObject()).put("value", s.getWipbvalue()).put("key", s.getWiid()));
@@ -530,14 +532,18 @@ public class WorkstationService {
 				// 物件轉換
 				Workstation sys_t = new Workstation();
 				JSONObject data = (JSONObject) one;
+				// 群組?
+				// 如果程序正在使用-不能移除
+				if (data.getBoolean("sys_header")) {
+					if (workpDao.findAllByWpwgid(data.getInt("w_g_id")).size() > 0) {
+						return false;
+					}
+					workstationDao.deleteByWgid(sys_t.getWgid());
+					continue;
+				}
 				sys_t.setWid(data.getInt("w_id"));
 				sys_t.setWgid(data.getInt("w_g_id"));
 				workstationDao.deleteByWidAndSysheader(sys_t.getWid(), false);
-				// 群組?
-				if (data.getBoolean("sys_header")) {
-					workstationDao.deleteByWgid(sys_t.getWgid());
-				}
-
 				check = true;
 			}
 		} catch (Exception e) {

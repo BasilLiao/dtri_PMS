@@ -20,7 +20,7 @@ import dtri.com.tw.db.entity.SystemPermission;
 import dtri.com.tw.db.entity.SystemUser;
 import dtri.com.tw.login.LoginUserDetails;
 import dtri.com.tw.service.PackageService;
-import dtri.com.tw.service.SystemConfigService;
+import dtri.com.tw.service.WorkstationProgramService;
 
 @Controller
 public class WorkstationProgramController {
@@ -30,7 +30,7 @@ public class WorkstationProgramController {
 	@Autowired
 	PackageService packageService;
 	@Autowired
-	SystemConfigService configService;
+	WorkstationProgramService programService;
 
 	/**
 	 * 訪問
@@ -61,7 +61,7 @@ public class WorkstationProgramController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = configService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = programService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color, one.getSppermission());
 		// 回傳-資料
@@ -82,7 +82,7 @@ public class WorkstationProgramController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = configService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = programService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color, "");
 		// 回傳-資料
@@ -112,9 +112,9 @@ public class WorkstationProgramController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = configService.createData(req.getBody(), user);
+		check = programService.createData(req.getBody(), user);
 		if (check) {
-			check = configService.save_asData(req.getBody(), user);
+			check = programService.save_asData(req.getBody(), user);
 		}
 		// Step3.進行判定
 		if (check) {
@@ -151,7 +151,7 @@ public class WorkstationProgramController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = configService.updateData(req.getBody(), user);
+		check = programService.updateData(req.getBody(), user);
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
@@ -180,7 +180,7 @@ public class WorkstationProgramController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = configService.deleteData(req.getBody());
+		check = programService.deleteData(req.getBody());
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳

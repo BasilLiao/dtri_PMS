@@ -27,12 +27,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  *      sys_sort : 自訂排序<br>
  *      ---工作站項目---<br>
  *      wp_id : 主key<br>
- *      wp_g_work : 群組<br>
+ *      wp_g_id : 群組<br>
  *      wp_name : 工作程序名稱<br>
- *      wp_g_work : 工作站(群組)<br>
- *      wp_s_work : 工作站(順序)<br>
- *      wp_codename :2維代號(選擇工作流程)<br>
- *      wp_o_work : 工作站one(關聯)<br>
+ *      wp_w_g_id : 工作站(群組)<br>
+ *      wp_c_name :2維代號(選擇工作流程)<br>
  * 
  * 
  **/
@@ -93,17 +91,11 @@ public class WorkstationProgram {
 	@Column(name = "wp_name", nullable = false, columnDefinition = "varchar(50)")
 	private String wpname;
 
-	@Column(name = "wp_g_work", nullable = false)
-	private Integer wpgwork;
+	@Column(name = "wp_w_g_id", nullable = false)
+	private Integer wpwgid;
 
-	@Column(name = "wp_s_work", nullable = false)
-	private Integer wpswork;
-
-	@Column(name = "wp_codename", nullable = false, columnDefinition = "varchar(50)")
-	private String wpcodename;
-
-	@Column(name = "wp_o_work", nullable = false)
-	private Integer wpowork;
+	@Column(name = "wp_c_name", nullable = false, columnDefinition = "varchar(50)")
+	private String wpcname;
 
 	public Boolean getSysheader() {
 		return sysheader;
@@ -201,36 +193,19 @@ public class WorkstationProgram {
 		this.wpname = wpname;
 	}
 
-	public Integer getWpgwork() {
-		return wpgwork;
+	public Integer getWpwgid() {
+		return wpwgid;
 	}
 
-	public void setWpgwork(Integer wpgwork) {
-		this.wpgwork = wpgwork;
+	public void setWpwgid(Integer wpwgid) {
+		this.wpwgid = wpwgid;
 	}
 
-	public Integer getWpswork() {
-		return wpswork;
+	public String getWpcname() {
+		return wpcname;
 	}
 
-	public void setWpswork(Integer wpswork) {
-		this.wpswork = wpswork;
+	public void setWpcname(String wpcname) {
+		this.wpcname = wpcname;
 	}
-
-	public String getWpcodename() {
-		return wpcodename;
-	}
-
-	public void setWpcodename(String wpcodename) {
-		this.wpcodename = wpcodename;
-	}
-
-	public Integer getWpowork() {
-		return wpowork;
-	}
-
-	public void setWpowork(Integer wpowork) {
-		this.wpowork = wpowork;
-	}
-
 }

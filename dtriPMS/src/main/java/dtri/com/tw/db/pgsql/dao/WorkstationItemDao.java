@@ -18,7 +18,8 @@ public interface WorkstationItemDao extends JpaRepository<WorkstationItem, Long>
 	@Query("SELECT c FROM WorkstationItem c " //
 			+ "WHERE (:wipbcell is null or c.wipbcell LIKE %:wipbcell% ) and "//
 			+ "(:wipbvalue is null or c.wipbvalue LIKE %:wipbvalue% ) and "//
-			+ "( c.sysstatus = :sysstatus )  "//
+			+ "( c.sysstatus = :sysstatus ) and "//
+			+ "( c.wiid != 0 ) "//
 			+ "order by c.wiid asc,c.sysmdate desc")
 	ArrayList<WorkstationItem> findAllByWorkstationItem(@Param("wipbcell") String wipbcell, @Param("wipbvalue") String wipbvalue,
 			@Param("sysstatus") Integer sysstatus, Pageable pageable);

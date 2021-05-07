@@ -317,7 +317,7 @@ public class ProductionBodyService {
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_g_id", one.getPbgid());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "ph_id", productionHeader.getPhid());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "ph_pr_id", productionHeader.getProductionRecords().getPrid());
-			object_body.put(FFS.ord((ord += 1), FFS.B) + "ph_model", productionHeader.getPhmodel());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "ph_model", productionHeader.getProductionRecords().getPrpmodel());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_sn", one.getPbsn());
 
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_shipping_date", one.getPbshippingdate() == null ? "" : one.getPbshippingdate());

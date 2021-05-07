@@ -92,9 +92,9 @@ INSERT INTO production_records(pr_id, pr_bom_id, pr_c_from,pr_c_name,pr_s_sn, pr
 INSERT INTO production_records(pr_id, pr_bom_id, pr_c_from,pr_c_name,pr_s_sn, pr_e_sn, pr_order_id, pr_p_model,pr_p_quantity,pr_p_ok_quantity,pr_b_item, pr_s_item) VALUES ('A513-123456799',  '93-363-G100001', '生產注意事項','MAYA(Isreal)', 'A251','A350','訂單編號(OP-2021042002)', 'DT363GL',100,20, '{"CPU":i800,"RAM":"4G"}','{"M/B 版本":"R5.8.P","ECN":"D6B"}');
 
 --production_header
-INSERT INTO production_header(ph_id,ph_pb_g_id,ph_type, ph_model, ph_pr_id, ph_schedule, ph_wp_id, sys_header, sys_ver) VALUES (1,1,'A511', '測試_產品型號1', 'A511-123456779', '', 1, true, 0);
-INSERT INTO production_header(ph_id,ph_pb_g_id,ph_type, ph_model, ph_pr_id, ph_schedule, ph_wp_id, sys_header, sys_ver) VALUES (2,2,'A511', '測試_產品型號2', 'A512-123456789', '', 2, true, 0);
-INSERT INTO production_header(ph_id,ph_pb_g_id,ph_type, ph_model, ph_pr_id, ph_schedule, ph_wp_id, sys_header, sys_ver) VALUES (3,2,'A521', '測試_產品型號3', 'A513-123456799', '', 3, true, 0);
+INSERT INTO production_header(ph_id,ph_pb_g_id,ph_type, ph_pr_id, ph_schedule, ph_wp_id, sys_header, sys_ver) VALUES (1,1,'A511', 'A511-123456779', '', 1, true, 0);
+INSERT INTO production_header(ph_id,ph_pb_g_id,ph_type, ph_pr_id, ph_schedule, ph_wp_id, sys_header, sys_ver) VALUES (2,2,'A511', 'A512-123456789', '', 2, true, 0);
+INSERT INTO production_header(ph_id,ph_pb_g_id,ph_type, ph_pr_id, ph_schedule, ph_wp_id, sys_header, sys_ver) VALUES (3,2,'A521', 'A513-123456799', '', 1, true, 0);
 SELECT setval('public.production_header_seq', 3, true);
 DROP sequence IF EXISTS PRODUCTION_HEADER_G_SEQ CASCADE;
 create sequence PRODUCTION_HEADER_G_SEQ start with 4 increment by 1;
@@ -133,6 +133,8 @@ INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (3
 SELECT setval('public.workstation_item_seq', 3, true);
 
 --workstation
+INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (0, true, 'Group', 0, 'Group','','', 0, 0);
+
 INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (1, true, 'BC088', 1, 'PCB_processing','pb_w_name01','系統管理者_Group', 1, 0);
 INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (2, false, 'BC088', 1, 'PCB_processing','pb_w_name01','系統管理者_Group', 1, 1);
 INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (3, false, 'BC088', 1, 'PCB_processing','pb_w_name01','系統管理者_Group', 1, 2);
@@ -144,6 +146,19 @@ INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell,
 SELECT setval('public.workstation_seq', 7, true);
 DROP sequence IF EXISTS WORKSTATION_G_SEQ CASCADE;
 create sequence WORKSTATION_G_SEQ start with 3 increment by 1;
+
+--workstation_program
+INSERT INTO workstation_program(wp_id,wp_g_id,wp_w_g_id, wp_c_name, wp_name, sys_sort,sys_header) VALUES (1,1,0,'WP999', '測試流程名稱1', 0,true);
+INSERT INTO workstation_program(wp_id,wp_g_id,wp_w_g_id, wp_c_name, wp_name, sys_sort,sys_header) VALUES (2,1,1,'WP999', '測試流程名稱1', 1,false);
+INSERT INTO workstation_program(wp_id,wp_g_id,wp_w_g_id, wp_c_name, wp_name, sys_sort,sys_header) VALUES (3,1,2,'WP999', '測試流程名稱1', 2,false);
+
+INSERT INTO workstation_program(wp_id,wp_g_id,wp_w_g_id, wp_c_name, wp_name, sys_sort,sys_header) VALUES (4,2,0,'WP888', '測試流程名稱2', 0,true);
+INSERT INTO workstation_program(wp_id,wp_g_id,wp_w_g_id, wp_c_name , wp_name, sys_sort,sys_header) VALUES (5,2,1,'WP888', '測試流程名稱2', 1,false);
+SELECT setval('public.workstation_program_seq', 5, true);
+DROP sequence IF EXISTS WORKSTATION_PROGRAM_G_SEQ CASCADE;
+create sequence WORKSTATION_PROGRAM_G_SEQ start with 3 increment by 1;
+
+
 
 --production_sn
 INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value)VALUES (1, 1, '機種別', '', '');
