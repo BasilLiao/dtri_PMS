@@ -35,6 +35,7 @@ public class PackageService {
 			data.setCall_bk_fn(req.isNull("call_bk_fn") ? null : req.getString("call_bk_fn"));
 			data.setCall_bk_vals(req.isNull("call_bk_vals") ? new JSONObject() : req.getJSONObject("call_bk_vals"));
 			data.setHtml_body(req.isNull("html_body") ? null : req.getString("html_body"));
+			
 			data.setInfo("");
 		} else {
 			data = null;
@@ -66,7 +67,7 @@ public class PackageService {
 		data.put("html_permission", object.getHtml_permission());
 		data.put("cell_searchs", object.getCell_searchs());
 		data.put("cell_modify", object.getCell_modify());
-
+		data.put("cell_g_modify", object.getCell_g_modify());
 		System.out.println(data.toString());
 		return new JSONObject().put("resp_content", data).toString();
 	}

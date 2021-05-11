@@ -28,7 +28,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  *      pr_s_item : 軟體定義{"名稱1":"內容1","名稱2":"內容2"}<br>
  *      pr_s_sn : 產品序號 開始 EX:xxxxxx 01YW12042J044-<br>
  *      pr_e_sn : 產品序號 結束 EX: xxxxxx 01YW12042J050<br>
- * 
+ *      pr_w_years : 保固
  * 
  */
 @Entity
@@ -77,9 +77,11 @@ public class ProductionRecords {
 
 	// 功能項目
 	@Id
-	//因為是文字 故無用 自動累加
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "production_records_seq")
-	//@SequenceGenerator(name = "production_records_seq", sequenceName = "production_records_seq", allocationSize = 1)
+	// 因為是文字 故無用 自動累加
+	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+	// "production_records_seq")
+	// @SequenceGenerator(name = "production_records_seq", sequenceName =
+	// "production_records_seq", allocationSize = 1)
 	@Column(name = "pr_id")
 	private String prid;
 
@@ -119,9 +121,12 @@ public class ProductionRecords {
 
 	@Column(name = "pr_e_sn", nullable = false, columnDefinition = "varchar(50) default ''")
 	private String presn;
-	
-   @OneToOne(mappedBy = "productionRecords")
-    private ProductionHeader header;
+
+	@Column(name = "pr_w_years", columnDefinition = "int default 0")
+	private Integer prwyears;
+
+	@OneToOne(mappedBy = "productionRecords")
+	private ProductionHeader header;
 
 	public Integer getPrpokquantity() {
 		return prpokquantity;
@@ -289,5 +294,13 @@ public class ProductionRecords {
 
 	public void setPresn(String presn) {
 		this.presn = presn;
+	}
+
+	public Integer getPrwyears() {
+		return prwyears;
+	}
+
+	public void setPrwyears(Integer prwyears) {
+		this.prwyears = prwyears;
 	}
 }

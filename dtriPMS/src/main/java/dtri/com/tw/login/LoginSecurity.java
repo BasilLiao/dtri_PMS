@@ -41,6 +41,7 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 		String workstation_work = "/ajax/workstation_work.basil";
 		String workstation_conf = "/ajax/workstation_config.basil";
 		String workstation_prog= "/ajax/workstation_program.basil";
+		String maintain_code= "/ajax/maintain_code.basil";
 
 		http.authorizeRequests()
 				// thirdparty && img 資料夾靜態資料可 直接 存取 (預設皆有 訪問權限 資料可[匿名]存取)
@@ -138,6 +139,13 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, workstation_conf + ".AC").hasAuthority(actionRole(workstation_conf, "AC"))// (新增)
 				.antMatchers(HttpMethod.PUT, workstation_conf + ".AU").hasAuthority(actionRole(workstation_conf, "AU"))// (修改)
 				.antMatchers(HttpMethod.DELETE, workstation_conf + ".AD").hasAuthority(actionRole(workstation_conf, "AD"))// (移除)
+				
+				// ----請求-maintain_code-(訪問) ----
+				.antMatchers(HttpMethod.POST, maintain_code).hasAuthority(actionRole(maintain_code, ""))//
+				.antMatchers(HttpMethod.POST, maintain_code + ".AR").hasAuthority(actionRole(maintain_code, "AR"))// (查詢)
+				.antMatchers(HttpMethod.POST, maintain_code + ".AC").hasAuthority(actionRole(maintain_code, "AC"))// (新增)
+				.antMatchers(HttpMethod.PUT, maintain_code + ".AU").hasAuthority(actionRole(maintain_code, "AU"))// (修改)
+				.antMatchers(HttpMethod.DELETE, maintain_code + ".AD").hasAuthority(actionRole(maintain_code, "AD"))// (移除)
 
 				// 請求需要檢驗-全部請求
 				.anyRequest().authenticated();

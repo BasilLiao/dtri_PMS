@@ -12,29 +12,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dtri.com.tw.bean.PackageBean;
-import dtri.com.tw.db.entity.SystemConfig;
+import dtri.com.tw.db.entity.ProductionSN;
 import dtri.com.tw.db.entity.SystemUser;
-import dtri.com.tw.db.pgsql.dao.SystemConfigDao;
+import dtri.com.tw.db.pgsql.dao.ProductionSNDao;
 import dtri.com.tw.tools.Fm_Time;
 
 @Service
-public class ProductinoSnService {
+public class ProductionSnService {
 	@Autowired
-	private SystemConfigDao configDao;
+	private ProductionSNDao snDao;
 
 	// 取得當前 資料清單
 	public PackageBean getData(JSONObject body, int page, int p_size) {
 		PackageBean bean = new PackageBean();
-		ArrayList<SystemConfig> systemConfigs = new ArrayList<SystemConfig>();
+		ArrayList<ProductionSN> productinoSns = new ArrayList<ProductionSN>();
 
 		// 查詢的頁數，page=從0起算/size=查詢的每頁筆數
 		if (p_size < 1) {
 			page = 0;
 			p_size = 100;
 		}
-		PageRequest page_r = PageRequest.of(page, p_size, Sort.by("scgid").descending());
-		String sc_name = null;
-		String sc_g_name = null;
+		PageRequest page_r = PageRequest.of(page, p_size, Sort.by("psid").descending());
+		String ps_name = null;
+		String ps_g_name = null;
 		String status = "0";
 		// 初次載入需要標頭 / 之後就不用
 		if (body == null || body.isNull("search")) {
@@ -44,8 +44,8 @@ public class ProductinoSnService {
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "ps_id", FFS.h_t("ID", "100px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "ps_g_id", FFS.h_t("群組ID", "100px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "ps_g_name", FFS.h_t("群組名稱", "100px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "ps_name", FFS.h_t("名稱", "100px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "ps_value", FFS.h_t("參數", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "ps_name", FFS.h_t("規則名稱", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "ps_value", FFS.h_t("規則參數", "100px", FFS.SHO));
 
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_c_date", FFS.h_t("建立時間", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_c_user", FFS.h_t("建立人", "100px", FFS.SHO));
@@ -56,7 +56,7 @@ public class ProductinoSnService {
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_sort", FFS.h_t("排序", "100px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_ver", FFS.h_t("版本", "100px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_status", FFS.h_t("狀態", "100px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_header", FFS.h_t("群組代表?", "100px", FFS.DIS));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_header", FFS.h_t("群組代表?", "100px", FFS.SHO));
 			bean.setHeader(object_header);
 
 			// 放入修改 [(key)](modify/Create/Delete) 格式
@@ -64,32 +64,38 @@ public class ProductinoSnService {
 			JSONArray n_val = new JSONArray();
 			JSONArray a_val = new JSONArray();
 
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "ps_id", "ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "ps_g_id", "群組ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "ps_g_name", "群組名稱"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "ps_name", "名稱"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "ps_value", "參數"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-1", false, n_val, "ps_id", "ID"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-1", false, n_val, "ps_g_id", "群組ID"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", true, n_val, "ps_g_name", "規則群組名稱"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "ps_name", "規則名稱"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "ps_value", "規則參數"));
 
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_c_date", "建立時間"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_c_user", "建立人"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_m_date", "修改時間"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_m_user", "修改人"));
+//			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_c_date", "建立時間"));
+//			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_c_user", "建立人"));
+//			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_m_date", "修改時間"));
+//			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_m_user", "修改人"));
 
-			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-12", false, n_val, "sys_note", "備註"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "0", "0", FFS.SHO, "col-md-2", true, n_val, "sys_sort", "排序"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_ver", "版本"));
+//			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-12", false, n_val, "sys_note", "備註"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "0", "0", FFS.DIS, "col-md-2", true, n_val, "sys_sort", "排序"));
+//			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_ver", "版本"));
 
 			a_val = new JSONArray();
 			a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.SHO, "col-md-2", true, a_val, "sys_status", "狀態"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false, n_val, "sys_header", "群組代表"));
+			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.DIS, "col-md-1", true, a_val, "sys_status", "狀態"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-1", false, n_val, "sys_header", "群組代表"));
 			bean.setCell_modify(obj_m);
 
+			// 放入群主指定 [(key)](modify/Create/Delete) 格式
+			JSONArray obj_g_m = new JSONArray();
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-2", "ps_name"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-2", "ps_value"));
+			bean.setCell_g_modify(obj_g_m);
+			
 			// 放入包裝(search)
 			JSONArray object_searchs = new JSONArray();
-			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "sc_g_name", "群組名稱", n_val));
-			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "sc_name", "名稱", n_val));
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "ps_g_name", "規則群組名稱", n_val));
+			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "ps_name", "規則名稱", n_val));
 
 			a_val = new JSONArray();
 			a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
@@ -99,25 +105,25 @@ public class ProductinoSnService {
 		} else {
 
 			// 進行-特定查詢
-			sc_name = body.getJSONObject("search").getString("sc_name");
-			sc_name = sc_name.equals("") ? null : sc_name;
-			sc_g_name = body.getJSONObject("search").getString("sc_g_name");
-			sc_g_name = sc_g_name.equals("") ? null : sc_g_name;
+			ps_name = body.getJSONObject("search").getString("ps_name");
+			ps_name = ps_name.equals("") ? null : ps_name;
+			ps_g_name = body.getJSONObject("search").getString("ps_g_name");
+			ps_g_name = ps_g_name.equals("") ? null : ps_g_name;
 			status = body.getJSONObject("search").getString("sys_status");
 			status = status.equals("") ? "0" : status;
 		}
-		systemConfigs = configDao.findAllByConfig(sc_name, sc_g_name, Integer.parseInt(status), page_r);
+		productinoSns = snDao.findAllByProductionSN(ps_name, ps_g_name, Integer.parseInt(status), page_r);
 
 		// 放入包裝(body) [01 是排序][_b__ 是分割直][資料庫欄位名稱]
 		JSONArray object_bodys = new JSONArray();
-		systemConfigs.forEach(one -> {
+		productinoSns.forEach(one -> {
 			JSONObject object_body = new JSONObject();
 			int ord = 0;
-			object_body.put(FFS.ord((ord += 1), FFS.B) + "sc_id", one.getScid());
-			object_body.put(FFS.ord((ord += 1), FFS.B) + "sc_g_id", one.getScgid());
-			object_body.put(FFS.ord((ord += 1), FFS.B) + "sc_g_name", one.getScgname());
-			object_body.put(FFS.ord((ord += 1), FFS.B) + "sc_name", one.getScname());
-			object_body.put(FFS.ord((ord += 1), FFS.B) + "sc_value", one.getScvalue());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "ps_id", one.getPsid());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "ps_g_id", one.getPsgid());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "ps_g_name", one.getPsgname());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "ps_name", one.getPsname());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "ps_value", one.getPsvalue());
 
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_c_date", Fm_Time.to_yMd_Hms(one.getSyscdate()));
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_c_user", one.getSyscuser());
@@ -127,9 +133,11 @@ public class ProductinoSnService {
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_sort", one.getSyssort());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_ver", one.getSysver());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_status", one.getSysstatus());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_header", one.getSysheader());
 			object_bodys.put(object_body);
 		});
 		bean.setBody(new JSONObject().put("search", object_bodys));
+		bean.setBody_type("fatherSon");
 		return bean;
 	}
 
@@ -141,27 +149,25 @@ public class ProductinoSnService {
 			JSONArray list = body.getJSONArray("create");
 			for (Object one : list) {
 				// 物件轉換
-				SystemConfig sys_c = new SystemConfig();
+				ProductionSN sys_c = new ProductionSN();
 				JSONObject data = (JSONObject) one;
-				sys_c.setScname(data.getString("sc_name"));
-				sys_c.setScgname(data.getString("sc_g_name"));
-				sys_c.setScvalue(data.getString("sc_value"));
-				sys_c.setSysnote(data.getString("sys_note"));
-				sys_c.setSyssort(data.getInt("sys_sort"));
-				sys_c.setSysstatus(data.getInt("sys_status"));
+				// 檢查是否在特定屬性下
+				ArrayList<ProductionSN> sn = snDao.findAllBySysheaderAndPsgid(true, data.getInt("ps_g_id"));
+				if (sn.size() == 0) {
+					return false;
+				}
+				sys_c.setPsgid(data.getInt("ps_g_id"));
+				sys_c.setPsgname(data.getString("ps_g_name"));
+				sys_c.setPsname(data.getString("ps_name"));
+				sys_c.setPsvalue(data.getString("ps_value"));
+				sys_c.setSysnote("");
+				sys_c.setSyssort(0);
+				sys_c.setSysstatus(0);
+				sys_c.setSysheader(false);
 				sys_c.setSysmuser(user.getSuname());
 				sys_c.setSyscuser(user.getSuname());
 
-				// 檢查群組名稱重複
-				ArrayList<SystemConfig> sys_p_g = configDao.findAllByConfigGroupTop1(sys_c.getScgname(), PageRequest.of(0, 1));
-				if (sys_p_g != null && sys_p_g.size() > 0) {
-					// 重複 則取同樣G_ID
-					sys_c.setScgid(sys_p_g.get(0).getScgid());
-				} else {
-					// 取得最新G_ID
-					sys_c.setScgid(configDao.getSystem_config_g_seq());
-				}
-				configDao.save(sys_c);
+				snDao.save(sys_c);
 			}
 			check = true;
 		} catch (Exception e) {
@@ -178,27 +184,25 @@ public class ProductinoSnService {
 			JSONArray list = body.getJSONArray("save_as");
 			for (Object one : list) {
 				// 物件轉換
-				SystemConfig sys_c = new SystemConfig();
+				ProductionSN sys_c = new ProductionSN();
 				JSONObject data = (JSONObject) one;
-				sys_c.setScname(data.getString("sc_name"));
-				sys_c.setScgname(data.getString("sc_g_name"));
-				sys_c.setScvalue(data.getString("sc_value"));
-				sys_c.setSysnote(data.getString("sys_note"));
-				sys_c.setSyssort(data.getInt("sys_sort"));
-				sys_c.setSysstatus(data.getInt("sys_status"));
+				// 檢查是否在特定屬性下
+				ArrayList<ProductionSN> sn = snDao.findAllBySysheaderAndPsgid(true, data.getInt("ps_g_id"));
+				if (sn.size() == 0) {
+					return false;
+				}
+				sys_c.setPsgid(data.getInt("ps_g_id"));
+				sys_c.setPsgname(data.getString("ps_g_name"));
+				sys_c.setPsname(data.getString("ps_name"));
+				sys_c.setPsvalue(data.getString("ps_value"));
+				sys_c.setSysnote("");
+				sys_c.setSyssort(0);
+				sys_c.setSysstatus(0);
+				sys_c.setSysheader(false);
 				sys_c.setSysmuser(user.getSuname());
 				sys_c.setSyscuser(user.getSuname());
 
-				// 檢查群組名稱重複
-				ArrayList<SystemConfig> sys_c_g = configDao.findAllByConfigGroupTop1(sys_c.getScgname(), PageRequest.of(0, 1));
-				if (sys_c_g != null && sys_c_g.size() > 0) {
-					// 重複 則取同樣G_ID
-					sys_c.setScgid(sys_c_g.get(0).getScgid());
-				} else {
-					// 取得最新G_ID
-					sys_c.setScgid(configDao.getSystem_config_g_seq());
-				}
-				configDao.save(sys_c);
+				snDao.save(sys_c);
 			}
 			check = true;
 		} catch (Exception e) {
@@ -215,29 +219,23 @@ public class ProductinoSnService {
 			JSONArray list = body.getJSONArray("modify");
 			for (Object one : list) {
 				// 物件轉換
-				SystemConfig sys_p = new SystemConfig();
+				ProductionSN sys_p = new ProductionSN();
 				JSONObject data = (JSONObject) one;
-				sys_p.setScid(data.getInt("sc_id"));
-				sys_p.setScname(data.getString("sc_name"));
-				sys_p.setScgid(data.getInt("sc_g_id"));
-				sys_p.setScgname(data.getString("sc_g_name"));
-				sys_p.setScvalue(data.getString("sc_value"));
-				sys_p.setSysnote(data.getString("sys_note"));
-				sys_p.setSyssort(data.getInt("sys_sort"));
-				sys_p.setSysstatus(data.getInt("sys_status"));
-				sys_p.setSysmuser(user.getSuname());
-				sys_p.setSysmdate(new Date());
-
-				// 檢查群組名稱重複
-				ArrayList<SystemConfig> sys_p_g = configDao.findAllByConfigGroupTop1(sys_p.getScgname(), PageRequest.of(0, 1));
-				if (sys_p_g != null && sys_p_g.size() > 0) {
-					// 重複 則取同樣G_ID
-					sys_p.setScgid(sys_p_g.get(0).getScgid());
-				} else {
-					// 取得最新G_ID
-					sys_p.setScgid(configDao.getSystem_config_g_seq());
+				// 父類別除外
+				if (!data.getBoolean("sys_header")) {
+					sys_p.setPsid(data.getInt("ps_id"));
+					sys_p.setPsgid(data.getInt("ps_g_id"));
+					sys_p.setPsname(data.getString("ps_name"));
+					sys_p.setPsgname(data.getString("ps_g_name"));
+					sys_p.setPsvalue(data.getString("sc_value"));
+					sys_p.setSysnote("");
+					sys_p.setSyssort(0);
+					sys_p.setSysstatus(0);
+					sys_p.setSysheader(false);
+					sys_p.setSysmuser(user.getSuname());
+					sys_p.setSysmdate(new Date());
+					snDao.save(sys_p);
 				}
-				configDao.save(sys_p);
 			}
 			// 有更新才正確
 			if (list.length() > 0) {
@@ -259,12 +257,14 @@ public class ProductinoSnService {
 			JSONArray list = body.getJSONArray("delete");
 			for (Object one : list) {
 				// 物件轉換
-				SystemConfig sys_p = new SystemConfig();
+				ProductionSN sys_p = new ProductionSN();
 				JSONObject data = (JSONObject) one;
-				sys_p.setScid(data.getInt("sc_id"));
-
-				configDao.deleteByScidAndSysheader(sys_p.getScid(), false);
-				check = true;
+				// 父類別除外
+				if (!data.getBoolean("sys_header")) {
+					sys_p.setPsid(data.getInt("ps_id"));
+					snDao.deleteByPsidAndSysheader(sys_p.getPsid(), false);
+					check = true;
+				}
 			}
 		} catch (Exception e) {
 			System.out.println(e);

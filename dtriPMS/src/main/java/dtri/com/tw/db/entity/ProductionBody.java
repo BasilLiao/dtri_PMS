@@ -265,8 +265,8 @@ public class ProductionBody implements Serializable {
 	@Column(name = "pb_l_size")
 	private String pblsize;
 
-	@Column(name = "pb_w_years", nullable = false, columnDefinition = "TIMESTAMP default now()")
-	private Date pbwyears;
+	@Column(name = "pb_w_years", nullable = false, columnDefinition = "integer DEFAULT 0")
+	private Integer pbwyears;
 
 	@Column(name = "pb_shipping_date")
 	private Date pbshippingdate;
@@ -282,11 +282,11 @@ public class ProductionBody implements Serializable {
 		this.pbposition = pbposition;
 	}
 
-	public Date getPbwyears() {
+	public Integer getPbwyears() {
 		return pbwyears;
 	}
 
-	public void setPbwyears(Date pbwyears) {
+	public void setPbwyears(Integer pbwyears) {
 		this.pbwyears = pbwyears;
 	}
 

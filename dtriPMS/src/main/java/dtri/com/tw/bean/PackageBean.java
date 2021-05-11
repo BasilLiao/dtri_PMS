@@ -39,6 +39,7 @@ public class PackageBean {
 	private JSONObject info_user;// 使用者資訊
 	private JSONArray cell_searchs;// 查詢欄位
 	private JSONArray cell_modify;// 修改欄位
+	private JSONArray cell_g_modify;// 修改群組欄位
 
 	public PackageBean() {
 		this.info = info_message_danger + info_administrator;
@@ -189,6 +190,14 @@ public class PackageBean {
 
 	public void setHtml_permission(String html_permission) {
 		this.html_permission = html_permission;
+	}
+
+	public JSONArray getCell_g_modify() {
+		return cell_g_modify;
+	}
+
+	public void setCell_g_modify(JSONArray cell_g_modify) {
+		this.cell_g_modify = cell_g_modify;
 	}
 	
 }

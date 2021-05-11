@@ -41,7 +41,7 @@ public interface ProductionHeaderDao extends JpaRepository<ProductionHeader, Lon
 			+ "(:prbomid is null or r.prbomid LIKE %:prbomid% ) and "//
 			+ "(:prbitem is null or r.prbitem LIKE %:prbitem% ) and "//
 			+ "(:prsitem is null or r.prsitem LIKE %:prsitem% ) and "//
-			+ "( h.sysstatus = :sysstatus ) and "//
+			+ "(:sysstatus = 0 or  h.sysstatus = :sysstatus ) and "//
 			+ "(coalesce(:phpbgid, null) is null or h.phpbgid IN :phpbgid ) and "// coalesce 回傳非NULL值
 			+ "(h.phid != 0) "//
 			+ " order by h.sysmdate desc ")

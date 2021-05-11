@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class FFS {
 	// 屬性設置
 	public static final String INP = "input", TTA = "textarea", SEL = "select", CHE = "checkbox";
-	public static final String TEXT = "text", NUMB = "number", PASS = "password",DATE="date";
+	public static final String TEXT = "text", NUMB = "number", PASS = "password", DATE = "date";
 	public static final String DIS = "disabled", SHO = "show";
 	// 大小
 	public static final String S10 = "100px", S15 = "150px", S20 = "200px", S30 = "300px";
@@ -44,14 +44,14 @@ public class FFS {
 			JSONArray values, String id, String name) {
 		JSONObject object_value = new JSONObject();
 		object_value.put("name", name);
-		object_value.put("id", FFS.M+id);// id
+		object_value.put("id", FFS.M + id);// id
 		object_value.put("tag", tag);// 類型
 		object_value.put("type", type);// 驗證格式
 		object_value.put("required", required);// 是否必寫
 		object_value.put("placeholder", placeholder);// 預設文字
 		object_value.put("value", value);// 預設值
 		object_value.put("show", show);// 顯示?
-		object_value.put("col", col);// 顯示?
+		object_value.put("col", col);// 寬度?
 		object_value.put("values", values);// 多選項select (可能有)
 		return object_value;
 	}
@@ -98,6 +98,23 @@ public class FFS {
 		one_title.put("size", size);// 寬度?
 		one_title.put("show", show);// 顯示?
 		return one_title;
+	}
+
+	// Table group 群組格式(標題/寬度/顯示?)
+	/**
+	 * h_g=h_group
+	 * 
+	 * @param id   欄位ID
+	 * @param size 欄位寬度
+	 * 
+	 * @return 格式 : {name:xxx,size:50px}
+	 **/
+	public static JSONObject h_g(String show, String col, String id) {
+		JSONObject one_group = new JSONObject();
+		one_group.put("id", FFS.M + id);// id
+		one_group.put("col", col);// 寬度?
+		one_group.put("show", show);// 顯示?
+		return one_group;
 	}
 
 	// 自動排序

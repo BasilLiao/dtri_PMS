@@ -20,23 +20,23 @@ import dtri.com.tw.db.entity.SystemPermission;
 import dtri.com.tw.db.entity.SystemUser;
 import dtri.com.tw.login.LoginUserDetails;
 import dtri.com.tw.service.PackageService;
-import dtri.com.tw.service.ProductionSnService;
+import dtri.com.tw.service.MaintainCodeService;
 
 @Controller
-public class ProductionSNController {
+public class MaintainCodeController {
 	// 功能
-	final static String SYS_F = "production_sn.basil";
+	final static String SYS_F = "maintain_code.basil";
 
 	@Autowired
 	PackageService packageService;
 	@Autowired
-	ProductionSnService snService;
+	MaintainCodeService codeService;
 
 	/**
 	 * 訪問
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_sn.basil" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/maintain_code.basil" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String access(@RequestBody String json_object) {
 		System.out.println("---controller -access " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
@@ -61,7 +61,7 @@ public class ProductionSNController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = snService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = codeService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color, one.getSppermission());
 		// 回傳-資料
@@ -72,7 +72,7 @@ public class ProductionSNController {
 	 * 查詢
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_sn.basil.AR" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/maintain_code.basil.AR" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String search(@RequestBody String json_object) {
 		System.out.println("---controller -search " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
@@ -82,7 +82,7 @@ public class ProductionSNController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = snService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = codeService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color, "");
 		// 回傳-資料
@@ -93,7 +93,7 @@ public class ProductionSNController {
 	 * 新增
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_sn.basil.AC" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/maintain_code.basil.AC" }, method = { RequestMethod.POST }, produces = "application/json;charset=UTF-8")
 	public String create(@RequestBody String json_object) {
 		System.out.println("---controller -create " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
@@ -112,9 +112,9 @@ public class ProductionSNController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = snService.createData(req.getBody(), user);
+		check = codeService.createData(req.getBody(), user);
 		if (check) {
-			check = snService.save_asData(req.getBody(), user);
+			check = codeService.save_asData(req.getBody(), user);
 		}
 		// Step3.進行判定
 		if (check) {
@@ -132,7 +132,7 @@ public class ProductionSNController {
 	 * 修改
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_sn.basil.AU" }, method = { RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/maintain_code.basil.AU" }, method = { RequestMethod.PUT }, produces = "application/json;charset=UTF-8")
 	public String modify(@RequestBody String json_object) {
 		System.out.println("---controller - -modify " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
@@ -151,7 +151,7 @@ public class ProductionSNController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = snService.updateData(req.getBody(), user);
+		check = codeService.updateData(req.getBody(), user);
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
@@ -168,7 +168,7 @@ public class ProductionSNController {
 	 * 移除
 	 */
 	@ResponseBody
-	@RequestMapping(value = { "/ajax/production_sn.basil.AD" }, method = { RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = { "/ajax/maintain_code.basil.AD" }, method = { RequestMethod.DELETE }, produces = "application/json;charset=UTF-8")
 	public String delete(@RequestBody String json_object) {
 		System.out.println("---controller -delete " + SYS_F + " Check");
 		PackageBean req = new PackageBean();
@@ -180,7 +180,7 @@ public class ProductionSNController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = snService.deleteData(req.getBody());
+		check = codeService.deleteData(req.getBody());
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳

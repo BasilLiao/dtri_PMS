@@ -114,6 +114,23 @@ public class SystemGroupService {
 			obj_m.put(FFS.h_m(FFS.CHE, FFS.CHE, "", "", FFS.SHO, "col-md-1", false, n_val, "sg_permission_2", "刪除"));
 			obj_m.put(FFS.h_m(FFS.CHE, FFS.CHE, "", "", FFS.SHO, "col-md-1", false, n_val, "sg_permission_1", "查詢"));
 
+			// 放入群主指定 [(key)](modify/Create/Delete) 格式
+			JSONArray obj_g_m = new JSONArray();
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sys_sort"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sg_sp_id"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sg_permission_512"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sg_permission_256"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sg_permission_128"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sg_permission_64"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sg_permission_32"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sg_permission_16"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sg_permission_8"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sg_permission_4"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sg_permission_2"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sg_permission_1"));	
+			
+			bean.setCell_g_modify(obj_g_m);
+			
 			// 放入包裝(search)
 			JSONArray object_searchs = new JSONArray();
 			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "sg_name", "群組名稱", n_val));

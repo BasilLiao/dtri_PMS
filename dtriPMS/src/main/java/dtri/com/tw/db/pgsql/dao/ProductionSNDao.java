@@ -14,25 +14,30 @@ public interface ProductionSNDao extends JpaRepository<ProductionSN, Long> {
 	// 查詢全部
 	ArrayList<ProductionSN> findAll();
 
+	// 查詢全部
+	ArrayList<ProductionSN> findAllByPsid(Integer id);
+
 	// 查詢一部分
 	@Query("SELECT c FROM ProductionSN c " //
 			+ "WHERE (:psname is null or c.psname LIKE %:psname% ) and "//
 			+ "(:psgname is null or c.psgname LIKE %:psgname% ) and " //
 			+ "( c.sysstatus = :sysstatus )  " //
-			+ "order by c.psgid asc,c.sysmdate desc")
+			+ "order by c.psgid asc,c.sysheader desc,c.psname asc")
 	ArrayList<ProductionSN> findAllByProductionSN(@Param("psname") String psname, @Param("psgname") String psgname,
 			@Param("sysstatus") Integer sysstatus, Pageable pageable);
 
+	// 查詢不含群組代表
+	ArrayList<ProductionSN> findAllBySysheaderOrderByPsgidAsc(boolean sysheader);
+
 	// 查詢是否重複 群組
-	@Query("SELECT c FROM ProductionSN c " + "WHERE  (c.psgname = :psgname) " + "order by c.psgid desc")
-	ArrayList<ProductionSN> findAllByConfigGroupTop1(@Param("psgname") String psgname, Pageable pageable);
+	ArrayList<ProductionSN> findAllBySysheaderAndPsgid(boolean sysheader, Integer psgid);
 
 	// 取得最新G_ID
 	@Query(value = "SELECT CURRVAL('production_g_sn_seq')", nativeQuery = true)
 	Integer getProduction_g_sn_seq();
 
 	// 取得ID
-	@Query(value = "SELECT CURRVAL('production_sn_seq')", nativeQuery = true)
+	@Query(value = "SELECT NEXTVAL('production_sn_seq')", nativeQuery = true)
 	Integer getProduction_sn_seq();
 
 	// delete

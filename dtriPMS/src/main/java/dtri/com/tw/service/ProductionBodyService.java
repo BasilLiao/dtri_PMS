@@ -276,12 +276,14 @@ public class ProductionBodyService {
 		}
 
 		// 查詢SN欄位+產品型號+製令單號
-		String nativeQuery = "SELECT b.pb_id FROM production_body b join production_header h on b.pb_g_id = h.ph_pb_g_id  WHERE ";
+		String nativeQuery = "SELECT b.pb_id FROM production_body b "
+				+ "join production_header h on b.pb_g_id = h.ph_pb_g_id "
+				+ "join production_records p on h.ph_pr_id = p.pr_id WHERE ";
 		if (!pb_sn_value.equals("")) {
 			nativeQuery += " (:pb_sn_value='' or " + pb_sn_name + " LIKE :pb_sn_value) and ";
 		}
 		nativeQuery += " (:pb_sn='' or b.pb_sn LIKE :pb_sn) and ";
-		nativeQuery += " (:ph_model='' or h.ph_model LIKE :ph_model) and ";
+		nativeQuery += " (:ph_model='' or p.pr_p_model LIKE :ph_model) and ";
 		nativeQuery += " (:ph_pr_id='' or h.ph_pr_id LIKE :ph_pr_id) and ";
 		nativeQuery += " (b.pb_g_id != 0) group by b.pb_id ";
 		nativeQuery += " order by b.pb_id limit " + p_size + " offset " + page + " ";

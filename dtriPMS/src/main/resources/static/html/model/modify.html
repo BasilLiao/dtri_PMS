@@ -322,6 +322,8 @@
 			create_datas :[],
 			modify_datas :[],
 			delete_datas :[],
+			//群組代表格式
+			modify_g_datas :[],
 		},
 		//初始化
 		created() {
@@ -356,6 +358,11 @@
             //console.log(key_id+" "+value_name);
             //關閉範例
             $(".d_title_body").remove();
+			},
+			setDataGroupTitle(title){
+				//標題群組注入資訊(Modify)
+				this.modify_g_datas = title;
+				console.log(this.modify_g_datas);
 			},
 			setDataTitle(title){
 				//標題注入資訊(Detail / Create / Modify)
@@ -726,6 +733,15 @@
                   	//群組類型
                     if($("#save_as_really_tr_"+this.save_as_nb+" .m__sys_header input").val()=="true"){
     					$("#save_as_really_tr_"+this.save_as_nb+" .save_as_example_group").addClass("d-none");
+    					//群組特定設定
+						for(var g =0;g<this.modify_g_datas.length;g++){
+							if(this.modify_g_datas[g].show=="disabled"){
+								//不顯示?
+	    						$("#save_as_really_tr_"+this.save_as_nb+" ."+this.modify_g_datas[g].id+" .save_value").attr("disabled","disabled");
+							}else{
+								$("#save_as_really_tr_"+this.save_as_nb+" ."+this.modify_g_datas[g].id+" .save_value").removeAttr("disabled");
+							}
+						}
                     }else{
                     	$("#save_as_really_tr_"+this.save_as_nb+" .save_as_example_group").removeClass("d-none");
                     }
@@ -754,6 +770,15 @@
                 	//群組類型
                     if($("#modify_really_tr_"+this.modify_nb+" .m__sys_header input").val()=="true"){
     					$("#modify_really_tr_"+this.modify_nb+" .modify_example_group").addClass("d-none");
+    					//群組特定設定
+						for(var g =0;g<this.modify_g_datas.length;g++){
+							if(this.modify_g_datas[g].show=="disabled"){
+								//不顯示?
+	    						$("#modify_really_tr_"+this.modify_nb+" ."+this.modify_g_datas[g].id+" .save_value").attr("disabled","disabled");
+							}else{
+								$("#modify_really_tr_"+this.modify_nb+" ."+this.modify_g_datas[g].id+" .save_value").removeAttr("disabled");
+							}
+						}
                     }else{
                     	$("#modify_really_tr_"+this.modify_nb+" .modify_example_group").removeClass("d-none");
                     }

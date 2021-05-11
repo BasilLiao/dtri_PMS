@@ -37,7 +37,7 @@ INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (20, 4, '工作站', '0001001101', 1305, '作業-SN補單據', 'workstation_snadd.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (21, 4, '工作站', '0001001101', 1306, '作業-工作站', 'workstation_work.basil');
 --維修區
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (22, 5, '產品維修', '0001001101', 1401, '維修-錯誤代碼', 'fix_config.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (22, 5, '產品維修', '0001001101', 1401, '維修-錯誤代碼', 'maintain_code.basil');
 
 SELECT setval('public.system_permission_seq', 22, true);
 DROP sequence IF EXISTS SYSTEM_PERMISSION_G_SEQ CASCADE;
@@ -45,7 +45,7 @@ create sequence SYSTEM_PERMISSION_G_SEQ start with 6 increment by 1;
 
 --system_group(sg_permission[特殊3(512),特殊2(256),特殊1(128),訪問(64),下載(32),上傳(16),新增(8),修改(4),刪除(2),查詢(1)])
 ----admin
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort,sys_header) VALUES (1,1, '系統管理者_Group', '0000000000', 1,0,true);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort,sys_header) VALUES (1,1, '系統管理者', '0000000000', 1,0,true);
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (2,1, '系統管理者', '1111111111', 2,1001);
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (3,1, '系統管理者', '1111111111', 3,1002);
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (4,1, '系統管理者', '0001111111', 4,1003);
@@ -73,7 +73,7 @@ INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_so
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (22,1, '系統管理者', '1111111111', 22,1401);
 
 ----user
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort,sys_header) VALUES (23,2, '一般使用者_Group', '0000000000', 1,0,true);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort,sys_header) VALUES (23,2, '一般使用者', '0000000000', 1,0,true);
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (24,2, '一般使用者', '0001000001', 8,1101);
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (25,2, '一般使用者', '0001000001', 9,1102);
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (26,2, '一般使用者', '0001000001', 10,1103);
@@ -87,9 +87,9 @@ INSERT INTO system_user(su_id,su_account, su_e_name, su_email, su_name, su_passw
 SELECT setval('public.system_user_seq', 2, true);
 
 ----production_records
-INSERT INTO production_records(pr_id, pr_bom_id, pr_c_from,pr_c_name,pr_s_sn, pr_e_sn, pr_order_id, pr_p_model,pr_p_quantity,pr_p_ok_quantity,pr_b_item, pr_s_item) VALUES ('A511-123456779',  '91-363-G100001', '生產注意事項','MAYA(Isreal)', 'A051','A150','訂單編號(OP-2021042001)', 'DT363GL',150,40, '{"CPU":i600,"RAM":"4G"}','{"M/B 版本":"R5.6.P","ECN":"D6B"}');
-INSERT INTO production_records(pr_id, pr_bom_id, pr_c_from,pr_c_name,pr_s_sn, pr_e_sn, pr_order_id, pr_p_model,pr_p_quantity,pr_p_ok_quantity,pr_b_item, pr_s_item) VALUES ('A512-123456789',  '92-363-G100001', '生產注意事項','MAYA(Isreal)', 'A151','A250','訂單編號(OP-2021042002)', 'DT363GL',120,30, '{"CPU":i700,"RAM":"4G"}','{"M/B 版本":"R5.7.P","ECN":"D6B"}');
-INSERT INTO production_records(pr_id, pr_bom_id, pr_c_from,pr_c_name,pr_s_sn, pr_e_sn, pr_order_id, pr_p_model,pr_p_quantity,pr_p_ok_quantity,pr_b_item, pr_s_item) VALUES ('A513-123456799',  '93-363-G100001', '生產注意事項','MAYA(Isreal)', 'A251','A350','訂單編號(OP-2021042002)', 'DT363GL',100,20, '{"CPU":i800,"RAM":"4G"}','{"M/B 版本":"R5.8.P","ECN":"D6B"}');
+INSERT INTO production_records(pr_id, pr_bom_id, pr_c_from,pr_c_name,pr_s_sn, pr_e_sn, pr_order_id, pr_p_model,pr_p_quantity,pr_p_ok_quantity,pr_b_item, pr_s_item) VALUES ('A511-123456779',  '91-363-G100001', '生產注意事項','MAYA(Isreal)', 'AAAB12111A001','AAAB12111A100','訂單編號(OP-2021042001)', 'DT363GL',100,40, '{"CPU":i600,"RAM":"4G"}','{"M/B 版本":"R5.6.P","ECN":"D6B"}');
+INSERT INTO production_records(pr_id, pr_bom_id, pr_c_from,pr_c_name,pr_s_sn, pr_e_sn, pr_order_id, pr_p_model,pr_p_quantity,pr_p_ok_quantity,pr_b_item, pr_s_item) VALUES ('A512-123456789',  '92-363-G100001', '生產注意事項','MAYA(Isreal)', 'AAAB12111A101','AAAB12111A200','訂單編號(OP-2021042002)', 'DT363GL',100,30, '{"CPU":i700,"RAM":"4G"}','{"M/B 版本":"R5.7.P","ECN":"D6B"}');
+INSERT INTO production_records(pr_id, pr_bom_id, pr_c_from,pr_c_name,pr_s_sn, pr_e_sn, pr_order_id, pr_p_model,pr_p_quantity,pr_p_ok_quantity,pr_b_item, pr_s_item) VALUES ('A513-123456799',  '93-363-G100001', '生產注意事項','MAYA(Isreal)', 'AAAB12111A201','AAAB12111A250','訂單編號(OP-2021042002)', 'DT363GL',50,20, '{"CPU":i800,"RAM":"4G"}','{"M/B 版本":"R5.8.P","ECN":"D6B"}');
 
 --production_header
 INSERT INTO production_header(ph_id,ph_pb_g_id,ph_type, ph_pr_id, ph_schedule, ph_wp_id, sys_header, sys_ver) VALUES (1,1,'A511', 'A511-123456779', '', 1, true, 0);
@@ -135,14 +135,14 @@ SELECT setval('public.workstation_item_seq', 3, true);
 --workstation
 INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (0, true, 'Group', 0, 'Group','','', 0, 0);
 
-INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (1, true, 'BC088', 1, 'PCB_processing','pb_w_name01','系統管理者_Group', 1, 0);
-INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (2, false, 'BC088', 1, 'PCB_processing','pb_w_name01','系統管理者_Group', 1, 1);
-INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (3, false, 'BC088', 1, 'PCB_processing','pb_w_name01','系統管理者_Group', 1, 2);
-INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (4, false, 'BC088', 1, 'PCB_processing','pb_w_name01','系統管理者_Group', 1, 3);
+INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (1, true, 'BC088', 1, 'PCB_processing','pb_w_name01','系統管理者', 1, 0);
+INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (2, false, 'BC088', 1, 'PCB_processing','pb_w_name01','系統管理者', 1, 1);
+INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (3, false, 'BC088', 1, 'PCB_processing','pb_w_name01','系統管理者', 1, 2);
+INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (4, false, 'BC088', 1, 'PCB_processing','pb_w_name01','系統管理者', 1, 3);
 
-INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (5, true, 'BC099', 2, 'PCB_function_test','pb_w_name03','一般使用者_Group', 2, 0);
-INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (6, false, 'BC099', 2, 'PCB_function_test','pb_w_name03','一般使用者_Group', 2, 1);
-INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (7, false, 'BC099', 2, 'PCB_function_test','pb_w_name03','一般使用者_Group', 2, 2);
+INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (5, true, 'BC099', 2, 'PCB_function_test','pb_w_name03','一般使用者', 2, 0);
+INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (6, false, 'BC099', 2, 'PCB_function_test','pb_w_name03','一般使用者', 2, 1);
+INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (7, false, 'BC099', 2, 'PCB_function_test','pb_w_name03','一般使用者', 2, 2);
 SELECT setval('public.workstation_seq', 7, true);
 DROP sequence IF EXISTS WORKSTATION_G_SEQ CASCADE;
 create sequence WORKSTATION_G_SEQ start with 3 increment by 1;
@@ -158,36 +158,35 @@ SELECT setval('public.workstation_program_seq', 5, true);
 DROP sequence IF EXISTS WORKSTATION_PROGRAM_G_SEQ CASCADE;
 create sequence WORKSTATION_PROGRAM_G_SEQ start with 3 increment by 1;
 
-
-
 --production_sn
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value)VALUES (1, 1, '機種別', '', '');
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value)VALUES (2, 1, '機種別', '136BU', '36B');
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value)VALUES (3, 2, '生產廠別', '', '');
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value)VALUES (4, 2, '生產廠別', 'Beijing', 'B');
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value)VALUES (5, 3, '保固期限', '', '');
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value)VALUES (6, 3, '保固期限', '1_year', '1');
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value)VALUES (7, 4, '生產年周', '', '');
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value)VALUES (8, 4, '生產年周', '[YYWW]', '2118');
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value)VALUES (9, 5, 'Panel廠商(面板)', '', '');
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value)VALUES (10, 5, 'Panel廠商(面板)', 'AGL', 'A');
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value)VALUES (11, 6, '流水號', '', '');
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value)VALUES (12, 6, '流水號', '[000]', '346');
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (1, 1, '機種別', '', '',true);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (2, 1, '機種別', '136BU', 'AAA',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (3, 2, '生產廠別', '', '',true);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (4, 2, '生產廠別', 'Beijing', 'B',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (5, 3, '保固期限', '', '',true);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (6, 3, '保固期限', '1_year', '1',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (7, 4, '生產年周', '', '',true);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (8, 4, '生產年周', '[YYWW]', '2118',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (9, 5, 'Panel廠商(面板)', '', '',true);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (10, 5, 'Panel廠商(面板)', 'AGL', 'A',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (11, 6, '流水號', '', '',true);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (12, 6, '流水號', '[000]', '346',false);
 SELECT setval('public.production_sn_seq', 12, true);
 DROP sequence IF EXISTS PRODUCTION_SN_G_SEQ  CASCADE;
-create sequence PRODUCTION_SN_G_SEQ start with 2 increment by 1;
+create sequence PRODUCTION_SN_G_SEQ start with 7 increment by 1;
 
---群組計數
+--維修code
+INSERT INTO maintain_code(mc_id, mc_g_id, mc_g_name, mc_name, mc_value,sys_header)VALUES (1, 1, '電池', '', 'EC',true);
+INSERT INTO maintain_code(mc_id, mc_g_id, mc_g_name, mc_name, mc_value,sys_header)VALUES (2, 1, '電池', '冒煙', 'EC001',false);
+INSERT INTO maintain_code(mc_id, mc_g_id, mc_g_name, mc_name, mc_value,sys_header)VALUES (3, 1, '電池', '浸水', 'EC002',false);
+INSERT INTO maintain_code(mc_id, mc_g_id, mc_g_name, mc_name, mc_value,sys_header)VALUES (4, 1, '電池', '長香菇', 'EC003',false);
+
+INSERT INTO maintain_code(mc_id, mc_g_id, mc_g_name, mc_name, mc_value,sys_header)VALUES (5, 2, '螢幕', '', 'EA',true);
+INSERT INTO maintain_code(mc_id, mc_g_id, mc_g_name, mc_name, mc_value,sys_header)VALUES (6, 2, '螢幕', '不亮', 'EA001',false);
+INSERT INTO maintain_code(mc_id, mc_g_id, mc_g_name, mc_name, mc_value,sys_header)VALUES (7, 2, '螢幕', '很亮', 'EA002',false);
+INSERT INTO maintain_code(mc_id, mc_g_id, mc_g_name, mc_name, mc_value,sys_header)VALUES (8, 2, '螢幕', '一下亮一下不亮', 'EA003',false);
+SELECT setval('public.maintain_code_seq', 8, true);
+DROP sequence IF EXISTS MAINTAIN_CODE_G_SEQ  CASCADE;
+create sequence MAINTAIN_CODE_G_SEQ start with 3 increment by 1;
 
 
-
-
-
-
-
-
-
-
-
-
---workstation_prohect
