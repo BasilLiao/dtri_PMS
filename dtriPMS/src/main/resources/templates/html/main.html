@@ -170,6 +170,10 @@ body {
                                 	main.allData['action'] = event['resp_content']['action'];
                                 	modify.modifyReturn();
                                     break;
+                                case "workstation":
+									main.allData = event['resp_content']; 
+									workstation.searchReturn();
+                                    break;
                             }
 						}else{
 							t_alert.alertshow("warning", "[5478] Didn't find anything [WARNING]!!");

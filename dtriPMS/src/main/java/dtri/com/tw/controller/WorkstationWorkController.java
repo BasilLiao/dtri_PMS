@@ -20,7 +20,7 @@ import dtri.com.tw.db.entity.SystemPermission;
 import dtri.com.tw.db.entity.SystemUser;
 import dtri.com.tw.login.LoginUserDetails;
 import dtri.com.tw.service.PackageService;
-import dtri.com.tw.service.SystemConfigService;
+import dtri.com.tw.service.WorkstationWorkService;
 
 @Controller
 public class WorkstationWorkController {
@@ -30,7 +30,7 @@ public class WorkstationWorkController {
 	@Autowired
 	PackageService packageService;
 	@Autowired
-	SystemConfigService configService;
+	WorkstationWorkService workService;
 
 	/**
 	 * 訪問
@@ -61,9 +61,11 @@ public class WorkstationWorkController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = configService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = workService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color, one.getSppermission());
+
 		// 回傳-資料
 		return packageService.objToJson(resp);
 	}
@@ -79,12 +81,33 @@ public class WorkstationWorkController {
 		PackageBean resp = new PackageBean();
 		String info = null, info_color = null;
 		System.out.println(json_object);
+		// 取得-當前用戶資料
+		List<SystemGroup> systemGroup = new ArrayList<SystemGroup>();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			// Step1.查詢資料權限
+			systemGroup = userDetails.getSystemGroup();
+		}
+		// UI限制功能
+		SystemPermission one = new SystemPermission();
+		systemGroup.forEach(p -> {
+			if (p.getSystemPermission().getSpcontrol().equals(SYS_F)) {
+				one.setSppermission(p.getSystemPermission().getSppermission());
+			}
+		});
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = configService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
-		// Step3.包裝回傳
-		resp = packageService.setObjResp(resp, req, info, info_color, "");
+		resp = workService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+
+		if (resp != null) {
+			// Step3.包裝回傳
+			resp = packageService.setObjResp(resp, req, info, info_color, one.getSppermission());
+		} else {
+			// Step4.包裝回傳(有錯)
+			resp = packageService.setObjResp(resp, req, PackageBean.info_message_warning, PackageBean.info_color_warning, "");
+		}
 		// 回傳-資料
 		return packageService.objToJson(resp);
 	}
@@ -112,9 +135,9 @@ public class WorkstationWorkController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = configService.createData(req.getBody(), user);
+		check = workService.createData(req.getBody(), user);
 		if (check) {
-			check = configService.save_asData(req.getBody(), user);
+			check = workService.save_asData(req.getBody(), user);
 		}
 		// Step3.進行判定
 		if (check) {
@@ -151,7 +174,7 @@ public class WorkstationWorkController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = configService.updateData(req.getBody(), user);
+		check = workService.updateData(req.getBody(), user);
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳
@@ -180,7 +203,7 @@ public class WorkstationWorkController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行新增
-		check = configService.deleteData(req.getBody());
+		check = workService.deleteData(req.getBody());
 		// Step3.進行判定
 		if (check) {
 			// Step4.包裝回傳

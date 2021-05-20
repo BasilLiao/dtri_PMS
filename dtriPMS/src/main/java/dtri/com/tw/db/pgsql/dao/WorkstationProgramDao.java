@@ -25,7 +25,13 @@ public interface WorkstationProgramDao extends JpaRepository<WorkstationProgram,
 
 	// 查詢全部 By Group
 	ArrayList<WorkstationProgram> findAllByWpgidOrderBySyssortAsc(Integer wp_g_id);
-	
+
+	// 查詢全部 By Group 排除代表
+	ArrayList<WorkstationProgram> findAllByWpgidAndSysheaderOrderBySyssortAsc(Integer wp_g_id, Boolean sysheader);
+
+	// 查詢全部 By Group + 特定工作站
+	ArrayList<WorkstationProgram> findAllByWpgidAndWpwgidAndSysheaderOrderBySyssortAsc(Integer wp_g_id, Integer wp_w_g_id, Boolean sysheader);
+
 	// 查詢全部 By Group 代表
 	ArrayList<WorkstationProgram> findAllBySysheader(Boolean sysheader);
 

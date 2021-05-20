@@ -1,8 +1,10 @@
 package dtri.com.tw.controller;
 
+import java.awt.print.PrinterJob;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.PrintService;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
@@ -43,6 +45,20 @@ public class IndexController {
 		System.out.println("---controller -login(logout) " + SYS_F + " Check");
 		// 可能有錯誤碼
 		String error = request.getParameter("status");
+
+		// 測試網路列印
+		String printerName = "";
+		PrintService service = null;
+		// Get array of all print services - sort order NOT GUARANTEED!
+		PrintService[] services = PrinterJob.lookupPrintServices();
+		// Retrieve specified print service from the array
+		for (int index = 0; service == null && index < services.length; index++) {
+			System.out.println(services[index].getName());
+			if (services[index].getName().equalsIgnoreCase(printerName)) {
+				service = services[index];
+			}
+		}
+
 		// 回傳-模板
 		return new ModelAndView("/html/login", "status", error);
 	}
@@ -82,7 +98,7 @@ public class IndexController {
 			}
 		});
 		// Step2.包裝回傳
-		resp_object = packageService.setObjResp(resp_object, req_object, info, info_color,"");
+		resp_object = packageService.setObjResp(resp_object, req_object, info, info_color, "");
 
 		// 回傳-模板
 		return new ModelAndView("/html/main", "initMain", packageService.objToJson(resp_object));
@@ -115,7 +131,7 @@ public class IndexController {
 			info_color = PackageBean.info_color_warning;
 		}
 		// Step2.包裝回傳
-		resp_object = packageService.setObjResp(resp_object, req_object, info, info_color,"");
+		resp_object = packageService.setObjResp(resp_object, req_object, info, info_color, "");
 
 		// 回傳-模板
 		return packageService.objToJson(resp_object);

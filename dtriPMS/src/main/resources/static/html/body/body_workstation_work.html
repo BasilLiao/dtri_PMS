@@ -107,6 +107,10 @@
 			//工作站-模板
 			$("#index #workstation_tab").load("./html/model/workstation.html", function() {
 				$('#workstation_tab #m_order').focus();
+				//workstation.fix_barcode_init();
+				workstation.doc_init(main.allData.header.doc_list);
+				workstation.fix_barcode_init(main.allData.header.fix_list);
+				workstation.sn_init();
 			});
 			
 			//模板-關閉不需要的分頁 disabled

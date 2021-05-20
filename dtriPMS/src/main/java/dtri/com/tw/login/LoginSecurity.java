@@ -168,7 +168,7 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 				// 登出-後轉跳
 				.logoutSuccessUrl("/login.basil?status=You are exit!")
 				// 登出-移除Session
-				.invalidateHttpSession(true).clearAuthentication(true)
+				.invalidateHttpSession(true).clearAuthentication(true).deleteCookies("JSESSIONID")
 				// 登出-移除Cookies
 				.deleteCookies();
 		// 關閉CSRF跨域

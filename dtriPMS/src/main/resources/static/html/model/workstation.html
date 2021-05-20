@@ -4,14 +4,23 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+.big-checkbox {
+	width: 20px;
+	height: 20px;
+}
+
+#barcode_sn_name .package_qty {
+	font-size: 18px;
+}
 </style>
 
 <div id="workstation" class="text-left shadow">
 	<div class=" bg-white rounded-top m-0 pl-1 h5">
-		<i class="bi bi-joystick mr-1"></i>Workstation-<b id="workstation_name">組裝工作站</b>
+		<i class="bi bi-joystick mr-1"></i>Workstation-<b class="h6" id="workstation_name">Loading...</b>
 	</div>
 	<div class="p-2">
-		<form onsubmit="return workstation.send_save();">
+		<form onsubmit="return workstation.send_command();">
 			<table class="table table-sm  table-bordered table-responsive m-0 bg-white" style="min-height: 60vh">
 				<thead class="thead bg-dark table-dark">
 					<tr>
@@ -56,37 +65,20 @@
 						<!-- fix -->
 						<td colspan="7" class="p-0 border border-dark">
 							<div class="row justify-content-between m-0">
-								<div id="barcode_open_barcode" class="row m-0 p-2">
-									<div>open_barcode[BC008]</div>
+								<div class="row m-0 p-2">
+									<div>Open_Barcode[BC008]</div>
 									<div id="barcode_BC008" class="m-1"></div>
 								</div>
-								<div id="barcode_open_fix" class="row m-0 p-2">
-									<div>open_fix[BC009]</div>
+								<div class="row m-0 p-2">
+									<div>Open_Fix[BC009]</div>
 									<div id="barcode_BC009" class="m-1"></div>
 								</div>
-								<div id="barcode_open_doc" class="row m-0 p-2">
-									<div>open_doc[BC010]</div>
+								<div class="row m-0 p-2">
+									<div>Open_Doc[BC010]</div>
 									<div id="barcode_BC010" class="m-1"></div>
 								</div>
-							</div> <!-- 維修條碼_類型(浮動) -->
-							<div id="fix_type_open" class="col-12 row justify-content-between m-0 text-center p-0 border border-secondary rounded" style="display: none;">
-								<div class="col-12 m-0 p-0 h4">Fix-type</div>
-								<div class="p-2">
-									<div class="row m-0 p-1">
-										<div id="BC011" class="barcode_action btn btn-light p-0 pr-2 pl-2">XXX[BC011]</div>
-										<div id="barcode_BC011" class="m-1"></div>
-									</div>
-								</div>
-							</div> <!-- 維修條碼_項目(浮動) -->
-							<div id="fix_item_open" class="col-12 row justify-content-between m-0 text-center p-0 border border-secondary rounded" style="display: none;">
-								<div class="col-12 m-0 p-0 h4">Fix-item</div>
-								<div class="p-2">
-									<div class="row m-0">
-										<div id="BC012" class="barcode_action btn btn-light p-0 pr-2 pl-2">XXX[BC012]</div>
-										<div id="barcode_BC012" class="m-1"></div>
-									</div>
-								</div>
 							</div>
+
 						</td>
 					</tr>
 					<tr id="barcode_work" class="w_i_1 font-weight-bold">
@@ -109,7 +101,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="dropdown-divider p-1 mt-3"></div>
+								<div class="dropdown-divider p-0 mt-2"></div>
 								<div class="p-2" id="check">
 									<div id="barcode_BC003"></div>
 									<div id="BC003" class="btn btn-sm btn-light col-12 p-0 m-0 mt-1 barcode_action">
@@ -126,7 +118,24 @@
 										</div>
 									</div>
 								</div>
-								<div class="dropdown-divider p-1 mt-3"></div>
+								<div class="dropdown-divider p-0 mt-2"></div>
+								<div class="p-2" id="save">
+									<div id="barcode_BC011"></div>
+									<div id="BC011" class="btn btn-sm btn-light col-12 p-0 m-0 mt-1 barcode_action">
+										<div class="small font-weight-bold">
+											print(印出SN)<br>[BC011]
+										</div>
+									</div>
+								</div>
+								<div class="p-2" id="save">
+									<div id="barcode_BC012"></div>
+									<div id="BC012" class="btn btn-sm btn-light col-12 p-0 m-0 mt-1 barcode_action">
+										<div class="small font-weight-bold">
+											print(印出包裝PG)<br>[BC012]
+										</div>
+									</div>
+								</div>
+								<div class="dropdown-divider p-0 mt-2"></div>
 								<div class="p-2" id="clear">
 									<div id="barcode_BC005"></div>
 									<div id="BC005" class="btn btn-sm btn-light col-12 p-0 m-0 mt-1 barcode_action">
@@ -143,7 +152,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="dropdown-divider p-1 mt-3"></div>
+								<div class="dropdown-divider p-0 mt-2"></div>
 								<div class="p-2" id="logout">
 									<div id="barcode_BC007"></div>
 									<div id="BC007" class="btn btn-sm btn-light col-12 p-0 m-0 mt-1 barcode_action">
@@ -154,9 +163,57 @@
 								</div>
 							</div>
 						</td>
+						<td colspan="3" class="p-0 border-dark border">
+							<!-- 維修條碼_類型(浮動) -->
+							<div id="fix_t_open" class="col-12 row justify-content-between m-0 text-center p-0 border border-secondary rounded" style="display: none;">
+								<div class="col-12 m-0 p-0 h4">Fix-type</div>
+								<div id="fix_t_example" class="p-2">
+									<div class="row m-0 p-1">
+										<div id="BC013" class="barcode_action btn btn-light p-0 pr-2 pl-2">XXX[BC013]</div>
+										<div id="barcode_BC013" class="m-1"></div>
+									</div>
+								</div>
+							</div> <!-- 維修條碼_項目(浮動) -->
+							<div id="fix_i_open" class="col-12 row justify-content-between m-0 text-center p-0 border border-secondary rounded" style="display: none;">
+								<div class="col-12 m-0 p-0 h4">Fix-item</div>
+								<div id="fix_i_example" class="p-2">
+									<div class="row m-0">
+										<div id="BC014" class="barcode_action btn btn-light p-0 pr-2 pl-2">XXX[BC014]</div>
+										<div id="barcode_BC014" class="m-1"></div>
+									</div>
+								</div>
+							</div>
+						</td>
+						<!-- Doc -->
+						<td colspan="2" class="p-1 border border-dark" rowspan="100">
+							<!-- (固定)顯特定內容 -->
+							<div class="doc_open" style="display: none;">
+								<div id="" style="min-width: 380px;">
+									<!-- (固定)顯特定內容 (製令資訊/軟體定義/規格定義)-->
+									<div id="doc_c_x" class="border border-secondary rounded">
+										<div id="" class="p-1 col-6 doc_t_name ">Information</div>
+										<div id="doc_all" class="p-0 row m-0">
+											<div id="doc_example" class="col-6 p-0 d-none">
+												<div class="m-0 p-1">
+													<div class="row m-0">
+														<input class="col-2 mt-1 p-1 border border-dark rounded big-checkbox doc_c_check" id="" name="" value="true" type="checkbox" style="max-width: 30px;">
+														<div class="col-10 doc_c_name p-0 over_hid" id="" contenteditable="true">Loading...</div>
+													</div>
+													<input disabled="disabled" class="col-12  p-0 border border-light rounded doc_c_value" id="" type="text" required>
+													<textarea disabled="disabled" class="col-12  p-0 border border-light rounded doc_c_value d-none" id="" rows="5" required></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<!--(固定) -->
+					<tr id="barcode_work" class="w_i_1 font-weight-bold">
 						<td colspan="2" class="p-0">
 							<div class="row p-1 m-0 border  border-light rounded">
-								<div class="col-5 p-1 m-0">*工作站:</div>
+								<div class="col-5 p-1 m-0">*Workstation Code:</div>
 								<div class="col-7 p-0">
 									<input id="w_focus_1" disabled="disabled" class="w_sn_value col p-1 border-1 border-primary rounded" type="text" required>
 								</div>
@@ -173,33 +230,12 @@
 								<i class="bi bi-shield-x text-danger p-0 h3 d-none"></i>
 							</div>
 						</td>
-						<!-- Doc -->
-						<td colspan="2" class="p-1 border border-dark" rowspan="100">
-							<!-- (固定)顯特定內容 -->
-							<div class="doc_open" style="display: none;">
-								<div id="doc_example" style="min-width: 380px;">
-									<!-- (固定)顯特定內容 (製令資訊/軟體定義/規格定義)-->
-									<div id="doc_content_x" class="border border-secondary rounded">
-										<div id="" class="doc_t_name p-1">XX</div>
-										<div id="" class="p-0 row m-0">
-											<div class="col-6 p-0">
-												<div class="m-0 p-1">
-													<div class="col-12 doc_c_name p-0 over_hid" id="">XX</div>
-													<input disabled="disabled" class="col-12  p-0 border border-light rounded doc_c_value" id="" type="text" required>
-													<textarea disabled="disabled" class="col-12  p-0 border border-light rounded doc_c_value d-none" id="" rows="5" required></textarea>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</td>
 					</tr>
 					<!--(固定) -->
 					<tr id="barcode_order" class="w_i_2 font-weight-bold">
 						<td colspan="2" class="p-0">
 							<div class=" row p-1 m-0 border border-light rounded">
-								<div class="col-5 p-1 m-0">*製令單:</div>
+								<div class="col-5 p-1 m-0">*Product Order:</div>
 								<div class="col-7 p-0">
 									<input id="w_focus_2" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
@@ -217,11 +253,12 @@
 							</div>
 						</td>
 					</tr>
+
 					<!--(固定) -->
-					<tr id="barcode_sn" class="w_i_3 font-weight-bold">
-						<td colspan="2" class="p-0">
+					<tr id="barcode_path" class="w_i_3 font-weight-bold">
+						<td colspan="2" class="p-0 ">
 							<div class=" row p-1 m-0 border border-light rounded">
-								<div class="col-5 p-1 m-0">*產品SN:</div>
+								<div class="col-5 p-1 m-0">*Product Patch:</div>
 								<div class="col-7 p-0">
 									<input id="w_focus_3" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
@@ -243,7 +280,7 @@
 					<tr id="barcode_fix" class="w_i_4 font-weight-bold">
 						<td colspan="2" class="p-0">
 							<div class=" row p-1 m-0 border border-light rounded">
-								<div class="col-5 p-1 m-0">*故障代碼(可複數):</div>
+								<div class="col-5 p-1 m-0">*Error Code:</div>
 								<div class="col-7 p-0">
 									<input id="w_focus_4" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
@@ -262,10 +299,14 @@
 						</td>
 					</tr>
 					<!--(固定) -->
-					<tr id="barcode_path" class="w_i_5 font-weight-bold">
-						<td colspan="2" class="p-0 ">
+					<tr id="barcode_sn" class="w_i_5 font-weight-bold">
+						<td colspan="2" class="p-0">
 							<div class=" row p-1 m-0 border border-light rounded">
-								<div class="col-5 p-1 m-0">*置物位置:</div>
+								<div class="col-5 p-1 m-0 row">
+									<!-- <input class="mt-1 p-1 border border-dark rounded big-checkbox" id="" name="" value="true" type="checkbox">
+									 -->
+									<div>*Product SN:</div>
+								</div>
 								<div class="col-7 p-0">
 									<input id="w_focus_5" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
@@ -308,18 +349,21 @@
 							</div>
 						</td>
 					</tr>
-					<tr class="font-weight-bold">
+					<tr id="sn_example" class="font-weight-bold">
 						<td colspan="3" class="pr-0 pl-0">
 							<div class="dropdown-divider p-0 m-0 border border-dark"></div>
 						</td>
 					</tr>
 					<!-- 工作項目(浮動) Manufacturing order-->
-					<tr class="w_i_6 workstation_example font-weight-bold">
+					<tr id="workstation_example" class="w_i_6 font-weight-bold">
 						<td colspan="2" class="p-0">
 							<div class=" row p-1 m-0 border border-light rounded">
-								<div class="w_sn_name col-5 p-1 m-0">XXX</div>
+								<div class="col-5 p-0 row m-0">
+									<input class="ml-1 mt-2 p-1 border border-dark rounded big-checkbox w_sn_check" id="" name="" value="true" type="checkbox">
+									<div class=" m-0 p-1 w_sn_name">Loading...</div>
+								</div>
 								<div class="col-7 p-0">
-									<input id="w_focus_6" class="w_sn_value col p-1 border-0 border-primary rounded" disabled="disabled" type="text" required>
+									<input id="" class="w_sn_value col p-1 border-0 border-primary rounded" disabled="disabled" type="text" required>
 								</div>
 							</div>
 						</td>
@@ -335,20 +379,94 @@
 							</div>
 						</td>
 					</tr>
-
 					<!-- 功能(固定) -->
 					<tr>
-						<td colspan="3" rowspan="2" class="p-0 border border-dark">
+						<td colspan="3" class="p-0 border border-light ">
 							<div class="shadow-sm text-left">
 								<div class=" bg-white rounded-top m-0 pl-1 h5">
 									<i class="bi bi-file-earmark-check mr-1"></i> Action
 								</div>
 								<div class="col-12 p-2 m-0 row justify-content-center">
-									<button class="col-sm-3 mt-1 btn btn-primary btn-sm" type="submit">Send Command</button>
-									<div class="col-1"></div>
-									<button class="col-sm-3 mt-1 btn btn-info btn-sm" type="button">Print Barcode</button>
-									<div class="col-1"></div>
-									<button class="col-sm-3 mt-1 btn btn-warning btn-sm" type="button">All Cancel</button>
+									<div class="col-sm-5"></div>
+									<button class="col-sm-2 mt-1 btn btn-primary btn-sm" type="submit">Send Command</button>
+									<div class="col-sm-5"></div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<!-- 累計Cumulative SN(固定) -->
+					<tr class="font-weight-bold">
+						<td colspan="3" class="pr-0 pl-0">
+							<div class="dropdown-divider p-0 m-0 border border-dark"></div>
+						</td>
+					</tr>
+					<!-- 標籤樣式(固定) -->
+					<tr>
+						<td rowspan="2" colspan="3" class="p-0 border border-dark">
+							<div class="shadow-sm text-left">
+								<div class=" bg-dark text-light m-0 p-1 h5">
+									<i class="bi bi-upc-scan mr-1"></i> Print Barcode
+								</div>
+								<div class=" shadow-sm text-left">
+									<div class=" bg-white rounded-top m-0 pl-1 h5 row">
+										<div class="ml-1">
+											<input id="sn_cumulative_check" name="" value="true" type="checkbox" class=" mt-2 p-1 border border-dark rounded big-checkbox">
+										</div>
+										<div class="m-0 p-1">Package SN Cumulative</div>
+										<div class="col-1">
+											<input id="sn_cumulative_number" type="number" class="col m-1 p-0 rounded" value="0" style="min-width: 40px;">
+										</div>
+										<div class="m-0 p-1">(Number)</div>
+									</div>
+									<div id="sn_cumulative_example" class="d-none sn_cumulative row p-1 m-0 border border-light rounded font-weight-bold">
+										<div class="col-5 p-1 m-0 row">
+											<div>*Product SN:</div>
+										</div>
+										<div class="col-7 p-0">
+											<input disabled="disabled" type="text" required="required" class="sn_cumulative_value col p-1 border-0 border-primary rounded">
+										</div>
+									</div>
+								</div>
+								<div class="row m-0">
+									<div class="p-1 m-1" style="width: 225px;">
+										<div class="row m-0">
+											<div class="col-8 m-0 p-1">(Print quantity)</div>
+											<div class="col-4 m-0 p-1">
+												<input id="barcode_sn_one_nb" type="number" class="col p-0 rounded" value="1">
+											</div>
+										</div>
+										<div id="barcode_sn_print" class="m-0 p-1 border border-secondary" style="width: 225px;">
+											<div id="barcode_sn_one"></div>
+											<div id="barcode_sn_name" class="font-weight-bold text-center">S/N:</div>
+										</div>
+									</div>
+									<div class="p-1 m-1" style="width: 300px;">
+										<div class="row m-0">
+											<div class="col-8 m-0 p-1">(Print quantity)</div>
+											<div class="col-4 m-0 p-1">
+												<input id="barcode_sn_all_list_nb" type="number" class="col p-0 rounded" value="1">
+											</div>
+										</div>
+										<div id="barcode_sn_all_list" class="m-0 p-1 border border-secondary font-weight-bold" style="width: 300px; transform: scale(1);">
+											<div class="row m-0">
+												<div>P/N:</div>
+												<div class="ml-2" id="barcode_model_name" contenteditable="true">Product Model Number</div>
+											</div>
+											<div class="row m-0">
+												<div class="mt-2">S/N:</div>
+												<div class="ml-2 mt-2">
+													<div class="mt-2" id="barcode_sn_list_ex">
+														<div id="barcode_sn_list_0"></div>
+														<div id="barcode_sn_name_0" class="font-weight-bold text-center"></div>
+													</div>
+												</div>
+											</div>
+											<div class="row m-0">
+												<div id="">QTY:</div>
+												<div class="ml-2" id="barcode_sn_qty">0</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</td>
@@ -368,9 +486,18 @@
 			//籃框位置
 			nb:1,
 			nb_max:6,
+			//維修代碼
+			fix_type:{},
+			fix_item:{},
+			fix_code_type:"",//暫存維修屬性
+			//上次使用的code
+			barcode_save:false,
+			barcode_check:false,
+			//克隆 SN_LIST
+			sn_list_example:"",
 		},
 		//初始化
-		created : function() {
+		created() {
 			console.log("workstation.html(created)");
 			//限制動作5碼
 			this.create_barcode("barcode_BC001","BC001","code39");
@@ -380,20 +507,21 @@
 			this.create_barcode("barcode_BC005","BC005","code39");
 			this.create_barcode("barcode_BC006","BC006","code39");
 			this.create_barcode("barcode_BC007","BC007","code39");
+			
 			//標籤開關
 			this.create_barcode("barcode_BC008","BC008","code39");
 			this.create_barcode("barcode_BC009","BC009","code39");
 			this.create_barcode("barcode_BC010","BC010","code39");
-			//維修代號
 			this.create_barcode("barcode_BC011","BC011","code39");
+			
+			//維修代號
 			this.create_barcode("barcode_BC012","BC012","code39");
 			this.create_barcode("barcode_BC013","BC013","code39");
-			
-			
+			this.create_barcode("barcode_BC014","BC014","code39");
 			
 			
 			//barcode_open 顯示 ?
-			$(document).on("click", "#barcode_open", function (event) {
+			$(document).on("click", "#barcode_open", function (event){
 			    console.log("barcode_open");
 				   $(".barcode_open").toggle("fast");
 
@@ -406,10 +534,10 @@
 			//fix_open 顯示?
 			$(document).on("click", "#fix_open", function (event) {
 			    console.log("doc_open");
-			    $("#fix_type_open").slideToggle("fast");
+			    $("#fix_t_open").slideToggle("fast");
 			    //如果顯示則關閉
-			    if($("#fix_item_open").css('display')!='none'){
-			    	  $("#fix_item_open").slideToggle("fast");
+			    if($("#fix_i_open").css('display')!='none'){
+			    	  $("#fix_i_open").slideToggle("fast");
 			    }
 			});
 			//barcode_action-> m_order行為執行?
@@ -422,6 +550,72 @@
 		},
 		//可呼叫方法
 		methods : {
+			//初始化 fix 格式
+			fix_barcode_init(fix_info){
+				this.fix_type = {};
+				this.fix_type =fix_info;
+				console.log(this.fix_type);
+				//vvv測試格式vvv
+				//for(var a = 0;a<=10;a++){
+				//	//item
+				//	var json_fix_item = {}; 
+				//	json_fix_item['name'] = '(測)維修代碼'+a;
+				//	var fix_item_one ={};
+				//	for(var b = 0;b<=10;b++){
+				//		fix_item_one['FI'+(b+'').padStart(3, '0')] = '說明:'+a+'_'+b;
+				//	}
+				//	json_fix_item['item'] = fix_item_one;
+				//	//type
+				//	this.fix_type["FT"+(a+'').padStart(3, '0')] = json_fix_item;
+				//}
+				//^^^測試格式^^^
+				//顯示[維修]屬性內容
+				for(var a = 0;a<Object.keys(this.fix_type).length;a++){
+	                var key_id = Object.keys(this.fix_type)[a];
+	                var key_name =this.fix_type[key_id].name;
+	                
+					var fix_t_example =$("#fix_t_example").clone();
+					fix_t_example[0].id = "";
+					fix_t_example[0].children[0].children[0].innerText = key_name+'['+key_id+']';
+					fix_t_example[0].children[0].children[0].id=key_id;
+					fix_t_example[0].children[0].children[1].id='barcode_'+key_id;
+					fix_t_example[0].children[0].children[1].innerText="";
+					fix_t_example.insertBefore("#fix_t_example");
+					//建立新code
+					this.create_barcode('barcode_'+key_id,key_id,"code39");
+					//console.log(fix_t_example);
+				}
+				$("#fix_t_example").addClass('d-none');
+				
+				//console.log(this.fix_type);
+			},
+			// 初始化 doc 格式
+			doc_init(title){
+				for (var i = 0; i < Object.keys(title).length; i++) {
+					var doc_example = $("#doc_example").clone(); //複製樣本
+					var value = title[Object.keys(title)[i]].value;
+					var name = title[Object.keys(title)[i]].name;
+					var col = title[Object.keys(title)[i]].col;
+					var id = title[Object.keys(title)[i]].id;
+					var tag =title[Object.keys(title)[i]].tag;
+					doc_example[0].className = "p-0 "+col;
+					doc_example[0].id=id;
+					doc_example.insertBefore("#doc_example");
+					$('#'+id+' .doc_c_name').text(name);
+					$('#'+id+' .doc_c_value').val(value);
+					if(tag=="textarea"){
+						$('#'+id+' input').addClass("d-none");
+						$('#'+id+' textarea').removeClass("d-none");
+					}
+					console.log(name+" "+value+" "+col);
+				}
+			},
+			//初始化 客製化 SN
+			sn_init(){
+				 this.sn_list_example =$("#workstation_example").clone();
+				 $("#workstation_example").remove();
+				
+			},
 			//建立 一維條碼
 			create_barcode(taget_id,barcode_val,code){
 				/*
@@ -432,21 +626,25 @@
 				fontSize: 10,output: "css",
 				posX: 0,posY: 0
 				*/
-				var barcode_f = {barWidth:1,barHeight:15,showHRI:false,};
+				var barcode_f = {barWidth:1,barHeight:20,showHRI:false,};
 				$("#"+taget_id).barcode(barcode_val,code,barcode_f);     
 			},
 			//執行動作
-			send_save(){
+			send_command(){
 				setTimeout(function(){
-					console.log("send_save :"+$('#m_order').val() );
+					console.log("send_command :"+$('#m_order').val() );
 					var code = $('#m_order').val();
 					var id =$(".border-1").attr("id");
+					console.log(id);
+					//沒輸入則不動
+					if(code==""){
+						return false;
+					}
 					//指令類型
 					switch(code){
 					case "BC001":
 						//目前代碼位置 
 						if(workstation.nb>1){
-							console.log(id);
 							workstation.nb = parseInt(id.replace('w_focus_',''));
 							workstation.nb-=1;
 							//更換Class
@@ -459,8 +657,7 @@
 						break;
 					case "BC002":
 						//目前代碼位置 
-						if(workstation.nb<workstation.nb_max){
-							console.log(id);
+						if(workstation.nb<$(".w_sn_value").length){
 							workstation.nb = parseInt(id.replace('w_focus_',''));
 							workstation.nb+=1;
 							//更換Class
@@ -472,19 +669,93 @@
 						return false;
 						break;
 					case "BC003":
-						$("#barcode_open" ).trigger( "click" );
+						var w_focus_1 = $('#w_focus_1').val();
+						var w_focus_2 = $('#w_focus_2').val();
+						var w_focus_5 = $('#w_focus_5').val();
+						//進行查詢
+						if(w_focus_1!="" && w_focus_2!="" && w_focus_5!=""){
+							workstation.sendCheck();
+							
+						}
+						
+						
+					    //如果顯示則關閉
+					    if($("#doc_status").css('display')=='none'){
+							$("#doc_open" ).trigger( "click" );
+					    }
 						return false;
 						break;
 					case "BC004":
-						$("#barcode_open" ).trigger( "click" );
+						//存檔+避免w_focus_5 (SN)
+						if( $("#w_focus_5").val()!="" && workstation.barcode_check){
+							
+							//Step1.累計條碼
+							if ($('#sn_cumulative_check').is(":checked")){
+								$("#sn_cumulative_example input").val($("#w_focus_5").val());
+								var sn_cumulative_example =$("#sn_cumulative_example").clone();
+								sn_cumulative_example[0].className= "sn_cumulative_list row p-1 m-0 border border-light rounded font-weight-bold";
+								sn_cumulative_example[0].id= "";
+								sn_cumulative_example.insertBefore("#sn_cumulative_example");
+								
+								//barcode 登記 外包裝累加
+								var barcode_sn_list_ex =$("#barcode_sn_list_ex").clone();
+								var barcode_sn_id = 'barcode_sn_list_'+$('.sn_cumulative_list').length;
+								var barcode_sn_name = 'barcode_sn_name_'+$('.sn_cumulative_list').length;
+								barcode_sn_list_ex[0].id="";
+								barcode_sn_list_ex[0].className="mt-2 package_qty";
+								barcode_sn_list_ex[0].children[0].id = barcode_sn_id;
+								barcode_sn_list_ex[0].children[1].id = barcode_sn_name;
+								barcode_sn_list_ex[0].children[1].innerText = "S/N:"+$("#w_focus_5").val();
+								barcode_sn_list_ex.insertBefore("#barcode_sn_list_ex");
+								workstation.create_barcode(barcode_sn_id,$("#w_focus_5").val(),"code39");
+								
+								$("#barcode_sn_qty").text($(".package_qty").length);
+							}
+							//Step2.印出->清除Package
+							if($('#sn_cumulative_number').val()<$('.sn_cumulative_list').length){
+								$(".sn_cumulative_list").remove();
+								$(".package_qty").remove();
+								$("#barcode_sn_qty").text(0);
+							}
+							
+							//Step3.存檔
+							workstation.sendSave();
+							workstation.barcode_save = true;
+							
+							//Step4.基本清除
+							$('#w_focus_3').val("");
+							$('#w_focus_4').val("");
+							$('#w_focus_5').val("");
+							$('#w_focus_6').val("");
+							$('#w_focus_7').val("");
+							$('#w_focus_8').val("");
+							
+							//Step5.更換Class
+							workstation.nb = 5;
+							$("#"+id).removeClass("border-1");
+							$("#"+id).addClass("border-0");
+							$("#w_focus_"+workstation.nb).addClass("border-1");
+							$("#w_focus_"+workstation.nb).removeClass("border-0");
+						}
+						$("#doc_open" ).trigger( "click" );
 						return false;
 						break;
 					case "BC005":
+						//清除
 						$('#'+id).val("");
 						return false;
 						break;
 					case "BC006":
-						$('.w_sn_value' ).val("");
+						//取消全部
+						$('.w_sn_value').val("");
+						workstation.nb=1;
+						//更換Class
+						$("#"+id).removeClass("border-1");
+						$("#"+id).addClass("border-0");
+						$("#w_focus_"+workstation.nb).addClass("border-1");
+						$("#w_focus_"+workstation.nb).removeClass("border-0");
+						$('.doc_c_value').val("");
+						$(".sn_list").remove();
 						return false;
 						break;
 					case "BC007":
@@ -500,9 +771,6 @@
 					case "BC009":
 						//顯示fix
 						$("#fix_open").trigger( "click" );
-						if($("#fix_item_open").css("display")!="none"){
-							$("#fix_item_open").slideToggle("fast");
-						}
 						return false;
 						break;
 					case "BC010":
@@ -510,28 +778,132 @@
 						$("#doc_open" ).trigger( "click" );
 						return false;
 						break;
+					case "BC011":
+						//Save->打印條碼->清除內容 && SN 不得為空
+						if(workstation.barcode_save){
+							console.log('Save->打印條碼 : BC011');
+							//Step2.建立打印頁面
+							var css = '<link rel="stylesheet" href="./css/model/print_code.css" />';
+								css +='<link rel="stylesheet" href="./thirdparty/css/bootstrap-4.6.0.min.css" />';
+							var divToPrint=$('<div>').append($('#barcode_sn_print').clone()).html();
+							var newWin=window.open('','Print-Window');
+							newWin.document.open();
+							newWin.document.write('<html><head>'+css+'</head>'+
+							'<body onload="print()">'+divToPrint+'</body></html>');
+							newWin.document.close();
+							//setTimeout(function(){newWin.close();},300);
+							workstation.barcode_save = false;
+							workstation.barcode_check = false;
+						}
+						
+						return false;
+						break;
+					case "BC012":
+						if($("#barcode_sn_qty").text()!="0"){
+							console.log('Save->打印包裝條碼 : BC012');
+							//Step1.印出包裝
+							var css = '<link rel="stylesheet" href="./css/model/print_package_code.css" />';
+								css +='<link rel="stylesheet" href="./thirdparty/css/bootstrap-4.6.0.min.css" />';
+							var divToPrint=$('<div>').append($('#barcode_sn_all_list').clone()).html();
+							var newWin=window.open('','Print-Window');
+							newWin.document.open();
+							newWin.document.write('<html><head>'+css+'</head>'+
+							'<body onload="print()">'+divToPrint+'</body></html>');
+							newWin.document.close();
+							//setTimeout(function(){newWin.close();},300);
+							workstation.barcode_save = false;
+							workstation.barcode_check = false;
+							$("#doc_open" ).trigger( "click" );
+							
+							//Step2.印出->清除
+							if($('#sn_cumulative_number').val()<=$('.sn_cumulative_list').length){
+								 for(var i = 0 ;i < $('.sn_cumulative_list').length;i++){
+									console.log($('.sn_cumulative_list .sn_cumulative_value')[i].value);								 
+								 }
+								$(".sn_cumulative_list").remove();
+								$(".package_qty").remove();
+								$("#barcode_sn_qty").text(0);
+							}
+						}
+						
+						return false;
+						break;	
 					default:
+						
 						
 						break;
 					}
-					//是否為維修代碼
-					if(code=="BC011"){
-						 $("#fix_item_open").slideToggle("fast");
+					//是否為維修代碼(群組類別)
+					if(workstation.fix_type[code]!=null){
+						 $("#fix_i_open").slideToggle("fast");
+						 console.log(id);
+							workstation.nb = parseInt(id.replace('w_focus_',''));
+							workstation.nb=4;
+							//更換Class
+							$("#"+id).removeClass("border-1");
+							$("#"+id).addClass("border-0");
+							$("#w_focus_"+workstation.nb).addClass("border-1");
+							$("#w_focus_"+workstation.nb).removeClass("border-0");
+							
+							var items = workstation.fix_type[code]['item'];
+							//顯示[維修]屬性內容
+							$("#fix_i_example").removeClass('d-none');
+							$(".fix_i_list").remove();
+							
+							for(var a = 0;a<Object.keys(items).length;a++){
+				                var key_id = Object.keys(items)[a];
+				                var key_name =items[key_id];
+				                
+								var fix_t_example =$("#fix_i_example").clone();				
+								fix_t_example[0].id = "";
+								fix_t_example[0].className="p-2 fix_i_list";
+								fix_t_example[0].children[0].children[0].innerText = key_name+'['+key_id+']';
+								fix_t_example[0].children[0].children[0].id=key_id;
+								fix_t_example[0].children[0].children[1].id='barcode_'+key_id;
+								fix_t_example[0].children[0].children[1].innerText="";
+								fix_t_example.insertBefore("#fix_i_example");
+								//建立新code
+								workstation.create_barcode('barcode_'+key_id,key_id,"code39");
+								//console.log(fix_t_example);
+							}
+							$("#fix_i_example").addClass('d-none');
+							workstation.fix_code_type=code;
+						 return false;
 					}
-					if(code=="BC012"){
-						 $("#fix_item_open").slideToggle("fast");
+					//(項目類別)
+					if(workstation.fix_code_type!="" && workstation.fix_type[workstation.fix_code_type].item[code]!=null){
+						//維修代碼已經存在
+						if($('#'+id).val()!=""){
+							$('#'+id).val($('#'+id).val()+'_'+code);						
+						}else{
+							$('#'+id).val(code);	
+						}
+						 $("#fix_i_open").slideToggle("fast");
+						 return false;
 					}
 					//輸入一般值->換下一格
 					$('#'+id).val(code);
-					if(workstation.nb<workstation.nb_max){
-						console.log(id);
+					//是SN欄位則登記
+					if(workstation.nb==5){
+						$('#barcode_sn_name').text("S/N:"+code);
+						workstation.create_barcode("barcode_sn_one",code,"code39");
+						
+					}
+					if(workstation.nb<$(".w_sn_value").length ){
+						//console.log(id);
 						workstation.nb = parseInt(id.replace('w_focus_',''));
-						workstation.nb+=1;
-						//更換Class
-						$("#"+id).removeClass("border-1");
-						$("#"+id).addClass("border-0");
-						$("#w_focus_"+workstation.nb).addClass("border-1");
-						$("#w_focus_"+workstation.nb).removeClass("border-0");
+													
+							workstation.nb+=1;
+							//跳過 Error Code + Product Patch
+							if(workstation.nb==3 ||workstation.nb==4){
+								workstation.nb = 5;
+							}
+							//更換Class
+							$("#"+id).removeClass("border-1");
+							$("#"+id).addClass("border-0");
+							$("#w_focus_"+workstation.nb).addClass("border-1");
+							$("#w_focus_"+workstation.nb).removeClass("border-0");
+						
 					}
 
 				  }, 400);
@@ -543,9 +915,85 @@
 				
 				return false; //防止真傳送
 			},
-			ajaxSend(url, dataSend) {
+			//存檔
+			sendSave() {
+				console.log("sendSave");
 
 			},
+			//檢查
+			sendCheck() {
+				console.log("sendCheck");	
+				 var search = {};
+                search['w_c_name'] = $('#w_focus_1').val();
+                search['ph_pr_id'] = $('#w_focus_2').val();
+                search['pb_sn'] = $('#w_focus_5').val();
+                
+	            //包裝
+	            var s_url = (t_body.html_body + ".AR").replace("html", "basil").replace("body_", "");
+	            var s_type = "POST";
+	            var s_data = {};
+	            var req = {};
+	            req.user = "";
+	            req.date = new Date();
+	            req.action = "AR";
+	            req.body = {};
+	            req.body.search = search;
+	            req.page_total = 0;
+	            req.page_batch = 0;
+	            req.page_now_nb = 0;
+	            req.html_body = "";
+	            req.call_bk_fn = "workstation";
+	            req.call_bk_vals = {};
+	            s_data.req_content = req;
+	
+	            //console.log(s_url);
+	            //傳送
+	            main.ajaxSend(s_url, s_type, s_data);
+			},
+			 searchReturn() {
+                //console.log("searchReturn");
+                this.barcode_check = true;
+                console.log(main.allData.body.search);
+                //更新doc
+                var doc_list =  main.allData.body.search[0];
+				for (var i = 0; i < Object.keys(doc_list).length; i++) {
+					var key = Object.keys(doc_list)[i];
+					var value = doc_list[key];						
+					$('#'+key+' .doc_c_value').val(value);
+				}
+				//更新SN_List
+				var sn_list =  main.allData.body.sn_list;
+				var nb =6;
+				$(".sn_list").remove();
+				 for (var i = 0; i < Object.keys(sn_list).length; i++) {
+					var one_sn = sn_list[Object.keys(sn_list)[i]];
+					var key = Object.keys(one_sn);
+					var value = one_sn[key];						
+					var sn_list_tr =  this.sn_list_example.clone();
+					sn_list_tr[0].id=key;
+					sn_list_tr[0].className = "w_i_"+(nb+i)+" sn_list font-weight-bold";
+					sn_list_tr.insertBefore("#sn_example");
+					$(".w_i_"+(nb+i)+" .w_sn_name").text(value);
+					$(".w_i_"+(nb+i)+" .w_sn_value").attr("id","w_focus_"+(nb+i));
+				}
+				 
+				 //更新工作站
+				 $("#workstation_name").text( main.allData.body.workdatation_name);
+				
+				 
+				 //自動位移
+				 if($(".sn_list").length>0){
+					//更換Class
+						var id =$(".border-1").attr("id");
+						workstation.nb+=1;
+						$("#"+id).removeClass("border-1");
+						$("#"+id).addClass("border-0");
+						$("#w_focus_"+workstation.nb).addClass("border-1");
+						$("#w_focus_"+workstation.nb).removeClass("border-0");
+				 }
+				
+            },
+			
 		},
 		//移除監聽事件
 		beforeDestroy() {
@@ -554,10 +1002,6 @@
 			$(document).off("click", "#doc_open");
 			$(document).off("click", "#fix_open");
 			$(document).off("click", ".barcode_action");
-			
-			
-			
-			
 		}
 	});
 </script>

@@ -24,6 +24,12 @@ public interface ProductionBodyDao extends JpaRepository<ProductionBody, Long> {
 	// 查詢SN重複
 	List<ProductionBody> findAllByPbsn(String pbsn);
 
+	// 查詢SN重複+群組
+	List<ProductionBody> findAllByPbsnAndPbgid(String pbsn, Integer pbgid);
+
+	// 查詢SN群組
+	List<ProductionBody> findAllByPbgidOrderByPbsnAsc(Integer pbgid);
+
 	// 查詢一部分_Body
 	@Query(value = "SELECT b FROM ProductionBody b WHERE "//
 			+ "( b.sysstatus = :sysstatus ) and "//

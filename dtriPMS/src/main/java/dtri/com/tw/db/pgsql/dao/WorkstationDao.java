@@ -14,15 +14,17 @@ public interface WorkstationDao extends JpaRepository<Workstation, Long> {
 	// 查詢全部
 	ArrayList<Workstation> findAll();
 
-	// 查詢全部
-	ArrayList<Workstation> findAllByWgid(Integer wgid);
+	// 查詢全部 指定工作站代表
+	ArrayList<Workstation> findAllByWgidAndSysheaderOrderBySyssortAsc(Integer wgid, Boolean sysheader);
+
+	ArrayList<Workstation> findAllByWgidOrderBySyssortAsc(Integer wgid);
 
 	// 查詢工作站代表
 	ArrayList<Workstation> findAllBySysheader(Boolean sysheader, Pageable pageable);
 
 	// 查詢工作站碼
-		ArrayList<Workstation> findAllByWcname(String wcname, Pageable pageable);
-	
+	ArrayList<Workstation> findAllByWcname(String wcname, Pageable pageable);
+
 	// 查詢工作站 欄位
 	ArrayList<Workstation> findAllByWpbcell(String wpbcell, Pageable pageable);
 

@@ -70,7 +70,9 @@ public class ProductionBodyService {
 
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_shipping_date", FFS.h_t("SN_出貨日", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_recycling_date", FFS.h_t("SN_回收日", "150px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_position", FFS.h_t("SN_保固年", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_position", FFS.h_t("SN_最後位置", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_w_years", FFS.h_t("SN_保固年", "120px", FFS.SHO));
+			
 
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_f_value", FFS.h_t("SN_維修項目", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_f_note", FFS.h_t("SN_維修說明", "150px", FFS.SHO));
@@ -79,6 +81,8 @@ public class ProductionBodyService {
 
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_l_path", FFS.h_t("SN_檢測Log位置", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_l_text", FFS.h_t("SN_檢測Log內容", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_l_size", FFS.h_t("SN_檢測Log大小", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_schedule", FFS.h_t("SSN_過站設定", "150px", FFS.SHO));
 
 			// sn關聯表
 			int j = 0;
@@ -187,8 +191,12 @@ public class ProductionBodyService {
 				}
 			}
 
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-12", false, n_val, "pb_schedule", "SN_過站狀態"));
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-12", false, n_val, "pb_l_path", "SN_檢測Log位置"));
 			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.DIS, "col-md-12", false, n_val, "pb_l_text", "SN_檢測Log內容"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "pb_l_size", "SN_檢測Log大小"));
+			
+			
 			obj_m.put(FFS.h_m(FFS.TTA, FFS.TEXT, "", "", FFS.SHO, "col-md-12", false, n_val, "sys_note", "備註"));
 			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-1", false, n_val, "sys_header", "群組代表?"));
 			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-1", false, n_val, "sys_ver", "版本"));
@@ -202,6 +210,8 @@ public class ProductionBodyService {
 			a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
 			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.SHO, "col-md-1", true, a_val, "sys_status", "狀態"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "3", "3", FFS.DIS, "col-md-1", true, a_val, "pb_w_years", "保固年份"));
+			
 			bean.setCell_modify(obj_m);
 
 			// 放入包裝(search)
@@ -321,10 +331,13 @@ public class ProductionBodyService {
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "ph_pr_id", productionHeader.getProductionRecords().getPrid());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "ph_model", productionHeader.getProductionRecords().getPrpmodel());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_sn", one.getPbsn());
+		
 
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_shipping_date", one.getPbshippingdate() == null ? "" : one.getPbshippingdate());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_recycling_date", one.getPbrecyclingdate() == null ? "" : one.getPbrecyclingdate());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_position", one.getPbposition() == null ? "" : one.getPbposition());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_w_years", one.getPbwyears() == null ? "" : one.getPbwyears());
+			
 
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_f_value", one.getPbfvalue() == null ? "" : one.getPbfvalue());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_f_note", one.getPbfnote() == null ? "" : one.getPbfnote());
@@ -333,6 +346,8 @@ public class ProductionBodyService {
 
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_l_path", one.getPblpath() == null ? "" : one.getPblpath());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_l_text", one.getPbltext() == null ? "" : one.getPbltext());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_l_size", one.getPblsize() == null ? "" : one.getPblsize());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_schedule", one.getPbschedule() == null ? "" : one.getPbschedule());
 
 			try {
 				// 有效設定的欄位
@@ -418,7 +433,7 @@ public class ProductionBodyService {
 				JSONObject data = (JSONObject) one;
 				ProductionRecords search = new ProductionRecords();
 				search.setPrid(data.getString("ph_pr_id"));
-				List<ProductionHeader> p_Headers = headerDao.findAllByproductionRecords(search);
+				List<ProductionHeader> p_Headers = headerDao.findAllByProductionRecords(search);
 				List<ProductionBody> p_Bodys = bodyDao.findAllByPbsn(data.getString("pb_sn"));
 				// 有資料
 				if (p_Headers.size() < 1) {
@@ -489,7 +504,7 @@ public class ProductionBodyService {
 				JSONObject data = (JSONObject) one;
 				ProductionRecords search = new ProductionRecords();
 				search.setPrid(data.getString("ph_pr_id"));
-				List<ProductionHeader> p_Headers = headerDao.findAllByproductionRecords(search);
+				List<ProductionHeader> p_Headers = headerDao.findAllByProductionRecords(search);
 				List<ProductionBody> p_Bodys = bodyDao.findAllByPbsn(data.getString("pb_sn"));
 				// 有資料
 				if (p_Headers.size() < 1) {
@@ -554,7 +569,7 @@ public class ProductionBodyService {
 				List<ProductionBody> p_Bodys = bodyDao.findAllByPbsn(data.getString("pb_sn"));
 				ProductionRecords search = new ProductionRecords();
 				search.setPrid(data.getString("ph_pr_id"));
-				List<ProductionHeader> p_Headers = headerDao.findAllByproductionRecords(search);
+				List<ProductionHeader> p_Headers = headerDao.findAllByProductionRecords(search);
 				// 有資料?
 				if (p_Headers.size() < 1) {
 					return check;
@@ -573,6 +588,7 @@ public class ProductionBodyService {
 				pro_b.setPbfvalue(data.getString("pb_f_value"));
 				pro_b.setPbltext(data.getString("pb_l_text"));
 				pro_b.setSysstatus(data.getInt("sys_status"));
+				pro_b.setPbwyears(data.getInt("pb_w_years"));
 				pro_b.setSyssort(data.getInt("sys_sort"));
 				pro_b.setSysmuser(user.getSuname());
 				pro_b.setSysmdate(new Date());

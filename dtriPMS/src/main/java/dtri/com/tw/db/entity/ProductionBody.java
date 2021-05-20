@@ -25,7 +25,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  *      pb_f_note : 損壞說明<br>
  *      pb_w_name : 工作站完成人<br>
  *      pb_value : pb_value1-50 SN(材料序號) <br>
- *      pb_text : PLT_Log 內容資訊 <br>
+ *      pb_l_size : PLT_Log 大小 <br>
+ *      pb_l_text : PLT_Log 內容資訊 <br>
+ *      pb_l_path : PLT_Log 位置資訊 <br>
  *      pb_position : 置物位置 <br>
  *      pb_w_years: 保固年份 <br>
  *      pb_shipping_date: 出貨日<br>

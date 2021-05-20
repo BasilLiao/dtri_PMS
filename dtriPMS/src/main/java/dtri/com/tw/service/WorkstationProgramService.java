@@ -82,7 +82,7 @@ public class WorkstationProgramService {
 				a_vals.put((new JSONObject()).put("value", w.getWpbname()).put("key", w.getWgid()));
 			});
 
-			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, a_vals, "wp_w_g_id", "工作站ID"));
+			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "0", "0", FFS.SHO, "col-md-2", true, a_vals, "wp_w_g_id", "工作站ID"));
 
 			// obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false,
 			// n_val, "sys_c_date", "建立時間"));
@@ -104,6 +104,14 @@ public class WorkstationProgramService {
 			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.DIS, "col-md-1", true, a_val, "sys_status", "狀態"));
 			bean.setCell_modify(obj_m);
 
+			// 放入群主指定 [(key)](modify/Create/Delete) 格式
+			JSONArray obj_g_m = new JSONArray();
+			
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sys_sort"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-2", "wp_w_g_id"));
+			bean.setCell_g_modify(obj_g_m);
+			
+			
 			// 放入包裝(search)
 			JSONArray object_searchs = new JSONArray();
 			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "wp_c_name", "工作程序代號", n_val));

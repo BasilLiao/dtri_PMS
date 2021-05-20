@@ -481,7 +481,7 @@ public class WorkstationService {
 					workstationDao.save(sys_t);
 
 					// 更新每一筆資料
-					ArrayList<Workstation> workstations = workstationDao.findAllByWgid(data.getInt("w_g_id"));
+					ArrayList<Workstation> workstations = workstationDao.findAllByWgidOrderBySyssortAsc(data.getInt("w_g_id"));
 					for (Workstation w : workstations) {
 						w.setWcname(data.getString("w_c_name"));
 						w.setWpbname(w_pb_value);

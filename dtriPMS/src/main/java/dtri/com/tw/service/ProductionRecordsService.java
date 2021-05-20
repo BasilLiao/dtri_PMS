@@ -186,7 +186,7 @@ public class ProductionRecordsService {
 				// 檢查是否有-製令單 one to one
 				ProductionRecords search = new ProductionRecords();
 				search.setPrid(data.getString("pr_id"));
-				List<ProductionHeader> headers = headerDao.findAllByproductionRecords(search);
+				List<ProductionHeader> headers = headerDao.findAllByProductionRecords(search);
 				if (entitys.size() < 1 && headers.size() == 1) {
 					recordsDao.save(entity);
 				} else {
@@ -244,7 +244,7 @@ public class ProductionRecordsService {
 				// 檢查是否有-製令單 one to one
 				ProductionRecords search = new ProductionRecords();
 				search.setPrid(data.getString("pr_id"));
-				List<ProductionHeader> headers = headerDao.findAllByproductionRecords(search);
+				List<ProductionHeader> headers = headerDao.findAllByProductionRecords(search);
 				if (entitys.size() < 1 && headers.size() == 1) {
 					recordsDao.save(entity);
 				} else {
@@ -288,7 +288,7 @@ public class ProductionRecordsService {
 				// 檢查是否有-製令單 one to one
 				ProductionRecords search = new ProductionRecords();
 				search.setPrid(data.getString("pr_id"));
-				List<ProductionHeader> headers = headerDao.findAllByproductionRecords(search);
+				List<ProductionHeader> headers = headerDao.findAllByProductionRecords(search);
 				if (headers.size() == 1) {
 					recordsDao.save(entity);
 				} else {
