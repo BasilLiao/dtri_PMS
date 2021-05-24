@@ -49,7 +49,7 @@ public class SystemGroupController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = groupService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(), user.getSuaccount());
+		resp = groupService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(), user);
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color, "");
 		// 回傳-資料
@@ -78,7 +78,7 @@ public class SystemGroupController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = groupService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(), user.getSuaccount());
+		resp = groupService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(), user);
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color, "");
 		// 回傳-資料

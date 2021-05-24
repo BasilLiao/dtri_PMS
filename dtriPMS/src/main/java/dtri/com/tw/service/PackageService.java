@@ -67,7 +67,9 @@ public class PackageService {
 		data.put("html_permission", object.getHtml_permission());
 		data.put("cell_searchs", object.getCell_searchs());
 		data.put("cell_modify", object.getCell_modify());
+		data.put("cell_refresh", object.getCell_refresh());
 		data.put("cell_g_modify", object.getCell_g_modify());
+		
 		System.out.println(data.toString());
 		return new JSONObject().put("resp_content", data).toString();
 	}

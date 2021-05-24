@@ -28,9 +28,12 @@ public interface MaintainCodeDao extends JpaRepository<MaintainCode, Long> {
 
 	// 查詢是否重複 群組
 	ArrayList<MaintainCode> findAllBySysheaderAndMcgname(boolean sysheader, String gname);
-	
+
 	// 查詢是否重複 及代碼
-		ArrayList<MaintainCode> findAllByMcvalueAndSysheader(String vlaue,boolean sysheader);
+	ArrayList<MaintainCode> findAllByMcvalue(String vlaue);
+
+	// 查詢是否重複 及代碼
+	ArrayList<MaintainCode> findAllByMcvalueAndSysheader(String vlaue, boolean sysheader);
 
 	// 取得最新G_ID
 	@Query(value = "SELECT NEXTVAL('maintain_code_g_seq')", nativeQuery = true)
@@ -42,7 +45,7 @@ public interface MaintainCodeDao extends JpaRepository<MaintainCode, Long> {
 
 	// delete
 	Long deleteByMcidAndSysheader(Integer id, Boolean sysheader);
-	
+
 	// delete 群組一除
 	Long deleteByMcgid(Integer id);
 }

@@ -2,6 +2,7 @@ package dtri.com.tw.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -66,7 +67,7 @@ public class MaintainCodeService {
 
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-1", false, n_val, "mc_id", "ID"));
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-1", false, n_val, "mc_g_id", "群組ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "mc_g_name", "維修群組名稱"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", true, n_val, "mc_g_name", "維修群組名稱"));
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "mc_name", "維修名稱"));
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "mc_value", "維修代號"));
 
@@ -90,6 +91,7 @@ public class MaintainCodeService {
 			JSONArray obj_g_m = new JSONArray();
 			// obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-2", "mc_g_name"));
 			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-2", "mc_name"));
+			obj_g_m.put(FFS.h_g(FFS.SHO, "col-md-2", "mc_g_name"));
 			bean.setCell_g_modify(obj_g_m);
 
 			// 放入包裝(search)
@@ -137,7 +139,8 @@ public class MaintainCodeService {
 			object_bodys.put(object_body);
 		});
 		bean.setBody(new JSONObject().put("search", object_bodys));
-		bean.setBody_type("fatherSon");
+		// 是否為群組模式? type:[group/general] || 新增時群組? createOnly:[all/general]
+		bean.setBody_type(new JSONObject("{'type':'group','createOnly':'all'}"));
 		return bean;
 	}
 
@@ -207,6 +210,7 @@ public class MaintainCodeService {
 			JSONArray list = body.getJSONArray("save_as");
 			String mc_g_name = "";
 			int mc_g_id = 0;
+			List<MaintainCode> sys_c_s = new ArrayList<MaintainCode>();
 			for (Object one : list) {
 				// 物件轉換
 				MaintainCode sys_c = new MaintainCode();
@@ -214,17 +218,20 @@ public class MaintainCodeService {
 				sys_c.setMcgid(data.getInt("mc_g_id"));
 				sys_c.setMcgname(data.getString("mc_g_name"));
 				// 檢查代碼重複/名稱?
-				if (mcDao.findAllByMcvalueAndSysheader(data.getString("mc_value"),  false).size() > 0) {
+				if (mcDao.findAllByMcvalue(data.getString("mc_value")).size() > 0) {
 					return false;
 				}
-				// 檢查是否在特定屬性下
-				ArrayList<MaintainCode> mc = mcDao.findAllBySysheaderAndMcgname(true, data.getString("mc_g_name"));
-				if (mc.size() == 0 && mc_g_id == 0) {
+				if (mc_g_id == 0) {
+					// 檢查是否在特定屬性下
+					ArrayList<MaintainCode> mc = mcDao.findAllBySysheaderAndMcgname(true, data.getString("mc_g_name"));
+					if (mc.size() > 0) {
+						return false;
+					}
 					// 父類別
 					mc_g_id = mcDao.getMaintain_code_g_seq();
 					mc_g_name = data.getString("mc_g_name");
 					sys_c.setMcgid(mc_g_id);
-					sys_c.setMcgname(data.getString("mc_g_name"));
+					sys_c.setMcgname(mc_g_name);
 					sys_c.setMcname("");
 					sys_c.setMcvalue(data.getString("mc_value"));
 					sys_c.setSysnote("");
@@ -233,12 +240,11 @@ public class MaintainCodeService {
 					sys_c.setSysheader(true);
 					sys_c.setSysmuser(user.getSuname());
 					sys_c.setSyscuser(user.getSuname());
-					mcDao.save(sys_c);
-
+					// mcDao.save(sys_c);
 				} else {
 					// 子類別
-					sys_c.setMcgid(mc_g_id == 0 ? mc.get(0).getMcgid() : mc_g_id);
-					sys_c.setMcgname(mc_g_name.equals("") ? mc.get(0).getMcgname() : mc_g_name);
+					sys_c.setMcgid(mc_g_id);
+					sys_c.setMcgname(mc_g_name);
 					sys_c.setMcname(data.getString("mc_name"));
 					sys_c.setMcvalue(data.getString("mc_value"));
 					sys_c.setSysnote("");
@@ -247,9 +253,11 @@ public class MaintainCodeService {
 					sys_c.setSysheader(false);
 					sys_c.setSysmuser(user.getSuname());
 					sys_c.setSyscuser(user.getSuname());
-					mcDao.save(sys_c);
+					// mcDao.save(sys_c);
 				}
+				sys_c_s.add(sys_c);
 			}
+			mcDao.saveAll(sys_c_s);
 			check = true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -262,6 +270,7 @@ public class MaintainCodeService {
 	public boolean updateData(JSONObject body, SystemUser user) {
 		boolean check = false;
 		try {
+			List<MaintainCode> sys_p_s = new ArrayList<MaintainCode>();
 			JSONArray list = body.getJSONArray("modify");
 			String mc_g_name = "";
 			for (Object one : list) {
@@ -282,7 +291,8 @@ public class MaintainCodeService {
 					sys_p.setSysheader(true);
 					sys_p.setSysmuser(user.getSuname());
 					sys_p.setSysmdate(new Date());
-					mcDao.save(sys_p);
+					sys_p_s.add(sys_p);
+					// mcDao.save(sys_p);
 				} else {
 					// 子
 					sys_p.setMcid(data.getInt("mc_id"));
@@ -296,9 +306,11 @@ public class MaintainCodeService {
 					sys_p.setSysheader(false);
 					sys_p.setSysmuser(user.getSuname());
 					sys_p.setSysmdate(new Date());
-					mcDao.save(sys_p);
+					sys_p_s.add(sys_p);
+					// mcDao.save(sys_p);
 				}
 			}
+			mcDao.saveAll(sys_p_s);
 			// 有更新才正確
 			if (list.length() > 0) {
 				check = true;

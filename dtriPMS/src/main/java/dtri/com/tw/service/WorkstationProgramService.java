@@ -47,8 +47,8 @@ public class WorkstationProgramService {
 			int ord = 0;
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "wp_id", FFS.h_t("ID", "100px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "wp_g_id", FFS.h_t("群組ID", "100px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "wp_name", FFS.h_t("工作程序名稱", "150px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "wp_c_name", FFS.h_t("工作程序代號", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "wp_name", FFS.h_t("程序名稱", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "wp_c_name", FFS.h_t("程序代號", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "wp_w_g_id", FFS.h_t("工作站ID", "100px", FFS.SHO));
 
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_c_date", FFS.h_t("建立時間", "150px", FFS.SHO));
@@ -60,7 +60,7 @@ public class WorkstationProgramService {
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_sort", FFS.h_t("排序", "100px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_ver", FFS.h_t("版本", "100px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_status", FFS.h_t("狀態", "100px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_header", FFS.h_t("群組代表", "100px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_header", FFS.h_t("群組", "100px", FFS.SHO));
 
 			bean.setHeader(object_header);
 
@@ -69,12 +69,12 @@ public class WorkstationProgramService {
 			JSONArray n_val = new JSONArray();
 			JSONArray a_val = new JSONArray();
 
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-1", false, n_val, "sys_header", "工作程序代表"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-1", false, n_val, "sys_header", "群組?"));
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-1", false, n_val, "wp_id", "ID"));
 
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false, n_val, "wp_g_id", "群組ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, n_val, "wp_name", "工作程序名稱"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.SHO, "col-md-1", true, n_val, "wp_c_name", "工作程序代號"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", true, n_val, "wp_name", "程序名稱"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-1", true, n_val, "wp_c_name", "程序代號"));
 
 			JSONArray a_vals = new JSONArray();
 			workstations = workstationDao.findAllBySysheader(true, PageRequest.of(0, 999));
@@ -109,6 +109,9 @@ public class WorkstationProgramService {
 			
 			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-1", "sys_sort"));
 			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-2", "wp_w_g_id"));
+			
+			obj_g_m.put(FFS.h_g(FFS.SHO, "col-md-2", "wp_name"));
+			obj_g_m.put(FFS.h_g(FFS.SHO, "col-md-1", "wp_c_name"));
 			bean.setCell_g_modify(obj_g_m);
 			
 			
@@ -157,7 +160,8 @@ public class WorkstationProgramService {
 			object_bodys.put(object_body);
 		});
 		bean.setBody(new JSONObject().put("search", object_bodys));
-		bean.setBody_type("fatherSon");
+		//是否為群組模式? type:[group/general] || 新增時群組? createOnly:[all/general] 
+		bean.setBody_type(new JSONObject("{'type':'group','createOnly':'all'}"));
 		return bean;
 	}
 
@@ -203,18 +207,20 @@ public class WorkstationProgramService {
 					wp_c_name = data.getString("wp_c_name");
 					wp_name = data.getString("wp_name");
 
-					// 子類別
-					sys_c.setWpgid(wpgid);
-					sys_c.setWpcname(data.getString("wp_c_name"));
-					sys_c.setWpname(data.getString("wp_name"));
-					sys_c.setWpwgid(data.getInt("wp_w_g_id"));
-					sys_c.setSyssort(data.getInt("sys_sort"));
-					sys_c.setSysstatus(0);
-					sys_c.setSysnote("");
-					sys_c.setSysheader(false);
-					sys_c.setSysmuser(user.getSuname());
-					sys_c.setSyscuser(user.getSuname());
-					programDao.save(sys_c);
+					if(list.length()==1) {
+						// 子類別
+						sys_c.setWpgid(wpgid);
+						sys_c.setWpcname(data.getString("wp_c_name"));
+						sys_c.setWpname(data.getString("wp_name"));
+						sys_c.setWpwgid(data.getInt("wp_w_g_id"));
+						sys_c.setSyssort(data.getInt("sys_sort"));
+						sys_c.setSysstatus(0);
+						sys_c.setSysnote("");
+						sys_c.setSysheader(false);
+						sys_c.setSysmuser(user.getSuname());
+						sys_c.setSyscuser(user.getSuname());
+						programDao.save(sys_c);						
+					}
 
 				} else {
 					// 添加到該類子類別

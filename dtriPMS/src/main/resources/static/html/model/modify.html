@@ -365,6 +365,24 @@
 				this.modify_g_datas = title;
 				console.log(this.modify_g_datas);
 			},
+			setDataTitleUpdate(title){
+				//更新樣板
+				
+				console.log();
+				for(var s=0;s<title.length;s++){
+					
+					var t_s = this.create_example_tr[0].children[2].children[0].children;
+					for(var t=0;t<t_s.length;t++){
+						var classN = this.create_example_tr[0].children[2].children[0].children[t].className;
+						if(classN.indexOf(title[s].id)>1){
+							console.log(classN+" : "+title[s].id+" : "+title[s].value+" : "+(classN.indexOf(title[s].id)>1));
+							this.create_example_tr[0].children[2].children[0].children[t].children[1].children[0].value = title[s].value;
+							console.log(this.create_example_tr[0].children[2].children[0].children[t].children[1].children);
+						}
+					}
+				}
+			},
+			
 			setDataTitle(title){
 				//標題注入資訊(Detail / Create / Modify)
 				for(var d =0;d<title.length;d++){
@@ -994,6 +1012,23 @@
                     var create_example = modify.create_example_tr.clone();
                     create_example[0].id="create_really_tr_"+modify.create_nb;
                     create_example.appendTo(".create_example");
+                   
+                    //群組類型-呈現形式
+                    if($(".create_really_tr").length==0 && main.allData.body_type.type=="group"){
+                   		//呈現群組
+                    	if(main.allData.body_type.createOnly=="all"){
+	                    	$('#'+create_example[0].id+" .create_example_group").addClass('d-none');                		
+	                    	//群組特定設定
+							for(var g =0;g<modify.modify_g_datas.length;g++){
+								if(modify.modify_g_datas[g].show=="disabled"){
+									//不顯示?
+		    						$("#create_really_tr_"+modify.create_nb+" ."+modify.modify_g_datas[g].id+" .save_value").attr("disabled","disabled");
+								}else{
+									$("#create_really_tr_"+modify.create_nb+" ."+modify.modify_g_datas[g].id+" .save_value").removeAttr("disabled");
+								}
+							}
+                    	}
+                    }
                     
                     //交換顯示按鈕+添加ID
                     $("#create_really_tr_"+modify.create_nb+" .create_example_remove .bi").removeClass("d-none");

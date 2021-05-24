@@ -17,7 +17,7 @@
 
 <div id="workstation" class="text-left shadow">
 	<div class=" bg-white rounded-top m-0 pl-1 h5">
-		<i class="bi bi-joystick mr-1"></i>Workstation-<b class="h6" id="workstation_name">Loading...</b>
+		<i class="bi bi-joystick mr-1"></i>Workstation-><b class="h6" id="workdatation_program_name">Loading...</b>/<b class="h6" id="workstation_name">Loading...</b>
 	</div>
 	<div class="p-2">
 		<form onsubmit="return workstation.send_command();">
@@ -81,7 +81,7 @@
 
 						</td>
 					</tr>
-					<tr id="barcode_work" class="w_i_1 font-weight-bold">
+					<tr id="barcode_action" class="font-weight-bold">
 						<!-- 動作機制 -->
 						<td colspan="2" rowspan="100" class="p-0 pl-1 pr-1  text-center small border-dark border">
 							<div class="barcode_open" style="display: none;">
@@ -215,7 +215,7 @@
 							<div class="row p-1 m-0 border  border-light rounded">
 								<div class="col-5 p-1 m-0">*Workstation Code:</div>
 								<div class="col-7 p-0">
-									<input id="w_focus_1" disabled="disabled" class="w_sn_value col p-1 border-1 border-primary rounded" type="text" required>
+									<input title="w_c_name" id="w_focus_1" disabled="disabled" class="w_sn_value col p-1 border-1 border-primary rounded" type="text" required>
 								</div>
 							</div>
 						</td>
@@ -237,7 +237,7 @@
 							<div class=" row p-1 m-0 border border-light rounded">
 								<div class="col-5 p-1 m-0">*Product Order:</div>
 								<div class="col-7 p-0">
-									<input id="w_focus_2" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
+									<input title="ph_pr_id" id="w_focus_2" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
 							</div>
 						</td>
@@ -260,7 +260,7 @@
 							<div class=" row p-1 m-0 border border-light rounded">
 								<div class="col-5 p-1 m-0">*Product Patch:</div>
 								<div class="col-7 p-0">
-									<input id="w_focus_3" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
+									<input title="pb_position" id="w_focus_3" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
 							</div>
 						</td>
@@ -282,7 +282,7 @@
 							<div class=" row p-1 m-0 border border-light rounded">
 								<div class="col-5 p-1 m-0">*Error Code:</div>
 								<div class="col-7 p-0">
-									<input id="w_focus_4" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
+									<input title="pb_f_value" id="w_focus_4" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
 							</div>
 						</td>
@@ -308,7 +308,7 @@
 									<div>*Product SN:</div>
 								</div>
 								<div class="col-7 p-0">
-									<input id="w_focus_5" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
+									<input title="pb_sn" id="w_focus_5" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
 							</div>
 						</td>
@@ -533,7 +533,7 @@
 			});
 			//fix_open 顯示?
 			$(document).on("click", "#fix_open", function (event) {
-			    console.log("doc_open");
+			    console.log("fix_open");
 			    $("#fix_t_open").slideToggle("fast");
 			    //如果顯示則關閉
 			    if($("#fix_i_open").css('display')!='none'){
@@ -675,14 +675,16 @@
 						//進行查詢
 						if(w_focus_1!="" && w_focus_2!="" && w_focus_5!=""){
 							workstation.sendCheck();
-							
+							//如果顯示則關閉
+						    if($("#doc_status").css('display')=='none'){
+								$("#doc_open" ).trigger( "click" );
+						    }	
+						}else{
+							//如果顯示則關閉
+						    if($("#doc_status").css('display')!='none'){
+								$("#doc_open" ).trigger( "click" );
+						    }	
 						}
-						
-						
-					    //如果顯示則關閉
-					    if($("#doc_status").css('display')=='none'){
-							$("#doc_open" ).trigger( "click" );
-					    }
 						return false;
 						break;
 					case "BC004":
@@ -918,6 +920,39 @@
 			//存檔
 			sendSave() {
 				console.log("sendSave");
+				var action = "";
+				var	s_type = "POST";
+				var s_url = "";
+				var	s_data = {};
+				var req = {};
+				req.user="";
+				req.date=new Date();
+				req.body={};
+				req.page_total=this.page_total;
+				req.page_batch=this.page_batch;
+				req.page_now_nb=this.page_now_nb;
+				req.html_body= "";
+				req.call_bk_fn="modify";
+				req.call_bk_vals={};
+				s_data.req_content = req;
+				//modify
+				var modify_one={};
+				for(var c = 0 ;c<$(".w_sn_value").length;c++){
+					var title = $(".w_sn_value")[c].title;
+					var id = $(".w_sn_value")[c].id;
+					modify_one[title] = $("#"+id).val();
+					
+				}
+				//包裝(action = AR_AC/AR_AU/AR_AD)
+				action = "AU";
+				s_type = "PUT";
+				s_url = (t_body.html_body+"."+action).replace('html','basil').replace('body_','');
+				req.action=action;
+				req.body={};
+				req.body['modify'] = modify_one;
+				req.call_bk_vals={};
+				main.ajaxSend(s_url, s_type, s_data);
+				
 
 			},
 			//檢查
@@ -975,11 +1010,13 @@
 					sn_list_tr.insertBefore("#sn_example");
 					$(".w_i_"+(nb+i)+" .w_sn_name").text(value);
 					$(".w_i_"+(nb+i)+" .w_sn_value").attr("id","w_focus_"+(nb+i));
+					$(".w_i_"+(nb+i)+" .w_sn_value").attr("title",key);
 				}
 				 
 				 //更新工作站
 				 $("#workstation_name").text( main.allData.body.workdatation_name);
-				
+				 $("#workdatation_program_name").text( main.allData.body.workdatation_program_name);
+				 
 				 
 				 //自動位移
 				 if($(".sn_list").length>0){

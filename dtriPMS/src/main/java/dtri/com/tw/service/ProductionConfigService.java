@@ -70,7 +70,7 @@ public class ProductionConfigService {
 					String value = (String) method.invoke(body_one);
 					String key = "pb_value" + String.format("%02d", j + 1);
 
-					a_val_body.put((new JSONObject()).put("value", value == null ? key : value).put("key", key));
+					a_val_body.put((new JSONObject()).put("value", key).put("key", key));
 
 				} catch (NoSuchMethodException e) {
 					e.printStackTrace();
@@ -113,7 +113,7 @@ public class ProductionConfigService {
 			pb_value = pb_value.equals("") ? null : pb_value;
 		}
 		productionBodys = bodyDao.findAllByPbid(0);
-
+		String pb_value_check = pb_value;
 		// 放入包裝(body) [01 是排序][_b__ 是分割直][資料庫欄位名稱]
 		JSONArray object_bodys = new JSONArray();
 		productionBodys.forEach(one -> {
@@ -126,6 +126,11 @@ public class ProductionConfigService {
 					method = one.getClass().getMethod(m_name);
 					String value = (String) method.invoke(one);
 					String name = "pb_value" + String.format("%02d", j + 1);
+					if (pb_value_check != null) {
+						if (value==null || value.indexOf(pb_value_check) < 0) {
+							continue;
+						}
+					}
 
 					JSONObject object_body = new JSONObject();
 					object_body.put(FFS.ord((ord += 1), FFS.B) + "pb_cell", name);

@@ -17,7 +17,7 @@ public interface SystemConfigDao extends JpaRepository<SystemConfig, Long> {
 	// 查詢一部分
 	@Query("SELECT c FROM SystemConfig c "
 			+ "WHERE (:scname is null or c.scname LIKE %:scname% ) and (:scgname is null or c.scgname LIKE %:scgname% ) and ( c.sysstatus = :sysstatus )  "
-			+ "order by c.scgid asc,c.sysmdate desc")
+			+ "order by c.scgid desc,c.sysmdate desc")
 	ArrayList<SystemConfig> findAllByConfig(@Param("scname") String scname, @Param("scgname") String scgname, @Param("sysstatus") Integer sysstatus,
 			Pageable pageable);
 

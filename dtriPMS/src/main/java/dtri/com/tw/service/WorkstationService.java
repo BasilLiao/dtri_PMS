@@ -93,8 +93,8 @@ public class WorkstationService {
 			workstationItems.forEach(s -> {
 				a_vals1.put((new JSONObject()).put("value", s.getWipbvalue()).put("key", s.getWiid()));
 			});
-			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, a_vals1, "w_i_id", "WI_項目ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "五碼[AA000]", "", FFS.SHO, "col-md-2", true, n_val, "w_c_name", "W_工作站碼"));
+			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "0", "0", FFS.SHO, "col-md-2", true, a_vals1, "w_i_id", "WI_項目ID"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "五碼[AA000]", "", FFS.DIS, "col-md-2", true, n_val, "w_c_name", "W_工作站碼"));
 
 			// sn關聯表-工作站
 			a_val = new JSONArray();
@@ -122,7 +122,7 @@ public class WorkstationService {
 					e.printStackTrace();
 				}
 			}
-			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, a_val, "w_pb_cell", "W_工作站[欄]"));
+			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, " ", " ", FFS.DIS, "col-md-2", true, a_val, "w_pb_cell", "W_工作站[欄]"));
 			// obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false,
 			// n_val, "w_pb_name", "W_工作站[名]"));
 
@@ -132,7 +132,7 @@ public class WorkstationService {
 			systemGroup.forEach(e -> {
 				a_vals2.put((new JSONObject()).put("value", e.getSgname()).put("key", e.getSggid()));
 			});
-			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, a_vals2, "w_sg_id", "SU_[群組]ID"));
+			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, " ", " ", FFS.DIS, "col-md-2", true, a_vals2, "w_sg_id", "SU_[群組]ID"));
 			// obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false,
 			// n_val, "w_sg_name", "SU_[群組]名"));
 
@@ -158,6 +158,14 @@ public class WorkstationService {
 			// a_val, "sys_status", "狀態"));
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-1", false, n_val, "sys_header", "群組?"));
 			bean.setCell_modify(obj_m);
+
+			// 放入群主指定 [(key)](modify/Create/Delete) 格式
+			JSONArray obj_g_m = new JSONArray();
+			obj_g_m.put(FFS.h_g(FFS.SHO, "col-md-2", "w_c_name"));
+			obj_g_m.put(FFS.h_g(FFS.SHO, "col-md-2", "w_pb_cell"));
+			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-2", "w_i_id"));
+			obj_g_m.put(FFS.h_g(FFS.SHO, "col-md-2", "w_sg_id"));
+			bean.setCell_g_modify(obj_g_m);
 
 			// 放入包裝(search)
 			JSONArray object_searchs = new JSONArray();
@@ -209,7 +217,8 @@ public class WorkstationService {
 			object_bodys.put(object_body);
 		});
 		bean.setBody(new JSONObject().put("search", object_bodys));
-		bean.setBody_type("fatherSon");
+		// 是否為群組模式? type:[group/general] || 新增群組? createOnly:[all/general]
+		bean.setBody_type(new JSONObject("{'type':'group','createOnly':'all'}"));
 		return bean;
 	}
 
@@ -219,22 +228,28 @@ public class WorkstationService {
 		boolean check = false;
 		try {
 			JSONArray list = body.getJSONArray("create");
-			String wc_name = "";
-			Integer wc_g_id = 0;
+			// 工作站名稱 /ID
+			String w_c_name = "";
+			Integer w_g_id = 0;
+			// 對應欄位 (工作站/欄位)
 			String w_pb_value = "";
 			String w_pb_cell = "";
-			Method method;
+			// 使用者群組
+			Integer w_sg_id = 0;
+			String w_sg_name = "";
+			// 工作站
+			ArrayList<Workstation> work_s = new ArrayList<Workstation>();
+
 			List<SystemGroup> systemGroup = new ArrayList<SystemGroup>();
 			for (Object one : list) {
 				JSONObject data = (JSONObject) one;
-				if (wc_g_id == 0) {
-					// 使用者群組
-					systemGroup = groupDao.findBySggidOrderBySggidAscSyssortAsc(data.getInt("w_sg_id"));
-					ProductionBody body_one = bodyDao.findAllByPbid(0).get(0);
+
+				if (w_g_id == 0) {
 					// 取得工作欄位 位置
+					ProductionBody body_one = bodyDao.findAllByPbid(0).get(0);
 					String w_pb_name = data.getString("w_pb_cell").replace("pb_w_name", "getPbwname");
 					try {
-						method = body_one.getClass().getMethod(w_pb_name);
+						Method method = body_one.getClass().getMethod(w_pb_name);
 						w_pb_value = (String) method.invoke(body_one);
 						w_pb_cell = data.getString("w_pb_cell");
 					} catch (NoSuchMethodException e) {
@@ -248,63 +263,75 @@ public class WorkstationService {
 					} catch (InvocationTargetException e) {
 						e.printStackTrace();
 					}
-				}
-				// 物件轉換
-				Workstation sys_t = new Workstation();
-				WorkstationItem sys_ti = new WorkstationItem();
-				sys_ti.setWiid(data.getInt("w_i_id"));
-				sys_t.setWorkstationItem(sys_ti);
-				sys_t.setWcname(data.getString("w_c_name"));
-				sys_t.setWpbcell(w_pb_cell);
-				sys_t.setWpbname(w_pb_value);
-				sys_t.setWsgid(systemGroup.get(0).getSggid());
-				sys_t.setWsgname(systemGroup.get(0).getSgname());
-				sys_t.setSysnote("");
-				sys_t.setSyssort(data.getInt("sys_sort"));
-				sys_t.setSysstatus(0);
-				sys_t.setSysheader(false);
-				sys_t.setSysmuser(user.getSuname());
-				sys_t.setSyscuser(user.getSuname());
 
-				// 檢查_工作站碼重複
-				ArrayList<Workstation> sys_t_g = workstationDao.findAllByWcname(sys_t.getWcname(), PageRequest.of(0, 1));
+				}
+				// 檢查_工作站碼_重複
+				work_s = workstationDao.findAllByWcname(data.getString("w_c_name"), PageRequest.of(0, 1));
 				// 檢查工作站 w_pb_cell 欄位重複
-				if (sys_t_g.size() == 0) {
-					sys_t_g = workstationDao.findAllByWpbcell(sys_t.getWpbcell(), PageRequest.of(0, 1));
+				if (work_s.size() == 0) {
+					work_s = workstationDao.findAllByWpbcell(w_pb_cell, PageRequest.of(0, 1));
 				}
 
-				if (sys_t_g != null && sys_t_g.size() > 0) {
-					// 重複 則取同樣G_ID && 登入為子類別
-					sys_t.setWcname(sys_t_g.get(0).getWcname());
-					sys_t.setWgid(sys_t_g.get(0).getWgid());
+				// 重複 則取同樣G_ID && 登入為子類別
+				if (work_s != null && work_s.size() > 0) {
+					// 使用者群組
+					systemGroup = groupDao.findBySggidOrderBySggidAscSyssortAsc(work_s.get(0).getWsgid());
+					w_sg_id = systemGroup.get(0).getSggid();
+					w_sg_name = systemGroup.get(0).getSgname();
+
+					Workstation sys_t = new Workstation();
+					WorkstationItem sys_ti = new WorkstationItem();
+					sys_ti.setWiid(data.getInt("w_i_id"));
+					sys_t.setWorkstationItem(sys_ti);
+					
+					sys_t.setWpbcell(w_pb_cell);
+					sys_t.setWpbname(w_pb_value);
+					sys_t.setWsgid(w_sg_id);
+					sys_t.setWsgname(w_sg_name);
+					
+					sys_t.setWcname(work_s.get(0).getWcname());
+					sys_t.setWgid(work_s.get(0).getWgid());
 					sys_t.setSysheader(false);
+					sys_t.setSysmuser(user.getSuname());
+					sys_t.setSyscuser(user.getSuname());
+					sys_t.setSysnote("");
+					sys_t.setSyssort(data.getInt("sys_sort"));
+					sys_t.setSysstatus(0);
+					workstationDao.save(sys_t);
+
 				} else {
+					// && 登入為父類別
+					// 使用者群組
+					systemGroup = groupDao.findBySggidOrderBySggidAscSyssortAsc(data.getInt("w_sg_id"));
+					w_sg_id = systemGroup.get(0).getSggid();
+					w_sg_name = systemGroup.get(0).getSgname();
+
 					// 取得最新G_ID && 登記為父類別
-					wc_g_id = workstationDao.getProduction_workstation_g_seq();
-					wc_name = sys_t.getWcname();
+					w_g_id = workstationDao.getProduction_workstation_g_seq();
+					w_c_name = data.getString("w_c_name");
+					
 					WorkstationItem sys_ti_f = new WorkstationItem();
-					sys_ti_f.setWiid(0);
 					Workstation sys_t_f = new Workstation();
-					sys_t_f.setWgid(wc_g_id);
-					sys_t_f.setWcname(wc_name);
+					sys_ti_f.setWiid(0);
+					sys_t_f.setWorkstationItem(sys_ti_f);
+					
+					sys_t_f.setWgid(w_g_id);
+					sys_t_f.setWcname(w_c_name);
+
 					sys_t_f.setSysheader(true);
 					sys_t_f.setWpbcell(w_pb_cell);
 					sys_t_f.setWpbname(w_pb_value);
-					sys_t_f.setWorkstationItem(sys_ti_f);
 					sys_t_f.setSysnote("");
 					sys_t_f.setSyssort(data.getInt("sys_sort"));
 					sys_t_f.setSysstatus(0);
-					sys_t_f.setWsgid(systemGroup.get(0).getSggid());
-					sys_t_f.setWsgname(systemGroup.get(0).getSgname());
+					sys_t_f.setWsgid(w_sg_id);
+					sys_t_f.setWsgname(w_sg_name);
 					sys_t_f.setSysmuser(user.getSuname());
 					sys_t_f.setSyscuser(user.getSuname());
-					workstationDao.save(sys_t_f);
 
-					sys_t.setWgid(wc_g_id);
-					sys_t.setWcname(wc_name);
+					workstationDao.save(sys_t_f);
 				}
 
-				workstationDao.save(sys_t);
 			}
 			check = true;
 		} catch (Exception e) {

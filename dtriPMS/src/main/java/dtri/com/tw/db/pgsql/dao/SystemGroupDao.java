@@ -20,12 +20,15 @@ public interface SystemGroupDao extends JpaRepository<SystemGroup, Long> {
 
 	// 查詢群組名稱
 	@Query("SELECT c FROM SystemGroup c "
-			+ "WHERE  (:sgname is null or c.sgname = :sgname) and ( c.sysstatus = :sysstatus ) and ((:sggid) is null or c.sggid in (:sggid)) "
+			+ "WHERE  (:sgname is null or c.sgname LIKE %:sgname%) and ( c.sysstatus = :sysstatus ) and ((:sggid) is null or c.sggid in (:sggid)) "
 			+ "order by c.sggid asc, c.sgid asc")
 	List<SystemGroup> findAllBySystemGroup(String sgname, Integer sysstatus, List<Integer> sggid);
 
 	// 查詢群組[頭]數量
 	List<SystemGroup> findAllBySysheader(boolean sysheader, Pageable p);
+	
+	// 查詢群組[頭]數量不包含 Admin群組
+		List<SystemGroup> findAllBySysheaderAndSgidNot(boolean sysheader,Integer sgid, Pageable p);
 
 	// 查詢群組分頁
 	List<SystemGroup> findAllByOrderBySggidAscSgidAsc(Pageable p);

@@ -26,7 +26,7 @@ public class PackageBean {
 	private String action;// 請求 動作行為
 	private JSONObject header;// title 名稱表
 	private JSONObject body;// 資料 內 容物
-	private String body_type;// 資料 內 容物類型()
+	private JSONObject body_type;// 資料 內 [容物類型群組][新增需不需要:群組/只有一般] (type:group,createOnly:(all/general))
 	private Integer page_total;// 每次 總頁數 ex :10
 	private Integer page_batch;// 第幾批
 	private Integer page_now_nb;// 第幾分頁
@@ -39,12 +39,14 @@ public class PackageBean {
 	private JSONObject info_user;// 使用者資訊
 	private JSONArray cell_searchs;// 查詢欄位
 	private JSONArray cell_modify;// 修改欄位
+	private JSONArray cell_refresh;// 修改欄位更新
+	
 	private JSONArray cell_g_modify;// 修改群組欄位
 
 	public PackageBean() {
 		this.info = info_message_danger + info_administrator;
 		this.info_color = info_color_danger;
-		this.body_type = "general";//general / fatherSon
+		this.body_type = new JSONObject("{'type':'general','createOnly':'all'}");//
 		this.date = new Date();
 	}
 
@@ -176,11 +178,11 @@ public class PackageBean {
 		this.call_bk_vals = call_bk_vals;
 	}
 
-	public String getBody_type() {
+	public JSONObject getBody_type() {
 		return body_type;
 	}
 
-	public void setBody_type(String body_type) {
+	public void setBody_type(JSONObject body_type) {
 		this.body_type = body_type;
 	}
 
@@ -198,6 +200,14 @@ public class PackageBean {
 
 	public void setCell_g_modify(JSONArray cell_g_modify) {
 		this.cell_g_modify = cell_g_modify;
+	}
+
+	public JSONArray getCell_refresh() {
+		return cell_refresh;
+	}
+
+	public void setCell_refresh(JSONArray cell_refresh) {
+		this.cell_refresh = cell_refresh;
 	}
 	
 }

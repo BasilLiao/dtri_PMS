@@ -90,8 +90,9 @@ public class ProductionSnService {
 			JSONArray obj_g_m = new JSONArray();
 			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-2", "ps_name"));
 			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-2", "ps_value"));
+			obj_g_m.put(FFS.h_g(FFS.SHO, "col-md-2", "ps_g_name"));
 			bean.setCell_g_modify(obj_g_m);
-			
+
 			// 放入包裝(search)
 			JSONArray object_searchs = new JSONArray();
 			object_searchs.put(FFS.h_s(FFS.INP, FFS.TEXT, "", "col-md-2", "ps_g_name", "規則群組名稱", n_val));
@@ -137,7 +138,10 @@ public class ProductionSnService {
 			object_bodys.put(object_body);
 		});
 		bean.setBody(new JSONObject().put("search", object_bodys));
-		bean.setBody_type("fatherSon");
+		//bean.setBody_type("fatherSon");
+		//是否為群組模式? type:[group/general] || 新增群組? createOnly:[all/general] 
+		bean.setBody_type(new JSONObject("{'type':'group','createOnly':'all'}"));
+		
 		return bean;
 	}
 
@@ -156,8 +160,8 @@ public class ProductionSnService {
 				if (sn.size() == 0) {
 					return false;
 				}
-				sys_c.setPsgid(data.getInt("ps_g_id"));
-				sys_c.setPsgname(data.getString("ps_g_name"));
+				sys_c.setPsgid(sn.get(0).getPsgid());
+				sys_c.setPsgname(sn.get(0).getPsgname());
 				sys_c.setPsname(data.getString("ps_name"));
 				sys_c.setPsvalue(data.getString("ps_value"));
 				sys_c.setSysnote("");
@@ -191,8 +195,8 @@ public class ProductionSnService {
 				if (sn.size() == 0) {
 					return false;
 				}
-				sys_c.setPsgid(data.getInt("ps_g_id"));
-				sys_c.setPsgname(data.getString("ps_g_name"));
+				sys_c.setPsgid(sn.get(0).getPsgid());
+				sys_c.setPsgname(sn.get(0).getPsgname());
 				sys_c.setPsname(data.getString("ps_name"));
 				sys_c.setPsvalue(data.getString("ps_value"));
 				sys_c.setSysnote("");
@@ -217,25 +221,38 @@ public class ProductionSnService {
 		boolean check = false;
 		try {
 			JSONArray list = body.getJSONArray("modify");
+			String ps_g_name = "";
 			for (Object one : list) {
 				// 物件轉換
 				ProductionSN sys_p = new ProductionSN();
 				JSONObject data = (JSONObject) one;
-				// 父類別除外
-				if (!data.getBoolean("sys_header")) {
-					sys_p.setPsid(data.getInt("ps_id"));
-					sys_p.setPsgid(data.getInt("ps_g_id"));
-					sys_p.setPsname(data.getString("ps_name"));
-					sys_p.setPsgname(data.getString("ps_g_name"));
-					sys_p.setPsvalue(data.getString("sc_value"));
-					sys_p.setSysnote("");
-					sys_p.setSyssort(0);
-					sys_p.setSysstatus(0);
+				sys_p.setPsid(data.getInt("ps_id"));
+				sys_p.setPsgid(data.getInt("ps_g_id"));
+				sys_p.setPsname(data.getString("ps_name"));
+				sys_p.setPsgname(data.getString("ps_g_name"));
+				sys_p.setPsvalue(ps_g_name);
+				
+				
+				sys_p.setSysnote("");
+				sys_p.setSyssort(0);
+				sys_p.setSysstatus(0);
+				
+				sys_p.setSysmuser(user.getSuname());
+				sys_p.setSysmdate(new Date());
+				// 父類別
+				if (data.getBoolean("sys_header")) {
+					ps_g_name = data.getString("ps_g_name");
+					sys_p.setPsgname(ps_g_name);
+					sys_p.setSysheader(true);
+					sys_p.setPsname("");
+					snDao.save(sys_p);
+				} else {
+					// 子類別
+					sys_p.setPsgname(ps_g_name);
 					sys_p.setSysheader(false);
-					sys_p.setSysmuser(user.getSuname());
-					sys_p.setSysmdate(new Date());
 					snDao.save(sys_p);
 				}
+
 			}
 			// 有更新才正確
 			if (list.length() > 0) {

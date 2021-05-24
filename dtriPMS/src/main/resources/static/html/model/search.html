@@ -159,7 +159,7 @@
             page_show_size: main.page_show_size, //目前_每分頁顯示數量
             page_now_size: main.page_now_size, //目前_實際筆數
             page_now: main.page_now, //目前_頁數
-            data_type:"general",//資料: 一般模式(general) 父子群組模式(fatherSon)
+            data_type:"general",//資料: 一般模式(general) 父子群組模式(group)
             data_item_f_id:"",//父類別ID
             
         },
@@ -202,11 +202,11 @@
                 //關閉範例
                 $(".s_title_body").addClass("d-none");
             },
-            setDataList(list,type) {
-                //清單注入[資訊,類型(可能是一般類型(清單)/父子類型(壓縮))] general/fatherSon
+            setDataList(list,body_type) {
+                //清單注入[資訊,類型(可能是一般類型(清單)/父子類型(壓縮))] general/group
             	var data_item_sons =[];
-            	this.data_type = type;
-                console.log( list.length,type);
+            	this.data_type = body_type.type;
+                console.log( list.length,body_type.type);
                 
                 //舊有資料清除
                 if (list.length < 1) {
@@ -248,7 +248,7 @@
                         var key_id = Object.keys(list[j])[i];
                         var value_name = list[j][Object.keys(list[j])[i]];
                         //取得title Size顯示
-                        console.log(key_id+" "+value_name);
+                       // console.log(key_id+" "+value_name);
                         var value_size = $("#"+key_id.replace("_b__","_h__")).css("maxWidth");
                         //取得title 是否顯示
                         if($("#"+key_id.replace("_b__","_h__")).hasClass('d-none')){
@@ -265,8 +265,8 @@
                     }
                     $("#search_data_" + j + " .s_list_body").remove();
                     
-                    //vv--fatherSon__因為 父子類別 (只顯示父類資訊)/子類別另存--vv
-                    if(type=="fatherSon"){
+                    //vv--group因為 父子類別 (只顯示父類資訊)/子類別另存--vv
+                    if(body_type.type=="group"){
 	                    for (var i = 0; i < Object.keys(list[j]).length; i++) {
 		                    if((Object.keys(list[j])[i]).indexOf("sys_header")>=1){
 		                        var value_name = list[j][Object.keys(list[j])[i]];
@@ -288,7 +288,7 @@
 		        			}
 	                    }
                     }
-                  	//^^--fatherSon__因為 父子類別 (只顯示父類資訊)--^^
+                  	//^^--group__因為 父子類別 (只顯示父類資訊)--^^
                     
                 }
                 //關閉樣式
@@ -413,8 +413,8 @@
                             break;
                     }
 					
-                    //vv--fatherSon__因為 父子類別 (只顯示父類資訊)/子類別另存--vv
-                    if(this.data_type=="fatherSon"){
+                    //vv--group因為 父子類別 (只顯示父類資訊)/子類別另存--vv
+                    if(this.data_type=="group"){
     	                for (var k = 0; k < $("#data_item_son tbody ." + id).length; k++) {
     	                	var id_son = $("#data_item_son tbody ." + id)[k].id;
     	                    var obj_one_son = {};
@@ -444,7 +444,7 @@
     	                
     	                console.log(a_detail);
                     }
-                    //^^--fatherSon__因為 父子類別 (只顯示父類資訊)/子類別另存--^^
+                    //^^--group因為 父子類別 (只顯示父類資訊)/子類別另存--^^
                 }
                 obj_all.a_detail = a_detail;
                 obj_all.a_save_as = a_save_as;
@@ -511,6 +511,14 @@
             searchReturn() {
                 console.log("searchReturn");
                 this.setDataList(main.allData.body.search,main.allData.body_type);
+                if(main.allData.cell_refresh!=null){
+                    console.log(main.allData.cell_refresh);
+                 	//編輯-模板更新
+     				modify.setDataTitleUpdate(main.allData.cell_refresh);
+     				//modify.setDataTitleDelete(main.allData.header);
+     				//modify.selectAllInit();
+
+                }
             },
             //v====[分頁功能]====v
             pageInit() {

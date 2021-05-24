@@ -101,9 +101,9 @@ create sequence PRODUCTION_HEADER_G_SEQ start with 4 increment by 1;
 
 ----production_body
 INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_value01, pb_value02 ,pb_value03 ,pb_value04 ,pb_value05 ,pb_value06 ,pb_value07,pb_value08,pb_value09,pb_sn, sys_header,pb_w_name01,pb_w_name02,pb_w_name03,pb_w_name04,pb_w_name05,pb_w_name06,pb_w_name07,pb_w_name08) VALUES ( 0,0, 0,'MB(UUID)' ,'MAC_ID(1)' ,'MAC_ID(2)' ,'WiFi_MAC' ,'(4G)IMEI','Battery(1)','Battery(2)','Battery(3)','SSD','', true,'PCB_processing','PCB_burnin','PCB_function_test','Assembly','Burnin','T1','T2','Package');
-INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 1,1, 0, '06QP32110Z391' , false, '{A站:N,B站:Y}','主版號11');
-INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 2,1, 0, '06QP32110Z392' , false, '{A站:N,B站:Y}','主版號12');
-INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 3,1, 0, '06QP32110Z393' , false, '{A站:N,B站:Y}','主版號13');
+INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 1,1, 0, '06QP32110Z391' , false, '{"1":{"name":"PCB_processing","type":"N"},"5":{"name":"PCB_function_test","type":"N"}}','主版號11');
+INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 2,1, 0, '06QP32110Z392' , false, '{"1":{"name":"PCB_processing","type":"N"},"5":{"name":"PCB_function_test","type":"N"}}','主版號12');
+INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 3,1, 0, '06QP32110Z393' , false, '{"1":{"name":"PCB_processing","type":"N"},"5":{"name":"PCB_function_test","type":"N"}}','主版號13');
 
 INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 4,2, 0, 'A13W1CC140300' , false, '{A站:N,B站:Y}','主版號21');
 INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 5,2, 0, 'A13W1CC140301' , false, '{A站:N,B站:Y}','主版號22');

@@ -16,7 +16,7 @@ public class Fm_SN {
 	 * @param entity 規則
 	 * @param total  總數
 	 **/
-	public static JSONObject analyze_Sn(ArrayList<ProductionSN> entity, int total) {
+	public static JSONObject analyze_Sn(ArrayList<ProductionSN> entity,boolean added, int total) {
 		JSONObject obj = new JSONObject();
 		if (entity.size() < 1) {
 			return obj;
@@ -52,7 +52,8 @@ public class Fm_SN {
 		for (int i = 0; i < total; i++) {
 
 			// 流水號
-			sn_000_value = get000(sn_000_value);
+			sn_000_value = get000(sn_000_value,added);
+			added = true;
 			// 如果數字為0 則在 年週期 加1(進位)
 			if (sn_000_value.equals("000")) {
 				sn_YYWW_value = ("" + (Integer.parseInt(sn_YYWW_value) + 1));
@@ -72,18 +73,20 @@ public class Fm_SN {
 		return obj;
 	}
 
-	// 規則 流水號+1
-	public static String get000(String nb) {
+	// 規則 流水號+1/(如果是更新需要起始,不累加+0)
+	public static String get000(String nb,boolean added) {
 		int l = nb.length();
 		int s = Integer.parseInt(nb);
-		s += 1;
+		if(added) {
+			s += 1;			
+		}
 		String nb_new = String.format("%0" + l + "d", s);
 		if (nb_new.length() > l) {
 			nb_new = nb_new.substring(1, 4);
 		}
 		return nb_new;
 	}
-
+	
 	// 規則 取得年周
 	public static String getYYWW(String old_YYWW) {
 		Calendar cal = Calendar.getInstance();
