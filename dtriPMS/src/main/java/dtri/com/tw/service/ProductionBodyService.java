@@ -80,7 +80,7 @@ public class ProductionBodyService {
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_useful_sn", FFS.h_t("SN_狀態", "150px", FFS.SHO));
 
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_l_path", FFS.h_t("SN_檢測Log位置", "150px", FFS.SHO));
-			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_l_text", FFS.h_t("SN_檢測Log內容", "150px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_l_text", FFS.h_t("SN_檢測Log內容", "150px", FFS.DIS));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_l_size", FFS.h_t("SN_檢測Log大小", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "pb_schedule", FFS.h_t("SSN_過站設定", "150px", FFS.SHO));
 

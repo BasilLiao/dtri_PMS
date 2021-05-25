@@ -101,7 +101,7 @@ public class WorkstationWorkController {
 		// Step2.進行查詢
 		resp = workService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
 
-		if (resp != null) {
+		if (resp != null && resp.getBody() != null) {
 			// Step3.包裝回傳
 			resp = packageService.setObjResp(resp, req, info, info_color, one.getSppermission());
 		} else {

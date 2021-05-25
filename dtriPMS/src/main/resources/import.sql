@@ -1,11 +1,14 @@
 --system_config
-INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value,sys_header)VALUES (1, 1, 'FTP設定', 'IP', '10.0.0.1',true);
-INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (2, 1, 'FTP設定', 'PORT', '21');
-INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (3, 1, 'FTP設定', 'PATH', '/123/456/789');
-INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (4, 2, 'E_MAIL代理', '帳號', '123MES@gmail.com');
-INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (5, 2, 'E_MAIL代理', '密碼', '123MES');
-INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (6, 2, 'E_MAIL代理', '協定', 'POST');
-SELECT setval('public.system_config_seq', 6, true);
+INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (1, 1, 'FTP', 'IP', '10.1.89.72');
+INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (2, 1, 'FTP', 'PORT', '21');
+INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (3, 1, 'FTP', 'PATH', '/PMS_LOG/');
+INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (4, 1, 'FTP', 'PATH_BACKUP', '/PMS_LOG_BACKUP/');
+INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (5, 1, 'FTP', 'ACCOUNT', 'burn');
+INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (6, 1, 'FTP', 'PASSWORD', 'burn');
+INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (7, 2, 'E_MAIL_PROXY', '帳號', '123MES@gmail.com');
+INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (8, 2, 'E_MAIL_PROXY', '密碼', '123MES');
+INSERT INTO system_config(sc_id, sc_g_id, sc_g_name, sc_name, sc_value)VALUES (9, 2, 'E_MAIL_PROXY', '協定', 'POST');
+SELECT setval('public.system_config_seq', 9, true);
 DROP sequence IF EXISTS SYSTEM_CONFIG_G_SEQ CASCADE;
 create sequence SYSTEM_CONFIG_G_SEQ start with 3 increment by 1;
 
@@ -100,7 +103,7 @@ DROP sequence IF EXISTS PRODUCTION_HEADER_G_SEQ CASCADE;
 create sequence PRODUCTION_HEADER_G_SEQ start with 4 increment by 1;
 
 ----production_body
-INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_value01, pb_value02 ,pb_value03 ,pb_value04 ,pb_value05 ,pb_value06 ,pb_value07,pb_value08,pb_value09,pb_sn, sys_header,pb_w_name01,pb_w_name02,pb_w_name03,pb_w_name04,pb_w_name05,pb_w_name06,pb_w_name07,pb_w_name08) VALUES ( 0,0, 0,'MB(UUID)' ,'MAC_ID(1)' ,'MAC_ID(2)' ,'WiFi_MAC' ,'(4G)IMEI','Battery(1)','Battery(2)','Battery(3)','SSD','', true,'PCB_processing','PCB_burnin','PCB_function_test','Assembly','Burnin','T1','T2','Package');
+INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_value01, pb_value02 ,pb_value03 ,pb_value04 ,pb_value05 ,pb_value06 ,pb_value07,pb_value08,pb_value09,pb_sn, sys_header,pb_w_name01,pb_w_name02,pb_w_name03,pb_w_name04,pb_w_name05,pb_w_name06,pb_w_name07,pb_w_name08) VALUES ( 0,0, 0,'MB(UUID)' ,'LAN1 MAC' ,'LAN2 MAC' ,'WIFI MAC' ,'NVRAM MAC','IMEI','ECN','EC','BIOS','', true,'PCB_processing','PCB_burnin','PCB_function_test','Assembly','Burnin','T1','T2','Package');
 INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 1,1, 0, '06QP32110Z391' , false, '{"1":{"name":"PCB_processing","type":"N"},"5":{"name":"PCB_function_test","type":"N"}}','主版號11');
 INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 2,1, 0, '06QP32110Z392' , false, '{"1":{"name":"PCB_processing","type":"N"},"5":{"name":"PCB_function_test","type":"N"}}','主版號12');
 INSERT INTO production_body(pb_id,pb_g_id, sys_ver, pb_sn, sys_header, pb_schedule,pb_value01) VALUES ( 3,1, 0, '06QP32110Z393' , false, '{"1":{"name":"PCB_processing","type":"N"},"5":{"name":"PCB_function_test","type":"N"}}','主版號13');
@@ -117,11 +120,11 @@ SELECT setval('public.production_body_seq', 10, true);
 DROP sequence IF EXISTS PRODUCTION_BODY_G_SEQ CASCADE;
 create sequence PRODUCTION_BODY_G_SEQ start with 3 increment by 1;
 
---workstation_item
+--workstation_item 'MB(UUID)' ,'LAN1 MAC' ,'LAN2 MAC'
 INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (0, true,'Group' , 'Group');
-INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (1, false,'pb_value01' , 'SN_MB(UUID)');
-INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (2, false,'pb_value02' , 'SN_MAC_ID(1)');
-INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (3, false,'pb_value03' , 'SN_MAC_ID(2)');
+INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (1, false,'pb_value01' , 'MB(UUID)');
+INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (2, false,'pb_value02' , 'LAN1 MAC');
+INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (3, false,'pb_value03' , 'LAN2 MAC');
 SELECT setval('public.workstation_item_seq', 3, true);
 
 --workstation

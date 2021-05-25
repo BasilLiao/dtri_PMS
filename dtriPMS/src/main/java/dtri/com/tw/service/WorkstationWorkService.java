@@ -2,6 +2,7 @@ package dtri.com.tw.service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -11,7 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +27,7 @@ import dtri.com.tw.db.entity.WorkstationProgram;
 import dtri.com.tw.db.pgsql.dao.MaintainCodeDao;
 import dtri.com.tw.db.pgsql.dao.ProductionBodyDao;
 import dtri.com.tw.db.pgsql.dao.ProductionHeaderDao;
+import dtri.com.tw.db.pgsql.dao.SystemConfigDao;
 import dtri.com.tw.db.pgsql.dao.WorkstationDao;
 import dtri.com.tw.db.pgsql.dao.WorkstationProgramDao;
 import dtri.com.tw.tools.Fm_json;
@@ -43,20 +44,20 @@ public class WorkstationWorkService {
 	private WorkstationProgramDao wkpDao;
 	@Autowired
 	private MaintainCodeDao codeDao;
+	@Autowired
+	private FtpService ftpService;
+	@Autowired
+	private SystemConfigDao sysDao;
 
 	// 取得當前 資料清單
 	public PackageBean getData(JSONObject body, int page, int p_size) {
 		PackageBean bean = new PackageBean();
-		ArrayList<ProductionHeader> pHeaders = new ArrayList<ProductionHeader>();
-		ArrayList<ProductionBody> pBodys = new ArrayList<ProductionBody>();
-		ArrayList<Workstation> works = new ArrayList<Workstation>();
 
 		// 查詢的頁數，page=從0起算/size=查詢的每頁筆數
 		if (p_size < 1) {
 			page = 0;
 			p_size = 100;
 		}
-		PageRequest page_r = PageRequest.of(page, p_size, Sort.by("scgid").descending());
 		String w_c_name = null;
 		String ph_pr_id = null;
 		String pb_sn = null;
@@ -65,7 +66,7 @@ public class WorkstationWorkService {
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
 			// fix
-			ArrayList<MaintainCode> codes = codeDao.findAllByMaintainCode(null, null, 0, PageRequest.of(0, 999));
+			ArrayList<MaintainCode> codes = codeDao.findAllByMaintainCode(null, null, 0, PageRequest.of(0, 9999));
 			JSONObject fix_obj = new JSONObject();
 			JSONObject fix_type = new JSONObject();
 			String mc_g_code = "", mc_g_name = "";
@@ -147,29 +148,98 @@ public class WorkstationWorkService {
 
 			// 工作站
 			ArrayList<Workstation> w_one = wkDao.findAllByWcname(w_c_name, PageRequest.of(0, 1));
-			ArrayList<WorkstationProgram> wp_one = new ArrayList<WorkstationProgram>();
-			List<ProductionHeader> ph_one = new ArrayList<ProductionHeader>();
-			List<ProductionBody> pb_one = new ArrayList<ProductionBody>();
+			ArrayList<WorkstationProgram> wp_all = new ArrayList<WorkstationProgram>();
+			List<ProductionHeader> ph_all = new ArrayList<ProductionHeader>();
+			List<ProductionBody> pb_all = new ArrayList<ProductionBody>();
 
+			// Step1. FTP檢查[]
+			ArrayList<SystemConfig> config = sysDao.findAllByConfig(null, "FTP", 0, PageRequest.of(0, 99));
+			JSONObject c_json = new JSONObject();
+			config.forEach(c -> {
+				c_json.put(c.getScname(), c.getScvalue());
+			});
+			Integer year = Year.now().getValue();
+			String url = c_json.getString("IP"), //
+					username = c_json.getString("ACCOUNT"), //
+					password = c_json.getString("PASSWORD"), //
+					remotePath = c_json.getString("PATH") + year, //
+					remotePathBackup = c_json.getString("PATH_BACKUP"), //
+					localPath = "";//
+			int port = c_json.getInt("PORT");
+			String[] searchName = { ph_pr_id, "", pb_sn };
+			JSONArray list_log = ftpService.downFile(url, port, username, password, remotePath, remotePathBackup, searchName, localPath);
+			pb_all = pbDao.findAllByPbsn(pb_sn);
+
+			// Log 更新 資料
+			if (list_log != null && list_log.length() > 0 && list_log.getJSONObject(0).getBoolean("check")) {
+				JSONObject one = list_log.getJSONObject(0);
+
+				// 檢查所有可能對應的欄位
+				Iterator<String> keys = one.keys();
+				ProductionBody body_title = pbDao.findAllByPbid(0).get(0);
+				ProductionBody body_one = pb_all.get(0);
+				while (keys.hasNext()) {
+					String cell_key = keys.next();
+					// sn關聯表
+					int j = 0;
+					for (j = 0; j < 50; j++) {
+						String get_name = "getPbvalue" + String.format("%02d", j + 1);
+						String set_name = "setPbvalue" + String.format("%02d", j + 1);
+						try {
+							// 取出欄位名稱 ->存入body_title資料
+							Method set_method = body_one.getClass().getMethod(set_name, String.class);
+							Method get_method = body_title.getClass().getMethod(get_name);
+							String name = (String) get_method.invoke(body_title);
+
+							if (name != null && name.equals(cell_key)) {
+								set_method.invoke(body_one, one.getString(cell_key));
+								break;
+							} else if (name == null) {
+								break;
+							}
+
+						} catch (NoSuchMethodException e) {
+							e.printStackTrace();
+						} catch (SecurityException e) {
+							e.printStackTrace();
+						} catch (IllegalAccessException e) {
+							e.printStackTrace();
+						} catch (IllegalArgumentException e) {
+							e.printStackTrace();
+						} catch (InvocationTargetException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				body_one.setPbltext(one.getString("pb_l_text"));
+				body_one.setPblpath(one.getString("pb_l_path"));
+				body_one.setPblsize(one.getInt("pb_l_size") + "");
+				pbDao.save(body_one);
+			} else {
+				// 查無此單
+				return new PackageBean();
+			}
+
+			// Step2. 製令+工作站+SN關聯+Doc 檢查
 			ProductionRecords records = new ProductionRecords();
 			records.setPrid(ph_pr_id);
-			ph_one = phDao.findAllByProductionRecords(records);
+			ph_all = phDao.findAllByProductionRecords(records);
 			// 比對-檢查製令
-			if (ph_one.size() == 1) {
+			if (ph_all.size() == 1) {
 				// 比對-檢查程序+工作站
-				wp_one = wkpDao.findAllByWpgidAndWpwgidAndSysheaderOrderBySyssortAsc(ph_one.get(0).getPhwpid(), w_one.get(0).getWgid(), false);
-				if (wp_one.size() == 1) {
+				wp_all = wkpDao.findAllByWpgidAndWpwgidAndSysheaderOrderBySyssortAsc(ph_all.get(0).getPhwpid(), w_one.get(0).getWgid(), false);
+				if (wp_all.size() == 1) {
 					// 比對-檢查SN關聯
-					pb_one = pbDao.findAllByPbsnAndPbgid(pb_sn, ph_one.get(0).getPhpbgid());
-					if (pb_one.size() == 1) {
+					pb_all = pbDao.findAllByPbsnAndPbgid(pb_sn, ph_all.get(0).getPhpbgid());
+					if (pb_all.size() == 1) {
 
 						// 放入包裝(body) [01 是排序][_b__ 是分割直][資料庫欄位名稱]
 						// doc
-						ProductionBody pb_one_fn = pb_one.get(0);
+						ProductionBody pb_one = pb_all.get(0);
 						JSONArray object_doc = new JSONArray();
 						JSONArray object_sn = new JSONArray();
 						JSONObject object_body_all = new JSONObject();
-						ph_one.forEach(one -> {
+						ph_all.forEach(one -> {
 							JSONObject object_body = new JSONObject();
 							object_body.put(FFS.M + "ph_s_date", one.getPhsdate() == null ? "" : one.getPhsdate());
 							object_body.put(FFS.M + "ph_pr_id", one.getProductionRecords().getPrid());
@@ -181,9 +251,9 @@ public class WorkstationWorkService {
 							object_body.put(FFS.M + "pr_p_quantity", one.getProductionRecords().getPrpquantity());
 							object_body.put(FFS.M + "sys_status", one.getSysstatus());
 
-							object_body.put(FFS.M + "pb_l_size", pb_one_fn.getPblsize());
-							object_body.put(FFS.M + "pb_l_path", pb_one_fn.getPblpath());
-							object_body.put(FFS.M + "pb_l_text", pb_one_fn.getPbltext());
+							object_body.put(FFS.M + "pb_l_size", pb_one.getPblsize());
+							object_body.put(FFS.M + "pb_l_path", pb_one.getPblpath());
+							object_body.put(FFS.M + "pb_l_text", pb_one.getPbltext());
 
 							object_body.put(FFS.M + "pr_b_item", one.getProductionRecords().getPrbitem());
 							object_body.put(FFS.M + "pr_s_item", one.getProductionRecords().getPrsitem());
@@ -201,17 +271,18 @@ public class WorkstationWorkService {
 
 						object_body_all.put("sn_list", object_sn);
 
-						object_body_all.put("workdatation_program_name", wp_one.get(0).getWpname());
+						object_body_all.put("workdatation_program_name", wp_all.get(0).getWpname());
 						object_body_all.put("workdatation_name", w_one.get(0).getWpbname());
 						bean.setBody(object_body_all);
+
 					} else {
-						return null;
+						return new PackageBean();
 					}
 				} else {
-					return null;
+					return new PackageBean();
 				}
 			} else {
-				return null;
+				return new PackageBean();
 			}
 		}
 		return bean;
@@ -222,32 +293,14 @@ public class WorkstationWorkService {
 	public boolean createData(JSONObject body, SystemUser user) {
 		boolean check = false;
 		try {
-			JSONArray list = body.getJSONArray("create");
-			for (Object one : list) {
-				// 物件轉換
-				SystemConfig sys_c = new SystemConfig();
-				JSONObject data = (JSONObject) one;
-				sys_c.setScname(data.getString("sc_name"));
-				sys_c.setScgname(data.getString("sc_g_name"));
-				sys_c.setScvalue(data.getString("sc_value"));
-				sys_c.setSysnote(data.getString("sys_note"));
-				sys_c.setSyssort(data.getInt("sys_sort"));
-				sys_c.setSysstatus(data.getInt("sys_status"));
-				sys_c.setSysmuser(user.getSuname());
-				sys_c.setSyscuser(user.getSuname());
-
-				// 檢查群組名稱重複
-//				ArrayList<SystemConfig> sys_p_g = configDao.findAllByConfigGroupTop1(sys_c.getScgname(), PageRequest.of(0, 1));
-//				if (sys_p_g != null && sys_p_g.size() > 0) {
-//					// 重複 則取同樣G_ID
-//					sys_c.setScgid(sys_p_g.get(0).getScgid());
-//				} else {
-//					// 取得最新G_ID
-//					sys_c.setScgid(configDao.getSystem_config_g_seq());
-//				}
-//				configDao.save(sys_c);
-			}
-			check = true;
+//			JSONArray list = body.getJSONArray("create");
+//			for (Object one : list) {
+//				// 物件轉換
+//				SystemConfig sys_c = new SystemConfig();
+//				JSONObject data = (JSONObject) one;
+//
+//			}
+//			check = true;
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -259,32 +312,13 @@ public class WorkstationWorkService {
 	public boolean save_asData(JSONObject body, SystemUser user) {
 		boolean check = false;
 		try {
-			JSONArray list = body.getJSONArray("save_as");
-			for (Object one : list) {
-				// 物件轉換
-				SystemConfig sys_c = new SystemConfig();
-				JSONObject data = (JSONObject) one;
-				sys_c.setScname(data.getString("sc_name"));
-				sys_c.setScgname(data.getString("sc_g_name"));
-				sys_c.setScvalue(data.getString("sc_value"));
-				sys_c.setSysnote(data.getString("sys_note"));
-				sys_c.setSyssort(data.getInt("sys_sort"));
-				sys_c.setSysstatus(data.getInt("sys_status"));
-				sys_c.setSysmuser(user.getSuname());
-				sys_c.setSyscuser(user.getSuname());
-
-				// 檢查群組名稱重複
-//				ArrayList<SystemConfig> sys_c_g = configDao.findAllByConfigGroupTop1(sys_c.getScgname(), PageRequest.of(0, 1));
-//				if (sys_c_g != null && sys_c_g.size() > 0) {
-//					// 重複 則取同樣G_ID
-//					sys_c.setScgid(sys_c_g.get(0).getScgid());
-//				} else {
-//					// 取得最新G_ID
-//					sys_c.setScgid(configDao.getSystem_config_g_seq());
-//				}
-//				configDao.save(sys_c);
-			}
-			check = true;
+			// JSONArray list = body.getJSONArray("save_as");
+			// for (Object one : list) {
+			// 物件轉換
+			// SystemConfig sys_c = new SystemConfig();
+			// JSONObject data = (JSONObject) one;
+			// }
+			// check = true;
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -306,11 +340,11 @@ public class WorkstationWorkService {
 			JSONObject list = body.getJSONObject("modify");
 			System.out.println(list);
 
-			// Step1.查詢SN關聯
+			// Step0.查詢SN關聯
 			if (list.get("pb_sn") != "") {
 				List<ProductionBody> body_s = pbDao.findAllByPbsn(list.getString("pb_sn"));
 				if (body_s.size() == 1) {
-
+					// Step1.更新[ProductionBody]
 					ProductionBody body_one = body_s.get(0);
 					body_one.setPbfvalue(list.getString("pb_f_value"));
 					body_one.setPbposition(list.getString("pb_position"));
@@ -335,23 +369,46 @@ public class WorkstationWorkService {
 						// 有此工作站+格式正確
 						if (wk_s.size() == 1 && Fm_json.isJSONValid(body_one.getPbschedule())) {
 							pb_schedule = new JSONObject(body_one.getPbschedule());
-							pb_schedule.getJSONObject(wk_s.get(0).getWid() + "").put("type", "Y");
 						} else {
 							return false;
 						}
-						body_one.setPbschedule(pb_schedule.toString());
 
-						// 全部都完成?
+						// Step1-1.工作站進度
+						body_one.setPbschedule(pb_schedule.toString());
 						boolean check_work_fn = true;
+						String previous_work = "";
 						Iterator<String> keys = pb_schedule.keys();
+
 						while (keys.hasNext()) {
 							String key = keys.next();
 							if (pb_schedule.get(key) instanceof JSONObject) {
-								if (pb_schedule.getJSONObject(key).getString("type").equals("N")) {
+								// 全部都完成?
+								String now_work = pb_schedule.getJSONObject(key).getString("type");
+								if (now_work.equals("N")) {
 									check_work_fn = false;
 								}
+								// 是否有前置站無
+								if (previous_work.equals("")) {
+									previous_work = now_work;
+								} else {
+									// 正常
+									if ((now_work.equals("N") && previous_work.equals("N")) || //
+											(now_work.equals("N") && previous_work.equals("Y")) || //
+											(now_work.equals("Y") && previous_work.equals("Y"))) {
+										previous_work = now_work;
+									}
+									// 不正常
+									else {
+										pb_schedule.getJSONObject(wk_s.get(0).getWid() + "").put("type", "N");
+										body_one.setPbschedule(pb_schedule.toString());
+										return false;
+									}
+								}
+
 							}
 						}
+						pb_schedule.getJSONObject(wk_s.get(0).getWid() + "").put("type", "Y");
+
 						body_one.setPbcheck(check_work_fn);
 
 						// 可能的工作站範圍
@@ -388,13 +445,13 @@ public class WorkstationWorkService {
 					body_one.setSysmdate(new Date());
 					body_one.setSysmuser(user.getSuname());
 					pbDao.save(body_one);
-					// 進度更新
-					// 製令單
+
+					// Step3. 製令單+規格更新[ProductionRecords]
 					ProductionRecords phprid = new ProductionRecords();
 					phprid.setPrid(list.getString("ph_pr_id"));
 					ProductionHeader p_header = phDao.findAllByProductionRecords(phprid).get(0);
-					//啟動時間
-					if(p_header.getSysstatus()==0) {
+					// 啟動時間
+					if (p_header.getSysstatus() == 0) {
 						p_header.setPhsdate(new Date());
 					}
 					p_header.setSysstatus(1);

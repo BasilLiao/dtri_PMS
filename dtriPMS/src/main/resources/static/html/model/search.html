@@ -393,7 +393,7 @@
                     //key value 建置
                     for (var c = 0; c < arrays.length; c++) {
                         var key = arrays[c].title.split(sp)[1];
-                        var value = arrays[c].innerText;
+                        var value = arrays[c].innerHTML.replaceAll("<br>","\n");
                       //  console.log(key + " : " + value);
                         obj_one[key] = value;
                     }
