@@ -952,8 +952,6 @@
 				req.body['modify'] = modify_one;
 				req.call_bk_vals={};
 				main.ajaxSend(s_url, s_type, s_data);
-				
-
 			},
 			//檢查
 			sendCheck() {
@@ -1017,20 +1015,17 @@
 				 $("#workstation_name").text( main.allData.body.workdatation_name);
 				 $("#workdatation_program_name").text( main.allData.body.workdatation_program_name);
 				 
-				 
 				 //自動位移
 				 if($(".sn_list").length>0){
 					//更換Class
 						var id =$(".border-1").attr("id");
-						workstation.nb+=1;
+						workstation.nb=6;
 						$("#"+id).removeClass("border-1");
 						$("#"+id).addClass("border-0");
-						$("#w_focus_"+workstation.nb).addClass("border-1");
-						$("#w_focus_"+workstation.nb).removeClass("border-0");
+						$("#w_focus_6").addClass("border-1");
+						$("#w_focus_6").removeClass("border-0");
 				 }
-				
             },
-			
 		},
 		//移除監聽事件
 		beforeDestroy() {

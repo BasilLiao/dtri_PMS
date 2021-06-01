@@ -32,6 +32,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  *      pb_w_years: 保固年份 <br>
  *      pb_shipping_date: 出貨日<br>
  *      pb_recycling_date :回收日<br>
+ *      pb_l_path_oqc : 抽測LOG位置<br>
  * 
  */
 @IdClass(ProductionBody.PrimaryKey.class)
@@ -263,7 +264,10 @@ public class ProductionBody implements Serializable {
 
 	@Column(name = "pb_l_path", columnDefinition = "varchar(255) default ''")
 	private String pblpath;
-
+	
+	@Column(name = "pb_l_path_oqc", columnDefinition = "varchar(255) default ''")
+	private String pblpathoqc;
+	
 	@Column(name = "pb_l_size")
 	private String pblsize;
 
@@ -1061,5 +1065,13 @@ public class ProductionBody implements Serializable {
 
 	public void setPblpath(String pblpath) {
 		this.pblpath = pblpath;
+	}
+
+	public String getPblpathoqc() {
+		return pblpathoqc;
+	}
+
+	public void setPblpathoqc(String pblpathoqc) {
+		this.pblpathoqc = pblpathoqc;
 	}
 }

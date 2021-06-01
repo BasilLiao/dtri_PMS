@@ -153,8 +153,8 @@ public class SystemPermissionService {
 				sys_p.setSysnote(data.getString("sys_note"));
 				sys_p.setSyssort(data.getInt("sys_sort"));
 				sys_p.setSysstatus(data.getInt("sys_status"));
-				sys_p.setSysmuser(user.getSuname());
-				sys_p.setSyscuser(user.getSuname());
+				sys_p.setSysmuser(user.getSuaccount());
+				sys_p.setSyscuser(user.getSuaccount());
 
 				// 檢查群組名稱重複
 				ArrayList<SystemPermission> sys_p_g = permissionDao.findAllByPermissionGroupTop1(sys_p.getSpgname(), PageRequest.of(0, 1));
@@ -214,8 +214,8 @@ public class SystemPermissionService {
 				sys_p.setSysnote(data.getString("sys_note"));
 				sys_p.setSyssort(data.getInt("sys_sort"));
 				sys_p.setSysstatus(data.getInt("sys_status"));
-				sys_p.setSysmuser(user.getSuname());
-				sys_p.setSyscuser(user.getSuname());
+				sys_p.setSysmuser(user.getSuaccount());
+				sys_p.setSyscuser(user.getSuaccount());
 
 				// 檢查群組名稱重複
 				ArrayList<SystemPermission> sys_p_g = permissionDao.findAllByPermissionGroupTop1(sys_p.getSpgname(), PageRequest.of(0, 1));

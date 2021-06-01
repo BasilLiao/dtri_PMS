@@ -13,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
+import dtri.com.tw.tools.Fm_Time;
+
 @Service
 public class FtpService {
 	private FTPClient ftpClient;
@@ -31,8 +33,9 @@ public class FtpService {
 	 * @param localPath  下載後儲存到本地的路徑
 	 * @return
 	 */
-	public JSONArray downFile(String url, int port, String username, String password, String remotePath, String remotePathBackup, String[] searchName,
-			String localPath) {
+	public JSONArray downFile(String url, int port, String username, String password, //
+			String remotePath, String remotePathBackup, String[] searchName,//
+			String localPath,String work_use) {
 		System.out.println(new Date());
 		JSONArray list = new JSONArray();
 		ftpClient = new FTPClient();
@@ -105,27 +108,35 @@ public class FtpService {
 						list.put(one);
 						continue;
 					}
+					// 轉移檔案
+					String dirPath = remotePathBackup + one.getString("WorkOrder");
+					// makeDirectories(ftpClient, dirPath);
+					boolean created = ftpClient.makeDirectory(dirPath);
+
+					String re_path = remotePath + "/" + ff.getName();
+					String new_path = dirPath + "/" + ff.getName() + "_"+work_use+"_"+Fm_Time.to_yMd_Hms(new Date());
+					ftpClient.rename(re_path, new_path);
+
 					// 補型號/補主機板號/轉16進制
 					long file_size = ff.getSize();
 					one = new JSONObject(line);
-					one.put("ph_pr_id", one.getString("WorkOrder"));
-					String mbSn[] = (one.getString("UUID").split("-"));
-					one.put("MB(UUID)", mbSn[mbSn.length - 1]);
-					one.put("ph_model", "");
-					one.put("pb_sn", one.getString("SN"));
-					one.put("pb_l_size", file_size);
-					one.put("pb_l_text", everything.toString());
-					one.put("pb_l_path", "");
-					one.put("check", true);
-					list.put(one);
-					// 轉移檔案
-					String dirPath = remotePathBackup + one.getString("WorkOrder");
-					//makeDirectories(ftpClient, dirPath);
-					boolean created = ftpClient.makeDirectory(dirPath);
 					
-					String re_path = remotePath + "/" + ff.getName();
-					String new_path = dirPath + "/" + ff.getName();
-					ftpClient.rename(re_path, new_path);
+					// 製令單 排除OQC
+					if (f_n[0].indexOf("OQC") != -1) {
+						one.put("check", false);
+					} else {
+						one.put("ph_pr_id", one.getString("WorkOrder"));
+						String mbSn[] = (one.getString("UUID").split("-"));
+						one.put("MB(UUID)", mbSn[mbSn.length - 1]);
+						one.put("ph_model", "");
+						one.put("pb_sn", one.getString("SN"));
+						one.put("pb_l_size", file_size);
+						one.put("pb_l_text", everything.toString());
+						one.put("pb_l_path", new_path);
+						one.put("check", true);
+					}
+
+					list.put(one);
 
 					// 關閉串流
 					bufferedReader.close();

@@ -453,8 +453,8 @@ public class ProductionBodyService {
 				p_body.setSysnote(data.getString("sys_note"));
 				p_body.setSyssort(data.getInt("sys_sort"));
 				p_body.setSysstatus(data.getInt("sys_status"));
-				p_body.setSysmuser(user.getSuname());
-				p_body.setSyscuser(user.getSuname());
+				p_body.setSysmuser(user.getSuaccount());
+				p_body.setSyscuser(user.getSuaccount());
 				// SN類別
 				try {
 					for (int k = 0; k < 50; k++) {
@@ -524,8 +524,8 @@ public class ProductionBodyService {
 				p_body.setSysnote(data.getString("sys_note"));
 				p_body.setSyssort(data.getInt("sys_sort"));
 				p_body.setSysstatus(data.getInt("sys_status"));
-				p_body.setSysmuser(user.getSuname());
-				p_body.setSyscuser(user.getSuname());
+				p_body.setSysmuser(user.getSuaccount());
+				p_body.setSyscuser(user.getSuaccount());
 				// SN類別
 				try {
 					for (int k = 0; k < 50; k++) {
@@ -592,7 +592,7 @@ public class ProductionBodyService {
 				pro_b.setSysstatus(data.getInt("sys_status"));
 				pro_b.setPbwyears(data.getInt("pb_w_years"));
 				pro_b.setSyssort(data.getInt("sys_sort"));
-				pro_b.setSysmuser(user.getSuname());
+				pro_b.setSysmuser(user.getSuaccount());
 				pro_b.setSysmdate(new Date());
 				try {
 					for (int k = 0; k < 50; k++) {

@@ -67,6 +67,7 @@ public class WorkstationService {
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "w_pb_cell", FFS.h_t("工作站欄位", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "w_sg_id", FFS.h_t("可使用[群組]ID", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "w_sg_name", FFS.h_t("可使用[群組]名稱", "180px", FFS.SHO));
+			object_header.put(FFS.ord((ord += 1), FFS.H) + "w_replace", FFS.h_t("可重複登記?", "180px", FFS.SHO));
 
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_t_date", FFS.h_t("建立時間", "150px", FFS.SHO));
 			object_header.put(FFS.ord((ord += 1), FFS.H) + "sys_t_user", FFS.h_t("建立人", "100px", FFS.SHO));
@@ -94,7 +95,7 @@ public class WorkstationService {
 				a_vals1.put((new JSONObject()).put("value", s.getWipbvalue()).put("key", s.getWiid()));
 			});
 			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "0", "0", FFS.SHO, "col-md-2", true, a_vals1, "w_i_id", "WI_項目ID"));
-			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "五碼[AA000]", "", FFS.DIS, "col-md-2", true, n_val, "w_c_name", "W_工作站碼"));
+			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "五碼[AA000]", "", FFS.DIS, "col-md-1", true, n_val, "w_c_name", "W_工作站碼"));
 
 			// sn關聯表-工作站
 			a_val = new JSONArray();
@@ -125,17 +126,20 @@ public class WorkstationService {
 			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, " ", " ", FFS.DIS, "col-md-2", true, a_val, "w_pb_cell", "W_工作站[欄]"));
 			// obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false,
 			// n_val, "w_pb_name", "W_工作站[名]"));
-
-			systemGroup = groupDao.findAllBySysheader(true, PageRequest.of(0, 999));
+			a_val = new JSONArray();
+			a_val.put((new JSONObject()).put("value", "重複").put("key", true));
+			a_val.put((new JSONObject()).put("value", "不重複").put("key", false));
+			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "true", "true", FFS.DIS, "col-md-1", true, a_val, "w_replace", "W_可重複?"));
 
 			JSONArray a_vals2 = new JSONArray();
+			systemGroup = groupDao.findAllBySysheader(true, PageRequest.of(0, 999));
 			systemGroup.forEach(e -> {
 				a_vals2.put((new JSONObject()).put("value", e.getSgname()).put("key", e.getSggid()));
 			});
 			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, " ", " ", FFS.DIS, "col-md-2", true, a_vals2, "w_sg_id", "SU_[群組]ID"));
 			// obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false,
 			// n_val, "w_sg_name", "SU_[群組]名"));
-
+			
 			// obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false,
 			// n_val, "sys_t_date", "建立時間"));
 			// obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-2", false,
@@ -151,9 +155,9 @@ public class WorkstationService {
 			// obj_m.put(FFS.h_m(FFS.INP, FFS.NUMB, "", "", FFS.DIS, "col-md-2", false,
 			// n_val, "sys_ver", "版本"));
 
-			a_val = new JSONArray();
-			a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
-			a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
+			//a_val = new JSONArray();
+			//a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
+			//a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
 			// obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "0", FFS.SHO, "col-md-1", true,
 			// a_val, "sys_status", "狀態"));
 			obj_m.put(FFS.h_m(FFS.INP, FFS.TEXT, "", "", FFS.DIS, "col-md-1", false, n_val, "sys_header", "群組?"));
@@ -165,6 +169,8 @@ public class WorkstationService {
 			obj_g_m.put(FFS.h_g(FFS.SHO, "col-md-2", "w_pb_cell"));
 			obj_g_m.put(FFS.h_g(FFS.DIS, "col-md-2", "w_i_id"));
 			obj_g_m.put(FFS.h_g(FFS.SHO, "col-md-2", "w_sg_id"));
+			obj_g_m.put(FFS.h_g(FFS.SHO, "col-md-2", "w_replace"));
+			
 			bean.setCell_g_modify(obj_g_m);
 
 			// 放入包裝(search)
@@ -203,6 +209,7 @@ public class WorkstationService {
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "w_pb_cell", one.getWpbcell());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "w_sg_id", one.getWsgid());
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "w_sg_name", one.getWsgname());
+			object_body.put(FFS.ord((ord += 1), FFS.B) + "w_replace", one.getWreplace());
 
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_t_date", Fm_Time.to_yMd_Hms(one.getSyscdate()));
 			object_body.put(FFS.ord((ord += 1), FFS.B) + "sys_t_user", one.getSyscuser());
@@ -234,6 +241,7 @@ public class WorkstationService {
 			// 對應欄位 (工作站/欄位)
 			String w_pb_value = "";
 			String w_pb_cell = "";
+			Boolean w_replace = true;
 			// 使用者群組
 			Integer w_sg_id = 0;
 			String w_sg_name = "";
@@ -252,6 +260,7 @@ public class WorkstationService {
 						Method method = body_one.getClass().getMethod(w_pb_name);
 						w_pb_value = (String) method.invoke(body_one);
 						w_pb_cell = data.getString("w_pb_cell");
+						
 					} catch (NoSuchMethodException e) {
 						e.printStackTrace();
 					} catch (SecurityException e) {
@@ -288,12 +297,13 @@ public class WorkstationService {
 					sys_t.setWpbname(w_pb_value);
 					sys_t.setWsgid(w_sg_id);
 					sys_t.setWsgname(w_sg_name);
+					sys_t.setWreplace(w_replace);
 					
 					sys_t.setWcname(work_s.get(0).getWcname());
 					sys_t.setWgid(work_s.get(0).getWgid());
 					sys_t.setSysheader(false);
-					sys_t.setSysmuser(user.getSuname());
-					sys_t.setSyscuser(user.getSuname());
+					sys_t.setSysmuser(user.getSuaccount());
+					sys_t.setSyscuser(user.getSuaccount());
 					sys_t.setSysnote("");
 					sys_t.setSyssort(data.getInt("sys_sort"));
 					sys_t.setSysstatus(0);
@@ -309,6 +319,7 @@ public class WorkstationService {
 					// 取得最新G_ID && 登記為父類別
 					w_g_id = workstationDao.getProduction_workstation_g_seq();
 					w_c_name = data.getString("w_c_name");
+					w_replace = data.getBoolean("w_replace");
 					
 					WorkstationItem sys_ti_f = new WorkstationItem();
 					Workstation sys_t_f = new Workstation();
@@ -317,7 +328,7 @@ public class WorkstationService {
 					
 					sys_t_f.setWgid(w_g_id);
 					sys_t_f.setWcname(w_c_name);
-
+					sys_t_f.setWreplace(w_replace);
 					sys_t_f.setSysheader(true);
 					sys_t_f.setWpbcell(w_pb_cell);
 					sys_t_f.setWpbname(w_pb_value);
@@ -326,8 +337,8 @@ public class WorkstationService {
 					sys_t_f.setSysstatus(0);
 					sys_t_f.setWsgid(w_sg_id);
 					sys_t_f.setWsgname(w_sg_name);
-					sys_t_f.setSysmuser(user.getSuname());
-					sys_t_f.setSyscuser(user.getSuname());
+					sys_t_f.setSysmuser(user.getSuaccount());
+					sys_t_f.setSyscuser(user.getSuaccount());
 
 					workstationDao.save(sys_t_f);
 				}
@@ -351,6 +362,7 @@ public class WorkstationService {
 			String w_pb_value = "";
 			String w_pb_cell = "";
 			Method method;
+			Boolean w_replace = true;
 			List<SystemGroup> systemGroup = new ArrayList<SystemGroup>();
 			for (Object one : list) {
 				JSONObject data = (JSONObject) one;
@@ -390,8 +402,8 @@ public class WorkstationService {
 				sys_t.setSyssort(data.getInt("sys_sort"));
 				sys_t.setSysstatus(0);
 				sys_t.setSysheader(false);
-				sys_t.setSysmuser(user.getSuname());
-				sys_t.setSyscuser(user.getSuname());
+				sys_t.setSysmuser(user.getSuaccount());
+				sys_t.setSyscuser(user.getSuaccount());
 
 				// 檢查_工作站碼重複
 				ArrayList<Workstation> sys_t_g = workstationDao.findAllByWcname(sys_t.getWcname(), PageRequest.of(0, 1));
@@ -404,11 +416,14 @@ public class WorkstationService {
 					// 重複 則取同樣G_ID && 登入為子類別
 					sys_t.setWcname(sys_t_g.get(0).getWcname());
 					sys_t.setWgid(sys_t_g.get(0).getWgid());
+					sys_t.setWreplace(sys_t_g.get(0).getWreplace());
 					sys_t.setSysheader(false);
 				} else {
 					// 取得最新G_ID && 登記為父類別
 					wc_g_id = workstationDao.getProduction_workstation_g_seq();
 					wc_name = sys_t.getWcname();
+					w_replace = data.getBoolean("w_replace");
+					
 					WorkstationItem sys_ti_f = new WorkstationItem();
 					sys_ti_f.setWiid(0);
 					Workstation sys_t_f = new Workstation();
@@ -418,13 +433,14 @@ public class WorkstationService {
 					sys_t_f.setWpbcell(w_pb_cell);
 					sys_t_f.setWpbname(w_pb_value);
 					sys_t_f.setWorkstationItem(sys_ti_f);
+					sys_t_f.setWreplace(w_replace);
 					sys_t_f.setSysnote("");
 					sys_t_f.setSyssort(data.getInt("sys_sort"));
 					sys_t_f.setSysstatus(0);
 					sys_t_f.setWsgid(systemGroup.get(0).getSggid());
 					sys_t_f.setWsgname(systemGroup.get(0).getSgname());
-					sys_t_f.setSysmuser(user.getSuname());
-					sys_t_f.setSyscuser(user.getSuname());
+					sys_t_f.setSysmuser(user.getSuaccount());
+					sys_t_f.setSyscuser(user.getSuaccount());
 					workstationDao.save(sys_t_f);
 
 					sys_t.setWgid(wc_g_id);
@@ -449,6 +465,7 @@ public class WorkstationService {
 			String w_pb_value = "";
 			String w_pb_cell = "";
 			String wc_name = "";
+			Boolean w_replace = true;
 			Method method;
 			List<SystemGroup> systemGroup = new ArrayList<SystemGroup>();
 			// 物件轉換
@@ -466,6 +483,7 @@ public class WorkstationService {
 					try {
 						method = body_one.getClass().getMethod(w_pb_name);
 						w_pb_value = (String) method.invoke(body_one);
+						w_replace = data.getBoolean("w_replace");
 						w_pb_cell = data.getString("w_pb_cell");
 					} catch (NoSuchMethodException e) {
 						e.printStackTrace();
@@ -499,10 +517,11 @@ public class WorkstationService {
 					sys_t.setWpbcell(data.getString("w_pb_cell"));
 					sys_t.setWpbname(w_pb_value);
 					sys_t.setWpbcell(w_pb_cell);
+					sys_t.setWreplace(w_replace);
 					sys_t.setWsgid(systemGroup.get(0).getSggid());
 					sys_t.setWsgname(systemGroup.get(0).getSgname());
-					sys_t.setSysmuser(user.getSuname());
-					sys_t.setSyscuser(user.getSuname());
+					sys_t.setSysmuser(user.getSuaccount());
+					sys_t.setSyscuser(user.getSuaccount());
 					sys_t.setSysheader(true);
 					sys_t.setSyssort(0);
 					workstationDao.save(sys_t);
@@ -515,8 +534,8 @@ public class WorkstationService {
 						w.setWpbcell(w_pb_cell);
 						w.setWsgid(systemGroup.get(0).getSggid());
 						w.setWsgname(systemGroup.get(0).getSgname());
-						w.setSysmuser(user.getSuname());
-						w.setSyscuser(user.getSuname());
+						w.setSysmuser(user.getSuaccount());
+						w.setSyscuser(user.getSuaccount());
 					}
 					workstationDao.saveAll(workstations);
 					wc_name = data.getString("w_c_name");
@@ -529,10 +548,11 @@ public class WorkstationService {
 					sys_t.setSysheader(false);
 					sys_t.setWpbname(w_pb_value);
 					sys_t.setWpbcell(w_pb_cell);
+					sys_t.setWreplace(w_replace);
 					sys_t.setWsgid(systemGroup.get(0).getSggid());
 					sys_t.setWsgname(systemGroup.get(0).getSgname());
-					sys_t.setSysmuser(user.getSuname());
-					sys_t.setSyscuser(user.getSuname());
+					sys_t.setSysmuser(user.getSuaccount());
+					sys_t.setSyscuser(user.getSuaccount());
 					sys_t.setSyssort(data.getInt("sys_sort"));
 					workstationDao.save(sys_t);
 				}

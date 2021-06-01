@@ -538,8 +538,8 @@ public class ProductionHeaderService {
 						pro_b.setPblsize("");
 						pro_b.setPbltext("");
 						pro_b.setPbschedule(json_work.toString());
-						pro_b.setSysmuser(user.getSuname());
-						pro_b.setSyscuser(user.getSuname());
+						pro_b.setSysmuser(user.getSuaccount());
+						pro_b.setSyscuser(user.getSuaccount());
 						productionBodyDao.save(pro_b);
 					});
 
@@ -557,8 +557,8 @@ public class ProductionHeaderService {
 					pro_r.setPrwyears(data.getInt("pr_w_years"));
 					pro_r.setPrssn(sn_lists.get(0).toString());
 					pro_r.setPresn(sn_lists.get(sn_lists.length() - 1).toString());
-					pro_r.setSysmuser(user.getSuname());
-					pro_r.setSyscuser(user.getSuname());
+					pro_r.setSysmuser(user.getSuaccount());
+					pro_r.setSyscuser(user.getSuaccount());
 
 					// productionRecordsDao.save(pro_r);
 
@@ -573,8 +573,8 @@ public class ProductionHeaderService {
 					pro_h.setSyssort(data.getInt("sys_sort"));
 					pro_h.setSysver(0);
 					pro_h.setSysstatus(data.getInt("sys_status"));
-					pro_h.setSysmuser(user.getSuname());
-					pro_h.setSyscuser(user.getSuname());
+					pro_h.setSysmuser(user.getSuaccount());
+					pro_h.setSyscuser(user.getSuaccount());
 					pro_h.setPhtype(data.getString("ph_type"));
 					pro_h.setPhpbgid(id_b_g);
 					productionHeaderDao.save(pro_h);
@@ -691,8 +691,8 @@ public class ProductionHeaderService {
 						pro_b.setPblsize("");
 						pro_b.setPbltext("");
 						pro_b.setPbschedule(json_work.toString());
-						pro_b.setSysmuser(user.getSuname());
-						pro_b.setSyscuser(user.getSuname());
+						pro_b.setSysmuser(user.getSuaccount());
+						pro_b.setSyscuser(user.getSuaccount());
 						productionBodyDao.save(pro_b);
 					});
 
@@ -710,8 +710,8 @@ public class ProductionHeaderService {
 					pro_r.setPrwyears(data.getInt("pr_w_years"));
 					pro_r.setPrssn(sn_lists.get(0).toString());
 					pro_r.setPresn(sn_lists.get(sn_lists.length() - 1).toString());
-					pro_r.setSysmuser(user.getSuname());
-					pro_r.setSyscuser(user.getSuname());
+					pro_r.setSysmuser(user.getSuaccount());
+					pro_r.setSyscuser(user.getSuaccount());
 
 					// productionRecordsDao.save(pro_r);
 
@@ -726,8 +726,8 @@ public class ProductionHeaderService {
 					pro_h.setSyssort(data.getInt("sys_sort"));
 					pro_h.setSysver(0);
 					pro_h.setSysstatus(0);
-					pro_h.setSysmuser(user.getSuname());
-					pro_h.setSyscuser(user.getSuname());
+					pro_h.setSysmuser(user.getSuaccount());
+					pro_h.setSyscuser(user.getSuaccount());
 					pro_h.setPhtype(data.getString("ph_type"));
 					pro_h.setPhpbgid(id_b_g);
 					productionHeaderDao.save(pro_h);
@@ -835,7 +835,7 @@ public class ProductionHeaderService {
 					pro_b.setSysstatus(data.getInt("sys_status"));
 					pro_b.setSyssort(data.getInt("sys_sort"));
 					pro_b.setPbschedule(json_work.toString());
-					pro_b.setSysmuser(user.getSuname());
+					pro_b.setSysmuser(user.getSuaccount());
 					productionBodyDao.save(pro_b);
 					i += 1;
 				}
@@ -857,7 +857,7 @@ public class ProductionHeaderService {
 				pro_r.setPrpokquantity(data.getInt("pr_p_ok_quantity"));
 				// pro_r.setPrbitem("");
 				// pro_r.setPrsitem("");
-				pro_r.setSysmuser(user.getSuname());
+				pro_r.setSysmuser(user.getSuaccount());
 				pro_h.setSysmdate(new Date());
 
 				// header
@@ -877,7 +877,7 @@ public class ProductionHeaderService {
 				} else {
 					pro_h.setSysstatus(data.getInt("sys_status"));
 				}
-				pro_h.setSysmuser(user.getSuname());
+				pro_h.setSysmuser(user.getSuaccount());
 				pro_h.setSysmdate(new Date());
 				pro_h.setPhpbgid(data.getInt("ph_pb_g_id"));
 				productionHeaderDao.save(pro_h);

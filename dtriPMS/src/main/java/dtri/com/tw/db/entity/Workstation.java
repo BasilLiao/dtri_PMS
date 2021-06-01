@@ -37,6 +37,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  *      w_pb_cell : 工作站名稱(來自於pb 欄位名稱)<br>
  *      w_sg_id : 可使用此工作站群組[ID]<br>
  *      w_sg_name : 可使用此工作站群組[名稱]<br>
+ *      w_replace : 是否可重複刷入資料
  * 
  * 
  * 
@@ -114,6 +115,10 @@ public class Workstation {
 
 	@Column(name = "w_sg_name", columnDefinition = "varchar(50) default ''")
 	private String wsgname;
+	
+	@Column(name = "w_replace", columnDefinition = "boolean default true")
+	private Boolean wreplace;	
+	
 
 	public Date getSyscdate() {
 		return syscdate;
@@ -249,6 +254,14 @@ public class Workstation {
 
 	public void setWsgname(String wsgname) {
 		this.wsgname = wsgname;
+	}
+
+	public Boolean getWreplace() {
+		return wreplace;
+	}
+
+	public void setWreplace(Boolean wreplace) {
+		this.wreplace = wreplace;
 	}
 	
 }

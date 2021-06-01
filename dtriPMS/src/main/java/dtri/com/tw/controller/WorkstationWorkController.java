@@ -61,7 +61,7 @@ public class WorkstationWorkController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = workService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = workService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(), null);
 
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color, one.getSppermission());
@@ -81,6 +81,7 @@ public class WorkstationWorkController {
 		PackageBean resp = new PackageBean();
 		String info = null, info_color = null;
 		System.out.println(json_object);
+		SystemUser user = new SystemUser();
 		// 取得-當前用戶資料
 		List<SystemGroup> systemGroup = new ArrayList<SystemGroup>();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -88,6 +89,7 @@ public class WorkstationWorkController {
 			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			// Step1.查詢資料權限
 			systemGroup = userDetails.getSystemGroup();
+			user = userDetails.getSystemUser();
 		}
 		// UI限制功能
 		SystemPermission one = new SystemPermission();
@@ -99,7 +101,7 @@ public class WorkstationWorkController {
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = workService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = workService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(), user);
 
 		if (resp != null && resp.getBody() != null) {
 			// Step3.包裝回傳

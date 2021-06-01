@@ -203,8 +203,8 @@ public class ProductionRecordsService {
 				entity.setPrpquantity(data.getInt("pr_p_quantity"));
 				entity.setPrbitem(data.getString("pr_b_item"));
 				entity.setPrsitem(data.getString("pr_s_item"));
-				entity.setSysmuser(user.getSuname());
-				entity.setSyscuser(user.getSuname());
+				entity.setSysmuser(user.getSuaccount());
+				entity.setSyscuser(user.getSuaccount());
 
 				
 			}
@@ -236,8 +236,8 @@ public class ProductionRecordsService {
 				entity.setPrpquantity(data.getInt("pr_p_quantity"));
 				entity.setPrbitem(data.getString("pr_b_item"));
 				entity.setPrsitem(data.getString("pr_s_item"));
-				entity.setSysmuser(user.getSuname());
-				entity.setSyscuser(user.getSuname());
+				entity.setSysmuser(user.getSuaccount());
+				entity.setSyscuser(user.getSuaccount());
 
 				// 檢查是否有 製令規格
 				ArrayList<ProductionRecords> entitys = recordsDao.findAllByPrid(data.getString("pr_id"), PageRequest.of(0, 10));
@@ -280,7 +280,7 @@ public class ProductionRecordsService {
 				entity.setPrpokquantity(data.getInt("pr_p_ok_quantity"));
 				entity.setPrbitem(data.getString("pr_b_item"));
 				entity.setPrsitem(data.getString("pr_s_item"));
-				entity.setSysmuser(user.getSuname());
+				entity.setSysmuser(user.getSuaccount());
 
 				// 檢查是否有 製令規格
 				// ArrayList<ProductionRecords> entitys =

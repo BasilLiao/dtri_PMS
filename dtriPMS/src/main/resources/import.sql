@@ -27,13 +27,13 @@ INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (9, 2, '個人設定', '0001001101', 1102, '個人-資料內容', 'own_user.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (10, 2, '個人設定', '0001001101', 1103,'個人-自訂設定', 'own_config.basil');
 --產品製程
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (11, 3, '產品製程', '0001001101', 1201, '製令-料件SN設定', 'production_config.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (11, 3, '產品製程', '0001001101', 1201, '製令-產品SN欄位', 'production_config.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (12, 3, '產品製程', '0001001101', 1202, '製令-產品SN規則', 'production_sn.basil');
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (13, 3, '產品製程', '0001001101', 1203, '製令-關聯SN物料', 'production_body.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (13, 3, '產品製程', '0001001101', 1203, '製令-產品SN料件', 'production_body.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (14, 3, '產品製程', '0001001101', 1204, '製令-製程管理', 'production_header.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (15, 3, '產品製程', '0001001101', 1205, '製令-規格紀錄', 'production_records.basil');
 --工作站
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (16, 4, '工作站', '0001001101', 1301, '工作-過站WP設定', 'workstation_config.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (16, 4, '工作站', '0001001101', 1301, '工作-過站WP欄位', 'workstation_config.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (17, 4, '工作站', '0001001101', 1302, '工作-項目SN管理', 'workstation_item.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (18, 4, '工作站', '0001001101', 1303, '工作-站台WK管理', 'workstation.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (19, 4, '工作站', '0001001101', 1304, '工作-流程管理', 'workstation_program.basil');

@@ -217,7 +217,7 @@ public class ProductionConfigService {
 					Method in_method = p_body.getClass().getMethod(in_name, String.class);
 					in_method.invoke(p_body, pb_value);
 
-					p_body.setSysmuser(user.getSuname());
+					p_body.setSysmuser(user.getSuaccount());
 					p_body.setSysmdate(new Date());
 
 					bodyDao.save(p_body);

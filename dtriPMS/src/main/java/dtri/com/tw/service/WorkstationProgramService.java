@@ -201,8 +201,8 @@ public class WorkstationProgramService {
 					wpf.setSysnote("");
 					wpf.setSysstatus(0);
 					wpf.setSysheader(true);
-					wpf.setSysmuser(user.getSuname());
-					wpf.setSyscuser(user.getSuname());
+					wpf.setSysmuser(user.getSuaccount());
+					wpf.setSyscuser(user.getSuaccount());
 					programDao.save(wpf);
 					wp_c_name = data.getString("wp_c_name");
 					wp_name = data.getString("wp_name");
@@ -217,8 +217,8 @@ public class WorkstationProgramService {
 						sys_c.setSysstatus(0);
 						sys_c.setSysnote("");
 						sys_c.setSysheader(false);
-						sys_c.setSysmuser(user.getSuname());
-						sys_c.setSyscuser(user.getSuname());
+						sys_c.setSysmuser(user.getSuaccount());
+						sys_c.setSyscuser(user.getSuaccount());
 						programDao.save(sys_c);						
 					}
 
@@ -233,8 +233,8 @@ public class WorkstationProgramService {
 					sys_c.setSysstatus(data.getInt("sys_status"));
 					sys_c.setWpwgid(data.getInt("wp_w_g_id"));
 					sys_c.setSysheader(false);
-					sys_c.setSysmuser(user.getSuname());
-					sys_c.setSyscuser(user.getSuname());
+					sys_c.setSysmuser(user.getSuaccount());
+					sys_c.setSyscuser(user.getSuaccount());
 					programDao.save(sys_c);
 				}
 
@@ -279,8 +279,8 @@ public class WorkstationProgramService {
 					wpf.setSysnote("");
 					wpf.setSysstatus(0);
 					wpf.setSysheader(true);
-					wpf.setSysmuser(user.getSuname());
-					wpf.setSyscuser(user.getSuname());
+					wpf.setSysmuser(user.getSuaccount());
+					wpf.setSyscuser(user.getSuaccount());
 					programDao.save(wpf);
 
 					if (list.length() == 1) {
@@ -293,8 +293,8 @@ public class WorkstationProgramService {
 						sys_c.setSysstatus(0);
 						sys_c.setSysnote("");
 						sys_c.setSysheader(false);
-						sys_c.setSysmuser(user.getSuname());
-						sys_c.setSyscuser(user.getSuname());
+						sys_c.setSysmuser(user.getSuaccount());
+						sys_c.setSyscuser(user.getSuaccount());
 						programDao.save(sys_c);
 					}
 
@@ -309,8 +309,8 @@ public class WorkstationProgramService {
 					sys_c.setSysstatus(data.getInt("sys_status"));
 					sys_c.setWpwgid(data.getInt("wp_w_g_id"));
 					sys_c.setSysheader(false);
-					sys_c.setSysmuser(user.getSuname());
-					sys_c.setSyscuser(user.getSuname());
+					sys_c.setSysmuser(user.getSuaccount());
+					sys_c.setSyscuser(user.getSuaccount());
 					programDao.save(sys_c);
 				}
 
@@ -349,7 +349,7 @@ public class WorkstationProgramService {
 					sys_p.setSysnote("");
 					sys_p.setSyssort(0);
 					sys_p.setSysstatus(data.getInt("sys_status"));
-					sys_p.setSysmuser(user.getSuname());
+					sys_p.setSysmuser(user.getSuaccount());
 					sys_p.setSysmdate(new Date());
 					sys_p.setSysheader(true);
 					programDao.save(sys_p);
@@ -372,7 +372,7 @@ public class WorkstationProgramService {
 					sys_p.setSysnote("");
 					sys_p.setSyssort(data.getInt("sys_sort"));
 					sys_p.setSysstatus(data.getInt("sys_status"));
-					sys_p.setSysmuser(user.getSuname());
+					sys_p.setSysmuser(user.getSuaccount());
 					sys_p.setSysmdate(new Date());
 					programDao.save(sys_p);
 				}

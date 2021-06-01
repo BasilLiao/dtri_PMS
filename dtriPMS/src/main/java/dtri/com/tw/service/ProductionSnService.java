@@ -168,8 +168,8 @@ public class ProductionSnService {
 				sys_c.setSyssort(0);
 				sys_c.setSysstatus(0);
 				sys_c.setSysheader(false);
-				sys_c.setSysmuser(user.getSuname());
-				sys_c.setSyscuser(user.getSuname());
+				sys_c.setSysmuser(user.getSuaccount());
+				sys_c.setSyscuser(user.getSuaccount());
 
 				snDao.save(sys_c);
 			}
@@ -203,8 +203,8 @@ public class ProductionSnService {
 				sys_c.setSyssort(0);
 				sys_c.setSysstatus(0);
 				sys_c.setSysheader(false);
-				sys_c.setSysmuser(user.getSuname());
-				sys_c.setSyscuser(user.getSuname());
+				sys_c.setSysmuser(user.getSuaccount());
+				sys_c.setSyscuser(user.getSuaccount());
 
 				snDao.save(sys_c);
 			}
@@ -237,7 +237,7 @@ public class ProductionSnService {
 				sys_p.setSyssort(0);
 				sys_p.setSysstatus(0);
 				
-				sys_p.setSysmuser(user.getSuname());
+				sys_p.setSysmuser(user.getSuaccount());
 				sys_p.setSysmdate(new Date());
 				// 父類別
 				if (data.getBoolean("sys_header")) {

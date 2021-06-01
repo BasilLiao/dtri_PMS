@@ -102,7 +102,7 @@ public class SystemGroupService {
 			permissions.forEach(s -> {
 				st_val.put((new JSONObject()).put("value", s.getSpname()).put("key", s.getSpid()));
 			});
-			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "", "", FFS.SHO, "col-md-2", true, st_val, "sg_sp_id", "權限關聯ID"));
+			obj_m.put(FFS.h_m(FFS.SEL, FFS.TEXT, "1", "1", FFS.SHO, "col-md-2", true, st_val, "sg_sp_id", "權限關聯ID"));
 			obj_m.put(FFS.h_m(FFS.CHE, FFS.CHE, "", "", FFS.SHO, "col-md-1", false, n_val, "sg_permission_512", "S3"));
 			obj_m.put(FFS.h_m(FFS.CHE, FFS.CHE, "", "", FFS.SHO, "col-md-1", false, n_val, "sg_permission_256", "S2"));
 			obj_m.put(FFS.h_m(FFS.CHE, FFS.CHE, "", "", FFS.SHO, "col-md-1", false, n_val, "sg_permission_128", "S1"));
@@ -266,8 +266,8 @@ public class SystemGroupService {
 					groupDao.save(sys_p_h);
 
 					// 登記子類別
-					sys_p.setSysheader(false);
-					groupDao.save(sys_p);
+					//sys_p.setSysheader(false);
+					//groupDao.save(sys_p);
 				} else {
 					// 登記子類別
 					sys_p.setSgname(sg_name);

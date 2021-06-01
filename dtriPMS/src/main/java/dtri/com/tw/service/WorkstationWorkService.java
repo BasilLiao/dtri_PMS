@@ -50,7 +50,7 @@ public class WorkstationWorkService {
 	private SystemConfigDao sysDao;
 
 	// 取得當前 資料清單
-	public PackageBean getData(JSONObject body, int page, int p_size) {
+	public PackageBean getData(JSONObject body, int page, int p_size, SystemUser user) {
 		PackageBean bean = new PackageBean();
 
 		// 查詢的頁數，page=從0起算/size=查詢的每頁筆數
@@ -167,10 +167,11 @@ public class WorkstationWorkService {
 					localPath = "";//
 			int port = c_json.getInt("PORT");
 			String[] searchName = { ph_pr_id, "", pb_sn };
-			JSONArray list_log = ftpService.downFile(url, port, username, password, remotePath, remotePathBackup, searchName, localPath);
+			JSONArray list_log = ftpService.downFile(url, port, username, password, remotePath, remotePathBackup, searchName, localPath,
+					user.getSuaccount());
 			pb_all = pbDao.findAllByPbsn(pb_sn);
 
-			// Log 更新 資料
+			// Log 更新 資料(檢查是否有LOG+內容是否正確)
 			if (list_log != null && list_log.length() > 0 && list_log.getJSONObject(0).getBoolean("check")) {
 				JSONObject one = list_log.getJSONObject(0);
 
@@ -217,7 +218,7 @@ public class WorkstationWorkService {
 				pbDao.save(body_one);
 			} else {
 				// 查無此單
-				return new PackageBean();
+				// return new PackageBean();
 			}
 
 			// Step2. 製令+工作站+SN關聯+Doc 檢查
@@ -369,6 +370,13 @@ public class WorkstationWorkService {
 						// 有此工作站+格式正確
 						if (wk_s.size() == 1 && Fm_json.isJSONValid(body_one.getPbschedule())) {
 							pb_schedule = new JSONObject(body_one.getPbschedule());
+
+							String yn = pb_schedule.getJSONObject(wk_s.get(0).getWid() + "").getString("type");
+							boolean yn_check = wk_s.get(0).getWreplace();
+							// 不可重複?
+							if (yn.equals("Y") && !yn_check) {
+								return false;
+							}
 						} else {
 							return false;
 						}
@@ -404,10 +412,10 @@ public class WorkstationWorkService {
 										return false;
 									}
 								}
-
 							}
 						}
 						pb_schedule.getJSONObject(wk_s.get(0).getWid() + "").put("type", "Y");
+						body_one.setPbschedule(pb_schedule.toString());
 
 						body_one.setPbcheck(check_work_fn);
 
@@ -417,7 +425,7 @@ public class WorkstationWorkService {
 							// 有欄位?
 							if (w_pb_cell.equals("pb_w_name" + String.format("%02d", k + 1))) {
 
-								String value = user.getSuname();
+								String value = user.getSuaccount();
 								String in_name = "setPbwname" + String.format("%02d", k + 1);
 								Method in_method = body_one.getClass().getMethod(in_name, String.class);
 								// 欄位有值
@@ -443,7 +451,7 @@ public class WorkstationWorkService {
 						return check;
 					}
 					body_one.setSysmdate(new Date());
-					body_one.setSysmuser(user.getSuname());
+					body_one.setSysmuser(user.getSuaccount());
 					pbDao.save(body_one);
 
 					// Step3. 製令單+規格更新[ProductionRecords]

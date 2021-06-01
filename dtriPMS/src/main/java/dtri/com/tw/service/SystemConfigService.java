@@ -147,8 +147,8 @@ public class SystemConfigService {
 				sys_c.setSysnote(data.has("sys_note")?data.getString("sys_note"):"");
 				sys_c.setSyssort(data.getInt("sys_sort"));
 				sys_c.setSysstatus(data.getInt("sys_status"));
-				sys_c.setSysmuser(user.getSuname());
-				sys_c.setSyscuser(user.getSuname());
+				sys_c.setSysmuser(user.getSuaccount());
+				sys_c.setSyscuser(user.getSuaccount());
 
 				// 檢查群組名稱重複
 				ArrayList<SystemConfig> sys_p_g = configDao.findAllByConfigGroupTop1(sys_c.getScgname(), PageRequest.of(0, 1));
@@ -184,8 +184,8 @@ public class SystemConfigService {
 				sys_c.setSysnote(data.has("sys_note")?data.getString("sys_note"):"");
 				sys_c.setSyssort(data.getInt("sys_sort"));
 				sys_c.setSysstatus(data.getInt("sys_status"));
-				sys_c.setSysmuser(user.getSuname());
-				sys_c.setSyscuser(user.getSuname());
+				sys_c.setSysmuser(user.getSuaccount());
+				sys_c.setSyscuser(user.getSuaccount());
 
 				// 檢查群組名稱重複
 				ArrayList<SystemConfig> sys_c_g = configDao.findAllByConfigGroupTop1(sys_c.getScgname(), PageRequest.of(0, 1));
@@ -223,7 +223,7 @@ public class SystemConfigService {
 				sys_p.setSysnote(data.has("sys_note")?data.getString("sys_note"):"");
 				sys_p.setSyssort(data.getInt("sys_sort"));
 				sys_p.setSysstatus(data.getInt("sys_status"));
-				sys_p.setSysmuser(user.getSuname());
+				sys_p.setSysmuser(user.getSuaccount());
 				sys_p.setSysmdate(new Date());
 
 				// 檢查群組名稱重複

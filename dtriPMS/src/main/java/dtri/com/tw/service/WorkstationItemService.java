@@ -208,8 +208,8 @@ public class WorkstationItemService {
 				sys_c.setSysnote("");
 				sys_c.setSyssort(0);
 				sys_c.setSysstatus(data.getInt("sys_status"));
-				sys_c.setSysmuser(user.getSuname());
-				sys_c.setSyscuser(user.getSuname());
+				sys_c.setSysmuser(user.getSuaccount());
+				sys_c.setSyscuser(user.getSuaccount());
 
 				// 檢查名稱重複
 				ArrayList<WorkstationItem> sys_p_g = itemDao.findAllByWorkstationItem(sys_c.getWipbcell(), sys_c.getWipbvalue(), 1,
@@ -270,8 +270,8 @@ public class WorkstationItemService {
 				sys_c.setSysnote("");
 				sys_c.setSyssort(0);
 				sys_c.setSysstatus(data.getInt("sys_status"));
-				sys_c.setSysmuser(user.getSuname());
-				sys_c.setSyscuser(user.getSuname());
+				sys_c.setSysmuser(user.getSuaccount());
+				sys_c.setSyscuser(user.getSuaccount());
 
 				// 檢查名稱重複
 				ArrayList<WorkstationItem> sys_p_g = itemDao.findAllByWorkstationItem(sys_c.getWipbcell(), sys_c.getWipbvalue(), 1,
@@ -330,7 +330,7 @@ public class WorkstationItemService {
 				sys_p.setSysnote("");
 				sys_p.setSyssort(0);
 				sys_p.setSysstatus(data.getInt("sys_status"));
-				sys_p.setSysmuser(user.getSuname());
+				sys_p.setSysmuser(user.getSuaccount());
 				sys_p.setSysmdate(new Date());
 
 				// 檢查名稱重複

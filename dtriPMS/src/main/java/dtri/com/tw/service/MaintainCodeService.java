@@ -175,8 +175,8 @@ public class MaintainCodeService {
 					sys_c.setSyssort(0);
 					sys_c.setSysstatus(0);
 					sys_c.setSysheader(true);
-					sys_c.setSysmuser(user.getSuname());
-					sys_c.setSyscuser(user.getSuname());
+					sys_c.setSysmuser(user.getSuaccount());
+					sys_c.setSyscuser(user.getSuaccount());
 					mcDao.save(sys_c);
 
 				} else {
@@ -189,8 +189,8 @@ public class MaintainCodeService {
 					sys_c.setSyssort(0);
 					sys_c.setSysstatus(0);
 					sys_c.setSysheader(false);
-					sys_c.setSysmuser(user.getSuname());
-					sys_c.setSyscuser(user.getSuname());
+					sys_c.setSysmuser(user.getSuaccount());
+					sys_c.setSyscuser(user.getSuaccount());
 					mcDao.save(sys_c);
 
 				}
@@ -238,8 +238,8 @@ public class MaintainCodeService {
 					sys_c.setSyssort(0);
 					sys_c.setSysstatus(0);
 					sys_c.setSysheader(true);
-					sys_c.setSysmuser(user.getSuname());
-					sys_c.setSyscuser(user.getSuname());
+					sys_c.setSysmuser(user.getSuaccount());
+					sys_c.setSyscuser(user.getSuaccount());
 					// mcDao.save(sys_c);
 				} else {
 					// 子類別
@@ -251,8 +251,8 @@ public class MaintainCodeService {
 					sys_c.setSyssort(0);
 					sys_c.setSysstatus(0);
 					sys_c.setSysheader(false);
-					sys_c.setSysmuser(user.getSuname());
-					sys_c.setSyscuser(user.getSuname());
+					sys_c.setSysmuser(user.getSuaccount());
+					sys_c.setSyscuser(user.getSuaccount());
 					// mcDao.save(sys_c);
 				}
 				sys_c_s.add(sys_c);
@@ -289,7 +289,7 @@ public class MaintainCodeService {
 					sys_p.setSyssort(0);
 					sys_p.setSysstatus(0);
 					sys_p.setSysheader(true);
-					sys_p.setSysmuser(user.getSuname());
+					sys_p.setSysmuser(user.getSuaccount());
 					sys_p.setSysmdate(new Date());
 					sys_p_s.add(sys_p);
 					// mcDao.save(sys_p);
@@ -304,7 +304,7 @@ public class MaintainCodeService {
 					sys_p.setSyssort(0);
 					sys_p.setSysstatus(0);
 					sys_p.setSysheader(false);
-					sys_p.setSysmuser(user.getSuname());
+					sys_p.setSysmuser(user.getSuaccount());
 					sys_p.setSysmdate(new Date());
 					sys_p_s.add(sys_p);
 					// mcDao.save(sys_p);

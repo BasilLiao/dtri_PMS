@@ -171,8 +171,8 @@ public class SystemUserService {
 				sys_c.setSysnote(data.getString("sys_note"));
 				sys_c.setSyssort(0);
 				sys_c.setSysstatus(data.getInt("sys_status"));
-				sys_c.setSysmuser(user.getSuname());
-				sys_c.setSyscuser(user.getSuname());
+				sys_c.setSysmuser(user.getSuaccount());
+				sys_c.setSyscuser(user.getSuaccount());
 
 				// 帳號重複
 				if (userDao.findBySuaccount(sys_c.getSuaccount()) != null) {
@@ -211,8 +211,8 @@ public class SystemUserService {
 				sys_c.setSysnote(data.getString("sys_note"));
 				sys_c.setSyssort(0);
 				sys_c.setSysstatus(data.getInt("sys_status"));
-				sys_c.setSysmuser(user.getSuname());
-				sys_c.setSyscuser(user.getSuname());
+				sys_c.setSysmuser(user.getSuaccount());
+				sys_c.setSyscuser(user.getSuaccount());
 
 				// 帳號重複
 				if (userDao.findBySuaccount(sys_c.getSuaccount()) != null) {
@@ -252,7 +252,7 @@ public class SystemUserService {
 				sys_c.setSysnote(data.getString("sys_note"));
 				sys_c.setSyssort(0);
 				sys_c.setSysstatus(data.getInt("sys_status"));
-				sys_c.setSysmuser(user.getSuname());
+				sys_c.setSysmuser(user.getSuaccount());
 				sys_c.setSysmdate(new Date());
 
 				userDao.save(sys_c);
