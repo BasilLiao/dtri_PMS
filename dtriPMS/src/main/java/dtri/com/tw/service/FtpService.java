@@ -147,7 +147,7 @@ public class FtpService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			JSONObject one = new JSONObject();
-			one.put("check", true);
+			one.put("check", false);
 			list.put(one);
 			return list;
 		} finally {

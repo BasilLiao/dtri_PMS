@@ -263,8 +263,8 @@ public class WorkstationWorkService {
 						object_body_all.put("search", object_doc);
 
 						// SN_list
-						w_one = wkDao.findAllByWgidAndSysheaderOrderBySyssortAsc(w_one.get(0).getWgid(), false);
-						w_one.forEach(w -> {
+						ArrayList<Workstation> w_for_sn = wkDao.findAllByWgidAndSysheaderOrderBySyssortAsc(w_one.get(0).getWgid(), false);
+						w_for_sn.forEach(w -> {
 							JSONObject object_body = new JSONObject();
 							object_body.put(w.getWorkstationItem().getWipbcell(), w.getWorkstationItem().getWipbvalue());
 							object_sn.put(object_body);

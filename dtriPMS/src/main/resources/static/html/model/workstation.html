@@ -210,16 +210,38 @@
 						</td>
 					</tr>
 					<!--(固定) -->
+					<tr id="barcode_user" class="w_i_0 font-weight-bold">
+						<td colspan="2" class="p-0">
+							<div class="row p-1 m-0 border  border-light rounded">
+								<div class="col-5 p-1 m-0">*Workstation User:</div>
+								<div class="col-7 p-0">
+									<input title="w_c_name" id="w_focus_0" disabled="disabled" class="w_sn_value col p-1 border-1 border-primary rounded" type="text" required>
+								</div>
+							</div>
+						</td>
+						<td class="p-1 border border-dark border-bottom-0">
+							<div class="w_i_success">
+								<i class="bi bi-shield-check text-success p-0 h3 d-none"></i>
+							</div>
+							<div class="w_i_warning">
+								<i class="bi bi-shield-exclamation text-warning p-0 h3"></i>
+							</div>
+							<div class="w_i_danger">
+								<i class="bi bi-shield-x text-danger p-0 h3 d-none"></i>
+							</div>
+						</td>
+					</tr>
+					<!--(固定) -->
 					<tr id="barcode_work" class="w_i_1 font-weight-bold">
 						<td colspan="2" class="p-0">
 							<div class="row p-1 m-0 border  border-light rounded">
 								<div class="col-5 p-1 m-0">*Workstation Code:</div>
 								<div class="col-7 p-0">
-									<input title="w_c_name" id="w_focus_1" disabled="disabled" class="w_sn_value col p-1 border-1 border-primary rounded" type="text" required>
+									<input title="w_c_name" id="w_focus_1" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
 							</div>
 						</td>
-						<td class="p-1 border border-dark border-bottom-0">
+						<td class="p-1">
 							<div class="w_i_success">
 								<i class="bi bi-shield-check text-success p-0 h3 d-none"></i>
 							</div>
@@ -484,7 +506,7 @@
 		data : {
 			test : 300,
 			//籃框位置
-			nb:1,
+			nb:0,
 			nb_max:6,
 			//維修代碼
 			fix_type:{},
@@ -644,7 +666,7 @@
 					switch(code){
 					case "BC001":
 						//目前代碼位置 
-						if(workstation.nb>1){
+						if(workstation.nb>0){
 							workstation.nb = parseInt(id.replace('w_focus_',''));
 							workstation.nb-=1;
 							//更換Class
@@ -657,7 +679,7 @@
 						break;
 					case "BC002":
 						//目前代碼位置 
-						if(workstation.nb<$(".w_sn_value").length){
+						if(workstation.nb+1<$(".w_sn_value").length){
 							workstation.nb = parseInt(id.replace('w_focus_',''));
 							workstation.nb+=1;
 							//更換Class
@@ -731,6 +753,7 @@
 							$('#w_focus_6').val("");
 							$('#w_focus_7').val("");
 							$('#w_focus_8').val("");
+							$('.doc_c_value').val("");
 							
 							//Step5.更換Class
 							workstation.nb = 5;
@@ -750,7 +773,7 @@
 					case "BC006":
 						//取消全部
 						$('.w_sn_value').val("");
-						workstation.nb=1;
+						workstation.nb=0;
 						//更換Class
 						$("#"+id).removeClass("border-1");
 						$("#"+id).addClass("border-0");
@@ -883,6 +906,15 @@
 						 $("#fix_i_open").slideToggle("fast");
 						 return false;
 					}
+					//略Workstation User(可能有複數)
+					if(workstation.nb==0){
+						if($('#'+id).val()==""){
+							$('#'+id).val(code);	
+						}else{
+							$('#'+id).val($('#'+id).val()+'_'+code);								
+						}
+						return false;
+					}
 					//輸入一般值->換下一格
 					$('#'+id).val(code);
 					//是SN欄位則登記
@@ -891,10 +923,10 @@
 						workstation.create_barcode("barcode_sn_one",code,"code39");
 						
 					}
-					if(workstation.nb<$(".w_sn_value").length ){
+					//自動位移
+					if(workstation.nb+1<$(".w_sn_value").length ){
 						//console.log(id);
-						workstation.nb = parseInt(id.replace('w_focus_',''));
-													
+						workstation.nb = parseInt(id.replace('w_focus_',''));	
 							workstation.nb+=1;
 							//跳過 Error Code + Product Patch
 							if(workstation.nb==3 ||workstation.nb==4){
@@ -957,6 +989,7 @@
 			sendCheck() {
 				console.log("sendCheck");	
 				 var search = {};
+				search['w_hours'] = $('#w_focus_0').val();
                 search['w_c_name'] = $('#w_focus_1').val();
                 search['ph_pr_id'] = $('#w_focus_2').val();
                 search['pb_sn'] = $('#w_focus_5').val();
