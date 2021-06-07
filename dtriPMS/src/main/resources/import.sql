@@ -39,12 +39,17 @@ INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (19, 4, '工作站', '0001001101', 1304, '工作-流程管理', 'workstation_program.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (20, 4, '工作站', '0001001101', 1305, '作業-SN補單', 'workstation_snadd.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (21, 4, '工作站', '0001001101', 1306, '作業-工作站', 'workstation_work.basil');
---維修區
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (22, 5, '產品維修', '0001001101', 1401, '維修-錯誤代碼', 'maintain_code.basil');
+--工時績效
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (22, 5, '人員績效', '0001001101', 1401, '工時-工時登記', 'work_hours.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (23, 5, '人員績效', '0001001101', 1402, '工時-工作類型', 'work_type.basil');
 
-SELECT setval('public.system_permission_seq', 22, true);
+
+--維修區
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (24, 6, '產品維修', '0001001101', 1401, '維修-錯誤代碼', 'maintain_code.basil');
+
+SELECT setval('public.system_permission_seq', 24, true);
 DROP sequence IF EXISTS SYSTEM_PERMISSION_G_SEQ CASCADE;
-create sequence SYSTEM_PERMISSION_G_SEQ start with 6 increment by 1;
+create sequence SYSTEM_PERMISSION_G_SEQ start with 7 increment by 1;
 
 --system_group(sg_permission[特殊3(512),特殊2(256),特殊1(128),訪問(64),下載(32),上傳(16),新增(8),修改(4),刪除(2),查詢(1)])
 ----admin
@@ -183,5 +188,22 @@ INSERT INTO maintain_code(mc_id, mc_g_id, mc_g_name, mc_name, mc_value,sys_heade
 SELECT setval('public.maintain_code_seq', 8, true);
 DROP sequence IF EXISTS MAINTAIN_CODE_G_SEQ  CASCADE;
 create sequence MAINTAIN_CODE_G_SEQ start with 3 increment by 1;
+
+--工作類型
+INSERT INTO work_type(wt_id,wt_name)VALUES (0,'Title_Group');
+INSERT INTO work_type(wt_id,wt_name)VALUES (1,'前板組裝');
+INSERT INTO work_type(wt_id,wt_name)VALUES (2,'後板組裝');
+INSERT INTO work_type(wt_id,wt_name)VALUES (3,'其他');
+INSERT INTO work_type(wt_id,wt_name)VALUES (4,'電池組裝');
+SELECT setval('public.work_type_seq', 4, true);
+
+--工時登記
+INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id,sys_header)VALUES (1, 'admin', '', 10, 'A44654-A654', 0,true);
+INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id)VALUES (2, 'admin', '測1試做事', 10, 'A44654-A654', 1);
+INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id)VALUES (3, 'admin', '測2試做事', 10, 'A44654-A654', 2);
+INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id)VALUES (4, 'admin', '測3試做事', 10, 'A44654-A654', 3);
+
+
+SELECT setval('public.work_type_seq', 3, true);
 
 

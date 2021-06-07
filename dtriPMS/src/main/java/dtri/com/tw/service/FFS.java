@@ -2,30 +2,36 @@ package dtri.com.tw.service;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.stereotype.Service;
+
+import dtri.com.tw.service.FFM.Hmb;
+import dtri.com.tw.service.FFM.See;
+import dtri.com.tw.service.FFM.Tag;
+import dtri.com.tw.service.FFM.Type;
 
 /**
  * 
  * FrontFormatService = FFS
  * 
  */
-@Service
 public class FFS {
 	// 屬性設置
-	public static final String INP = "input", TTA = "textarea", SEL = "select", CHE = "checkbox";
-	public static final String TEXT = "text", NUMB = "number", PASS = "password", DATE = "date";
-	public static final String DIS = "disabled", SHO = "show";
+	// public static final String INP = "input", TTA = "textarea", SEL = "select",
+	// CHE = "checkbox";
+	// public static final String TEXT = "text", NUMB = "number", PASS = "password",
+	// DATE = "date";
+	// public static final String DIS = "disabled", SHO = "show";
 	// 大小
-	public static final String S10 = "100px", S15 = "150px", S20 = "200px", S30 = "300px";
+	// public static final String S10 = "100px", S15 = "150px", S20 = "200px", S30 =
+	// "300px";
 	// 規則設定
-	public static final String H = "_h__", M = "m__", B = "_b__";
+	// public static final String H = "_h__", M = "m__", B = "_b__";
 
 	// 格式(CUD)需求包裝
 	/**
 	 * h_m = h_modify
 	 * 
-	 * @param tag         : 標籤
-	 * @param type        : 類型 select/input/textarea
+	 * @param tag         : 標籤 INP=input,TTA=textarea,SEL=select,CHE=checkbox
+	 * @param type        : 類型 EXT=text,NUMB=number,PASS=password,DATE=date
 	 * @param placeholder : 預設文字
 	 * @param value       : 預設值
 	 * @param show        : disabled/show 顯示?
@@ -40,17 +46,17 @@ public class FFS {
 	 *         show:"d-none/disabled/show", values:[{key:value,key:value}]}
 	 * 
 	 **/
-	public static JSONObject h_m(String tag, String type, String placeholder, String value, String show, String col, boolean required,
-			JSONArray values, String id, String name) {
+	public static JSONObject h_m(Tag tag, Type type, String placeholder, String value, See show, String col, boolean required, JSONArray values,
+			String id, String name) {
 		JSONObject object_value = new JSONObject();
 		object_value.put("name", name);
-		object_value.put("id", FFS.M + id);// id
-		object_value.put("tag", tag);// 類型
-		object_value.put("type", type);// 驗證格式
+		object_value.put("id", FFM.choose(FFM.Hmb.M.toString()) + id);// id
+		object_value.put("tag", FFM.choose(tag.toString()));// 類型
+		object_value.put("type", FFM.choose(type.toString()));// 驗證格式
 		object_value.put("required", required);// 是否必寫
 		object_value.put("placeholder", placeholder);// 預設文字
 		object_value.put("value", value);// 預設值
-		object_value.put("show", show);// 顯示?
+		object_value.put("show", FFM.choose(show.toString()));// 顯示?
 		object_value.put("col", col);// 寬度?
 		object_value.put("values", values);// 多選項select (可能有)
 		return object_value;
@@ -71,11 +77,11 @@ public class FFS {
 	 * @return 格式 :
 	 *         {name:xxx,type:(select/input/textarea),col:(col-(md/lg/sm)-數字),id:"",values:[{key:value,key:value}]}
 	 **/
-	public static JSONObject h_s(String tag, String type, String value, String col, String id, String name, JSONArray values) {
+	public static JSONObject h_s(Tag tag, Type type, String value, String col, String id, String name, JSONArray values) {
 		JSONObject one_search = new JSONObject();
 		one_search.put("name", name);
-		one_search.put("tag", tag);
-		one_search.put("type", type);
+		one_search.put("tag", FFM.choose(tag.toString()));
+		one_search.put("type", FFM.choose(type.toString()));
 		one_search.put("value", value);// 預設值
 		one_search.put("col", col);
 		one_search.put("id", id);
@@ -92,11 +98,11 @@ public class FFS {
 	 * 
 	 * @return 格式 : {name:xxx,size:50px}
 	 **/
-	public static JSONObject h_t(String name, String size, String show) {
+	public static JSONObject h_t(String name, String size, See show) {
 		JSONObject one_title = new JSONObject();
 		one_title.put("name", name);// 欄位名稱
 		one_title.put("size", size);// 寬度?
-		one_title.put("show", show);// 顯示?
+		one_title.put("show", FFM.choose(show.toString()));// 顯示?
 		return one_title;
 	}
 
@@ -109,11 +115,11 @@ public class FFS {
 	 * 
 	 * @return 格式 : {name:xxx,size:50px}
 	 **/
-	public static JSONObject h_g(String show, String col, String id) {
+	public static JSONObject h_g(See show, String col, String id) {
 		JSONObject one_group = new JSONObject();
-		one_group.put("id", FFS.M + id);// id
+		one_group.put("id", FFM.choose(FFM.Hmb.M.toString()) + id);// id
 		one_group.put("col", col);// 寬度?
-		one_group.put("show", show);// 顯示?
+		one_group.put("show", FFM.choose(show.toString()));// 顯示?
 		return one_group;
 	}
 
@@ -122,8 +128,8 @@ public class FFS {
 	 * @param ord 排序 雙位數
 	 * 
 	 **/
-	public static String ord(int ord, String w) {
-		return String.format("%02d", ord) + w;
+	public static String ord(int ord, Hmb w) {
+		return String.format("%02d", ord) + FFM.choose(w.toString());
 	}
 
 }

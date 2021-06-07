@@ -1,11 +1,13 @@
 package dtri.com.tw.db.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -124,6 +126,9 @@ public class ProductionRecords {
 
 	@OneToOne(mappedBy = "productionRecords")
 	private ProductionHeader header;
+	
+	@OneToMany(mappedBy = "productionRecords")
+	private List<WorkHours> workHours;
 
 	public Integer getPrpokquantity() {
 		return prpokquantity;
