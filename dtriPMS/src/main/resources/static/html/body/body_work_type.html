@@ -69,7 +69,7 @@
 		},
 		//初始化前
 		created() {
-			console.log("body_workstation_program.html(created)");
+			console.log("body_work_type.html(created)");
 		},
 		//初始化後
 		mounted() {
@@ -93,7 +93,6 @@
 			//編輯-模板
 			$("#index #modify_tab").load("./html/model/modify.html", function() {
 				modify.setDataTitle(main.allData.cell_modify);
-				modify.setDataGroupTitle(main.allData.cell_g_modify);
 				modify.setDataTitleDelete(main.allData.header);
 				modify.selectAllInit();
 			});
@@ -123,7 +122,7 @@
             $("#index #search_tab").addClass("active");
 
             //單元名稱
-            $("#title_name").text(t_nav.nav_list['body_workstation_program']);
+            $("#title_name").text(t_nav.nav_list['body_work_type']);
 		},
 		//可呼叫方法
 		methods : {
@@ -131,7 +130,7 @@
 		},
 		//移除監聽事件
 		beforeDestroy() {
-			console.log("body_workstation_program.html(beforeDestroy)");
+			console.log("body_work_type.html(beforeDestroy)");
 
 		}
 	});

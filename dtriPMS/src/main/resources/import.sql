@@ -40,12 +40,12 @@ INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (20, 4, '工作站', '0001001101', 1305, '作業-SN補單', 'workstation_snadd.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (21, 4, '工作站', '0001001101', 1306, '作業-工作站', 'workstation_work.basil');
 --工時績效
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (22, 5, '人員績效', '0001001101', 1401, '工時-工時登記', 'work_hours.basil');
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (23, 5, '人員績效', '0001001101', 1402, '工時-工作類型', 'work_type.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (22, 5, '人員績效', '0001001101', 1401, '工作-工時登記', 'work_hours.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (23, 5, '人員績效', '0001001101', 1402, '工作-作業類型', 'work_type.basil');
 
 
 --維修區
-INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (24, 6, '產品維修', '0001001101', 1401, '維修-錯誤代碼', 'maintain_code.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (24, 6, '產品維修', '0001001101', 1501, '維修-錯誤代碼', 'maintain_code.basil');
 
 SELECT setval('public.system_permission_seq', 24, true);
 DROP sequence IF EXISTS SYSTEM_PERMISSION_G_SEQ CASCADE;
@@ -79,6 +79,9 @@ INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_so
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (21,1, '系統管理者', '1111111111', 21,1306);
 
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (22,1, '系統管理者', '1111111111', 22,1401);
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (23,1, '系統管理者', '1111111111', 23,1402);
+
+INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (24,1, '系統管理者', '1111111111', 24,1501);
 
 ----user
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort,sys_header) VALUES (23,2, '一般使用者', '0000000000', 1,0,true);

@@ -156,6 +156,13 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.PUT, work_hours + ".AU").hasAuthority(actionRole(work_hours, "AU"))// (修改)
 				.antMatchers(HttpMethod.DELETE, work_hours + ".AD").hasAuthority(actionRole(work_hours, "AD"))// (移除)
 
+				// ----請求-work_type-(訪問) ----
+				.antMatchers(HttpMethod.POST, work_type).hasAuthority(actionRole(work_type, ""))//
+				.antMatchers(HttpMethod.POST, work_type + ".AR").hasAuthority(actionRole(work_type, "AR"))// (查詢)
+				.antMatchers(HttpMethod.POST, work_type + ".AC").hasAuthority(actionRole(work_type, "AC"))// (新增)
+				.antMatchers(HttpMethod.PUT, work_type + ".AU").hasAuthority(actionRole(work_type, "AU"))// (修改)
+				.antMatchers(HttpMethod.DELETE, work_type + ".AD").hasAuthority(actionRole(work_type, "AD"))// (移除)
+
 				// 請求需要檢驗-全部請求
 				.anyRequest().authenticated();
 		// 下列-登入位置

@@ -1,7 +1,7 @@
 <div class="text-center col-md" id="index">
 	<div class="p-1 mt-5">
 		<h4 class="m-0">
-			<b>製程-製令管理</b>
+			<b id="title_name"></b>
 		</h4>
 	</div>
 	    <div class="p-1">
@@ -120,6 +120,9 @@
             $("#index #search_nav").addClass("active");
             $("#index #search_tab").addClass("show");
             $("#index #search_tab").addClass("active");
+            
+            //單元名稱
+            $("#title_name").text(t_nav.nav_list['body_production_header']);
 		},
 		//可呼叫方法
 		methods : {

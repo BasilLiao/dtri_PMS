@@ -85,6 +85,7 @@
 		data : {
 			test : 300,
 			nb : 1, //編號(0 是 樣式)
+			nav_list:{},
 		},
 		//初始化前
 		created() {
@@ -137,6 +138,7 @@
 					$("#"+nav_m_l+" #item_m").attr("id","item_m_"+i);
 					$("#item_m_"+i).attr("url",list[i].url);
 					$("#item_m_"+i+" .item_n").text(list[i].i_name);
+					this.nav_list['body_'+(list[i].url).replace('.basil','')] = list[i].i_name;
 				}
 				//將預設單-移除
 				$(".nav_example").remove();

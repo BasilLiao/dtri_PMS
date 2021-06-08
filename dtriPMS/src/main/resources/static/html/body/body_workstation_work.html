@@ -1,7 +1,7 @@
 <div class="text-center col-md" id="index">
 	<div class="p-1 mt-5">
 		<h4 class="m-0">
-			<b>作業-工作站</b>
+			<b id="title_name"></b>
 		</h4>
 	</div>
 	    <div class="p-1">
@@ -126,6 +126,9 @@
             $("#index #workstation_nav").addClass("active");
             $("#index #workstation_tab").addClass("show");
             $("#index #workstation_tab").addClass("active");
+
+            //單元名稱
+            $("#title_name").text(t_nav.nav_list['body_workstation_item']);
 		},
 		//可呼叫方法
 		methods : {
