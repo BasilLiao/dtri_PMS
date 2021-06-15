@@ -88,9 +88,9 @@ public class ProductionSnService {
 
 			// 放入群主指定 [(key)](modify/Create/Delete) 格式
 			JSONArray obj_g_m = new JSONArray();
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, "col-md-2", "ps_name"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, "col-md-2", "ps_value"));
-			obj_g_m.put(FFS.h_g(FFM.See.SHO, "col-md-2", "ps_g_name"));
+			obj_g_m.put(FFS.h_g(FFM.See.DIS,FFM.D_None.D_SOHW, "col-md-2", "ps_name"));
+			obj_g_m.put(FFS.h_g(FFM.See.DIS,FFM.D_None.D_SOHW, "col-md-2", "ps_value"));
+			obj_g_m.put(FFS.h_g(FFM.See.SHO,FFM.D_None.D_SOHW, "col-md-2", "ps_g_name"));
 			bean.setCell_g_modify(obj_g_m);
 
 			// 放入包裝(search)

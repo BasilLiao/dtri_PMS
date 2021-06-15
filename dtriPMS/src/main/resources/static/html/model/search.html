@@ -4,10 +4,15 @@
 	width: 22px;
 	height: 20px;
 }
+
 .datalist {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    }
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.datetimepicker {
+	margin-top: 50px;
+}
 </style>
 <div id="search">
 	<div class="shadow mt-0 text-left">
@@ -299,15 +304,19 @@
             },
             setSearch(search) {
                 //查詢注入資訊
-                //console.log(search);
+                console.log(search);
                 for (var i = 0; i < search.length; i++) {
                     switch (search[i].tag) {
                         case "input":
                             var search_input = $(".search_example_input").clone(); //複製樣本
                             search_input[0].className = search[i].col + " p-2 search_true";
-                            search_input[0].id = "search_" + search[i].id;
+                            search_input[0].id = "search_" + search[i].id;                            
                             search_input.appendTo(".search_example_finds");
                             $("#" + search_input[0].id + " .s_name").text(search[i].name);
+                            //時間類型
+                            if(search[i].type=='date'){
+                            	$("#" + search_input[0].id + " .s_value").addClass('datetimepicker_date');
+                            }
                             break;
                         case "select":
                             //查詢物件練立search:[{"id":"","values":[{"key":"XXX","value":"XXX"},{...}],"type":"","name":""}]
@@ -334,6 +343,21 @@
                     $(".search_example_input").addClass("d-none");
                     $(".search_example_selsect").addClass("d-none");
                 }
+                
+                //時間格式
+                $('.datetimepicker_date').datetimepicker({
+                	 format: 'yyyy-mm-dd hh:ii:ss',
+                     pickerPosition:'bottom-right',
+                     minView:1,
+                     //hoursDisabled: [00, 1, 2, 3, 4, 5, 6, 7],
+                     //minuteStep: 30,
+                     autoclose:true,
+                     endDate: '+1d',
+                     datesDisabled: '+1d',
+                     todayBtn:true,
+                    //......可以同上項目代碼自定義設置
+                });
+                
             },
             selectAllInit() {
                 //監聽-同步相同屬性

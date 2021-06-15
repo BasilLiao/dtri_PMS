@@ -8,6 +8,14 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+.datetimepicker {
+	margin-top: 50px;
+}
+
+.bg-yellow-30 {
+	background-color: #fdf59a;
+}
 </style>
 <div id="modify">
 	<!-- 細節 -->
@@ -463,6 +471,11 @@
 						if(title[d].show=='disabled'){
 							$(".create_example ."+title[d].id+" input").attr("disabled","disabled");
 						}
+						if(title[d].type=='date'){
+							$(".create_example ."+title[d].id+" input").addClass('datetimepicker_date');
+							$(".create_example ."+title[d].id+" .save_value").attr("type","text");
+						}
+						
 						
 						//另存模板
 						input =$(".save_as_example .save_as_example_input").clone();
@@ -477,6 +490,10 @@
 						}
 						if(title[d].show=='disabled'){
 							$(".save_as_example ."+title[d].id+" input").attr("disabled","disabled");
+						}
+						if(title[d].type=='date'){
+							$(".save_as_example ."+title[d].id+" input").addClass('datetimepicker_date');
+							$(".save_as_example ."+title[d].id+" .save_value").attr("type","text");
 						}
 						
 						//修改模板
@@ -493,8 +510,13 @@
 						if(title[d].show=='disabled'){
 							$(".modify_example ."+title[d].id+" input").attr("disabled","disabled");
 						}
+						if(title[d].type=='date'){
+							$(".modify_example ."+title[d].id+" input").addClass('datetimepicker_date');
+							$(".modify_example ."+title[d].id+" .save_value").attr("type","text");
+						}
 						
 						break;
+						/*
 					case "input":
 						var input =$(".detail_example .detail_example_input").clone();
 						input[0].className="p-2 save_key "+title[d].col+" "+title[d].id;
@@ -515,6 +537,7 @@
 						if(title[d].show=='disabled'){
 							$(".create_example ."+title[d].id+" input").attr("disabled","disabled");
 						}	
+						*/
 					case "select":
 						var select =$(".detail_example .detail_example_select").clone();
 						select[0].className="p-2 save_key "+title[d].col+" "+title[d].id;
@@ -681,6 +704,8 @@
 				$("#save_as_example_tr").remove();
 				$("#modify_example_tr").remove();
 				$("#delete_example_tr").remove();
+				
+				
 			},
 			setData(obj_all){
 				//帶入資料區
@@ -722,9 +747,17 @@
 							 $("#detail_really_tr_"+this.detail_nb+" .m__"+key_id+" .save_value").prop("checked", key_value);
 						 }
                     }
-					//群組類型
+					//群組類型-因為全部都反白
                     if($("#detail_really_tr_"+this.detail_nb+" .m__sys_header input").val()=="true"){
     					$("#detail_really_tr_"+this.detail_nb+" .detail_example_group").addClass("d-none");
+                    	$("#detail_really_tr_"+this.detail_nb).addClass("bg-yellow-30");
+    					
+    					for(var g =0;g<this.modify_g_datas.length;g++){
+    	                  	//d_none?
+    						if(this.modify_g_datas[g].d_none=="d-none"){
+    							$("#detail_really_tr_"+this.detail_nb+" ."+this.modify_g_datas[g].id).addClass("d-none");
+    						}
+    					}
                     }else{
                     	$("#detail_really_tr_"+this.detail_nb+" .detail_example_group").removeClass("d-none");
                     }
@@ -752,6 +785,7 @@
                   	//群組類型
                     if($("#save_as_really_tr_"+this.save_as_nb+" .m__sys_header input").val()=="true"){
     					$("#save_as_really_tr_"+this.save_as_nb+" .save_as_example_group").addClass("d-none");
+    					$("#save_as_really_tr_"+this.save_as_nb).addClass("bg-yellow-30");
     					//群組特定設定
 						for(var g =0;g<this.modify_g_datas.length;g++){
 							if(this.modify_g_datas[g].show=="disabled"){
@@ -759,6 +793,10 @@
 	    						$("#save_as_really_tr_"+this.save_as_nb+" ."+this.modify_g_datas[g].id+" .save_value").attr("disabled","disabled");
 							}else{
 								$("#save_as_really_tr_"+this.save_as_nb+" ."+this.modify_g_datas[g].id+" .save_value").removeAttr("disabled");
+							}
+							//d_none?
+							if(this.modify_g_datas[g].d_none=="d-none"){
+								$("#save_as_really_tr_"+this.save_as_nb+" ."+this.modify_g_datas[g].id).addClass("d-none");
 							}
 						}
                     }else{
@@ -788,7 +826,9 @@
                     }
                 	//群組類型
                     if($("#modify_really_tr_"+this.modify_nb+" .m__sys_header input").val()=="true"){
+   						$("#modify_really_tr_"+this.modify_nb).addClass("bg-yellow-30");
     					$("#modify_really_tr_"+this.modify_nb+" .modify_example_group").addClass("d-none");
+    					
     					//群組特定設定
 						for(var g =0;g<this.modify_g_datas.length;g++){
 							if(this.modify_g_datas[g].show=="disabled"){
@@ -796,6 +836,10 @@
 	    						$("#modify_really_tr_"+this.modify_nb+" ."+this.modify_g_datas[g].id+" .save_value").attr("disabled","disabled");
 							}else{
 								$("#modify_really_tr_"+this.modify_nb+" ."+this.modify_g_datas[g].id+" .save_value").removeAttr("disabled");
+							}
+							//d_none?
+							if(this.modify_g_datas[g].d_none=="d-none"){
+								$("#modify_really_tr_"+this.modify_nb+" ."+this.modify_g_datas[g].id).addClass("d-none");
 							}
 						}
                     }else{
@@ -832,6 +876,7 @@
                     }
                   	//群組類型
                     if($("#delete_really_tr_"+this.delete_nb+" .sys_header").text()=="true"){
+                    	$("#delete_really_tr_"+this.delete_nb).addClass("bg-yellow-30");
     					$("#delete_really_tr_"+this.delete_nb+" .delete_example_group i").addClass("d-none");
     					$("#delete_really_tr_"+this.delete_nb+" .delete_example_group div").text("Group");
                     }else{
@@ -840,6 +885,20 @@
                     $("#" + one_option[0].id + " .d_list_body").remove();
                     this.delete_nb+=1;
 				}
+				
+				//時間格式
+                $('.datetimepicker_date').datetimepicker({
+                    format: 'yyyy-mm-dd hh:ii:00',
+                    pickerPosition:'bottom-right',
+                    //minView:1,
+                   // hoursDisabled: [00, 1, 2, 3, 4, 5, 6],
+                    minuteStep: 30,
+                    autoclose:true,
+                    endDate: '+1d',
+                    datesDisabled: '+1d',
+                    todayBtn:true,
+                    //......可以同上項目代碼自定義設置
+                });
 				
 				/*印出
 				for(var a_p=0;a_p <= obj_all.a_print.length;a_p++){
@@ -850,7 +909,8 @@
 				for(var a_d=0;a_d <= obj_all.a_download.length;a_d++){
 					obj_all.a_download[a_s_as];
 					
-				}*/         
+				}*/        
+				
 			},
 			//存檔
 			sendSave() {
@@ -1017,7 +1077,8 @@
                     if($(".create_really_tr").length==0 && main.allData.body_type.type=="group"){
                    		//呈現群組
                     	if(main.allData.body_type.createOnly=="all"){
-	                    	$('#'+create_example[0].id+" .create_example_group").addClass('d-none');                		
+	                    	$('#'+create_example[0].id+" .create_example_group").addClass('d-none'); 
+	                    	$("#create_really_tr_"+modify.create_nb).addClass("bg-yellow-30");
 	                    	//群組特定設定
 							for(var g =0;g<modify.modify_g_datas.length;g++){
 								if(modify.modify_g_datas[g].show=="disabled"){
@@ -1025,6 +1086,10 @@
 		    						$("#create_really_tr_"+modify.create_nb+" ."+modify.modify_g_datas[g].id+" .save_value").attr("disabled","disabled");
 								}else{
 									$("#create_really_tr_"+modify.create_nb+" ."+modify.modify_g_datas[g].id+" .save_value").removeAttr("disabled");
+								}
+								//d_none?
+								if(modify.modify_g_datas[g].d_none=="d-none"){
+									$("#create_really_tr_"+modify.create_nb+" ."+modify.modify_g_datas[g].id).addClass("d-none");
 								}
 							}
                     	}
@@ -1036,6 +1101,20 @@
                     $("#create_really_tr_"+modify.create_nb+" .create_example_add .bi").addClass("d-none");
                     $("#create_really_tr_"+modify.create_nb).addClass('create_really_tr');
                     modify.create_nb+=1;
+                    
+                  //時間格式
+                    $('.datetimepicker_date').datetimepicker({
+                        format: 'yyyy-mm-dd hh:ii:00',
+                        pickerPosition:'bottom-right',
+                        //minView:1,
+                        //hoursDisabled: [00, 1, 2, 3, 4, 5, 6],
+                        minuteStep: 30,
+                        autoclose:true,
+                        endDate: '+1d',
+                        datesDisabled: '+1d',
+                        todayBtn:true,
+                        //......可以同上項目代碼自定義設置
+                    });
                     
                  });
                 //移除

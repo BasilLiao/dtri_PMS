@@ -23,11 +23,15 @@ import dtri.com.tw.db.entity.ProductionHeader;
 import dtri.com.tw.db.entity.ProductionRecords;
 import dtri.com.tw.db.entity.ProductionSN;
 import dtri.com.tw.db.entity.SystemUser;
+import dtri.com.tw.db.entity.WorkHours;
+import dtri.com.tw.db.entity.WorkType;
 import dtri.com.tw.db.entity.Workstation;
 import dtri.com.tw.db.entity.WorkstationProgram;
 import dtri.com.tw.db.pgsql.dao.ProductionBodyDao;
 import dtri.com.tw.db.pgsql.dao.ProductionHeaderDao;
 import dtri.com.tw.db.pgsql.dao.ProductionSNDao;
+import dtri.com.tw.db.pgsql.dao.WorkHoursDao;
+import dtri.com.tw.db.pgsql.dao.WorkTypeDao;
 import dtri.com.tw.db.pgsql.dao.WorkstationDao;
 import dtri.com.tw.db.pgsql.dao.WorkstationProgramDao;
 import dtri.com.tw.tools.Fm_SN;
@@ -49,6 +53,12 @@ public class ProductionHeaderService {
 
 	@Autowired
 	private ProductionSNDao snDao;
+
+	@Autowired
+	private WorkTypeDao typeDao;
+
+	@Autowired
+	private WorkHoursDao hoursDao;
 
 	@Autowired
 	EntityManager em;
@@ -136,13 +146,14 @@ public class ProductionHeaderService {
 			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "ph_pb_g_id", "TL_SN_ID"));
 
 			a_val = new JSONArray();
-			a_val.put((new JSONObject()).put("value", "一般製令_No(sn)").put("key", "A511_No_SN"));
-			a_val.put((new JSONObject()).put("value", "一般製令_Cr(sn)").put("key", "A511"));
-			a_val.put((new JSONObject()).put("value", "重工製令_No(sn)").put("key", "A521_No_SN"));
-			a_val.put((new JSONObject()).put("value", "重工_Re(sn)").put("key", "A521"));
-			a_val.put((new JSONObject()).put("value", "維護製令").put("key", "A522"));
-			a_val.put((new JSONObject()).put("value", "拆解製令").put("key", "A431"));
-			a_val.put((new JSONObject()).put("value", "委外製令").put("key", "A512"));
+			a_val.put((new JSONObject()).put("value", "一般製令_No(sn)").put("key", "A511_no_sn"));
+			a_val.put((new JSONObject()).put("value", "一般製令_Both(sn)").put("key", "A511_no_and_has_sn"));
+			a_val.put((new JSONObject()).put("value", "一般製令_Create(sn)").put("key", "A511_has_sn"));
+			a_val.put((new JSONObject()).put("value", "重工製令_No(sn)").put("key", "A521_no_sn"));
+			a_val.put((new JSONObject()).put("value", "重工製令_Re(sn)").put("key", "A521_has_sn"));
+			a_val.put((new JSONObject()).put("value", "維護製令").put("key", "A522_service"));
+			a_val.put((new JSONObject()).put("value", "拆解製令").put("key", "A431_disassemble"));
+			a_val.put((new JSONObject()).put("value", "委外製令").put("key", "A512_outside"));
 			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "A511", "A511", FFM.See.SHO, "col-md-2", true, a_val, "ph_type", "TL_製令類"));
 			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "ph_pr_id", "TL_製令單號"));
 			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "ph_s_date", "TL_開始(時)"));
@@ -582,6 +593,69 @@ public class ProductionHeaderService {
 					pro_h.setPhtype(data.getString("ph_type"));
 					pro_h.setPhpbgid(id_b_g);
 					productionHeaderDao.save(pro_h);
+
+					// typeDao+hoursDao
+					List<WorkHours> works_p = new ArrayList<WorkHours>();
+					ArrayList<WorkType> types = typeDao.findAll();
+					types.forEach(t -> {
+						WorkHours work_p = new WorkHours();
+						if (t.getWtid() == 0) {
+							// 父類別
+							work_p.setSysheader(true);
+						} else {
+							work_p.setSysheader(false);
+							// 子類別
+						}
+						work_p.setProductionRecords(pro_r);
+						work_p.setWhwtid(t);
+						work_p.setWhdo("");
+						work_p.setWhaccount("");
+						work_p.setWhnb(0);
+						work_p.setSysnote("");
+						work_p.setSyssort(0);
+						work_p.setSysstatus(0);
+
+						// 製令單類型
+						switch (data.getString("ph_type")) {
+						case "A511_no_sn":
+							// A511_no_sn 一般製令_No(sn)
+
+							break;
+						case "A511_no_and_has_sn":
+							// A511_no_and_has_sn 一般製令_Both(sn)
+							works_p.add(work_p);
+							break;
+						case "A511_has_sn":
+							// A511_has_sn 一般製令_Create(sn)
+							works_p.add(work_p);
+							break;
+						case "A521_no_sn":
+							// A511_no_sn 重工製令_No(sn)
+
+							break;
+						case "A521_has_sn":
+							// A521_has_sn 重工製令_Re(sn)
+
+							break;
+						case "A522_service":
+							// A522_service 維護製令
+
+							break;
+						case "A431_disassemble":
+							// A522_service 拆解製令
+
+							break;
+						case "A512_outside":
+							// A522_service 委外製令
+
+							break;
+
+						default:
+							break;
+						}
+
+					});
+					hoursDao.saveAll(works_p);
 
 				} else {
 					return check;

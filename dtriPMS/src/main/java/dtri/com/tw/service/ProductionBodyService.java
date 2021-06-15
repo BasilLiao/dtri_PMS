@@ -53,6 +53,8 @@ public class ProductionBodyService {
 		String pb_sn_name = "";
 		String pb_sn = "";
 		String pb_sn_check = "";
+		String pb_sn_date_s = "";
+		String pb_sn_date_e = "";
 		List<Integer> pbid = null;
 		// 初次載入需要標頭 / 之後就不用
 		if (body == null || body.isNull("search")) {
@@ -256,6 +258,9 @@ public class ProductionBodyService {
 			object_searchs.put(FFS.h_s(FFM.Tag.SEL, FFM.Type.TEXT, "0", "col-md-2", "pb_sn_name", "SN_類型", a_val));
 			object_searchs.put(FFS.h_s(FFM.Tag.INP, FFM.Type.TEXT, "0", "col-md-2", "pb_sn_value", "SN_值", n_val));
 
+			object_searchs.put(FFS.h_s(FFM.Tag.INP, FFM.Type.DATE, "", "col-md-2", "pb_sn_date_s", "修改時間(始)", n_val));
+			object_searchs.put(FFS.h_s(FFM.Tag.INP, FFM.Type.DATE, "", "col-md-2", "pb_sn_date_e", "修改時間(終)", n_val));
+
 			bean.setCell_searchs(object_searchs);
 		} else {
 			// 進行-特定查詢
@@ -283,6 +288,10 @@ public class ProductionBodyService {
 			}
 			pb_sn_check = body.getJSONObject("search").getString("pb_sn_check");
 			pb_sn_check = (pb_sn_check.equals("")) ? null : pb_sn_check;
+
+			pb_sn_date_s = body.getJSONObject("search").getString("pb_sn_date_s");
+			pb_sn_date_e = body.getJSONObject("search").getString("pb_sn_date_e");
+
 		}
 
 		// 查詢SN欄位+產品型號+製令單號
@@ -290,6 +299,9 @@ public class ProductionBodyService {
 				+ "join production_records p on h.ph_pr_id = p.pr_id WHERE ";
 		if (!pb_sn_value.equals("")) {
 			nativeQuery += " (:pb_sn_value='' or " + pb_sn_name + " LIKE :pb_sn_value) and ";
+		}
+		if (!pb_sn_date_s.equals("") && !pb_sn_date_s.equals("")) {
+			nativeQuery += " (b.sys_m_date BETWEEN '" + pb_sn_date_s + "'  and '" + pb_sn_date_e + "' ) and ";
 		}
 		nativeQuery += " (:pb_sn='' or b.pb_sn LIKE :pb_sn) and ";
 		nativeQuery += " (:ph_model='' or p.pr_p_model LIKE :ph_model) and ";
@@ -307,7 +319,7 @@ public class ProductionBodyService {
 		em.clear();
 		em.close();
 		// 如果有查SN 則要有值/沒查則pass
-		if ((!pb_sn_value.equals("") && pbid.size() > 0) || pb_sn_value.equals("")) {
+		if ((!pb_sn_value.equals("") && pbid.size() > 0) || (pb_sn_value.equals("") || pb_sn_date_s.equals(""))) {
 			if (pb_sn_check == null) {
 				// 查詢有特定pb_id
 				productionBodies = bodyDao.findAllByProductionBody(Integer.parseInt(sysstatus), pbid);

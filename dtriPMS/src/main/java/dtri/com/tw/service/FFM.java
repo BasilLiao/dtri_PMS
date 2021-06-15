@@ -6,9 +6,14 @@ public class FFM {
 		H, M, B
 	}
 
-	/** 限制規格-顯示 **/
+	/** 限制規格-可填入? **/
 	public static enum See {
 		DIS, SHO
+	}
+
+	/** 限制規格-顯示? **/
+	public static enum D_None {
+		D_NONE, D_SOHW
 	}
 
 	/** 限制規格-標籤 **/
@@ -18,7 +23,7 @@ public class FFM {
 
 	/** 限制規格-類型 **/
 	public static enum Type {
-		TEXT, NUMB, PASS, DATE,CHE
+		TEXT, NUMB, PASS, DATE, CHE
 	}
 
 	/** 限制規格-大小 **/
@@ -26,10 +31,23 @@ public class FFM {
 		S10, S15, S20, S25, S30
 	}
 
+	/** 資料呈現型態(group 群組類/general一般類) **/
+	public static enum Group_type {
+		group, general
+	}
+
+	/** 群組-新增-類型(只要一般?general/全部?all) **/
+	public static enum Group_createOnly {
+		all, general
+	}
+
 	// 解析-代號-屬性設置
 	public static String choose(String key) {
 		String value = "";
 		switch (key) {
+		case "D_NONE":
+			value = "d-none";
+			break;
 		// See
 		case "DIS":
 			value = "disabled";
@@ -87,7 +105,7 @@ public class FFM {
 			value = "_b__";
 			break;
 		case "M":
-			value = "_m__";
+			value = "m__";
 			break;
 		// col
 		}

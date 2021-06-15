@@ -3,6 +3,9 @@ package dtri.com.tw.service;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import dtri.com.tw.service.FFM.D_None;
+import dtri.com.tw.service.FFM.Group_createOnly;
+import dtri.com.tw.service.FFM.Group_type;
 import dtri.com.tw.service.FFM.Hmb;
 import dtri.com.tw.service.FFM.See;
 import dtri.com.tw.service.FFM.Tag;
@@ -115,11 +118,12 @@ public class FFS {
 	 * 
 	 * @return 格式 : {name:xxx,size:50px}
 	 **/
-	public static JSONObject h_g(See show, String col, String id) {
+	public static JSONObject h_g(See show,D_None none, String col, String id) {
 		JSONObject one_group = new JSONObject();
 		one_group.put("id", FFM.choose(FFM.Hmb.M.toString()) + id);// id
 		one_group.put("col", col);// 寬度?
-		one_group.put("show", FFM.choose(show.toString()));// 顯示?
+		one_group.put("show", FFM.choose(show.toString()));// 可填寫?
+		one_group.put("d_none", FFM.choose(none.toString()));// 顯示?
 		return one_group;
 	}
 
@@ -132,4 +136,9 @@ public class FFS {
 		return String.format("%02d", ord) + FFM.choose(w.toString());
 	}
 
+	/** 群組設定 **/
+	public static JSONObject group_set(Group_type type, Group_createOnly create) {
+		// 是否為群組模式? type:[group/general] || 新增時群組? createOnly:[all/general]
+		return new JSONObject("{'type':'" + type.toString() + "','createOnly':'" + create.toString() + "'}");
+	}
 }

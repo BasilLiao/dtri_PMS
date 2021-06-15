@@ -41,4 +41,16 @@ public class Fm_Time {
 		return null;
 
 	}
+
+	/** yyyy-MM-dd HH:mm:ss to Date **/
+	public static Date toDateTime(String dt) {
+
+		try {
+			return format_yyyyMMdd_HHmmss.parse(dt);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
 }
