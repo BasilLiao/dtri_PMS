@@ -60,7 +60,7 @@ public class IndexController {
 		}
 
 		// 回傳-模板
-		return new ModelAndView("/html/login", "status", error);
+		return new ModelAndView("./html/login.html", "status", error);
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class IndexController {
 		resp_object = packageService.setObjResp(resp_object, req_object, info, info_color, "");
 
 		// 回傳-模板
-		return new ModelAndView("/html/main", "initMain", packageService.objToJson(resp_object));
+		return new ModelAndView("./html/main.html", "initMain", packageService.objToJson(resp_object));
 	}
 
 	/**

@@ -479,7 +479,7 @@ public class ProductionHeaderService {
 					// header
 					// int id_h = productionHeaderDao.getProductionHeaderSeq();
 					// int id_b = productionBodyDao.getProductionBodySeq();
-					int id_b_g = productionBodyDao.getProductionBodyGSeq();
+					int id_b_g2 = 1;
 
 					// sn
 					pro_sn = new ArrayList<ProductionSN>();
@@ -536,27 +536,32 @@ public class ProductionHeaderService {
 						json_one.put("type", "N");
 						json_work.put(works.get(0).getWid() + "", json_one);
 					}
+					// 無SN不需要指定新建
+					if (!data.getString("ph_type").equals("A511_no_sn")) {
 
-					sn_lists.forEach(s -> {
-						// body
-						ProductionBody pro_b = new ProductionBody();
-						pro_b.setSysver(0);
-						pro_b.setPbgid(id_b_g);
-						pro_b.setSysheader(false);
-						pro_b.setPbsn(s.toString());
-						pro_b.setPbcheck(false);
-						pro_b.setPbusefulsn(0);
-						pro_b.setPbwyears(data.getInt("pr_w_years"));
-						pro_b.setSysstatus(data.getInt("sys_status"));
-						pro_b.setSyssort(data.getInt("sys_sort"));
-						pro_b.setPblpath("");
-						pro_b.setPblsize("");
-						pro_b.setPbltext("");
-						pro_b.setPbschedule(json_work.toString());
-						pro_b.setSysmuser(user.getSuaccount());
-						pro_b.setSyscuser(user.getSuaccount());
-						productionBodyDao.save(pro_b);
-					});
+						int id_b_g = productionBodyDao.getProductionBodyGSeq();
+						sn_lists.forEach(s -> {
+							// body
+							ProductionBody pro_b = new ProductionBody();
+							pro_b.setSysver(0);
+							pro_b.setPbgid(id_b_g);
+							pro_b.setSysheader(false);
+							pro_b.setPbsn(s.toString());
+							pro_b.setPbcheck(false);
+							pro_b.setPbusefulsn(0);
+							pro_b.setPbwyears(data.getInt("pr_w_years"));
+							pro_b.setSysstatus(data.getInt("sys_status"));
+							pro_b.setSyssort(data.getInt("sys_sort"));
+							pro_b.setPblpath("");
+							pro_b.setPblsize("");
+							pro_b.setPbltext("");
+							pro_b.setPbschedule(json_work.toString());
+							pro_b.setSysmuser(user.getSuaccount());
+							pro_b.setSyscuser(user.getSuaccount());
+							productionBodyDao.save(pro_b);
+						});
+						id_b_g2 = id_b_g;
+					}
 
 					// 規格
 					pro_r.setPrid(data.getString("ph_pr_id"));
@@ -591,7 +596,7 @@ public class ProductionHeaderService {
 					pro_h.setSysmuser(user.getSuaccount());
 					pro_h.setSyscuser(user.getSuaccount());
 					pro_h.setPhtype(data.getString("ph_type"));
-					pro_h.setPhpbgid(id_b_g);
+					pro_h.setPhpbgid(id_b_g2);
 					productionHeaderDao.save(pro_h);
 
 					// typeDao+hoursDao
@@ -619,7 +624,7 @@ public class ProductionHeaderService {
 						switch (data.getString("ph_type")) {
 						case "A511_no_sn":
 							// A511_no_sn 一般製令_No(sn)
-
+							works_p.add(work_p);
 							break;
 						case "A511_no_and_has_sn":
 							// A511_no_and_has_sn 一般製令_Both(sn)
@@ -627,7 +632,7 @@ public class ProductionHeaderService {
 							break;
 						case "A511_has_sn":
 							// A511_has_sn 一般製令_Create(sn)
-							works_p.add(work_p);
+
 							break;
 						case "A521_no_sn":
 							// A511_no_sn 重工製令_No(sn)
@@ -695,7 +700,7 @@ public class ProductionHeaderService {
 					// header
 					// int id_h = productionHeaderDao.getProductionHeaderSeq();
 					// int id_b = productionBodyDao.getProductionBodySeq();
-					int id_b_g = productionBodyDao.getProductionBodyGSeq();
+					int id_b_g2 = 1;
 
 					// sn
 					pro_sn = new ArrayList<ProductionSN>();
@@ -752,28 +757,32 @@ public class ProductionHeaderService {
 						json_one.put("type", "N");
 						json_work.put(works.get(0).getWid() + "", json_one);
 					}
+					// 無SN不需要指定新建
+					if (!data.getString("ph_type").equals("A511_no_sn")) {
 
-					sn_lists.forEach(s -> {
-						// body
-						ProductionBody pro_b = new ProductionBody();
-						pro_b.setSysver(0);
-						pro_b.setPbgid(id_b_g);
-						pro_b.setSysheader(false);
-						pro_b.setPbsn(s.toString());
-						pro_b.setPbcheck(false);
-						pro_b.setPbusefulsn(0);
-						pro_b.setPbwyears(data.getInt("pr_w_years"));
-						pro_b.setSysstatus(data.getInt("sys_status"));
-						pro_b.setSyssort(data.getInt("sys_sort"));
-						pro_b.setPblpath("");
-						pro_b.setPblsize("");
-						pro_b.setPbltext("");
-						pro_b.setPbschedule(json_work.toString());
-						pro_b.setSysmuser(user.getSuaccount());
-						pro_b.setSyscuser(user.getSuaccount());
-						productionBodyDao.save(pro_b);
-					});
-
+						int id_b_g = productionBodyDao.getProductionBodyGSeq();
+						sn_lists.forEach(s -> {
+							// body
+							ProductionBody pro_b = new ProductionBody();
+							pro_b.setSysver(0);
+							pro_b.setPbgid(id_b_g);
+							pro_b.setSysheader(false);
+							pro_b.setPbsn(s.toString());
+							pro_b.setPbcheck(false);
+							pro_b.setPbusefulsn(0);
+							pro_b.setPbwyears(data.getInt("pr_w_years"));
+							pro_b.setSysstatus(data.getInt("sys_status"));
+							pro_b.setSyssort(data.getInt("sys_sort"));
+							pro_b.setPblpath("");
+							pro_b.setPblsize("");
+							pro_b.setPbltext("");
+							pro_b.setPbschedule(json_work.toString());
+							pro_b.setSysmuser(user.getSuaccount());
+							pro_b.setSyscuser(user.getSuaccount());
+							productionBodyDao.save(pro_b);
+						});
+						id_b_g2 = id_b_g;
+					}
 					// 規格
 					pro_r.setPrid(data.getString("ph_pr_id"));
 					pro_r.setPrbomid(data.getString("pr_bom_id"));
@@ -807,7 +816,7 @@ public class ProductionHeaderService {
 					pro_h.setSysmuser(user.getSuaccount());
 					pro_h.setSyscuser(user.getSuaccount());
 					pro_h.setPhtype(data.getString("ph_type"));
-					pro_h.setPhpbgid(id_b_g);
+					pro_h.setPhpbgid(id_b_g2);
 					productionHeaderDao.save(pro_h);
 
 				} else {
@@ -899,27 +908,62 @@ public class ProductionHeaderService {
 
 				}
 
-				// body
-				int id_b_g = data.getInt("ph_pb_g_id");
-				List<ProductionBody> pro_bs = productionBodyDao.findAllByPbgidOrderByPbsnAsc(id_b_g);
-				int i = 0;
-				for (ProductionBody pro_b : pro_bs) {
-					pro_b.setSysver(0);
-					pro_b.setPbgid(id_b_g);
-					pro_b.setSysheader(false);
-					pro_b.setPbsn(sn_lists.get(i).toString());
-					pro_b.setPbusefulsn(0);
-					pro_b.setPbwyears(data.getInt("pr_w_years"));
-					pro_b.setSysstatus(data.getInt("sys_status"));
-					pro_b.setSyssort(data.getInt("sys_sort"));
-					pro_b.setPbschedule(json_work.toString());
-					pro_b.setSysmuser(user.getSuaccount());
-					productionBodyDao.save(pro_b);
-					i += 1;
+				// 無SN不需要指定更新
+				int id_b_g2 = data.getInt("ph_pb_g_id");
+				pro_h = productionHeaderDao.findAllByPhid(data.getInt("ph_id")).get(0);
+				if (!data.getString("ph_type").equals("A511_no_sn") && !pro_h.getPhtype().equals("A511_no_sn")) {
+					// 有序號轉有序
+					// body
+					List<ProductionBody> pro_bs = productionBodyDao.findAllByPbgidOrderByPbsnAsc(id_b_g2);
+					int i = 0;
+					for (ProductionBody pro_b : pro_bs) {
+						pro_b.setSysver(0);
+						pro_b.setPbgid(id_b_g2);
+						pro_b.setSysheader(false);
+						pro_b.setPbsn(sn_lists.get(i).toString());
+						pro_b.setPbusefulsn(0);
+						pro_b.setPbwyears(data.getInt("pr_w_years"));
+						pro_b.setSysstatus(data.getInt("sys_status"));
+						pro_b.setSyssort(data.getInt("sys_sort"));
+						pro_b.setPbschedule(json_work.toString());
+						pro_b.setSysmuser(user.getSuaccount());
+						productionBodyDao.save(pro_b);
+						i += 1;
+					}
+				} else if (data.getString("ph_type").equals("A511_no_sn")) {
+					// 有序/無序 號轉無序號->移除序號SN
+					productionBodyDao.deleteByPbgid(id_b_g2);
+					id_b_g2 = 1;
+
+				} else if (pro_h.getPhtype().equals("A511_no_sn") && !data.getString("ph_type").equals("A511_no_sn")) {
+					// 原本無序號 ->轉有序號
+					int id_b_g = productionBodyDao.getProductionBodyGSeq();
+					sn_lists.forEach(s -> {
+						// body
+						ProductionBody pro_b = new ProductionBody();
+						pro_b.setSysver(0);
+						pro_b.setPbgid(id_b_g);
+						pro_b.setSysheader(false);
+						pro_b.setPbsn(s.toString());
+						pro_b.setPbcheck(false);
+						pro_b.setPbusefulsn(0);
+						pro_b.setPbwyears(data.getInt("pr_w_years"));
+						pro_b.setSysstatus(data.getInt("sys_status"));
+						pro_b.setSyssort(data.getInt("sys_sort"));
+						pro_b.setPblpath("");
+						pro_b.setPblsize("");
+						pro_b.setPbltext("");
+						pro_b.setPbschedule(json_work.toString());
+						pro_b.setSysmuser(user.getSuaccount());
+						pro_b.setSyscuser(user.getSuaccount());
+						productionBodyDao.save(pro_b);
+					});
+					id_b_g2 = id_b_g;
+
 				}
 
 				// 規格
-				pro_h = productionHeaderDao.findAllByPhid(data.getInt("ph_id")).get(0);
+
 				ProductionRecords pro_r = pro_h.getProductionRecords();
 				pro_r.setPrid(data.getString("ph_pr_id"));
 				pro_r.setPrbomid(data.getString("pr_bom_id"));
@@ -936,11 +980,12 @@ public class ProductionHeaderService {
 				// pro_r.setPrbitem("");
 				// pro_r.setPrsitem("");
 				pro_r.setSysmuser(user.getSuaccount());
-				pro_h.setSysmdate(new Date());
+				pro_r.setSysmdate(new Date());
 
 				// header
 				pro_h.setPhtype(data.getString("ph_type"));
 				pro_h.setPhwpid(data.getInt("ph_wp_id"));
+				pro_h.setPhpbgid(id_b_g2);
 				pro_h.setProductionRecords(pro_r);
 				pro_h.setPhschedule(data.getInt("pr_p_ok_quantity") + "／" + data.getInt("pr_p_quantity"));
 				pro_h.setSysheader(true);
@@ -957,7 +1002,6 @@ public class ProductionHeaderService {
 				}
 				pro_h.setSysmuser(user.getSuaccount());
 				pro_h.setSysmdate(new Date());
-				pro_h.setPhpbgid(data.getInt("ph_pb_g_id"));
 				productionHeaderDao.save(pro_h);
 
 				check = true;

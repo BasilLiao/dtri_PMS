@@ -33,7 +33,7 @@ public interface ProductionBodyDao extends JpaRepository<ProductionBody, Long> {
 	@Query(value = "SELECT b FROM ProductionBody b WHERE "//
 			+ "( b.sysstatus = :sysstatus ) and "//
 			+ "(coalesce(:pbid, null) is null or b.pbid IN :pbid ) and "// coalesce 回傳非NULL值
-			+ "(b.pbid!=0) and (b.sysheader!=true) "//
+			+ "(b.pbid!=0 or b.pbid!=1) and (b.sysheader!=true) "//
 			+ " order by b.pbgid desc,b.sysheader desc, b.sysmdate desc ")
 	List<ProductionBody> findAllByProductionBody(@Param("sysstatus") Integer sys_status, @Param("pbid") List<Integer> pb_id);
 
@@ -41,12 +41,15 @@ public interface ProductionBodyDao extends JpaRepository<ProductionBody, Long> {
 	@Query(value = "SELECT b FROM ProductionBody b WHERE "//
 			+ "( b.sysstatus = :sysstatus ) and "//
 			+ "(coalesce(:pbid, null) is null or b.pbid IN :pbid ) and "// coalesce 回傳非NULL值
-			+ "(b.pbid!=0) and (b.sysheader!=true) and  (b.pbcheck=:pbcheck)"//
+			+ "(b.pbid!=0 or b.pbid!=1) and (b.sysheader!=true) and  (b.pbcheck=:pbcheck)"//
 			+ " order by b.pbgid desc,b.sysmdate desc ,b.sysheader desc")
 	List<ProductionBody> findAllByProductionBody(@Param("sysstatus") Integer sys_status, @Param("pbid") List<Integer> pb_id,
 			@Param("pbcheck") Boolean pb_check);
 
 	// 移除單一SN
 	Long deleteByPbid(Integer id);
+	
+	//移除 群組
+	Long deleteByPbgid(Integer id);
 
 }

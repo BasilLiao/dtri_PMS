@@ -233,7 +233,7 @@ public class WorkHoursService {
 					wh_pr_id.setPrid(pr_id);
 					total_tw = 0;
 				} else {
-					return false;
+					//return false;
 				}
 
 				// 檢核總數量

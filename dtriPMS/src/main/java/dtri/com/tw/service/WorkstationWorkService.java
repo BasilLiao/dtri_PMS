@@ -496,16 +496,16 @@ public class WorkstationWorkService {
 
 		boolean check = false;
 		try {
-			JSONArray list = body.getJSONArray("delete");
-			for (Object one : list) {
-				// 物件轉換
-				SystemConfig sys_p = new SystemConfig();
-				JSONObject data = (JSONObject) one;
-				sys_p.setScid(data.getInt("sc_id"));
-
-				// configDao.deleteByScidAndSysheader(sys_p.getScid(), false);
-				check = true;
-			}
+			// JSONArray list = body.getJSONArray("delete");
+//			for (Object one : list) {
+//				// 物件轉換
+//				SystemConfig sys_p = new SystemConfig();
+//				JSONObject data = (JSONObject) one;
+//				sys_p.setScid(data.getInt("sc_id"));
+//
+//				// configDao.deleteByScidAndSysheader(sys_p.getScid(), false);
+//				check = true;
+//			}
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;
