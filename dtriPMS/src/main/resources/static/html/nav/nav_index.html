@@ -59,7 +59,10 @@
 				</div>
 				<div class="collapse ml-3" onclick="$('#nav_m_all_btn').trigger('click')" id="nav_m_l_0">
 					<ul class="nav navbar-nav">
-						<li class="btn-outline-secondary item_click" id="item_m"><a class="text-white nav-link p-2" href="#"> <i class="bi bi-box-arrow-in-down-right mr-2"></i><font class="item_n">Home_0</font>
+						<li class="btn-outline-secondary item_click" id="item_m"><a class="text-white nav-link p-2" href="#">
+						 <i class="bi bi-box-arrow-in-down-right mr-2"></i>
+						 <i class="d-none bi bi-gear mr-2"></i>
+						 <font class="item_n">Home_0</font>
 						</a></li>
 					</ul>
 				</div>
@@ -138,6 +141,12 @@
 					$("#"+nav_m_l+" #item_m").attr("id","item_m_"+i);
 					$("#item_m_"+i).attr("url",list[i].url);
 					$("#item_m_"+i+" .item_n").text(list[i].i_name);
+					//維修?
+					if(list[i].sp_type==1){
+						$("#item_m_"+i+" .bi-gear").removeClass('d-none');
+						$("#item_m_"+i+" .bi-box-arrow-in-down-right").addClass('d-none');
+					}
+					
 					this.nav_list['body_'+(list[i].url).replace('.basil','')] = list[i].i_name;
 				}
 				//將預設單-移除

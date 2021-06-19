@@ -87,22 +87,22 @@ public class WorkHoursService {
 			JSONArray s_val = new JSONArray();
 			JSONArray n_val = new JSONArray();
 
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "wh_id", "ID"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "sys_header", "群組代表"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "wh_pr_id", "製令單"));
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, st_val, "wh_wt_id", "工作類型"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.DATE, "", "", FFM.See.SHO, "col-md-2", false, n_val, "wh_s_date", "時間(始)"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.DATE, "", "", FFM.See.SHO, "col-md-2", false, n_val, "wh_e_date", "時間(結)"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.See.SHO, "col-md-1", true, n_val, "wh_nb", "完成數量"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.See.DIS, "col-md-1", true, n_val, "pr_p_quantity", "總數"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "wh_id", "ID"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "sys_header", "群組代表"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "wh_pr_id", "製令單"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, st_val, "wh_wt_id", "工作類型"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.DATE, "", "", FFM.See.SHO, "col-md-2", false, n_val, "wh_s_date", "時間(始)"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.DATE, "", "", FFM.See.SHO, "col-md-2", false, n_val, "wh_e_date", "時間(結)"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.See.SHO, "col-md-1", true, n_val, "wh_nb", "完成數量"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.See.DIS, "col-md-1", true, n_val, "pr_p_quantity", "總數"));
 
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-9", true, n_val, "wh_do", "工作內容"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "wh_account", "作業人員"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-9", true, n_val, "wh_do", "工作內容"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "wh_account", "作業人員"));
 
 			s_val = new JSONArray();
 			s_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			s_val.put((new JSONObject()).put("value", "取消").put("key", "1"));
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "0", FFM.See.SHO, "col-md-1", true, s_val, "sys_status", "狀態"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.SEL, FFM.Type.TEXT, "", "0", FFM.See.SHO, "col-md-1", true, s_val, "sys_status", "狀態"));
 			bean.setCell_modify(obj_m);
 
 			// 放入群主指定 [(key)](modify/Create/Delete) 格式
@@ -233,7 +233,7 @@ public class WorkHoursService {
 					wh_pr_id.setPrid(pr_id);
 					total_tw = 0;
 				} else {
-					//return false;
+					// return false;
 				}
 
 				// 檢核總數量

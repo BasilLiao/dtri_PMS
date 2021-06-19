@@ -69,12 +69,12 @@ public class WorkstationProgramService {
 			JSONArray n_val = new JSONArray();
 			JSONArray a_val = new JSONArray();
 
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "sys_header", "群組?"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "wp_id", "ID"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "sys_header", "群組?"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "wp_id", "ID"));
 
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "wp_g_id", "群組ID"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "wp_name", "程序名稱"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", true, n_val, "wp_c_name", "程序代號"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "wp_g_id", "群組ID"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "wp_name", "程序名稱"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", true, n_val, "wp_c_name", "程序代號"));
 
 			JSONArray a_vals = new JSONArray();
 			workstations = workstationDao.findAllBySysheader(true, PageRequest.of(0, 999));
@@ -82,31 +82,31 @@ public class WorkstationProgramService {
 				a_vals.put((new JSONObject()).put("value", w.getWpbname()).put("key", w.getWgid()));
 			});
 
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "0", "0", FFM.See.SHO, "col-md-2", true, a_vals, "wp_w_g_id", "工作站ID"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "0", "0", FFM.See.SHO, "col-md-2", true, a_vals, "wp_w_g_id", "工作站ID"));
 
-			// obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
 			// "col-md-2", false,
 			// n_val, "sys_c_date", "建立時間"));
-			// obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
 			// "col-md-2", false,
 			// n_val, "sys_c_user", "建立人"));
-			// obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
 			// "col-md-2", false,
 			// n_val, "sys_m_date", "修改時間"));
-			// obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
 			// "col-md-2",
 			// false,n_val, "sys_m_user", "修改人"));
 
-			// obj_m.put(FFS.h_m(FFS.TTA, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-12",
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFS.TTA, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-12",
 			// false,
 			// n_val, "sys_note", "備註"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.SHO, "col-md-1", true, n_val, "sys_sort", "排序"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.DIS, "col-md-1", false, n_val, "sys_ver", "版本"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.SHO, "col-md-1", true, n_val, "sys_sort", "排序"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.DIS, "col-md-1", false, n_val, "sys_ver", "版本"));
 
 			a_val = new JSONArray();
 			a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "0", FFM.See.DIS, "col-md-1", true, a_val, "sys_status", "狀態"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "", "0", FFM.See.DIS, "col-md-1", true, a_val, "sys_status", "狀態"));
 			bean.setCell_modify(obj_m);
 
 			// 放入群主指定 [(key)](modify/Create/Delete) 格式

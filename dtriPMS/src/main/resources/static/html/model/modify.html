@@ -278,13 +278,14 @@
 					</thead>
 					<tbody class="delete_example_body" style="white-space: nowrap;">
 						<tr id="delete_example_tr">
-							<td class="p-1 border border-secondary">
+							<td class="p-1 ">
+								<!-- border border-secondary -->
 								<div class="delete_example_remove">
 									<i class="bi bi-x-square btn btn-outline-danger p-0 pl-1 pr-1 m-0"></i>
 								</div>
 							</td>
-							<td class="border border-secondary delete_example_group p-0">
-								<div class="delete_group_i border-top border-dark p-1">
+							<td class="delete_example_group p-0">
+								<div class="delete_group_i border-dark p-1">
 									<i class="bi bi-text-indent-left h4"></i>
 								</div>
 							</td>
@@ -423,6 +424,9 @@
 						if(title[d].show=='disabled'){
 							$(".create_example ."+title[d].id+" input").attr("disabled","disabled");
 						}
+						if(title[d].d_none=='d-none'){
+							$(".create_example ."+title[d].id).addClass('d-none');
+						}
 						
 						//另存模板
 						checkbox =$(".save_as_example .save_as_example_checkbox").clone();
@@ -436,6 +440,9 @@
 						if(title[d].show=='disabled'){
 							$(".save_as_example ."+title[d].id+" input").attr("disabled","disabled");
 						}
+						if(title[d].d_none=='d-none'){
+							$(".save_as_example ."+title[d].id).addClass('d-none');
+						}
 						
 						//修改模板
 						checkbox =$(".modify_example .modify_example_checkbox").clone();
@@ -448,6 +455,9 @@
 						}
 						if(title[d].show=='disabled'){
 							$(".modify_example ."+title[d].id+" input").attr("disabled","disabled");
+						}
+						if(title[d].d_none=='d-none'){
+							$(".modify_example ."+title[d].id).addClass('d-none');
 						}
 						
 						break;
@@ -475,7 +485,9 @@
 							$(".create_example ."+title[d].id+" input").addClass('datetimepicker_date');
 							$(".create_example ."+title[d].id+" .save_value").attr("type","text");
 						}
-						
+						if(title[d].d_none=='d-none'){
+							$(".create_example ."+title[d].id).addClass('d-none');
+						}
 						
 						//另存模板
 						input =$(".save_as_example .save_as_example_input").clone();
@@ -495,6 +507,9 @@
 							$(".save_as_example ."+title[d].id+" input").addClass('datetimepicker_date');
 							$(".save_as_example ."+title[d].id+" .save_value").attr("type","text");
 						}
+						if(title[d].d_none=='d-none'){
+							$(".save_as_example ."+title[d].id).addClass('d-none');
+						}
 						
 						//修改模板
 						input =$(".modify_example .modify_example_input").clone();
@@ -513,6 +528,9 @@
 						if(title[d].type=='date'){
 							$(".modify_example ."+title[d].id+" input").addClass('datetimepicker_date');
 							$(".modify_example ."+title[d].id+" .save_value").attr("type","text");
+						}
+						if(title[d].d_none=='d-none'){
+							$(".modify_example ."+title[d].id).addClass('d-none');
 						}
 						
 						break;
@@ -556,6 +574,9 @@
 						if(title[d].show=='disabled'){
 							$(".create_example ."+title[d].id+" select").attr("disabled","disabled");
 						}
+						if(title[d].d_none=='d-none'){
+							$(".create_example ."+title[d].id).addClass('d-none');
+						}
 						//--
 						select =$(".save_as_example .save_as_example_select").clone();
 						select[0].className="p-2 save_key "+title[d].col+" "+title[d].id;
@@ -569,6 +590,9 @@
 						if(title[d].show=='disabled'){
 							$(".save_as_example ."+title[d].id+" select").attr("disabled","disabled");
 						}
+						if(title[d].d_none=='d-none'){
+							$(".save_as_example ."+title[d].id).addClass('d-none');
+						}
 						//--
 						select =$(".modify_example .modify_example_select").clone();
 						select[0].className="p-2 save_key "+title[d].col+" "+title[d].id;
@@ -581,15 +605,23 @@
 						if(title[d].show=='disabled'){
 							$(".modify_example ."+title[d].id+" select").attr("disabled","disabled");
 						}
+						if(title[d].d_none=='d-none'){
+							$(".modify_example ."+title[d].id).addClass('d-none');
+						}
 						
-						for(var o =0; o <title[d].values.length;o++){							
+						for(var o =title[d].values.length-1; o>=0 ;o--){							
 							var one_option = $(".detail_example_select select .example_select_one").clone();//複製樣本
 							one_option[0].id="select_"+title[d]['values'][o]["key"];
 							one_option[0].value = title[d]['values'][o]["key"];
 							one_option[0].innerText = title[d]['values'][o]["value"];
 							one_option[0].className = "";
 							one_option.appendTo(".detail_example_body ."+title[d].id+" select");
-							if(title[d].value==one_option[0].value){$(".detail_example_body ."+title[d].id+" #"+one_option[0].id).attr("selected","true")}
+							if(title[d].value==one_option[0].value){
+								$(".detail_example_body ."+title[d].id+" #"+one_option[0].id).attr("selected","true")
+							}
+							if(title[d]['values'][o]['dis']=="disabled"){
+								$(".detail_example_body ."+title[d].id+" #"+one_option[0].id).attr("disabled","disabled")
+							}
 							//--
 							one_option = $(".create_example_select select .example_select_one").clone();//複製樣本
 							one_option[0].id="select_"+title[d]['values'][o]["key"];
@@ -597,8 +629,12 @@
 							one_option[0].innerText = title[d]['values'][o]["value"];
 							one_option[0].className = "";
 							one_option.appendTo(".create_example_body ."+title[d].id+" select");
-							if(title[d].value==one_option[0].value){$(".create_example_body ."+title[d].id+" #"+one_option[0].id).attr("selected","true")}
-							
+							if(title[d].value==one_option[0].value){
+								$(".create_example_body ."+title[d].id+" #"+one_option[0].id).attr("selected","true")
+							}
+							if(title[d]['values'][o]['dis']=="disabled"){
+								$(".create_example_body ."+title[d].id+" #"+one_option[0].id).attr("disabled","disabled")
+							}
 							//--
 							one_option = $(".save_as_example_select select .example_select_one").clone();//複製樣本
 							one_option[0].id="select_"+title[d]['values'][o]["key"];
@@ -606,8 +642,12 @@
 							one_option[0].innerText = title[d]['values'][o]["value"];
 							one_option[0].className = "";
 							one_option.appendTo(".save_as_example_body ."+title[d].id+" select");
-							if(title[d].value==one_option[0].value){$(".save_as_example_body ."+title[d].id+" #"+one_option[0].id).attr("selected","true")}
-							
+							if(title[d].value==one_option[0].value){
+								$(".save_as_example_body ."+title[d].id+" #"+one_option[0].id).attr("selected","true")
+							}
+							if(title[d]['values'][o]['dis']=="disabled"){
+								$(".save_as_example_body ."+title[d].id+" #"+one_option[0].id).attr("disabled","disabled")
+							}
 							//--
 							one_option = $(".modify_example_select select .example_select_one").clone();//複製樣本
 							one_option[0].id="select_"+title[d]['values'][o]["key"];
@@ -615,7 +655,12 @@
 							one_option[0].innerText = title[d]['values'][o]["value"];
 							one_option[0].className = "";
 							one_option.appendTo(".modify_example_body ."+title[d].id+" select");
-							if(title[d].value==one_option[0].value){$(".modify_example_body ."+title[d].id+" #"+one_option[0].id).attr("selected","true")}
+							if(title[d].value==one_option[0].value){
+								$(".modify_example_body ."+title[d].id+" #"+one_option[0].id).attr("selected","true")
+							}
+							if(title[d]['values'][o]['dis']=="disabled"){
+								$(".modify_example_body ."+title[d].id+" #"+one_option[0].id).attr("disabled","disabled")
+							}
 							
 						}
 						break;
@@ -638,6 +683,9 @@
 						if(title[d].show=='disabled'){
 							$(".create_example ."+title[d].id+" textarea").attr("disabled","disabled");
 						}
+						if(title[d].d_none=='d-none'){
+							$(".create_example ."+title[d].id).addClass('d-none');
+						}
 						//--
 						textarea = $(".save_as_example .save_as_example_textarea").clone();
 						textarea[0].className="p-2 save_key "+title[d].col+" "+title[d].id;
@@ -650,6 +698,9 @@
 						if(title[d].show=='disabled'){
 							$(".save_as_example ."+title[d].id+" textarea").attr("disabled","disabled");
 						}
+						if(title[d].d_none=='d-none'){
+							$(".save_as_example ."+title[d].id).addClass('d-none');
+						}
 						//--
 						textarea = $(".modify_example .modify_example_textarea").clone();
 						textarea[0].className="p-2 save_key "+title[d].col+" "+title[d].id;
@@ -660,6 +711,9 @@
 						}
 						if(title[d].show=='disabled'){
 							$(".modify_example ."+title[d].id+" textarea").attr("disabled","disabled");
+						}
+						if(title[d].d_none=='d-none'){
+							$(".modify_example ."+title[d].id).addClass('d-none');
 						}
 						break;
 					}
@@ -756,6 +810,8 @@
     	                  	//d_none?
     						if(this.modify_g_datas[g].d_none=="d-none"){
     							$("#detail_really_tr_"+this.detail_nb+" ."+this.modify_g_datas[g].id).addClass("d-none");
+    						}else{
+    							$("#detail_really_tr_"+this.detail_nb+" ."+this.modify_g_datas[g].id).removeClass("d-none");
     						}
     					}
                     }else{
@@ -797,7 +853,9 @@
 							//d_none?
 							if(this.modify_g_datas[g].d_none=="d-none"){
 								$("#save_as_really_tr_"+this.save_as_nb+" ."+this.modify_g_datas[g].id).addClass("d-none");
-							}
+							}else{
+    							$("#save_as_really_tr_"+this.save_as_nb+" ."+this.modify_g_datas[g].id).removeClass("d-none");
+    						}
 						}
                     }else{
                     	$("#save_as_really_tr_"+this.save_as_nb+" .save_as_example_group").removeClass("d-none");
@@ -840,7 +898,9 @@
 							//d_none?
 							if(this.modify_g_datas[g].d_none=="d-none"){
 								$("#modify_really_tr_"+this.modify_nb+" ."+this.modify_g_datas[g].id).addClass("d-none");
-							}
+							}else{
+    							$("#modify_really_tr_"+this.modify_nb+" ."+this.modify_g_datas[g].id).removeClass("d-none");
+    						}
 						}
                     }else{
                     	$("#modify_really_tr_"+this.modify_nb+" .modify_example_group").removeClass("d-none");
@@ -873,15 +933,29 @@
                         one_item.insertBefore("#" + one_option[0].id + " .d_list_body");
                         //樣式
                        $("#delete_really_tr_"+this.delete_nb+" ."+key_id).css("maxWidth",with_style);
+                   		//顯示與不顯示
+                   		for(var show =0;show <this.modify_g_datas.length;show++){
+                   			var show_id = (this.modify_g_datas[show].id).replace('m__','');
+                   			var show_none = (this.modify_g_datas[show].d_none);
+	                     	if(show_id==key_id){
+	                     		if(show_none=="d-none"){
+		                     		$("#delete_really_tr_"+this.delete_nb+" ."+key_id).attr("disabled","disabled");
+	                     		}
+		                     	continue;
+	                     	}
+                   		}
                     }
                   	//群組類型
                     if($("#delete_really_tr_"+this.delete_nb+" .sys_header").text()=="true"){
-                    	$("#delete_really_tr_"+this.delete_nb).addClass("bg-yellow-30");
+                    	$("#delete_really_tr_"+this.delete_nb).css('background-color','#fdf59a');
     					$("#delete_really_tr_"+this.delete_nb+" .delete_example_group i").addClass("d-none");
-    					$("#delete_really_tr_"+this.delete_nb+" .delete_example_group div").text("Group");
+    					$("#delete_really_tr_"+this.delete_nb+" .delete_example_group div").text("Header");
                     }else{
                     	$("#delete_really_tr_"+this.delete_nb+" .delete_example_group i").removeClass("d-none");
                     }
+                  
+                  	
+                  	
                     $("#" + one_option[0].id + " .d_list_body").remove();
                     this.delete_nb+=1;
 				}
@@ -1090,7 +1164,9 @@
 								//d_none?
 								if(modify.modify_g_datas[g].d_none=="d-none"){
 									$("#create_really_tr_"+modify.create_nb+" ."+modify.modify_g_datas[g].id).addClass("d-none");
-								}
+								}else{
+	    							$("#create_really_tr_"+modify.create_nb+" ."+modify.modify_g_datas[g].id).removeClass("d-none");
+	    						}
 							}
                     	}
                     }
@@ -1102,7 +1178,7 @@
                     $("#create_really_tr_"+modify.create_nb).addClass('create_really_tr');
                     modify.create_nb+=1;
                     
-                  //時間格式
+                  	//時間格式
                     $('.datetimepicker_date').datetimepicker({
                         format: 'yyyy-mm-dd hh:ii:00',
                         pickerPosition:'bottom-right',
@@ -1115,13 +1191,30 @@
                         todayBtn:true,
                         //......可以同上項目代碼自定義設置
                     });
-                    
+                  	
+                  	//如果是群組類型 在自動新增一次
+                    if($(".create_really_tr").length==1 && main.allData.body_type.type=="group"){
+                    	 $( "#create_example_tr .create_example_add" ).trigger( "click" );
+                    }
+
                  });
                 //移除
             	 $(document).on("click", ".create_example_remove", function (event) {
                  	console.log("create_example_remove");
             		var id = event.target.id.replace("create_really_id_","");
-            		$("#create_really_tr_"+id).remove();
+            		
+            		//如果是群組模式(只剩下兩筆資料+只刪除子資料) 則不給移除
+            		if(main.allData.body_type.type=="group" && $(".create_really_tr").length==2 &&
+            				!$("#create_really_tr_"+id+" .create_example_group").hasClass( "d-none")){
+            			return false;
+            		}
+            		
+            		//群組移除
+            		if($("#create_really_tr_"+id+" .create_example_group").hasClass( "d-none")){
+            			$(".create_really_tr").remove();
+            		}else{
+            			$("#create_really_tr_"+id).remove();
+            		}
                   });
             	 $(document).on("click", ".save_as_example_remove", function (event) {
                      console.log("save_as_example_remove");

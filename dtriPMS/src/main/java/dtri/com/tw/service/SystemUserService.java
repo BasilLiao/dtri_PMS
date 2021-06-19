@@ -68,7 +68,7 @@ public class SystemUserService {
 			// 放入修改 [(key)](modify/Create/Delete) 格式
 
 			JSONArray obj_m = new JSONArray();
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, new JSONArray(), "su_id", "ID"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, new JSONArray(), "su_id", "ID"));
 
 			JSONArray groups = new JSONArray();
 			groupDao.findAllBySysheader(true, PageRequest.of(0, 999)).forEach(s -> {
@@ -76,33 +76,33 @@ public class SystemUserService {
 			});
 
 			JSONArray value = new JSONArray();
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-1", true, groups, "su_sg_g_id", "群組ID"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-1", true, groups, "su_sg_g_id", "群組ID"));
 			JSONArray values = new JSONArray();
 			values.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			values.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "0", "0", FFM.See.SHO, "col-md-1", true, values, "sys_status", "狀態"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, value, "su_name", "姓名"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, value, "su_e_name", "英文姓名"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "0", "0", FFM.See.SHO, "col-md-1", true, values, "sys_status", "狀態"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, value, "su_name", "姓名"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, value, "su_e_name", "英文姓名"));
 
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, value, "su_account", "帳號"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.PASS, "", "", FFM.See.SHO, "col-md-2", true, value, "su_password", "密碼"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, value, "su_position", "職位"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-4", true, value, "su_email", "Email"));
-			// obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, value, "su_account", "帳號"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.PASS, "", "", FFM.See.SHO, "col-md-2", true, value, "su_password", "密碼"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, value, "su_position", "職位"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-4", true, value, "su_email", "Email"));
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
 			// "col-md-2", false, value, "sys_c_date", "建立時間"));
-			// obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
 			// "col-md-2", false, value, "sys_c_user", "建立人"));
-			// obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
 			// "col-md-2", false, value, "sys_m_date", "修改時間"));
-			// obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
 			// "col-md-2", false, value, "sys_m_user", "修改人"));
 
-			// obj_m.put(FFS.h_m(FFM.Tag.INP, FFS.NUMB, "0", "0", FFM.See.DIS, "col-md-1",
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFS.NUMB, "0", "0", FFM.See.DIS, "col-md-1",
 			// false, value, "sys_ver", "版本"));
-			// obj_m.put(FFS.h_m(FFM.Tag.INP, FFS.NUMB, "0", "0", FFM.See.SHO, "col-md-1",
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFS.NUMB, "0", "0", FFM.See.SHO, "col-md-1",
 			// true, value, "sys_sort", "排序"));
 
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-6", false, value, "sys_note", "備註"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-6", false, value, "sys_note", "備註"));
 			bean.setCell_modify(obj_m);
 
 			// 放入包裝(search)

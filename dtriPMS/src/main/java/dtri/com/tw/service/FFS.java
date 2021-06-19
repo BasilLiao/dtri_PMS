@@ -33,6 +33,7 @@ public class FFS {
 	/**
 	 * h_m = h_modify
 	 * 
+	 * @param none        :是否顯示
 	 * @param tag         : 標籤 INP=input,TTA=textarea,SEL=select,CHE=checkbox
 	 * @param type        : 類型 EXT=text,NUMB=number,PASS=password,DATE=date
 	 * @param placeholder : 預設文字
@@ -49,8 +50,8 @@ public class FFS {
 	 *         show:"d-none/disabled/show", values:[{key:value,key:value}]}
 	 * 
 	 **/
-	public static JSONObject h_m(Tag tag, Type type, String placeholder, String value, See show, String col, boolean required, JSONArray values,
-			String id, String name) {
+	public static JSONObject h_m(D_None none, Tag tag, Type type, String placeholder, String value, See show, String col, boolean required,
+			JSONArray values, String id, String name) {
 		JSONObject object_value = new JSONObject();
 		object_value.put("name", name);
 		object_value.put("id", FFM.choose(FFM.Hmb.M.toString()) + id);// id
@@ -59,7 +60,9 @@ public class FFS {
 		object_value.put("required", required);// 是否必寫
 		object_value.put("placeholder", placeholder);// 預設文字
 		object_value.put("value", value);// 預設值
-		object_value.put("show", FFM.choose(show.toString()));// 顯示?
+		object_value.put("show", FFM.choose(show.toString()));// 可填寫??
+		object_value.put("d_none", FFM.choose(none.toString()));// 顯示?
+
 		object_value.put("col", col);// 寬度?
 		object_value.put("values", values);// 多選項select (可能有)
 		return object_value;
@@ -118,7 +121,7 @@ public class FFS {
 	 * 
 	 * @return 格式 : {name:xxx,size:50px}
 	 **/
-	public static JSONObject h_g(See show,D_None none, String col, String id) {
+	public static JSONObject h_g(See show, D_None none, String col, String id) {
 		JSONObject one_group = new JSONObject();
 		one_group.put("id", FFM.choose(FFM.Hmb.M.toString()) + id);// id
 		one_group.put("col", col);// 寬度?

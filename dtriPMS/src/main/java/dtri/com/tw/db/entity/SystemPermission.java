@@ -24,6 +24,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  *      sp_g_name : 單元群組名稱<br>
  *      sp_control : 單元控制名稱<br>
  *      sp_permission : 權限<br>
+ *      sp_type:功能類型<br>
  */
 @Entity
 @Table(name = "system_permission")
@@ -101,7 +102,11 @@ public class SystemPermission {
 
 	@Column(name = "sp_permission", nullable = false, columnDefinition = "varchar(10)")
 	private String sppermission;
-
+	
+	@Column(name = "sp_type")
+	private Integer sptype;
+	
+	
 	@OneToMany(mappedBy = "systemPermission")
 	private List<SystemGroup> systemGroup;
 
@@ -231,5 +236,11 @@ public class SystemPermission {
 
 	public void setSystemGroup(List<SystemGroup> systemGroup) {
 		this.systemGroup = systemGroup;
+	}
+	public Integer getSptype() {
+		return sptype;
+	}
+	public void setSptype(Integer sptype) {
+		this.sptype = sptype;
 	}
 }

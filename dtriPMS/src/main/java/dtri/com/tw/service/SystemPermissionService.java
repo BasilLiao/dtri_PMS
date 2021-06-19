@@ -67,31 +67,31 @@ public class SystemPermissionService {
 			JSONArray obj_m = new JSONArray();
 			JSONArray values = new JSONArray();
 
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, values, "sp_id", "功能ID"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, values, "sp_g_id", "功能組ID"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "功能組名稱", "", FFM.See.SHO, "col-md-2", true, values, "sp_g_name", "功能組名稱"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "功能單元名稱", "", FFM.See.SHO, "col-md-2", true, values, "sp_name", "功能名稱"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "例:index.basil", "", FFM.See.SHO, "col-md-2", true, values, "sp_control", "功能控制"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, values, "sp_id", "功能ID"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, values, "sp_g_id", "功能組ID"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "功能組名稱", "", FFM.See.SHO, "col-md-2", true, values, "sp_g_name", "功能組名稱"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "功能單元名稱", "", FFM.See.SHO, "col-md-2", true, values, "sp_name", "功能名稱"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "例:index.basil", "", FFM.See.SHO, "col-md-2", true, values, "sp_control", "功能控制"));
 
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "例:0001001101", "", FFM.See.SHO, "col-md-2", true, values, "sp_permission", "權限範圍"));
-			// obj_m.put(FFS.h_m(FFS.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "例:0001001101", "", FFM.See.SHO, "col-md-2", true, values, "sp_permission", "權限範圍"));
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFS.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
 			// "col-md-2", false, values, "sys_c_date", "建立時間"));
-			// obj_m.put(FFS.h_m(FFS.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFS.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
 			// "col-md-2", false, values, "sys_c_user", "建立人"));
-			// obj_m.put(FFS.h_m(FFS.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFS.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
 			// "col-md-2", false, values, "sys_m_date", "修改時間"));
-			// obj_m.put(FFS.h_m(FFS.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFS.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
 			// "col-md-2", false, values, "sys_m_user", "修改人"));
 
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.SHO, "col-md-1", true, values, "sys_sort", "排序"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.DIS, "col-md-1", false, values, "sys_ver", "版本"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-10", false, values, "sys_note", "備註"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.SHO, "col-md-1", true, values, "sys_sort", "排序"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.DIS, "col-md-1", false, values, "sys_ver", "版本"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-10", false, values, "sys_note", "備註"));
 
 			values = new JSONArray();
 			values.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			values.put((new JSONObject()).put("value", "異常").put("key", "1"));
 			values.put((new JSONObject()).put("value", "Admin(專用)").put("key", "2"));
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "0", FFM.See.SHO, "col-md-2", true, values, "sys_status", "狀態"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "", "0", FFM.See.SHO, "col-md-2", true, values, "sys_status", "狀態"));
 			bean.setCell_modify(obj_m);
 
 			// 放入包裝(search)

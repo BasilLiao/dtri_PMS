@@ -13,7 +13,10 @@ import dtri.com.tw.db.entity.SystemGroup;
 public interface SystemGroupDao extends JpaRepository<SystemGroup, Long> {
 
 	// 查詢群組
-	List<SystemGroup> findBySggidOrderBySggidAscSyssortAsc(Integer sggid);
+	@Query("SELECT c FROM SystemGroup c "
+			+ "WHERE  (c.sggid = :sggid) "
+			+ "order by c.sggid asc, c.systemPermission.syssort asc")
+	List<SystemGroup> findBySggidOrderBySggid(Integer sggid);
 
 	// 查詢ID
 	List<SystemGroup> findBySgidOrderBySgidAscSyssortAsc(Integer sgid);

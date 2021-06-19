@@ -29,6 +29,7 @@ public class IndexService {
 				one.put("i_name", systemGroup.getSystemPermission().getSpname());
 				one.put("i_url", systemGroup.getSystemPermission().getSpcontrol());
 				one.put("i_sort", systemGroup.getSystemPermission().getSyssort());
+				one.put("sp_type", systemGroup.getSystemPermission().getSptype());
 				array.put(one);
 			}
 		}

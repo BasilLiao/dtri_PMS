@@ -142,8 +142,8 @@ public class ProductionHeaderService {
 			JSONArray n_val = new JSONArray();
 			JSONArray a_val = new JSONArray();
 			// header
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "ph_id", "TL_ID"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "ph_pb_g_id", "TL_SN_ID"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "ph_id", "TL_ID"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "ph_pb_g_id", "TL_SN_ID"));
 
 			a_val = new JSONArray();
 			a_val.put((new JSONObject()).put("value", "一般製令_No(sn)").put("key", "A511_no_sn"));
@@ -154,35 +154,35 @@ public class ProductionHeaderService {
 			a_val.put((new JSONObject()).put("value", "維護製令").put("key", "A522_service"));
 			a_val.put((new JSONObject()).put("value", "拆解製令").put("key", "A431_disassemble"));
 			a_val.put((new JSONObject()).put("value", "委外製令").put("key", "A512_outside"));
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "A511", "A511", FFM.See.SHO, "col-md-2", true, a_val, "ph_type", "TL_製令類"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "ph_pr_id", "TL_製令單號"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "ph_s_date", "TL_開始(時)"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "ph_e_date", "TL_結束(時)"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "A511", "A511", FFM.See.SHO, "col-md-2", true, a_val, "ph_type", "TL_製令類"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "ph_pr_id", "TL_製令單號"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "ph_s_date", "TL_開始(時)"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "ph_e_date", "TL_結束(時)"));
 			ArrayList<WorkstationProgram> list_p = programDao.findAllBySysheader(true);
 			JSONArray a_val_p = new JSONArray();
 			list_p.forEach(p -> {
 				a_val_p.put((new JSONObject()).put("value", p.getWpname()).put("key", p.getWpgid()));
 			});
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, a_val_p, "ph_wp_id", "TL_工作站"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, a_val_p, "ph_wp_id", "TL_工作站製程"));
 			// 規格-ProductionRecords
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "pr_p_model", "PR_產品型號"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "pr_bom_id", "PR_BOM料號"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "pr_order_id", "PR_訂單編號"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "pr_c_name", "PR_客戶名稱"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "13碼", "", FFM.See.DIS, "col-md-2", false, n_val, "pr_s_sn", "PR_產品SN_開始"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "13碼", "", FFM.See.DIS, "col-md-2", false, n_val, "pr_e_sn", "PR_產品SN_結束"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "pr_p_model", "PR_產品型號"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "pr_bom_id", "PR_BOM料號"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "pr_order_id", "PR_訂單編號"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "pr_c_name", "PR_客戶名稱"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "13碼", "", FFM.See.DIS, "col-md-2", false, n_val, "pr_s_sn", "PR_產品SN_開始"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "13碼", "", FFM.See.DIS, "col-md-2", false, n_val, "pr_e_sn", "PR_產品SN_結束"));
 
-			obj_m.put(FFS.h_m(FFM.Tag.TTA, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-6", true, n_val, "pr_b_item", "PR_規格定義"));
-			obj_m.put(FFS.h_m(FFM.Tag.TTA, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-6", true, n_val, "pr_s_item", "PR_軟體定義"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.TTA, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-6", true, n_val, "pr_b_item", "PR_規格定義"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.TTA, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-6", true, n_val, "pr_s_item", "PR_軟體定義"));
 			// sys
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.SHO, "col-md-1", true, n_val, "pr_p_quantity", "PR_需產數"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.DIS, "col-md-1", true, n_val, "pr_p_ok_quantity", "PR_完成數"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "pr_c_from", "PR_單據來源"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "sys_c_date", "TL_建立時間"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "sys_c_user", "TL_建立人"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "sys_m_date", "TL_修改時間"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "sys_m_user", "TL_修改人"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "ph_schedule", "TL_進度"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.SHO, "col-md-1", true, n_val, "pr_p_quantity", "PR_需產數"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.DIS, "col-md-1", true, n_val, "pr_p_ok_quantity", "PR_完成數"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "pr_c_from", "PR_單據來源"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "sys_c_date", "TL_建立時間"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "sys_c_user", "TL_建立人"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "sys_m_date", "TL_修改時間"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "sys_m_user", "TL_修改人"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "ph_schedule", "TL_進度"));
 
 			// sn規格定義(固定範圍)
 			JSONArray a_val_1 = new JSONArray();
@@ -216,15 +216,15 @@ public class ProductionHeaderService {
 					break;
 				}
 			}
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-1", true, a_val_1, "ps_sn_1", "P_SN_機種"));
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-1", true, a_val_2, "ps_sn_2", "P_SN_廠別"));
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-1", true, a_val_3, "ps_sn_3", "P_SN_保固"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, a_val_4, a_val_4, FFM.See.DIS, "col-md-1", true, n_val, "ps_sn_4", "P_SN_週期"));
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-1", true, a_val_5, "ps_sn_5", "P_SN_面板"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, a_val_6, a_val_6, FFM.See.DIS, "col-md-1", true, n_val, "ps_sn_6", "P_SN_流水"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-1", true, a_val_1, "ps_sn_1", "P_SN_機種"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-1", true, a_val_2, "ps_sn_2", "P_SN_廠別"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-1", true, a_val_3, "ps_sn_3", "P_SN_保固"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, a_val_4, a_val_4, FFM.See.DIS, "col-md-1", true, n_val, "ps_sn_4", "P_SN_週期"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-1", true, a_val_5, "ps_sn_5", "P_SN_面板"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, a_val_6, a_val_6, FFM.See.DIS, "col-md-1", true, n_val, "ps_sn_6", "P_SN_流水"));
 
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.DIS, "col-md-1", false, n_val, "sys_ver", "TL_版本"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.DIS, "col-md-1", true, n_val, "sys_sort", "TL_排序"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.DIS, "col-md-1", false, n_val, "sys_ver", "TL_版本"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.DIS, "col-md-1", true, n_val, "sys_sort", "TL_排序"));
 
 			a_val = new JSONArray();
 			a_val.put((new JSONObject()).put("value", "待命中").put("key", "0"));
@@ -232,9 +232,9 @@ public class ProductionHeaderService {
 			a_val.put((new JSONObject()).put("value", "已完成").put("key", "2"));
 			a_val.put((new JSONObject()).put("value", "暫停中").put("key", "8"));
 			a_val.put((new JSONObject()).put("value", "已終止").put("key", "9"));
-			obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "0", "0", FFM.See.DIS, "col-md-1", true, a_val, "sys_status", "TL_狀態"));
-			obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.SHO, "col-md-1", false, n_val, "pr_w_years", "PR_保固"));
-			obj_m.put(FFS.h_m(FFM.Tag.TTA, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-12", false, n_val, "sys_note", "TL_備註"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "0", "0", FFM.See.DIS, "col-md-1", true, a_val, "sys_status", "TL_狀態"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.SHO, "col-md-1", false, n_val, "pr_w_years", "PR_保固"));
+			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.TTA, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-12", false, n_val, "sys_note", "TL_備註"));
 
 			bean.setCell_modify(obj_m);
 
@@ -433,16 +433,16 @@ public class ProductionHeaderService {
 				break;
 			}
 		}
-		// obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO,
+		// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO,
 		// "col-md-1", true, a_val_1, "ps_sn_1", "P_SN_機種"));
-		// obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO,
+		// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO,
 		// "col-md-1", true, a_val_2, "ps_sn_2", "P_SN_廠別"));
-		// obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO,
+		// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO,
 		// "col-md-1", true, a_val_3, "ps_sn_3", "P_SN_保固"));
-		obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, a_val_4, a_val_4, FFM.See.DIS, "col-md-1", true, n_val, "ps_sn_4", "P_SN_週期"));
-		// obj_m.put(FFS.h_m(FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO,
+		obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, a_val_4, a_val_4, FFM.See.DIS, "col-md-1", true, n_val, "ps_sn_4", "P_SN_週期"));
+		// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO,
 		// "col-md-1", true, a_val_5, "ps_sn_5", "P_SN_面板"));
-		obj_m.put(FFS.h_m(FFM.Tag.INP, FFM.Type.NUMB, a_val_6, a_val_6, FFM.See.DIS, "col-md-1", true, n_val, "ps_sn_6", "P_SN_流水"));
+		obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, a_val_6, a_val_6, FFM.See.DIS, "col-md-1", true, n_val, "ps_sn_6", "P_SN_流水"));
 		bean.setCell_refresh(obj_m);
 
 		bean.setBody(object_bodys_all);
