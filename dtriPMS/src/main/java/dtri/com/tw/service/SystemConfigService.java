@@ -41,21 +41,21 @@ public class SystemConfigService {
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
 			int ord = 0;
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sc_id", FFS.h_t("ID", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sc_g_id", FFS.h_t("群組ID", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sc_g_name", FFS.h_t("群組名稱", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sc_name", FFS.h_t("名稱", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sc_value", FFS.h_t("參數", "100px", FFM.See.SHO));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sc_id", FFS.h_t("ID", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sc_g_id", FFS.h_t("群組ID", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sc_g_name", FFS.h_t("群組名稱", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sc_name", FFS.h_t("名稱", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sc_value", FFS.h_t("參數", "100px", FFM.Wri.W_Y));
 
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_date", FFS.h_t("建立時間", "150px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_user", FFS.h_t("建立人", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_date", FFS.h_t("修改時間", "150px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_user", FFS.h_t("修改人", "100px", FFM.See.SHO));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_date", FFS.h_t("建立時間", "150px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_user", FFS.h_t("建立人", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_date", FFS.h_t("修改時間", "150px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_user", FFS.h_t("修改人", "100px", FFM.Wri.W_Y));
 
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_note", FFS.h_t("備註", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_sort", FFS.h_t("排序", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_ver", FFS.h_t("版本", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_status", FFS.h_t("狀態", "100px", FFM.See.SHO));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_note", FFS.h_t("備註", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_sort", FFS.h_t("排序", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_ver", FFS.h_t("版本", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_status", FFS.h_t("狀態", "100px", FFM.Wri.W_Y));
 			bean.setHeader(object_header);
 
 			// 放入修改 [(key)](modify/Create/Delete) 格式
@@ -63,30 +63,35 @@ public class SystemConfigService {
 			JSONArray n_val = new JSONArray();
 			JSONArray a_val = new JSONArray();
 
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "sc_id", "ID"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "sc_g_id", "群組ID"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "sc_g_name", "群組名稱"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "sc_name", "名稱"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-3", true, n_val, "sc_value", "參數"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-1", false, n_val, "sc_id", "ID"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-1", false, n_val, "sc_g_id", "群組ID"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_Y, "col-md-2", true, n_val, "sc_g_name", "群組名稱"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_Y, "col-md-2", true, n_val, "sc_name", "名稱"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_Y, "col-md-3", true, n_val, "sc_value", "參數"));
 
-			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",
+			// FFM.Wri.W_N,
 			// "col-md-2", false, n_val, "sys_c_date", "建立時間"));
-			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",
+			// FFM.Wri.W_N,
 			// "col-md-2", false, n_val, "sys_c_user", "建立人"));
-			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",
+			// FFM.Wri.W_N,
 			// "col-md-2", false, n_val, "sys_m_date", "修改時間"));
-			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS,
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",
+			// FFM.Wri.W_N,
 			// "col-md-2", false, n_val, "sys_m_user", "修改人"));
 
-			// obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFS.TTA, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-12",
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFS.TTA, FFM.Type.TEXT, "", "",
+			// FFM.Wri.W_Y, "col-md-12",
 			// false, n_val, "sys_note", "備註"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.SHO, "col-md-1", true, n_val, "sys_sort", "排序"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.See.DIS, "col-md-1", false, n_val, "sys_ver", "版本"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.Wri.W_Y, "col-md-1", true, n_val, "sys_sort", "排序"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.Wri.W_N, "col-md-1", false, n_val, "sys_ver", "版本"));
 
 			a_val = new JSONArray();
 			a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW,FFM.Tag.SEL, FFM.Type.TEXT, "", "0", FFM.See.SHO, "col-md-1", true, a_val, "sys_status", "狀態"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.SEL, FFM.Type.TEXT, "", "0", FFM.Wri.W_Y, "col-md-1", true, a_val, "sys_status", "狀態"));
 			bean.setCell_modify(obj_m);
 
 			// 放入包裝(search)

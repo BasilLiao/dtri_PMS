@@ -3,13 +3,13 @@ package dtri.com.tw.service;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import dtri.com.tw.service.FFM.D_None;
+import dtri.com.tw.service.FFM.Dno;
 import dtri.com.tw.service.FFM.Group_createOnly;
 import dtri.com.tw.service.FFM.Group_type;
 import dtri.com.tw.service.FFM.Hmb;
-import dtri.com.tw.service.FFM.See;
 import dtri.com.tw.service.FFM.Tag;
 import dtri.com.tw.service.FFM.Type;
+import dtri.com.tw.service.FFM.Wri;
 
 /**
  * 
@@ -22,7 +22,7 @@ public class FFS {
 	// CHE = "checkbox";
 	// public static final String TEXT = "text", NUMB = "number", PASS = "password",
 	// DATE = "date";
-	// public static final String DIS = "disabled", SHO = "show";
+	// public static final String DIS = "disabled", SHO = "write";
 	// 大小
 	// public static final String S10 = "100px", S15 = "150px", S20 = "200px", S30 =
 	// "300px";
@@ -38,7 +38,7 @@ public class FFS {
 	 * @param type        : 類型 EXT=text,NUMB=number,PASS=password,DATE=date
 	 * @param placeholder : 預設文字
 	 * @param value       : 預設值
-	 * @param show        : disabled/show 顯示?
+	 * @param write       : disabled/write 顯示?
 	 * @param col         : 規格
 	 * @param required    : 是否必寫
 	 * @param values      : 多選項select 才需要[{key:value,key:value}]
@@ -47,10 +47,10 @@ public class FFS {
 	 * 
 	 * @return 格式 : {type:"select/input/textarea", <br>
 	 *         required:"true/false",placeholder:"XXXX",<br>
-	 *         show:"d-none/disabled/show", values:[{key:value,key:value}]}
+	 *         write:"d-none/disabled/write", values:[{key:value,key:value}]}
 	 * 
 	 **/
-	public static JSONObject h_m(D_None none, Tag tag, Type type, String placeholder, String value, See show, String col, boolean required,
+	public static JSONObject h_m(Dno none, Tag tag, Type type, String placeholder, String value, Wri write, String col, boolean required,
 			JSONArray values, String id, String name) {
 		JSONObject object_value = new JSONObject();
 		object_value.put("name", name);
@@ -60,7 +60,7 @@ public class FFS {
 		object_value.put("required", required);// 是否必寫
 		object_value.put("placeholder", placeholder);// 預設文字
 		object_value.put("value", value);// 預設值
-		object_value.put("show", FFM.choose(show.toString()));// 可填寫??
+		object_value.put("write", FFM.choose(write.toString()));// 可填寫??
 		object_value.put("d_none", FFM.choose(none.toString()));// 顯示?
 
 		object_value.put("col", col);// 寬度?
@@ -104,11 +104,11 @@ public class FFS {
 	 * 
 	 * @return 格式 : {name:xxx,size:50px}
 	 **/
-	public static JSONObject h_t(String name, String size, See show) {
+	public static JSONObject h_t(String name, String size, Wri write) {
 		JSONObject one_title = new JSONObject();
 		one_title.put("name", name);// 欄位名稱
 		one_title.put("size", size);// 寬度?
-		one_title.put("show", FFM.choose(show.toString()));// 顯示?
+		one_title.put("write", FFM.choose(write.toString()));// 顯示?
 		return one_title;
 	}
 
@@ -121,11 +121,11 @@ public class FFS {
 	 * 
 	 * @return 格式 : {name:xxx,size:50px}
 	 **/
-	public static JSONObject h_g(See show, D_None none, String col, String id) {
+	public static JSONObject h_g(Wri write, Dno none, String col, String id) {
 		JSONObject one_group = new JSONObject();
 		one_group.put("id", FFM.choose(FFM.Hmb.M.toString()) + id);// id
 		one_group.put("col", col);// 寬度?
-		one_group.put("show", FFM.choose(show.toString()));// 可填寫?
+		one_group.put("write", FFM.choose(write.toString()));// 可填寫?
 		one_group.put("d_none", FFM.choose(none.toString()));// 顯示?
 		return one_group;
 	}

@@ -57,28 +57,28 @@ public class WorkHoursService {
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
 			int ord = 0;
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_id", FFS.h_t("ID", "50px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_pr_id", FFS.h_t("製令單", "200px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_wt_id", FFS.h_t("類型", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_wt_name", FFS.h_t("類型名稱", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_do", FFS.h_t("工作內容", "350px", FFM.See.SHO));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_id", FFS.h_t("ID", "50px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_pr_id", FFS.h_t("製令單", "200px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_wt_id", FFS.h_t("類型", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_wt_name", FFS.h_t("類型名稱", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_do", FFS.h_t("工作內容", "350px", FFM.Wri.W_Y));
 
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_nb", FFS.h_t("已完成", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "pr_p_quantity", FFS.h_t("需完成", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_account", FFS.h_t("作業人員", "150px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_s_date", FFS.h_t("開始時間", "180px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_e_date", FFS.h_t("結束時間", "180px", FFM.See.SHO));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_nb", FFS.h_t("已完成", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "pr_p_quantity", FFS.h_t("需完成", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_account", FFS.h_t("作業人員", "150px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_s_date", FFS.h_t("開始時間", "180px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_e_date", FFS.h_t("結束時間", "180px", FFM.Wri.W_Y));
 
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_header", FFS.h_t("群組代表", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_date", FFS.h_t("建立時間", "150px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_user", FFS.h_t("建立人", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_date", FFS.h_t("修改時間", "150px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_user", FFS.h_t("修改人", "100px", FFM.See.SHO));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_header", FFS.h_t("群組代表", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_date", FFS.h_t("建立時間", "150px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_user", FFS.h_t("建立人", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_date", FFS.h_t("修改時間", "150px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_user", FFS.h_t("修改人", "100px", FFM.Wri.W_Y));
 
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_note", FFS.h_t("備註", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_sort", FFS.h_t("排序", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_ver", FFS.h_t("版本", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_status", FFS.h_t("狀態", "100px", FFM.See.SHO));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_note", FFS.h_t("備註", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_sort", FFS.h_t("排序", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_ver", FFS.h_t("版本", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_status", FFS.h_t("狀態", "100px", FFM.Wri.W_Y));
 
 			bean.setHeader(object_header);
 
@@ -87,33 +87,33 @@ public class WorkHoursService {
 			JSONArray s_val = new JSONArray();
 			JSONArray n_val = new JSONArray();
 
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "wh_id", "ID"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "sys_header", "群組代表"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "wh_pr_id", "製令單"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, st_val, "wh_wt_id", "工作類型"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.DATE, "", "", FFM.See.SHO, "col-md-2", false, n_val, "wh_s_date", "時間(始)"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.DATE, "", "", FFM.See.SHO, "col-md-2", false, n_val, "wh_e_date", "時間(結)"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.See.SHO, "col-md-1", true, n_val, "wh_nb", "完成數量"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.See.DIS, "col-md-1", true, n_val, "pr_p_quantity", "總數"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-1", false, n_val, "wh_id", "ID"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-1", false, n_val, "sys_header", "群組代表"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-2", true, n_val, "wh_pr_id", "製令單"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-2", true, st_val, "wh_wt_id", "工作類型"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.DATE, "", "", FFM.Wri.W_Y, "col-md-2", false, n_val, "wh_s_date", "時間(始)"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.DATE, "", "", FFM.Wri.W_Y, "col-md-2", false, n_val, "wh_e_date", "時間(結)"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.Wri.W_Y, "col-md-1", true, n_val, "wh_nb", "完成數量"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.Wri.W_N, "col-md-1", true, n_val, "pr_p_quantity", "總數"));
 
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-9", true, n_val, "wh_do", "工作內容"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, n_val, "wh_account", "作業人員"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_Y, "col-md-9", true, n_val, "wh_do", "工作內容"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_Y, "col-md-2", true, n_val, "wh_account", "作業人員"));
 
 			s_val = new JSONArray();
 			s_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			s_val.put((new JSONObject()).put("value", "取消").put("key", "1"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.SEL, FFM.Type.TEXT, "", "0", FFM.See.SHO, "col-md-1", true, s_val, "sys_status", "狀態"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.SEL, FFM.Type.TEXT, "", "0", FFM.Wri.W_Y, "col-md-1", true, s_val, "sys_status", "狀態"));
 			bean.setCell_modify(obj_m);
 
 			// 放入群主指定 [(key)](modify/Create/Delete) 格式
 			JSONArray obj_g_m = new JSONArray();
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sys_status"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "wh_s_date"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "wh_e_date"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "wh_do"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "wh_account"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "wh_nb"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "wh_wt_id"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sys_status"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "wh_s_date"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "wh_e_date"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "wh_do"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "wh_account"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "wh_nb"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "wh_wt_id"));
 
 			bean.setCell_g_modify(obj_g_m);
 

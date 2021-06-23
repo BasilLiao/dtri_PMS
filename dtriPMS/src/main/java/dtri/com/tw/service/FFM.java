@@ -7,13 +7,13 @@ public class FFM {
 	}
 
 	/** 限制規格-可填入? **/
-	public static enum See {
-		DIS, SHO
+	public static enum Wri {
+		W_Y, W_N
 	}
 
 	/** 限制規格-顯示? **/
-	public static enum D_None {
-		D_NONE, D_SOHW
+	public static enum Dno {
+		D_N, D_S
 	}
 
 	/** 限制規格-標籤 **/
@@ -45,14 +45,14 @@ public class FFM {
 	public static String choose(String key) {
 		String value = "";
 		switch (key) {
-		case "D_NONE":
+		case "D_N":
 			value = "d-none";
 			break;
 		// See
-		case "DIS":
+		case "W_N":
 			value = "disabled";
 			break;
-		case "SHO":
+		case "W_Y":
 			value = "show";
 			break;
 		// Tag

@@ -165,18 +165,22 @@ create sequence WORKSTATION_PROGRAM_G_SEQ start with 3 increment by 1;
 
 --production_sn
 INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (1, 1, '機種別', '', '',true);
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (2, 1, '機種別', '136BU', 'AAA',false);
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (3, 2, '生產廠別', '', '',true);
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (4, 2, '生產廠別', 'Beijing', 'B',false);
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (5, 3, '保固期限', '', '',true);
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (6, 3, '保固期限', '1_year', '1',false);
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (7, 4, '生產年周', '', '',true);
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (8, 4, '生產年周', '[YYWW]', '2118',false);
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (9, 5, 'Panel廠商(面板)', '', '',true);
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (10, 5, 'Panel廠商(面板)', 'AGL', 'A',false);
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (11, 6, '流水號', '', '',true);
-INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (12, 6, '流水號', '[000]', '346',false);
-SELECT setval('public.production_sn_seq', 12, true);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (2, 1, '機種別', 'NO(SN)', 'no_',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (3, 1, '機種別', '136BU', 'AAA',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (4, 2, '生產廠別', '', '',true);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (5, 2, '生產廠別', 'NO(SN)', 's',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (6, 2, '生產廠別', 'Beijing', 'B',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (7, 3, '保固期限', '', '',true);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (8, 3, '保固期限', 'NO(SN)', 'n',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (9, 3, '保固期限', '1_year', '1',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (10, 4, '生產年周', '', '',true);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (11, 4, '生產年周', '[YYWW]', '2118',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (12, 5, 'Panel廠商(面板)', '', '',true);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (13, 5, 'Panel廠商(面板)','NO(SN)', 'n',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (14, 5, 'Panel廠商(面板)','AGL', 'A',false);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (15, 6, '流水號', '', '',true);
+INSERT INTO production_sn(ps_id, ps_g_id, ps_g_name, ps_name, ps_value,sys_header)VALUES (16, 6, '流水號', '[000]', '346',false);
+SELECT setval('public.production_sn_seq', 16, true);
 DROP sequence IF EXISTS PRODUCTION_SN_G_SEQ  CASCADE;
 create sequence PRODUCTION_SN_G_SEQ start with 7 increment by 1;
 

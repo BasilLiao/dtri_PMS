@@ -22,7 +22,7 @@ public interface ProductionSNDao extends JpaRepository<ProductionSN, Long> {
 			+ "WHERE (:psname is null or c.psname LIKE %:psname% ) and "//
 			+ "(:psgname is null or c.psgname LIKE %:psgname% ) and " //
 			+ "( c.sysstatus = :sysstatus )  " //
-			+ "order by c.psgid asc,c.sysheader desc,c.psname asc")
+			+ "order by c.psgid asc,c.sysheader desc,c.psid asc")
 	ArrayList<ProductionSN> findAllByProductionSN(@Param("psname") String psname, @Param("psgname") String psgname,
 			@Param("sysstatus") Integer sysstatus, Pageable pageable);
 

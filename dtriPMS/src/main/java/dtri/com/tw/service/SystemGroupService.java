@@ -47,34 +47,34 @@ public class SystemGroupService {
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
 			int ord = 0;
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_id", FFS.h_t("ID", "50px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_g_id", FFS.h_t("群組ID", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_name", FFS.h_t("群組名稱", "150px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_sp_name", FFS.h_t("單元名稱", "150px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_header", FFS.h_t("群組代表", "100px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_sp_id", FFS.h_t("關聯ID", "100px", FFM.See.DIS));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_id", FFS.h_t("ID", "50px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_g_id", FFS.h_t("群組ID", "100px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_name", FFS.h_t("群組名稱", "150px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_sp_name", FFS.h_t("單元名稱", "150px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_header", FFS.h_t("群組代表", "100px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_sp_id", FFS.h_t("關聯ID", "100px", FFM.Wri.W_N));
 
 			// (sg_permission[特殊3(512),特殊2(256),特殊1(128),訪問(64),下載(32),上傳(16),新增(8),修改(4),刪除(2),查詢(1)])
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_512", FFS.h_t("S3", "50px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_256", FFS.h_t("S2", "50px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_128", FFS.h_t("S1", "50px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_64", FFS.h_t("訪", "50px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_32", FFS.h_t("下", "50px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_16", FFS.h_t("上", "50px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_8", FFS.h_t("增", "50px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_4", FFS.h_t("改", "50px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_2", FFS.h_t("刪", "50px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_1", FFS.h_t("查", "50px", FFM.See.DIS));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_512", FFS.h_t("S3", "50px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_256", FFS.h_t("S2", "50px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_128", FFS.h_t("S1", "50px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_64", FFS.h_t("訪", "50px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_32", FFS.h_t("下", "50px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_16", FFS.h_t("上", "50px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_8", FFS.h_t("增", "50px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_4", FFS.h_t("改", "50px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_2", FFS.h_t("刪", "50px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sg_permission_1", FFS.h_t("查", "50px", FFM.Wri.W_N));
 
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_date", FFS.h_t("建立時間", "150px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_user", FFS.h_t("建立人", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_date", FFS.h_t("修改時間", "150px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_user", FFS.h_t("修改人", "100px", FFM.See.SHO));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_date", FFS.h_t("建立時間", "180px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_user", FFS.h_t("建立人", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_date", FFS.h_t("修改時間", "180px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_user", FFS.h_t("修改人", "100px", FFM.Wri.W_Y));
 
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_sort", FFS.h_t("排序", "100px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_ver", FFS.h_t("版本", "100px", FFM.See.DIS));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_status", FFS.h_t("狀態", "100px", FFM.See.SHO));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_note", FFS.h_t("備註", "100px", FFM.See.SHO));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_sort", FFS.h_t("排序", "100px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_ver", FFS.h_t("版本", "100px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_status", FFS.h_t("狀態", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_note", FFS.h_t("備註", "100px", FFM.Wri.W_Y));
 
 			bean.setHeader(object_header);
 
@@ -83,18 +83,18 @@ public class SystemGroupService {
 			JSONArray s_val = new JSONArray();
 			JSONArray n_val = new JSONArray();
 
-			obj_m.put(FFS.h_m(FFM.D_None.D_NONE, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "sg_id", "群組ID"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_NONE, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", false, n_val, "sg_g_id", "群組類別ID"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_NONE, FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.See.DIS, "col-md-1", false, n_val, "sys_ver", "版本"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_NONE, FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.See.SHO, "col-md-1", true, n_val, "sys_sort", "排序"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_NONE, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "sg_name", "群組名稱"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_NONE, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-2", true, n_val, "sg_sp_name", "單元名稱"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_NONE, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.See.DIS, "col-md-1", false, n_val, "sys_header", "群組代表"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-2", false, n_val, "sg_id", "群組ID"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-2", false, n_val, "sg_g_id", "群組類別ID"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.Wri.W_N, "col-md-1", false, n_val, "sys_ver", "版本"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.Wri.W_Y, "col-md-1", true, n_val, "sys_sort", "排序"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-2", true, n_val, "sg_name", "群組名稱"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-2", true, n_val, "sg_sp_name", "單元名稱"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-1", false, n_val, "sys_header", "群組代表"));
 
 			s_val = new JSONArray();
 			s_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			s_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_NONE, FFM.Tag.SEL, FFM.Type.TEXT, "", "0", FFM.See.DIS, "col-md-1", true, s_val, "sys_status", "狀態"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.SEL, FFM.Type.TEXT, "", "0", FFM.Wri.W_N, "col-md-1", true, s_val, "sys_status", "狀態"));
 			bean.setCell_modify(obj_m);
 
 			JSONArray st_val = new JSONArray();
@@ -103,54 +103,51 @@ public class SystemGroupService {
 			String old_p_g_name = "";
 			for (SystemPermission s : permissions) {
 				// 排除群組代表
-				if (s.getSpid() != 1) {
-					if (old_p_g_id != s.getSpgid()) {
-						if (!old_p_g_name.equals("")) {
-							st_val.put((new JSONObject()).put("value", "====" + old_p_g_name + "====").put("key", "dis"+old_p_g_id).put("dis", "disabled"));
-						}
-						old_p_g_id = s.getSpgid();
+				old_p_g_id = s.getSpgid();
+				if (old_p_g_id != 0) {
+					if (old_p_g_name.equals(s.getSpgname())) {
+						st_val.put((new JSONObject()).put("value", s.getSpname()).put("key", s.getSpid()));
+					} else {
 						old_p_g_name = s.getSpgname();
+						st_val.put((new JSONObject()).put("value", "====" + old_p_g_name + "====").put("key", "dis" + old_p_g_id).put("dis",
+								"disabled"));
+						st_val.put((new JSONObject()).put("value", s.getSpname()).put("key", s.getSpid()));
 					}
-					st_val.put((new JSONObject()).put("value", s.getSpname()).put("key", s.getSpid()));
 				}
 			}
-			st_val.put((new JSONObject()).put("value", "====" + old_p_g_name + "====").put("key", "dis"+old_p_g_id).put("dis", "disabled"));
-
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.See.SHO, "col-md-2", true, st_val, "sg_sp_id", "權限關聯ID"));
-			obj_m.put(
-					FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.See.SHO, "col-md-1", false, n_val, "sg_permission_512", "S3"));
-			obj_m.put(
-					FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.See.SHO, "col-md-1", false, n_val, "sg_permission_256", "S2"));
-			obj_m.put(
-					FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.See.SHO, "col-md-1", false, n_val, "sg_permission_128", "S1"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.See.SHO, "col-md-1", false, n_val, "sg_permission_64", "訪問"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.See.SHO, "col-md-1", false, n_val, "sg_permission_32", "下載"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.See.SHO, "col-md-1", false, n_val, "sg_permission_16", "上傳"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.See.SHO, "col-md-1", false, n_val, "sg_permission_8", "新增"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.See.SHO, "col-md-1", false, n_val, "sg_permission_4", "修改"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.See.SHO, "col-md-1", false, n_val, "sg_permission_2", "刪除"));
-			obj_m.put(FFS.h_m(FFM.D_None.D_SOHW, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.See.SHO, "col-md-1", false, n_val, "sg_permission_1", "查詢"));
+			//
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.Wri.W_Y, "col-md-2", true, st_val, "sg_sp_id", "權限關聯ID"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.Wri.W_Y, "col-md-1", false, n_val, "sg_permission_512", "S3"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.Wri.W_Y, "col-md-1", false, n_val, "sg_permission_256", "S2"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.Wri.W_Y, "col-md-1", false, n_val, "sg_permission_128", "S1"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.Wri.W_Y, "col-md-1", false, n_val, "sg_permission_64", "訪問"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.Wri.W_Y, "col-md-1", false, n_val, "sg_permission_32", "下載"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.Wri.W_Y, "col-md-1", false, n_val, "sg_permission_16", "上傳"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.Wri.W_Y, "col-md-1", false, n_val, "sg_permission_8", "新增"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.Wri.W_Y, "col-md-1", false, n_val, "sg_permission_4", "修改"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.Wri.W_Y, "col-md-1", false, n_val, "sg_permission_2", "刪除"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.CHE, FFM.Type.CHE, "", "", FFM.Wri.W_Y, "col-md-1", false, n_val, "sg_permission_1", "查詢"));
 
 			// 放入群主指定 [(key)](modify/Create/Delete) 格式
 			JSONArray obj_g_m = new JSONArray();
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sys_sort"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_id"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_g_id"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_sp_id"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_sp_name"));
-			obj_g_m.put(FFS.h_g(FFM.See.SHO, FFM.D_None.D_SOHW, "col-md-2", "sg_name"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_permission_512"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_permission_256"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_permission_128"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_permission_64"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_permission_32"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_permission_16"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_permission_8"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_permission_4"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_permission_2"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sg_permission_1"));
-			obj_g_m.put(FFS.h_g(FFM.See.SHO, FFM.D_None.D_SOHW, "col-md-1", "sys_status"));
-			obj_g_m.put(FFS.h_g(FFM.See.DIS, FFM.D_None.D_NONE, "col-md-1", "sys_header"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sys_sort"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_id"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_g_id"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_sp_id"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_sp_name"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_Y, FFM.Dno.D_S, "col-md-2", "sg_name"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_permission_512"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_permission_256"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_permission_128"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_permission_64"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_permission_32"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_permission_16"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_permission_8"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_permission_4"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_permission_2"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sg_permission_1"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_Y, FFM.Dno.D_S, "col-md-1", "sys_status"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "sys_header"));
 
 			bean.setCell_g_modify(obj_g_m);
 
@@ -292,6 +289,7 @@ public class SystemGroupService {
 					groupDao.save(sys_p_h);
 				} else {
 					// 登記子類別
+					sys_p.setSysheader(false);
 					sys_p.setSgname(sg_name);
 					sys_p.setSggid(sg_g_id);
 					groupDao.save(sys_p);
@@ -322,10 +320,13 @@ public class SystemGroupService {
 			// 檢查群組名稱重複(沒重複 則定義 group_name)
 			for (Object one : list) {
 				JSONObject data = (JSONObject) one;
-				ArrayList<SystemGroup> sys_p_g = groupDao.findAllByGroupTop1(data.getString("sg_name"), PageRequest.of(0, 1));
-				if (data.getBoolean("sys_header") && (sys_p_g == null || sys_p_g.size() == 0)) {
-					sg_name = data.getString("sg_name");
-					break;
+				if (data.getBoolean("sys_header")) {
+					ArrayList<SystemGroup> sys_p_g = groupDao.findAllByGroupTop1(data.getString("sg_name"), PageRequest.of(0, 1));
+					if (sys_p_g != null && sys_p_g.size() > 0) {
+						return false;
+					} else {
+						sg_name = data.getString("sg_name");
+					}
 				}
 			}
 			// 如果沒定義到 sg_name 則排除
@@ -356,6 +357,7 @@ public class SystemGroupService {
 					// 查詢最新 群組ID
 					// sg_g_id = groupDao.findAllByTop1(PageRequest.of(0, 1)).get(0).getSggid() + 1;
 					// 登記父類 群組代表名稱
+					sg_name = data.getString("sg_name");
 					SystemGroup sys_p_h = new SystemGroup();
 					sys_p_h.setSggid(groupDao.getSystem_group_g_seq());
 					sys_p_h.setSgname(sg_name);

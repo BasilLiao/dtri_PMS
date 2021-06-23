@@ -38,10 +38,18 @@ public class SystemUserController {
 		PackageBean resp = new PackageBean();
 		String info = null, info_color = null;
 		System.out.println(json_object);
+		// 取得-當前用戶資料
+		SystemUser user = new SystemUser();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			// Step1.查詢資料
+			user = userDetails.getSystemUser();
+		}
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = userService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = userService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(),user);
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color, "");
 		// 回傳-資料
@@ -59,10 +67,18 @@ public class SystemUserController {
 		PackageBean resp = new PackageBean();
 		String info = null, info_color = null;
 		System.out.println(json_object);
+		// 取得-當前用戶資料
+		SystemUser user = new SystemUser();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			LoginUserDetails userDetails = (LoginUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			// Step1.查詢資料
+			user = userDetails.getSystemUser();
+		}
 		// Step1.包裝解析
 		req = packageService.jsonToObj(new JSONObject(json_object));
 		// Step2.進行查詢
-		resp = userService.getData(req.getBody(), req.getPage_batch(), req.getPage_total());
+		resp = userService.getData(req.getBody(), req.getPage_batch(), req.getPage_total(),user);
 		// Step3.包裝回傳
 		resp = packageService.setObjResp(resp, req, info, info_color, "");
 		// 回傳-資料
