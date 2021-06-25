@@ -37,7 +37,7 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 		String production_reco = "/ajax/production_records.basil";
 		String production_conf = "/ajax/production_config.basil";
 		String workstation = "/ajax/workstation.basil";
-		String workstation_item = "/ajax/workstation_item.basil";
+		//String workstation_item = "/ajax/workstation_item.basil";
 		String workstation_work = "/ajax/workstation_work.basil";
 		String workstation_conf = "/ajax/workstation_config.basil";
 		String workstation_prog = "/ajax/workstation_program.basil";
@@ -101,11 +101,11 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.DELETE, production_reco + ".AD").hasAuthority(actionRole(production_reco, "AD"))// (移除)
 
 				// ----請求-workstation_item-(訪問) ----
-				.antMatchers(HttpMethod.POST, workstation_item).hasAuthority(actionRole(workstation_item, ""))//
+				/*.antMatchers(HttpMethod.POST, workstation_item).hasAuthority(actionRole(workstation_item, ""))//
 				.antMatchers(HttpMethod.POST, workstation_item + ".AR").hasAuthority(actionRole(workstation_item, "AR"))// (查詢)
 				.antMatchers(HttpMethod.POST, workstation_item + ".AC").hasAuthority(actionRole(workstation_item, "AC"))// (新增)
 				.antMatchers(HttpMethod.PUT, workstation_item + ".AU").hasAuthority(actionRole(workstation_item, "AU"))// (修改)
-				.antMatchers(HttpMethod.DELETE, workstation_item + ".AD").hasAuthority(actionRole(workstation_item, "AD"))// (移除)
+				.antMatchers(HttpMethod.DELETE, workstation_item + ".AD").hasAuthority(actionRole(workstation_item, "AD"))// (移除)*/
 
 				// ----請求-workstation_work-(訪問) ----
 				.antMatchers(HttpMethod.POST, workstation_work).hasAuthority(actionRole(workstation_work, ""))//

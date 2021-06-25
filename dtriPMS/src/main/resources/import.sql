@@ -26,17 +26,17 @@ INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission,
 INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (8, 2,0, '個人設定', '0001001101', 1102, '通用-帳號資料', 'own_user.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (9, 2,0, '個人設定', '0001000001', 1103, '通用-首頁', 'index.basil');
 --產品製程
-INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (10, 3,1, '產品製程', '0001001101', 1201, '設定-出貨序號規則', 'production_sn.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (10, 3,1, '產品製程', '0001001101', 1201, '設定-產品序號規則', 'production_sn.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (11, 3,1, '產品製程', '0001001101', 1202, '設定-料件SN類型', 'production_config.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (12, 3,0, '產品製程', '0001001101', 1203, '通用-製令單', 'production_header.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (13, 3,0, '產品製程', '0001001101', 1204, '通用-製令規格', 'production_records.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (14, 3,0, '產品製程', '0001001101', 1205, '通用-料件SN關聯', 'production_body.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (15, 3,0, '產品製程', '0001001111', 1206, '通用-製程及時進度', 'production_schedule.basil');
 --工作站
-INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (17, 4,1, '工作站', '0001001101', 1301, '設定-料件SN類型', 'workstation_item.basil');
+--遺棄--INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (17, 4,1, '工作站', '0001001101', 1301, '設定-料件SN類型', 'workstation_item.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (16, 4,1, '工作站', '0001001101', 1302, '設定-工作站名稱', 'workstation_config.basil');
-INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (18, 4,1, '工作站', '0001001101', 1303, '設定-工作站與SN綁定', 'workstation.basil');
-INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (19, 4,1, '工作站', '0001001101', 1304, '設定-工作站製程管理', 'workstation_program.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (18, 4,1, '工作站', '0001001101', 1303, '設定-工作站綁定', 'workstation.basil');
+INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (19, 4,1, '工作站', '0001001101', 1304, '設定-製程管理', 'workstation_program.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (20, 4,0, '工作站', '0001001101', 1305, '通用-工作站', 'workstation_work.basil');
 INSERT INTO system_permission(sp_id, sp_g_id, sp_type, sp_g_name, sp_permission, sys_sort, sp_name, sp_control)VALUES (21, 4,0, '工作站', '0001001101', 1306, '通用-SN補單', 'workstation_snadd.basil');
 --工時績效
@@ -72,7 +72,7 @@ INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_so
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (15,1, '系統管理者', '1111111111', 15,1205);
 
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (16,1, '系統管理者', '1111111111', 16,1301);
-INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (17,1, '系統管理者', '1111111111', 17,1302);
+--INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (17,1, '系統管理者', '1111111111', 17,1302);
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (18,1, '系統管理者', '1111111111', 18,1303);
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (19,1, '系統管理者', '1111111111', 19,1304);
 INSERT INTO system_group(sg_id, sg_g_id, sg_name, sg_permission, sg_sp_id,sys_sort) VALUES (20,1, '系統管理者', '1111111111', 20,1305);
@@ -135,7 +135,13 @@ INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (0
 INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (1, false,'pb_value01' , 'MB(UUID)');
 INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (2, false,'pb_value02' , 'LAN1 MAC');
 INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (3, false,'pb_value03' , 'LAN2 MAC');
-SELECT setval('public.workstation_item_seq', 3, true);
+INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (4, false,'pb_value04' , 'WIFI MAC');
+INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (5, false,'pb_value05' , 'NVRAM MAC');
+INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (6, false,'pb_value06' , 'IMEI');
+INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (7, false,'pb_value07' , 'ECN');
+INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (8, false,'pb_value08' , 'EC');
+INSERT INTO workstation_item(wi_id,sys_header, wi_pb_cell, wi_pb_value)VALUES (9, false,'pb_value09' , 'BIOS');
+SELECT setval('public.workstation_item_seq', 9, true);
 
 --workstation
 INSERT INTO workstation(w_id, sys_header, w_c_name, w_g_id, w_pb_name,w_pb_cell, w_sg_name,w_sg_id, w_i_id)VALUES (0, true, 'Group', 0, 'Group','','', 0, 0);
@@ -207,15 +213,15 @@ INSERT INTO work_type(wt_id,wt_name)VALUES (4,'電池組裝');
 SELECT setval('public.work_type_seq', 4, true);
 
 --工時登記
-INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id,sys_header)VALUES (1, '', '', 0, 'A44654-A654', 0,true);
-INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id)VALUES (2, 'admin', '測1試做事', 1, 'A44654-A654', 1);
-INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id)VALUES (3, 'admin', '測2試做事', 2, 'A44654-A654', 2);
-INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id)VALUES (4, 'admin', '測3試做事', 2, 'A44654-A654', 3);
+INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id,sys_header,sys_status)VALUES (1, '', '', 0, 'A44654-A654', 0,true,2);
+INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id,sys_status)VALUES (2, 'admin', '測1試做事', 1, 'A44654-A654', 1,2);
+INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id,sys_status)VALUES (3, 'admin', '測2試做事', 2, 'A44654-A654', 2,2);
+INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id,sys_status)VALUES (4, 'admin', '測3試做事', 2, 'A44654-A654', 3,2);
 
-INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id,sys_header)VALUES (5, '', '', 0, 'A511-210204004', 0,true);
-INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id)VALUES (6, 'admin', '測1試做事', 1, 'A511-210204004', 1);
-INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id)VALUES (7, 'admin', '測2試做事', 2, 'A511-210204004', 2);
-INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id)VALUES (8, 'admin', '測3試做事', 2, 'A511-210204004', 3);
+INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id,sys_header,sys_status)VALUES (5, '', '', 0, 'A511-210204004', 0,true,2);
+INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id,sys_status)VALUES (6, 'admin', '測1試做事', 1, 'A511-210204004', 1,2);
+INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id,sys_status)VALUES (7, 'admin', '測2試做事', 2, 'A511-210204004', 2,2);
+INSERT INTO public.work_hours(wh_id, wh_account, wh_do, wh_nb, wh_pr_id, wh_wt_id,sys_status)VALUES (8, 'admin', '測3試做事', 2, 'A511-210204004', 3,2);
 SELECT setval('public.work_hours_seq', 8, true);
 
 

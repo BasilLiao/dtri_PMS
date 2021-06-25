@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import dtri.com.tw.bean.ConfigBean;
 import dtri.com.tw.bean.PackageBean;
 import dtri.com.tw.db.entity.SystemGroup;
 import dtri.com.tw.db.entity.SystemPermission;
@@ -36,6 +37,9 @@ public class IndexController {
 	PackageService packageService;
 	@Autowired
 	IndexService indexService;
+
+	@Autowired
+	ConfigBean configBean;
 
 	/**
 	 * 登入 and 登出-畫面
@@ -58,7 +62,7 @@ public class IndexController {
 				service = services[index];
 			}
 		}
-
+		configBean.init();
 		// 回傳-模板
 		return new ModelAndView("./html/login.html", "status", error);
 	}

@@ -93,8 +93,11 @@ public class ProductionRecords {
 	@Column(name = "pr_p_quantity", nullable = false, columnDefinition = "int default 0")
 	private Integer prpquantity;
 
-	@Column(name = "pr_p_ok_quantity", nullable = false, columnDefinition = "int default 0")
+	@Column(name = "pr_p_ok_quantity", columnDefinition = "int default 0")
 	private Integer prpokquantity;
+
+	@Column(name = "pr_h_ok_quantity", columnDefinition = "int default 0")
+	private Integer prhokquantity;
 
 	@Column(name = "pr_p_model", nullable = false, columnDefinition = "varchar(50) default ''")
 	private String prpmodel;
@@ -126,7 +129,7 @@ public class ProductionRecords {
 
 	@OneToOne(mappedBy = "productionRecords")
 	private ProductionHeader header;
-	
+
 	@OneToMany(mappedBy = "productionRecords")
 	private List<WorkHours> workHours;
 
@@ -304,5 +307,13 @@ public class ProductionRecords {
 
 	public void setPrwyears(Integer prwyears) {
 		this.prwyears = prwyears;
+	}
+
+	public Integer getPrhokquantity() {
+		return prhokquantity;
+	}
+
+	public void setPrhokquantity(Integer prhokquantity) {
+		this.prhokquantity = prhokquantity;
 	}
 }

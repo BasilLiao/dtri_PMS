@@ -1386,7 +1386,7 @@
                 });
               	
               	//如果是群組類型 在自動新增一次
-                if($(".create_really_tr").length==1 && main.allData.body_type.type=="group" && type_data !="son_data"){
+                if($(".create_really_tr").length==1 && main.allData.body_type.type=="group" && type_data !="son_data" && main.allData.body_type.createOnly=="all"){
                 	 $( "#create_example_tr .create_example_add" ).trigger( "click" );
                 }
 			},

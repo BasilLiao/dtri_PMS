@@ -57,8 +57,11 @@ public interface ProductionHeaderDao extends JpaRepository<ProductionHeader, Lon
 	// 查詢重複製令
 	List<ProductionHeader> findAllByProductionRecords(ProductionRecords phprid);
 
-	// 查詢重複製令
-	List<ProductionHeader> findAllByProductionRecordsAndPhwpid(ProductionRecords phprid,Integer phwpid);
+	// 查詢重複製令+狀態
+	List<ProductionHeader> findAllByProductionRecordsAndSysstatusNotIn(ProductionRecords phprid, List<Integer> sysstatus);
+
+	// 查詢重複製令+ID
+	List<ProductionHeader> findAllByProductionRecordsAndPhwpid(ProductionRecords phprid, Integer phwpid);
 
 	// 查詢ID
 	List<ProductionHeader> findAllByPhid(Integer phid);

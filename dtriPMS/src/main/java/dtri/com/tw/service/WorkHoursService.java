@@ -2,7 +2,9 @@ package dtri.com.tw.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -57,27 +59,27 @@ public class WorkHoursService {
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
 			int ord = 0;
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_id", FFS.h_t("ID", "50px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_id", FFS.h_t("ID", "50px", FFM.Wri.W_N));
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_pr_id", FFS.h_t("製令單", "200px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_wt_id", FFS.h_t("類型", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_wt_name", FFS.h_t("類型名稱", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_do", FFS.h_t("工作內容", "350px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_wt_id", FFS.h_t("類型", "100px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_wt_name", FFS.h_t("類型名稱", "100px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_do", FFS.h_t("工作內容", "350px", FFM.Wri.W_N));
 
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_nb", FFS.h_t("已完成", "100px", FFM.Wri.W_Y));
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "pr_p_quantity", FFS.h_t("需完成", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_account", FFS.h_t("作業人員", "150px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_s_date", FFS.h_t("開始時間", "180px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_e_date", FFS.h_t("結束時間", "180px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_account", FFS.h_t("作業人員", "150px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_s_date", FFS.h_t("開始時間", "180px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "wh_e_date", FFS.h_t("結束時間", "180px", FFM.Wri.W_N));
 
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_header", FFS.h_t("群組代表", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_date", FFS.h_t("建立時間", "150px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_header", FFS.h_t("群組代表", "100px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_date", FFS.h_t("建立時間", "180px", FFM.Wri.W_Y));
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_user", FFS.h_t("建立人", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_date", FFS.h_t("修改時間", "150px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_date", FFS.h_t("修改時間", "180px", FFM.Wri.W_Y));
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_user", FFS.h_t("修改人", "100px", FFM.Wri.W_Y));
 
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_note", FFS.h_t("備註", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_sort", FFS.h_t("排序", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_ver", FFS.h_t("版本", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_sort", FFS.h_t("排序", "100px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_ver", FFS.h_t("版本", "100px", FFM.Wri.W_N));
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_status", FFS.h_t("狀態", "100px", FFM.Wri.W_Y));
 
 			bean.setHeader(object_header);
@@ -87,21 +89,22 @@ public class WorkHoursService {
 			JSONArray s_val = new JSONArray();
 			JSONArray n_val = new JSONArray();
 
-			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-1", false, n_val, "wh_id", "ID"));
-			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-1", false, n_val, "sys_header", "群組代表"));
-			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-2", true, n_val, "wh_pr_id", "製令單"));
-			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-2", true, st_val, "wh_wt_id", "工作類型"));
-			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.DATE, "", "", FFM.Wri.W_Y, "col-md-2", false, n_val, "wh_s_date", "時間(始)"));
-			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.DATE, "", "", FFM.Wri.W_Y, "col-md-2", false, n_val, "wh_e_date", "時間(結)"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-1", false, n_val, "wh_id", "ID"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-1", false, n_val, "sys_header", "群組代表"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-2", true, n_val, "wh_pr_id", "製令單"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.SEL, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-1", true, st_val, "wh_wt_id", "工作類型"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_Y, "col-md-4", true, n_val, "wh_do", "工作內容"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.DATE, "", "", FFM.Wri.W_Y, "col-md-2", true, n_val, "wh_s_date", "時間(始)"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.DATE, "", "", FFM.Wri.W_Y, "col-md-2", true, n_val, "wh_e_date", "時間(結)"));
 			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.Wri.W_Y, "col-md-1", true, n_val, "wh_nb", "完成數量"));
-			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.Wri.W_N, "col-md-1", true, n_val, "pr_p_quantity", "總數"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.Wri.W_N, "col-md-1", true, n_val, "pr_p_quantity", "總數"));
 
-			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_Y, "col-md-9", true, n_val, "wh_do", "工作內容"));
-			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_Y, "col-md-2", true, n_val, "wh_account", "作業人員"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_Y, "col-md-1", true, n_val, "wh_account", "作業人員"));
 
 			s_val = new JSONArray();
 			s_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			s_val.put((new JSONObject()).put("value", "取消").put("key", "1"));
+			s_val.put((new JSONObject()).put("value", "鎖定").put("key", "2").put("dis", "disabled"));
 			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.SEL, FFM.Type.TEXT, "", "0", FFM.Wri.W_Y, "col-md-1", true, s_val, "sys_status", "狀態"));
 			bean.setCell_modify(obj_m);
 
@@ -114,6 +117,9 @@ public class WorkHoursService {
 			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "wh_account"));
 			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "wh_nb"));
 			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-1", "wh_wt_id"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_S, "col-md-1", "wh_pr_id"));
+
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_S, "col-md-1", "pr_p_quantity"));
 
 			bean.setCell_g_modify(obj_g_m);
 
@@ -227,6 +233,7 @@ public class WorkHoursService {
 				JSONObject data = (JSONObject) one;
 				WorkType type = new WorkType();
 				// 驗證是否有此製令
+				total_tw = 0;
 				if (pr_id.equals("") || !data.getString("wh_pr_id").equals(pr_id)) {
 					pr_id = data.getString("wh_pr_id");
 					wh_pr_id = new ProductionRecords();
@@ -252,10 +259,12 @@ public class WorkHoursService {
 				}
 
 				// 檢核使用者
-				String check_user = hoursDao.findAllByWhid(data.getInt("wh_id")).get(0).getSysmuser();
-				if (!check_user.equals("system") && !check_user.equals(user.getSuaccount())) {
-					return false;
-				}
+				/*
+				 * String check_user =
+				 * hoursDao.findAllByWhid(data.getInt("wh_id")).get(0).getSysmuser(); if
+				 * (!check_user.equals("system") && !check_user.equals(user.getSuaccount())) {
+				 * return false; }
+				 */
 
 				type.setWtid(data.getInt("wh_wt_id"));
 
@@ -271,7 +280,7 @@ public class WorkHoursService {
 				work_p.setSysnote("");
 				work_p.setSyssort(0);
 				work_p.setSysheader(data.getBoolean("sys_header"));
-				work_p.setSysstatus(data.getInt("sys_status"));
+				work_p.setSysstatus(0);
 				work_p.setSysmuser(user.getSuaccount());
 				work_p.setSyscuser(user.getSuaccount());
 
@@ -280,6 +289,36 @@ public class WorkHoursService {
 
 			}
 			hoursDao.saveAll(works_p);
+
+			// 檢核數量 ->是否達標最低數量->達標則更新數量
+			ArrayList<WorkType> w_all = workTypeDao.findAll();
+			Map<Integer, Integer> all_type = new HashMap<Integer, Integer>();
+
+			for (WorkType workType : w_all) {
+				if (workType.getWtid() != 0) {
+					works_p = hoursDao.findAllByproductionRecordsAndWorkTypeAndSysstatus(wh_pr_id, workType, 0);
+					int total_nb = 0;// 暫時登記數量
+					for (WorkHours workHours : works_p) {
+						total_nb += workHours.getWhnb();
+					}
+					all_type.put(workType.getWtid(), total_nb);
+				}
+			}
+			int last_nb = 99999;
+			for (Map.Entry<Integer, Integer> entry : all_type.entrySet()) {
+				if (last_nb > entry.getValue()) {
+					last_nb = entry.getValue();
+				}
+			}
+			// System.out.println(last_nb);
+			int save_nb = last_nb;
+			works_p = hoursDao.findAllByproductionRecords(wh_pr_id);
+			works_p.forEach(s -> {
+				if (s.getSysheader()) {
+					s.setWhnb(save_nb);
+					hoursDao.save(s);
+				}
+			});
 			check = true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -319,17 +358,17 @@ public class WorkHoursService {
 
 			for (Object one : list) {
 				// 物件轉換
-				WorkHours work_p = new WorkHours();
 				JSONObject data = (JSONObject) one;
 				WorkType type = new WorkType();
+				WorkHours work_p = hoursDao.findAllByWhid(data.getInt("wh_id")).get(0);
 				// 驗證是否有此製令
 				if (pr_id.equals("") || !data.getString("wh_pr_id").equals(pr_id)) {
 					pr_id = data.getString("wh_pr_id");
 					wh_pr_id = new ProductionRecords();
 					wh_pr_id.setPrid(pr_id);
 				}
-				// 主類別不改
-				if (!data.getBoolean("sys_header")) {
+				// 主類別不改+不是鎖定資料
+				if (!data.getBoolean("sys_header") && work_p.getSysstatus() != 2) {
 					// 檢核總數量
 					List<WorkHours> check_wts = hoursDao.findAllByWorkHours(data.getString("wh_pr_id"), null, data.getInt("wh_wt_id"), 0, null, null,
 							PageRequest.of(0, 9999));
@@ -350,10 +389,12 @@ public class WorkHoursService {
 					}
 
 					// 檢核使用者
-					String check_user = hoursDao.findAllByWhid(data.getInt("wh_id")).get(0).getSysmuser();
-					if (!check_user.equals("system") && !check_user.equals(user.getSuaccount())) {
-						return false;
-					}
+					/*
+					 * String check_user =
+					 * hoursDao.findAllByWhid(data.getInt("wh_id")).get(0).getSysmuser(); if
+					 * (!check_user.equals("system") && !check_user.equals(user.getSuaccount())) {
+					 * return false; }
+					 */
 
 					type.setWtid(data.getInt("wh_wt_id"));
 
@@ -381,6 +422,36 @@ public class WorkHoursService {
 			}
 			hoursDao.saveAll(works_p);
 
+			// 檢核數量 ->是否達標最低數量->達標則更新數量
+			ArrayList<WorkType> w_all = workTypeDao.findAll();
+			Map<Integer, Integer> all_type = new HashMap<Integer, Integer>();
+
+			for (WorkType workType : w_all) {
+				if (workType.getWtid() != 0) {
+					works_p = hoursDao.findAllByproductionRecordsAndWorkTypeAndSysstatus(wh_pr_id, workType, 0);
+					int total_nb = 0;// 暫時登記數量
+					for (WorkHours workHours : works_p) {
+						total_nb += workHours.getWhnb();
+					}
+					all_type.put(workType.getWtid(), total_nb);
+				}
+			}
+			int last_nb = 99999;
+			for (Map.Entry<Integer, Integer> entry : all_type.entrySet()) {
+				if (last_nb > entry.getValue()) {
+					last_nb = entry.getValue();
+				}
+			}
+			// System.out.println(last_nb);
+			int save_nb = last_nb;
+			works_p = hoursDao.findAllByproductionRecords(wh_pr_id);
+			works_p.forEach(s -> {
+				if (s.getSysheader()) {
+					s.setWhnb(save_nb);
+					hoursDao.save(s);
+				}
+			});
+
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -398,17 +469,16 @@ public class WorkHoursService {
 				// 物件轉換
 				WorkHours work_p = new WorkHours();
 				JSONObject data = (JSONObject) one;
-				// 移除群組
+				// 排除 移除群組
 				if (data.getBoolean("sys_header")) {
-					ProductionRecords wh_pr_id = new ProductionRecords();
-					wh_pr_id.setPrbitem(data.getString("wh_pr_id"));
-
-					hoursDao.deleteByproductionRecords(wh_pr_id);
-
+					return false;
 				} else {
 					// 子類別
-					work_p.setWhid(data.getInt("wh_id"));
-					hoursDao.delete(work_p);
+					// 排除鎖定
+					if (data.getInt("sys_status") != 2) {
+						work_p.setWhid(data.getInt("wh_id"));
+						hoursDao.delete(work_p);
+					}
 				}
 				check = true;
 			}

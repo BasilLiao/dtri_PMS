@@ -15,13 +15,17 @@ import org.springframework.transaction.annotation.Transactional;
 import dtri.com.tw.bean.PackageBean;
 import dtri.com.tw.db.entity.ProductionBody;
 import dtri.com.tw.db.entity.SystemUser;
+import dtri.com.tw.db.entity.WorkstationItem;
 import dtri.com.tw.db.pgsql.dao.ProductionBodyDao;
+import dtri.com.tw.db.pgsql.dao.WorkstationItemDao;
 import dtri.com.tw.tools.Fm_Time;
 
 @Service
 public class ProductionConfigService {
 	@Autowired
 	private ProductionBodyDao bodyDao;
+	@Autowired
+	private WorkstationItemDao itemDao;
 
 	// 取得當前 資料清單
 	public PackageBean getData(JSONObject body, int page, int p_size) {
@@ -211,6 +215,7 @@ public class ProductionConfigService {
 				// 欄位名稱/值
 				String pb_cell = data.getString("pb_cell");
 				String pb_value = data.getString("pb_value");
+
 				// 欄位有值
 				if (pb_cell != null && !pb_cell.equals("")) {
 					String in_name = "setPbvalue" + pb_cell.substring(pb_cell.length() - 2);
@@ -221,6 +226,21 @@ public class ProductionConfigService {
 					p_body.setSysmdate(new Date());
 
 					bodyDao.save(p_body);
+					// 工作站-項目登入
+					ArrayList<WorkstationItem> items = itemDao.findAllByWorkstationItem(pb_cell, null);
+					if (!pb_value.equals("")) {
+						// 登入
+						WorkstationItem one_w = new WorkstationItem();
+						if (items.size() == 1) {
+							one_w = items.get(0);
+						}
+						one_w.setWipbcell(pb_cell);
+						one_w.setWipbvalue(pb_value);
+						itemDao.save(one_w);
+					} else {
+						// 移除
+						itemDao.delete(items.get(0));
+					}
 				}
 				check = true;
 			}

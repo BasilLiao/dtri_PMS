@@ -59,26 +59,26 @@ public class WorkstationService {
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
 			int ord = 0;
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_id", FFS.h_t("ID", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_g_id", FFS.h_t("群組ID", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_i_id", FFS.h_t("項目ID", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_codename", FFS.h_t("工作站條碼", "150px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_pb_name", FFS.h_t("工作站名稱", "150px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_pb_cell", FFS.h_t("工作站欄位", "150px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_sg_id", FFS.h_t("可使用[群組]ID", "150px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_sg_name", FFS.h_t("可使用[群組]名稱", "180px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_id", FFS.h_t("ID", "100px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_g_id", FFS.h_t("群組ID", "100px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_i_id", FFS.h_t("項目ID", "100px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_codename", FFS.h_t("工作站[條碼]", "150px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_pb_name", FFS.h_t("工作站[名稱]", "150px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_pb_cell", FFS.h_t("工作站[欄位]", "150px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_sg_id", FFS.h_t("使用群組[ID]", "150px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_sg_name", FFS.h_t("使用群組[名稱]", "180px", FFM.Wri.W_Y));
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "w_replace", FFS.h_t("可重複登記?", "180px", FFM.Wri.W_Y));
 
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_t_date", FFS.h_t("建立時間", "150px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_t_date", FFS.h_t("建立時間", "180px", FFM.Wri.W_Y));
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_t_user", FFS.h_t("建立人", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_date", FFS.h_t("修改時間", "150px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_date", FFS.h_t("修改時間", "180px", FFM.Wri.W_Y));
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_m_user", FFS.h_t("修改人", "100px", FFM.Wri.W_Y));
 
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_note", FFS.h_t("備註", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_sort", FFS.h_t("排序", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_ver", FFS.h_t("版本", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_sort", FFS.h_t("排序", "100px", FFM.Wri.W_N));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_ver", FFS.h_t("版本", "100px", FFM.Wri.W_N));
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_status", FFS.h_t("狀態", "100px", FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_header", FFS.h_t("群組?", "100px", FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_header", FFS.h_t("群組?", "100px", FFM.Wri.W_N));
 			bean.setHeader(object_header);
 
 			// 放入修改 [(key)](modify/Create/Delete) 格式
@@ -86,16 +86,18 @@ public class WorkstationService {
 			JSONArray n_val = new JSONArray();
 			JSONArray a_val = new JSONArray();
 
-			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "0", "0", FFM.Wri.W_N, "col-md-1", false, n_val, "w_id", "W_ID"));
-			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "0", "0", FFM.Wri.W_N, "col-md-1", false, n_val, "w_g_id", "W_群組ID"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.TEXT, "0", "0", FFM.Wri.W_N, "col-md-1", false, n_val, "w_id", "W_ID"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.TEXT, "0", "0", FFM.Wri.W_N, "col-md-1", false, n_val, "w_g_id", "W_群組ID"));
 
 			workstationItems = itemDao.findAll();
 			JSONArray a_vals1 = new JSONArray();
 			workstationItems.forEach(s -> {
-				a_vals1.put((new JSONObject()).put("value", s.getWipbvalue()).put("key", s.getWiid()));
+				if (s.getWiid() != 0) {
+					a_vals1.put((new JSONObject()).put("value", s.getWipbvalue()).put("key", s.getWiid()));
+				}
 			});
-			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.SEL, FFM.Type.TEXT, "0", "0", FFM.Wri.W_Y, "col-md-2", true, a_vals1, "w_i_id", "WI_項目ID"));
-			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "五碼[AA000]", "", FFM.Wri.W_N, "col-md-1", true, n_val, "w_c_name", "W_工作站碼"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S, FFM.Tag.SEL, FFM.Type.TEXT, "0", "0", FFM.Wri.W_Y, "col-md-2", true, a_vals1, "w_i_id", "料件SN綁定 工作站"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.TEXT, "五碼[AA000]", "", FFM.Wri.W_N, "col-md-2", true, n_val, "w_c_name", "工作站碼"));
 
 			// sn關聯表-工作站
 			a_val = new JSONArray();
@@ -123,43 +125,51 @@ public class WorkstationService {
 					e.printStackTrace();
 				}
 			}
-			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.SEL, FFM.Type.TEXT, " ", " ", FFM.Wri.W_N, "col-md-2", true, a_val, "w_pb_cell", "W_工作站[欄]"));
-			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N,
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.SEL, FFM.Type.TEXT, " ", " ", FFM.Wri.W_N, "col-md-2", true, a_val, "w_pb_cell", "工作站名稱"));
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",
+			// FFM.Wri.W_N,
 			// "col-md-2", false,
 			// n_val, "w_pb_name", "W_工作站[名]"));
 			a_val = new JSONArray();
 			a_val.put((new JSONObject()).put("value", "重複").put("key", true));
 			a_val.put((new JSONObject()).put("value", "不重複").put("key", false));
-			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.SEL, FFM.Type.TEXT, "true", "true", FFM.Wri.W_N, "col-md-1", true, a_val, "w_replace", "W_可重複?"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.SEL, FFM.Type.TEXT, "true", "true", FFM.Wri.W_N, "col-md-1", true, a_val, "w_replace", "可重複?"));
 
 			JSONArray a_vals2 = new JSONArray();
 			systemGroup = groupDao.findAllBySysheader(true, PageRequest.of(0, 999));
 			systemGroup.forEach(e -> {
 				a_vals2.put((new JSONObject()).put("value", e.getSgname()).put("key", e.getSggid()));
 			});
-			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.SEL, FFM.Type.TEXT, " ", " ", FFM.Wri.W_N, "col-md-2", true, a_vals2, "w_sg_id", "SU_[群組]ID"));
-			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N,
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.SEL, FFM.Type.TEXT, " ", " ", FFM.Wri.W_N, "col-md-2", true, a_vals2, "w_sg_id", "群組限制"));
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",
+			// FFM.Wri.W_N,
 			// "col-md-2", false,
 			// n_val, "w_sg_name", "SU_[群組]名"));
 
-			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N,
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",
+			// FFM.Wri.W_N,
 			// "col-md-2", false,
 			// n_val, "sys_t_date", "建立時間"));
-			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N,
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",
+			// FFM.Wri.W_N,
 			// "col-md-2", false,
 			// n_val, "sys_t_user", "建立人"));
-			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N,
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",
+			// FFM.Wri.W_N,
 			// "col-md-2", false,
 			// n_val, "sys_m_date", "修改時間"));
-			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N,
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",
+			// FFM.Wri.W_N,
 			// "col-md-2", false,
 			// n_val, "sys_m_user", "修改人"));
 
-			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFS.TTA, FFM.Type.TEXT, "", "", FFM.Wri.W_Y, "col-md-12",
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFS.TTA, FFM.Type.TEXT, "", "", FFM.Wri.W_Y,
+			// "col-md-12",
 			// false,
 			// n_val, "sys_note", "備註"));
-			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.Wri.W_Y, "col-md-1", true, n_val, "sys_sort", "排序"));
-			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.NUMB, "", "", FFM.Wri.W_N,
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.NUMB, "0", "0", FFM.Wri.W_Y, "col-md-1", true, n_val, "sys_sort", "排序"));
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.NUMB, "", "",
+			// FFM.Wri.W_N,
 			// "col-md-2",
 			// false,
 			// n_val, "sys_ver", "版本"));
@@ -167,17 +177,18 @@ public class WorkstationService {
 			// a_val = new JSONArray();
 			// a_val.put((new JSONObject()).put("value", "正常").put("key", "0"));
 			// a_val.put((new JSONObject()).put("value", "異常").put("key", "1"));
-			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFS.SEL, FFM.Type.TEXT, "", "0", FFM.Wri.W_Y, "col-md-1",
+			// obj_m.put(FFS.h_m(FFM.Dno.D_S,FFS.SEL, FFM.Type.TEXT, "", "0", FFM.Wri.W_Y,
+			// "col-md-1",
 			// true,
 			// a_val, "sys_status", "狀態"));
-			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-1", false, n_val, "sys_header", "群組?"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_N, FFM.Tag.INP, FFM.Type.TEXT, "", "", FFM.Wri.W_N, "col-md-1", false, n_val, "sys_header", "群組?"));
 			bean.setCell_modify(obj_m);
 
 			// 放入群主指定 [(key)](modify/Create/Delete) 格式
 			JSONArray obj_g_m = new JSONArray();
 			obj_g_m.put(FFS.h_g(FFM.Wri.W_Y, FFM.Dno.D_S, "col-md-2", "w_c_name"));
 			obj_g_m.put(FFS.h_g(FFM.Wri.W_Y, FFM.Dno.D_S, "col-md-2", "w_pb_cell"));
-			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_S, "col-md-2", "w_i_id"));
+			obj_g_m.put(FFS.h_g(FFM.Wri.W_N, FFM.Dno.D_N, "col-md-2", "w_i_id"));
 			obj_g_m.put(FFS.h_g(FFM.Wri.W_Y, FFM.Dno.D_S, "col-md-2", "w_sg_id"));
 			obj_g_m.put(FFS.h_g(FFM.Wri.W_Y, FFM.Dno.D_S, "col-md-2", "w_replace"));
 
@@ -591,15 +602,16 @@ public class WorkstationService {
 				JSONObject data = (JSONObject) one;
 				// 群組?
 				// 如果程序正在使用-不能移除
+				sys_t.setWid(data.getInt("w_id"));
+				sys_t.setWgid(data.getInt("w_g_id"));
 				if (data.getBoolean("sys_header")) {
 					if (workpDao.findAllByWpwgid(data.getInt("w_g_id")).size() > 0) {
 						return false;
 					}
 					workstationDao.deleteByWgid(sys_t.getWgid());
+					check = true;
 					continue;
 				}
-				sys_t.setWid(data.getInt("w_id"));
-				sys_t.setWgid(data.getInt("w_g_id"));
 				workstationDao.deleteByWidAndSysheader(sys_t.getWid(), false);
 				check = true;
 			}

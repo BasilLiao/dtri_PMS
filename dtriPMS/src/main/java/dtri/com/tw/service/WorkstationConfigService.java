@@ -39,8 +39,8 @@ public class WorkstationConfigService {
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
 			JSONObject object_header = new JSONObject();
 			int ord = 0;
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "pb_cell", FFS.h_t("WP_欄位", "150px",FFM.Wri.W_Y));
-			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "pb_value", FFS.h_t("WP_工作站名稱", "150px",FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "pb_cell", FFS.h_t("系統欄位", "150px",FFM.Wri.W_Y));
+			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "pb_value", FFS.h_t("工作站欄位名稱", "150px",FFM.Wri.W_Y));
 
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_date", FFS.h_t("建立時間", "150px",FFM.Wri.W_Y));
 			object_header.put(FFS.ord((ord += 1), FFM.Hmb.H) + "sys_c_user", FFS.h_t("建立人", "100px",FFM.Wri.W_Y));
@@ -84,8 +84,8 @@ public class WorkstationConfigService {
 					e.printStackTrace();
 				}
 			}
-			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.SEL, FFM.Type.TEXT, "", "",FFM.Wri.W_N, "col-md-2", false, a_val_body, "pb_cell", "PW_欄位"));
-			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",FFM.Wri.W_Y, "col-md-2", false, n_val, "pb_value", "WP_工作站名稱"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.SEL, FFM.Type.TEXT, "", "",FFM.Wri.W_N, "col-md-2", false, a_val_body, "pb_cell", "系統欄位"));
+			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",FFM.Wri.W_Y, "col-md-2", true, n_val, "pb_value", "工作站欄位名稱"));
 
 			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",FFM.Wri.W_N, "col-md-2", false, n_val, "sys_c_date", "建立時間"));
 			obj_m.put(FFS.h_m(FFM.Dno.D_S,FFM.Tag.INP, FFM.Type.TEXT, "", "",FFM.Wri.W_N, "col-md-2", false, n_val, "sys_c_user", "建立人"));
