@@ -6,7 +6,9 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,7 +32,6 @@ import dtri.com.tw.db.pgsql.dao.ProductionHeaderDao;
 import dtri.com.tw.db.pgsql.dao.SystemConfigDao;
 import dtri.com.tw.db.pgsql.dao.WorkstationDao;
 import dtri.com.tw.db.pgsql.dao.WorkstationProgramDao;
-import dtri.com.tw.tools.Fm_json;
 
 @Service
 public class WorkstationWorkService {
@@ -64,21 +65,23 @@ public class WorkstationWorkService {
 		// 初次載入需要標頭 / 之後就不用
 		if (body == null || body.isNull("search")) {
 			// 放入包裝(header) [01 是排序][_h__ 是分割直][資料庫欄位名稱]
-			JSONObject object_header = new JSONObject();
+			JSONObject object_header = new JSONObject(new LinkedHashMap<>());
 			// fix
 			ArrayList<MaintainCode> codes = codeDao.findAllByMaintainCode(null, null, 0, PageRequest.of(0, 9999));
 			JSONObject fix_obj = new JSONObject();
 			JSONObject fix_type = new JSONObject();
+			// JSONObject fix_item = new JSONObject();
+			Map<String, String> fix_item = new LinkedHashMap<String, String>();// 因為排序(一般JSONObject 是不排序)
 			String mc_g_code = "", mc_g_name = "";
-			JSONObject fix_item = new JSONObject();
+
 			for (MaintainCode one : codes) {
 				// TYPE
 				if (one.getSysheader()) {
-					if (fix_item.length() > 0) {
+					if (fix_item.size() > 0) {
 						fix_type.put("name", mc_g_name);
-						fix_type.put("item", fix_item);
+						fix_type.put("item", new JSONObject(fix_item));
 						fix_obj.put(mc_g_code, fix_type);
-						fix_item = new JSONObject();
+						fix_item = new LinkedHashMap<String, String>();
 						fix_type = new JSONObject();
 					}
 					mc_g_name = one.getMcgname();
@@ -89,11 +92,11 @@ public class WorkstationWorkService {
 				}
 			}
 			// 補上最後一圈
-			if (fix_item.length() > 0) {
+			if (fix_item.size() > 0) {
 				fix_type.put("name", mc_g_name);
-				fix_type.put("item", fix_item);
+				fix_type.put("item",new JSONObject(fix_item));
 				fix_obj.put(mc_g_code, fix_type);
-				fix_item = new JSONObject();
+				fix_item = new LinkedHashMap<String, String>();
 				fix_type = new JSONObject();
 			}
 			object_header.put("fix_list", fix_obj);
@@ -225,6 +228,7 @@ public class WorkstationWorkService {
 			ProductionRecords records = new ProductionRecords();
 			records.setPrid(ph_pr_id);
 			List<Integer> sysstatus = new ArrayList<Integer>();
+			// 狀態非(暫停/終止/完成)的資料
 			sysstatus.add(2);
 			sysstatus.add(8);
 			sysstatus.add(9);
@@ -368,63 +372,43 @@ public class WorkstationWorkService {
 							}
 						}
 						// 工作站->工作站欄位名稱
-						ArrayList<Workstation> wk_s = wkDao.findAllByWcname(list.getString("w_c_name"), PageRequest.of(0, 1));
-						JSONObject pb_schedule = new JSONObject();
+						JSONObject pbschedule = new JSONObject(body_s.get(0).getPbschedule());
 
-						// 有此工作站+格式正確
-						if (wk_s.size() == 1 && Fm_json.isJSONValid(body_one.getPbschedule())) {
-							pb_schedule = new JSONObject(body_one.getPbschedule());
-
-							String yn = pb_schedule.getJSONObject(wk_s.get(0).getWid() + "").getString("type");
-							boolean yn_check = wk_s.get(0).getWreplace();
-							// 不可重複?
-							if (yn.equals("Y") && !yn_check) {
-								return false;
-							}
-						} else {
+						// 有此工作站
+						if (!pbschedule.has(list.getString("w_c_name"))) {
 							return false;
 						}
 
 						// Step1-1.工作站進度
-						body_one.setPbschedule(pb_schedule.toString());
-						boolean check_work_fn = true;
-						String previous_work = "";
-						Iterator<String> keys = pb_schedule.keys();
-
+						Iterator<String> keys = pbschedule.keys();
+						int sort_check = pbschedule.getJSONObject(list.getString("w_c_name")).getInt("sort");
+						boolean check_fn = true;
 						while (keys.hasNext()) {
+							// 檢查前站別
 							String key = keys.next();
-							if (pb_schedule.get(key) instanceof JSONObject) {
-								// 全部都完成?
-								String now_work = pb_schedule.getJSONObject(key).getString("type");
-								if (now_work.equals("N")) {
-									check_work_fn = false;
-								}
-								// 是否有前置站無
-								if (previous_work.equals("")) {
-									previous_work = now_work;
-								} else {
-									// 正常
-									if ((now_work.equals("N") && previous_work.equals("N")) || //
-											(now_work.equals("N") && previous_work.equals("Y")) || //
-											(now_work.equals("Y") && previous_work.equals("Y"))) {
-										previous_work = now_work;
-									}
-									// 不正常
-									else {
-										pb_schedule.getJSONObject(wk_s.get(0).getWid() + "").put("type", "N");
-										body_one.setPbschedule(pb_schedule.toString());
+							if (pbschedule.get(key) instanceof JSONObject) {
+
+								String type = pbschedule.getJSONObject(key).getString("type");
+								int sort = pbschedule.getJSONObject(key).getInt("sort");
+								// 前置作業站別沒刷(除了自己)
+								if (!key.equals(list.getString("w_c_name"))) {
+									if (type.equals("N") && sort_check > sort) {
 										return false;
+									}
+									// 每一站都刷完了
+									if (type.equals("N")) {
+										check_fn = false;
 									}
 								}
 							}
 						}
-						pb_schedule.getJSONObject(wk_s.get(0).getWid() + "").put("type", "Y");
-						body_one.setPbschedule(pb_schedule.toString());
+						pbschedule.put(list.getString("w_c_name"), pbschedule.getJSONObject(list.getString("w_c_name")).put("type", "Y"));
+						body_one.setPbschedule(pbschedule.toString());
+						body_one.setPbcheck(check_fn);
 
-						body_one.setPbcheck(check_work_fn);
-
+						String w_pb_cell = pbschedule.getJSONObject(list.getString("w_c_name")).getString("w_pb_cell");
 						// 可能的工作站範圍
-						String w_pb_cell = wk_s.get(0).getWpbcell();
+						// String w_pb_cell = wk_s.get(0).getWpbcell();
 						for (int k = 0; k < 20; k++) {
 							// 有欄位?
 							if (w_pb_cell.equals("pb_w_name" + String.format("%02d", k + 1))) {
@@ -462,13 +446,11 @@ public class WorkstationWorkService {
 					ProductionRecords phprid = new ProductionRecords();
 					phprid.setPrid(list.getString("ph_pr_id"));
 					ProductionHeader p_header = phDao.findAllByProductionRecords(phprid).get(0);
+					p_header.setSysstatus(1);
 					// 啟動時間
 					if (p_header.getSysstatus() == 0) {
 						p_header.setPhsdate(new Date());
 					}
-					p_header.setSysstatus(1);
-					// 規格
-					ProductionRecords p_records = p_header.getProductionRecords();
 
 					// 關聯SN
 					List<ProductionBody> p_body = pbDao.findAllByPbgidOrderByPbsnAsc(p_header.getPhpbgid());
@@ -479,12 +461,16 @@ public class WorkstationWorkService {
 							finish += 1;
 						}
 					}
+					// 規格
+					ProductionRecords p_records = p_header.getProductionRecords();
 					p_records.setPrpokquantity(finish);
+
 					p_header.setPhschedule(p_records.getPrpokquantity() + "／" + p_records.getPrpquantity());
 					p_header.setProductionRecords(p_records);
 					// 此製令已完成
 					if (p_records.getPrpokquantity() == p_records.getPrpquantity()) {
 						p_header.setSysstatus(2);
+						p_header.setPhedate(new Date());
 					}
 					phDao.save(p_header);
 					check = true;

@@ -48,6 +48,7 @@ public class LoginSecurity extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				// thirdparty && img 資料夾靜態資料可 直接 存取 (預設皆有 訪問權限 資料可[匿名]存取)
 				.antMatchers(HttpMethod.GET, "/thirdparty/**", "/img/**", "/login.basil", "/login.html").permitAll()
+				.antMatchers(HttpMethod.POST, "/ajax/api.basil").permitAll()
 				// ----請求-index-(訪問)----
 				.antMatchers(HttpMethod.POST, "/ajax/index.basil").hasAuthority(actionRole("index.basil", ""))
 

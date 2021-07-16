@@ -13,6 +13,10 @@
 #barcode_sn_name .package_qty {
 	font-size: 18px;
 }
+
+.b_code_w {
+	max-width: 180px;
+}
 </style>
 
 <div id="workstation" class="text-left shadow">
@@ -66,15 +70,15 @@
 						<td colspan="7" class="p-0 border border-dark">
 							<div class="row justify-content-between m-0">
 								<div class="row m-0 p-2">
-									<div>Open_Barcode[BC008]</div>
+									<div>功能代碼[BC008]</div>
 									<div id="barcode_BC008" class="m-1"></div>
 								</div>
 								<div class="row m-0 p-2">
-									<div>Open_Fix[BC009]</div>
+									<div>故障代碼[BC009]</div>
 									<div id="barcode_BC009" class="m-1"></div>
 								</div>
 								<div class="row m-0 p-2">
-									<div>Open_Doc[BC010]</div>
+									<div>資訊內容[BC010]</div>
 									<div id="barcode_BC010" class="m-1"></div>
 								</div>
 							</div>
@@ -165,21 +169,23 @@
 						</td>
 						<td colspan="3" class="p-0 border-dark border">
 							<!-- 維修條碼_類型(浮動) -->
-							<div id="fix_t_open" class="col-12 row justify-content-between m-0 text-center p-0 border border-secondary rounded" style="display: none;">
-								<div class="col-12 m-0 p-0 h4">Fix-type</div>
-								<div id="fix_t_example" class="p-2">
-									<div class="row m-0 p-1">
-										<div id="BC013" class="barcode_action btn btn-light p-0 pr-2 pl-2">XXX[BC013]</div>
-										<div id="barcode_BC013" class="m-1"></div>
+							<div id="fix_t_open" class="col-12 row justify-content-start m-0 text-center p-0 border border-secondary rounded" style="display: none;">
+								<div class="col-12 m-0 p-0 h4">故障類別</div>
+								<div id="fix_t_example" class="p-1 col-3">
+									<div class="row m-0 p-1 bg-light">
+										<div id="barcode_BC013" class="m-1 col-7"></div>
+										<div id="BC013" class="barcode_action btn btn-light p-0 border-0 pt-1">XXX[BC013]</div>
 									</div>
 								</div>
 							</div> <!-- 維修條碼_項目(浮動) -->
-							<div id="fix_i_open" class="col-12 row justify-content-between m-0 text-center p-0 border border-secondary rounded" style="display: none;">
-								<div class="col-12 m-0 p-0 h4">Fix-item</div>
-								<div id="fix_i_example" class="p-2">
-									<div class="row m-0">
-										<div id="BC014" class="barcode_action btn btn-light p-0 pr-2 pl-2">XXX[BC014]</div>
-										<div id="barcode_BC014" class="m-1"></div>
+							<div id="fix_i_open" class="col-12 row justify-content-start m-0 text-center p-0 border border-secondary rounded" style="display: none;">
+								<div class="col-12 m-0 p-0 h4">
+									故障代碼:<i id="fix-item"></i>
+								</div>
+								<div id="fix_i_example" class="p-1 col-3">
+									<div class="row m-0 p-1 bg-light">
+										<div id="barcode_BC014" class="m-1 col-7"></div>
+										<div id="BC014" class="barcode_action btn btn-light p-0 border-0 pt-1">XXX[BC014]</div>
 									</div>
 								</div>
 							</div>
@@ -213,8 +219,8 @@
 					<tr id="barcode_user" class="w_i_0 font-weight-bold">
 						<td colspan="2" class="p-0">
 							<div class="row p-1 m-0 border  border-light rounded">
-								<div class="col-5 p-1 m-0">*Workstation User:</div>
-								<div class="col-7 p-0">
+								<div class="col-3 p-1 m-0 b_code_w">*作業人帳號(s):</div>
+								<div class="col-9 p-0">
 									<input title="w_c_name" id="w_focus_0" disabled="disabled" class="w_sn_value col p-1 border-1 border-primary rounded" type="text" required>
 								</div>
 							</div>
@@ -235,8 +241,8 @@
 					<tr id="barcode_work" class="w_i_1 font-weight-bold">
 						<td colspan="2" class="p-0">
 							<div class="row p-1 m-0 border  border-light rounded">
-								<div class="col-5 p-1 m-0">*Workstation Code:</div>
-								<div class="col-7 p-0">
+								<div class="col-3 p-1 m-0 b_code_w">*工作站代碼:</div>
+								<div class="col-9 p-0">
 									<input title="w_c_name" id="w_focus_1" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
 							</div>
@@ -257,8 +263,8 @@
 					<tr id="barcode_order" class="w_i_2 font-weight-bold">
 						<td colspan="2" class="p-0">
 							<div class=" row p-1 m-0 border border-light rounded">
-								<div class="col-5 p-1 m-0">*Product Order:</div>
-								<div class="col-7 p-0">
+								<div class="col-3 p-1 m-0 b_code_w">*製令單號:</div>
+								<div class="col-9 p-0">
 									<input title="ph_pr_id" id="w_focus_2" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
 							</div>
@@ -280,8 +286,8 @@
 					<tr id="barcode_path" class="w_i_3 font-weight-bold">
 						<td colspan="2" class="p-0 ">
 							<div class=" row p-1 m-0 border border-light rounded">
-								<div class="col-5 p-1 m-0">*Product Patch:</div>
-								<div class="col-7 p-0">
+								<div class="col-3 p-1 m-0 b_code_w">*產品暫放位置:</div>
+								<div class="col-9 p-0">
 									<input title="pb_position" id="w_focus_3" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
 							</div>
@@ -302,8 +308,8 @@
 					<tr id="barcode_fix" class="w_i_4 font-weight-bold">
 						<td colspan="2" class="p-0">
 							<div class=" row p-1 m-0 border border-light rounded">
-								<div class="col-5 p-1 m-0">*Error Code:</div>
-								<div class="col-7 p-0">
+								<div class="col-3 p-1 m-0 b_code_w">*產品異常代碼:</div>
+								<div class="col-9 p-0">
 									<input title="pb_f_value" id="w_focus_4" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
 							</div>
@@ -324,12 +330,8 @@
 					<tr id="barcode_sn" class="w_i_5 font-weight-bold">
 						<td colspan="2" class="p-0">
 							<div class=" row p-1 m-0 border border-light rounded">
-								<div class="col-5 p-1 m-0 row">
-									<!-- <input class="mt-1 p-1 border border-dark rounded big-checkbox" id="" name="" value="true" type="checkbox">
-									 -->
-									<div>*Product SN:</div>
-								</div>
-								<div class="col-7 p-0">
+								<div class="col-3 p-1 m-0 b_code_w">*產品身分序號:</div>
+								<div class="col-9 p-0">
 									<input title="pb_sn" id="w_focus_5" disabled="disabled" class="w_sn_value col p-1 border-0 border-primary rounded" type="text" required>
 								</div>
 							</div>
@@ -355,8 +357,8 @@
 						<!--(固定)目前條碼 -->
 						<td colspan="2" class="p-0">
 							<div class=" row p-1 m-0 border border-light rounded h2">
-								<div class="col-5 p-1 m-0">Barcode in:</div>
-								<div class="col-7 p-0">
+								<div class="col-3 p-1 m-0 b_code_w">指令:</div>
+								<div class="col-9 p-0">
 									<input autocomplete="off" class="col p-1 rounded" id="m_order" type="text" required autofocus>
 								</div>
 							</div>
@@ -380,7 +382,7 @@
 					<tr id="workstation_example" class="w_i_6 font-weight-bold">
 						<td colspan="2" class="p-0">
 							<div class=" row p-1 m-0 border border-light rounded">
-								<div class="col-5 p-0 row m-0">
+								<div class="col-5 p-0 row m-0 b_code_w">
 									<input class="ml-1 mt-2 p-1 border border-dark rounded big-checkbox w_sn_check" id="" name="" value="true" type="checkbox">
 									<div class=" m-0 p-1 w_sn_name">Loading...</div>
 								</div>
@@ -410,7 +412,7 @@
 								</div>
 								<div class="col-12 p-2 m-0 row justify-content-center">
 									<div class="col-sm-5"></div>
-									<button class="col-sm-2 mt-1 btn btn-primary btn-sm" type="submit">Send Command</button>
+									<button id="send_command_btn" class="col-sm-2 mt-1 btn btn-primary btn-sm" type="submit">Send Command</button>
 									<div class="col-sm-5"></div>
 								</div>
 							</div>
@@ -434,17 +436,17 @@
 										<div class="ml-1">
 											<input id="sn_cumulative_check" name="" value="true" type="checkbox" class=" mt-2 p-1 border border-dark rounded big-checkbox">
 										</div>
-										<div class="m-0 p-1">Package SN Cumulative</div>
-										<div class="col-1">
+										<div class="m-0 p-1">包裝條碼累計</div>
+										<div class="col-2">
 											<input id="sn_cumulative_number" type="number" class="col m-1 p-0 rounded" value="0" style="min-width: 40px;">
 										</div>
-										<div class="m-0 p-1">(Number)</div>
+										<div class="m-0 p-1">(自動列印)</div>
 									</div>
 									<div id="sn_cumulative_example" class="d-none sn_cumulative row p-1 m-0 border border-light rounded font-weight-bold">
 										<div class="col-5 p-1 m-0 row">
 											<div>*Product SN:</div>
 										</div>
-										<div class="col-7 p-0">
+										<div class="col-9 p-0">
 											<input disabled="disabled" type="text" required="required" class="sn_cumulative_value col p-1 border-0 border-primary rounded">
 										</div>
 									</div>
@@ -567,6 +569,7 @@
 			    console.log("barcode_action");
 			    console.log(event.currentTarget.id);
 			    $("#m_order").val(event.currentTarget.id);
+				$("#send_command_btn" ).trigger( "click" );
 			});
 
 		},
@@ -592,13 +595,14 @@
 				//}
 				//^^^測試格式^^^
 				//顯示[維修]屬性內容
+				this.fix_type = main.orderedSort(this.fix_type);
 				for(var a = 0;a<Object.keys(this.fix_type).length;a++){
 	                var key_id = Object.keys(this.fix_type)[a];
 	                var key_name =this.fix_type[key_id].name;
 	                
 					var fix_t_example =$("#fix_t_example").clone();
 					fix_t_example[0].id = "";
-					fix_t_example[0].children[0].children[0].innerText = key_name+'['+key_id+']';
+					fix_t_example[0].children[0].children[0].innerText = '['+key_id+']'+key_name;
 					fix_t_example[0].children[0].children[0].id=key_id;
 					fix_t_example[0].children[0].children[1].id='barcode_'+key_id;
 					fix_t_example[0].children[0].children[1].innerText="";
@@ -648,14 +652,14 @@
 				fontSize: 10,output: "css",
 				posX: 0,posY: 0
 				*/
-				var barcode_f = {barWidth:1,barHeight:20,showHRI:false,};
+				var barcode_f = {barWidth:1,barHeight:22,showHRI:false,};
 				$("#"+taget_id).barcode(barcode_val,code,barcode_f);     
 			},
 			//執行動作
 			send_command(){
 				setTimeout(function(){
 					console.log("send_command :"+$('#m_order').val() );
-					var code = $('#m_order').val();
+					var code = $('#m_order').val().replace('barcode_','');//排除多餘字
 					var id =$(".border-1").attr("id");
 					console.log(id);
 					//沒輸入則不動
@@ -860,7 +864,9 @@
 					}
 					//是否為維修代碼(群組類別)
 					if(workstation.fix_type[code]!=null){
-						 $("#fix_i_open").slideToggle("fast");
+						if(($("#fix-item").text()!=code && $("#fix_i_open").css("display")=="none") ||$("#fix-item").text()==code || $("#fix-item").text()==""){
+							 $("#fix_i_open").slideToggle("fast");						
+						}
 						 console.log(id);
 							workstation.nb = parseInt(id.replace('w_focus_',''));
 							workstation.nb=4;
@@ -874,15 +880,17 @@
 							//顯示[維修]屬性內容
 							$("#fix_i_example").removeClass('d-none');
 							$(".fix_i_list").remove();
+							$("#fix-item").text(code);
 							
+							items = main.orderedSort(items);//排序
 							for(var a = 0;a<Object.keys(items).length;a++){
 				                var key_id = Object.keys(items)[a];
 				                var key_name =items[key_id];
 				                
 								var fix_t_example =$("#fix_i_example").clone();				
 								fix_t_example[0].id = "";
-								fix_t_example[0].className="p-2 fix_i_list";
-								fix_t_example[0].children[0].children[0].innerText = key_name+'['+key_id+']';
+								fix_t_example[0].className="p-1 fix_i_list col-3";
+								fix_t_example[0].children[0].children[0].innerText = '['+key_id+']'+key_name;
 								fix_t_example[0].children[0].children[0].id=key_id;
 								fix_t_example[0].children[0].children[1].id='barcode_'+key_id;
 								fix_t_example[0].children[0].children[1].innerText="";
@@ -903,7 +911,7 @@
 						}else{
 							$('#'+id).val(code);	
 						}
-						 $("#fix_i_open").slideToggle("fast");
+						//$("#fix_i_open").slideToggle("fast");
 						 return false;
 					}
 					//略Workstation User(可能有複數)

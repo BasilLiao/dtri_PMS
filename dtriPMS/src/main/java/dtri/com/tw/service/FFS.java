@@ -121,12 +121,14 @@ public class FFS {
 	 * 
 	 * @return 格式 : {name:xxx,size:50px}
 	 **/
-	public static JSONObject h_g(Wri write, Dno none, String col, String id) {
+	public static JSONObject h_g(Wri write, Dno none, String col, String id, String value) {
 		JSONObject one_group = new JSONObject();
 		one_group.put("id", FFM.choose(FFM.Hmb.M.toString()) + id);// id
 		one_group.put("col", col);// 寬度?
 		one_group.put("write", FFM.choose(write.toString()));// 可填寫?
 		one_group.put("d_none", FFM.choose(none.toString()));// 顯示?
+		one_group.put("df_value", value);// 預設內容?
+
 		return one_group;
 	}
 

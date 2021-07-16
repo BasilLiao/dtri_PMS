@@ -1360,6 +1360,10 @@
 							}else{
     							$("#create_really_tr_"+modify.create_nb+" ."+modify.modify_g_datas[g].id).removeClass("d-none");
     						}
+							//df_value?
+							if(modify.modify_g_datas[g].df_value!=""){
+								$("#create_really_tr_"+modify.create_nb+" ."+modify.modify_g_datas[g].id+" input").val(modify.modify_g_datas[g].df_value);
+							}
 						}
                 	}
                 }

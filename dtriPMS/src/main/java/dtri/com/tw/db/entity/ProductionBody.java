@@ -108,7 +108,7 @@ public class ProductionBody implements Serializable {
 	@Column(name = "pb_f_note", columnDefinition = "varchar(255)")
 	private String pbfnote;
 
-	@Column(name = "pb_schedule", columnDefinition = "varchar(255)")
+	@Column(name = "pb_schedule", columnDefinition = "varchar(1000)")
 	private String pbschedule;
 
 	@Column(name = "pb_check", nullable = false, columnDefinition = "boolean default false")

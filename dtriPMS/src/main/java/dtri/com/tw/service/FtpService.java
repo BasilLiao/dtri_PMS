@@ -109,17 +109,17 @@ public class FtpService {
 						continue;
 					}
 					// 轉移檔案
+					one = new JSONObject(line);
 					String dirPath = remotePathBackup + one.getString("WorkOrder");
 					// makeDirectories(ftpClient, dirPath);
 					boolean created = ftpClient.makeDirectory(dirPath);
 
 					String re_path = remotePath + "/" + ff.getName();
-					String new_path = dirPath + "/" + ff.getName() + "_"+work_use+"_"+Fm_Time.to_yMd_Hms(new Date());
+					String new_path = dirPath + "/" + ff.getName() + "_"+work_use+"_ "+Fm_Time.to_yMd_Hms(new Date());
 					ftpClient.rename(re_path, new_path);
 
 					// 補型號/補主機板號/轉16進制
 					long file_size = ff.getSize();
-					one = new JSONObject(line);
 					
 					// 製令單 排除OQC
 					if (f_n[0].indexOf("OQC") != -1) {
